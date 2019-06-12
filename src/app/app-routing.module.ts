@@ -5,14 +5,15 @@ import { SpecialEventsComponent } from './special-events/special-events.componen
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  {path:'',redirectTo:'/events',pathMatch:'full'},
+  {path:'',redirectTo:'/profile',pathMatch:'full'},
   {path:'events',component:EventsComponent},
   {path:'special',component:SpecialEventsComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
-  {path: 'profile',component:ProfileComponent}
+  {path: 'profile',component:ProfileComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

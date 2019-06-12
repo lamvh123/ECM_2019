@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http'
 import { Observable } from 'rxjs';
+import { Router} from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 private _registerUrl = "http://localhost:3000/api/register"
 private _loginUrl= "https://educationcentermanagementapi-dev-as.azurewebsites.net/token";
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private route:Router) { }
   registerUser(user){
     return this.http.post<any>(this._registerUrl,user);
   }
@@ -46,5 +47,9 @@ private _loginUrl= "https://educationcentermanagementapi-dev-as.azurewebsites.ne
   }
   getToken(){
     return localStorage.getItem('token');
+  }
+  logout(){
+    localStorage.removeItem('token');
+    this.route.navigate(['/login']);
   }
 }

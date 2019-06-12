@@ -40,6 +40,5 @@ private _loginUrl= "https://educationcentermanagementapi-dev-as.azurewebsites.ne
   .set('username', 'systemadmin@gmail.com')
   .set('password', '@Systemadmin2019')
   return this.http.post(this._loginUrl, body);
-
   }
 }

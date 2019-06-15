@@ -6,14 +6,16 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './auth.guard';
+import { MenuBarComponent } from './menu-bar/menu-bar.component';
 
 const routes: Routes = [
-  {path:'',redirectTo:'/profile',pathMatch:'full'},
+  {path:'',redirectTo:'/Menu',pathMatch:'full'},
   {path:'events',component:EventsComponent},
   {path:'special',component:SpecialEventsComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
-  {path: 'profile',component:ProfileComponent,canActivate:[AuthGuard]}
+  {path: 'profile',component:ProfileComponent,canActivate:[AuthGuard]},
+  {path: 'Menu',component:MenuBarComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

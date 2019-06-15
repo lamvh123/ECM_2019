@@ -12,6 +12,7 @@ import { AuthService} from './auth.service';
 import { ProfileComponent } from './profile/profile.component'
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
+import { MenuBarComponent } from './menu-bar/menu-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { TokenInterceptorService } from './token-interceptor.service';
     LoginComponent,
     EventsComponent,
     SpecialEventsComponent,
-    ProfileComponent
+    ProfileComponent,
+    MenuBarComponent
   ],
   imports: [
     BrowserModule,

@@ -20,12 +20,28 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/app/images"
             ],
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [ "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/js/vendor/modernizr-3.5.0.min.js",
+              "src/assets/js/vendor/jquery-3.2.1.min.js",
+            "src/assets/js/bootstrap.min.js",
+            "src/assets/js/plugins.js",
+            "src/assets/js/popper.min.js",
+            "src/assets/js/active.js",
+            "src/assets/bundles/libscripts.bundle.js",
+            "src/assets/bundles/vendorscripts.bundle.js",
+            "src/assets/plugins/autosize/autosize.js",
+            "src/assets/plugins/momentjs/moment.js",
+            "src/assets/plugins/dropzone/dropzone.js",
+            "src/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
+            "src/assets/bundles/mainscripts.bundle.js",
+            "src/assets/js/pages/forms/basic-form-elements.js"
+           ],
             "es5BrowserSupport": true
           },
           "configurations": {

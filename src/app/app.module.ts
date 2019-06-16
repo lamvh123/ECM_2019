@@ -13,6 +13,11 @@ import { ProfileComponent } from './profile/profile.component'
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
+import { RedirectComponent } from './redirect/redirect.component';
+import { NavigateComponent } from './navigate/navigate.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +26,12 @@ import { MenuBarComponent } from './menu-bar/menu-bar.component';
     EventsComponent,
     SpecialEventsComponent,
     ProfileComponent,
-    MenuBarComponent
+    MenuBarComponent,
+    RedirectComponent,
+    NavigateComponent,
+    ErrorPageComponent,
+    AccessDeniedComponent,
+
   ],
   imports: [
     BrowserModule,

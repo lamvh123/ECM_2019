@@ -24,12 +24,12 @@
             <form id="sign_in" method="POST">
                 <div class="input-group"> <span class="input-group-addon"> <i id="user-icon" class="zmdi zmdi-account"></i> </span>
                     <div class="form-line">
-                        <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+                        <input type="text" class="form-control" [(ngModel)]="loginUserData.username" name="username" placeholder="Username" required autofocus>
                     </div>
                 </div>
                 <div class="input-group"> <span class="input-group-addon"> <i class="zmdi zmdi-lock"></i> </span>
                     <div class="form-line">
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        <input type="password" class="form-control" [(ngModel)]="loginUserData.password" name="password" placeholder="Password" required>
                     </div>
                 </div>
                 <div class="">
@@ -37,7 +37,7 @@
                     <label for="rememberme">Remember Me</label>
                 </div>
                 <div class="text-center">
-                    <a href="index.html" class="btn btn-raised waves-effect g-bg-blush2" >SIGN IN</a>
+                    <button (click)="loginUser()" class="btn btn-raised waves-effect g-bg-blush2" >SIGN IN</button>
                     <a href="sign-up.html" class="btn btn-raised waves-effect" >SIGN UP</a>
                 </div>
                 <div class="text-center"> <a href="forgot-password.html">Forgot Password?</a></div>

@@ -26,20 +26,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [ "node_modules/jquery/dist/jquery.min.js",
-              "src/assets/js/vendor/modernizr-3.5.0.min.js",
-              "src/assets/js/vendor/jquery-3.2.1.min.js",
-            "src/assets/js/bootstrap.min.js",
-            "src/assets/js/plugins.js",
-            "src/assets/js/popper.min.js",
-            "src/assets/js/active.js",
-            
-            "src/assets/plugins/autosize/autosize.js",
-            "src/assets/plugins/momentjs/moment.js",
-            "src/assets/plugins/dropzone/dropzone.js",
-            "src/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
-            
-            "src/assets/js/pages/forms/basic-form-elements.js"
+            "scripts": [ 
            ],
             "es5BrowserSupport": true
           },

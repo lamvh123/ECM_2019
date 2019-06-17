@@ -23,14 +23,7 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    $.getScript("/assets/bundles/libscripts.bundle.js", function (data, textStatus, jqxhr) {
-      console.log( textStatus );
-    });
-    console.log("ok1");
-    $.getScript("/assets/bundles/vendorscripts.bundle.js", function (data, textStatus, jqxhr) {
-      console.log( textStatus );
-    });
-    console.log("ok1");
+    
     $.getScript("/assets/bundles/mainscripts.bundle.js", function (data, textStatus, jqxhr) {
       console.log( textStatus );
     });

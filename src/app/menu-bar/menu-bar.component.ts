@@ -16,7 +16,7 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   constructor(private _router: Router, private route: ActivatedRoute) { }
   name;
   ngOnInit() {
-    this.name = this.className();
+    this.name = this.className();   
   //   $(document).ready(function() {
   //     alert('ok');
   //     // $() will work as an alias for jQuery() inside of this function
@@ -49,15 +49,6 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     body.appendChild(script);
   }
   ngAfterViewInit() {
-<<<<<<< HEAD
-    
-    $.getScript("/assets/bundles/mainscripts.bundle.js", function (data, textStatus, jqxhr) {
-      console.log( textStatus );
-    });
-    console.log("ok1");
-     $('.dtp-content').hide();
-    console.log('1' + this._router.url);
-=======
     this.loadScript('/assets/bundles/libscripts.bundle.js');
      this.loadScript('/assets/bundles/vendorscripts.bundle.js');
      this.loadScript('/assets/bundles/mainscripts.bundle.js');
@@ -80,6 +71,5 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
      
   // });
    
->>>>>>> 13cb7f960ffc6f53fd701f00a7105fa74fc3a375
    }
 }

@@ -10,6 +10,7 @@ import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { AdminGuardGuard } from './admin-guard.guard';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { TrainingStaffGuard } from './training-staff.guard';
+import { ViewProgramComponent } from './view-program/view-program.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'view-program',
+        component: ViewProgramComponent
       }]
   },
 

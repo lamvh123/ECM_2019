@@ -14,9 +14,9 @@ import * as $ from 'jquery';
 })
 export class MenuBarComponent implements OnInit, AfterViewInit {
   constructor(private _router: Router, private route: ActivatedRoute) { }
-  name;
+  urlName;
   ngOnInit() {
-    this.name = this.className();   
+    this.urlName = this.className();   
   //   $(document).ready(function() {
   //     alert('ok');
   //     // $() will work as an alias for jQuery() inside of this function

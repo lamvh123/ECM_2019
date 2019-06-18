@@ -30,7 +30,7 @@
               </div>
           </div>
           <div class="col-md-2">
-              <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+              <input type="submit" (click)="updateProfile()" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
           </div>
       </div>
       <div class="row">
@@ -64,7 +64,7 @@
                                       <label>Name</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>Kshiti Ghelani</p>
+                                    <p><input style="border:none" [(ngModel)]="user.name" type="text"   name="fullname"  required ></p>
                                   </div>
                               </div>
                               <div class="row">
@@ -72,7 +72,7 @@
                                       <label>Email</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>kshitighelani@gmail.com</p>
+                                    <p><input style="border:none"  type="text"  [(ngModel)]="user.email" name="email"  required ></p>
                                   </div>
                               </div>
                               <div class="row">
@@ -80,15 +80,15 @@
                                       <label>Phone</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>123 456 7890</p>
+                                    <p><input style="border:none"  type="text"  [(ngModel)]="user.PhoneNumber" name="phone"  required ></p>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="col-md-6">
-                                      <label>Profession</label>
+                                      <label>Sex</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>Web Developer and Designer</p>
+                                    <p><input style="border:none"  type="text"  [(ngModel)]="user.Sex" name="sex"  required ></p>
                                   </div>
                               </div>
                   </div>

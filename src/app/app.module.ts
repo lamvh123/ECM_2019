@@ -17,6 +17,9 @@ import { RedirectComponent } from './redirect/redirect.component';
 import { NavigateComponent } from './navigate/navigate.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { AdminGuardGuard } from './admin-guard.guard';
+import { TrainingStaffGuard } from './training-staff.guard';
+import { ViewProgramComponent } from './view-program/view-program.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
     NavigateComponent,
     ErrorPageComponent,
     AccessDeniedComponent,
+    ViewProgramComponent,
 
   ],
   imports: [
@@ -39,7 +43,7 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService,AuthGuard,{provide:HTTP_INTERCEPTORS,
+  providers: [AuthService,AuthGuard,AdminGuardGuard,TrainingStaffGuard,{provide:HTTP_INTERCEPTORS,
   useClass:TokenInterceptorService,multi:true}],
   bootstrap: [AppComponent]
 })

@@ -11,6 +11,11 @@ import { AdminGuardGuard } from './admin-guard.guard';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { TrainingStaffGuard } from './training-staff.guard';
 import { ViewProgramComponent } from './view-program/view-program.component';
+import { AddProgramComponent } from './add-program/add-program.component';
+import { ViewCourseComponent } from './view-course/view-course.component';
+import { AddCourseComponent } from './add-course/add-course.component';
+import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { ProgramDetailComponent } from './program-detail/program-detail.component';
 
 
 const routes: Routes = [
@@ -33,6 +38,26 @@ const routes: Routes = [
       {
         path: 'view-program',
         component: ViewProgramComponent
+      },
+      {
+        path: 'add-program',
+        component: AddProgramComponent
+      },
+      {
+        path: 'program-detail/:id',
+        component: ProgramDetailComponent
+      },
+      {
+        path: 'view-course/:id',
+        component: ViewCourseComponent
+      },
+      {
+        path: 'add-course/:id',
+        component: AddCourseComponent
+      },
+      {
+        path: 'course-detail/:id',
+        component: CourseDetailComponent
       }]
   },
 

@@ -15,6 +15,7 @@ import * as $ from 'jquery';
 export class MenuBarComponent implements OnInit, AfterViewInit {
   constructor(private _router: Router, private route: ActivatedRoute) { }
   urlName;
+  programName = '';
   ngOnInit() {
     this.urlName = this.className();   
   //   $(document).ready(function() {
@@ -49,9 +50,10 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     body.appendChild(script);
   }
   ngAfterViewInit() {
-    this.loadScript('/assets/bundles/libscripts.bundle.js');
-     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-     this.loadScript('/assets/bundles/mainscripts.bundle.js');
+    // this.loadScript('/assets/bundles/libscripts.bundle.js');
+    //  this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+    //  this.loadScript('/assets/bundles/mainscripts.bundle.js');
+     
   //   $(document).ready(function() {
   //     alert('ok');
   //     // $() will work as an alias for jQuery() inside of this function

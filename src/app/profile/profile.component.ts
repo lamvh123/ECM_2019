@@ -16,6 +16,9 @@ export class ProfileComponent implements OnInit,AfterViewInit {
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/Systemmanagement/Profile';
     this.http.get(configUrl).subscribe(res =>{
          console.log(res);
+         err => {
+          this.router.navigate(['/access-denied']);
+         }
     },
     error=>{
         if(error instanceof HttpErrorResponse){

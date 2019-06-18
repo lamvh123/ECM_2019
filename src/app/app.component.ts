@@ -10,13 +10,6 @@ export class AppComponent implements  AfterViewInit{
   title = 'ngApp';
   constructor(private auth:AuthService){}
   ngAfterViewInit() {
-    $.getScript("/assets/bundles/libscripts.bundle.js", function (data, textStatus, jqxhr) {
-      console.log( textStatus );
-    });
-    console.log("ok1");
-    $.getScript("/assets/bundles/vendorscripts.bundle.js", function (data, textStatus, jqxhr) {
-      console.log( textStatus );
-    });
-    console.log("ok1");
+   
    }
 }

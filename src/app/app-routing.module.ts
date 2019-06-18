@@ -9,6 +9,7 @@ import { AuthGuard } from './auth.guard';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { AdminGuardGuard } from './admin-guard.guard';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { TrainingStaffGuard } from './training-staff.guard';
 
 
 const routes: Routes = [
@@ -19,9 +20,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   
   {
-    path: 'Admin-menu',
+    path: 'Training-staff',
     component: MenuBarComponent,
-    canActivate:[AdminGuardGuard],
+    canActivate:[TrainingStaffGuard],
     children: [
      
       {

@@ -36,4 +36,11 @@ private _loginUrl= "https://educationcentermanagementapi-dev-as.azurewebsites.ne
     }
     return false;
   }
+  trainingStaffLogedIn(){
+    var role = localStorage.getItem('role');
+    if(this.logedIn()&&role=='TrainingStaff'){
+         return true;
+    }
+    return false;
+  }
 }

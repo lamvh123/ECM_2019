@@ -25,6 +25,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       if (this._auth.adminLogedIn) {
         this._router.navigate(['/Admin-menu/profile']);
       }
+      if(this._auth.trainingStaffLogedIn){
+        this._router.navigate(['/Training-staff/profile']);
+      }
     }
   }
   ngAfterViewInit() {
@@ -45,6 +48,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if(this._auth.adminLogedIn){
         // this._router.navigate(['/Admin-menu']);
         this._router.navigate(['/Admin-menu/profile']);
+        }
+        if(this._auth.trainingStaffLogedIn){
+          this._router.navigate(['/Training-staff/profile']);
         }
       },
       err => {

@@ -3,10 +3,13 @@
       <div class="row">
           <div class="col-md-4">
               <div class="profile-img">
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                  <img src="{{user.Avatar}}" alt=""/>
                   <div class="file btn btn-lg btn-primary">
-                      Change Photo
-                      <input type="file" name="file"/>
+<!--                      Change Photo-->
+<!--                      <input type="file" name="file"/>-->
+                    <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
+                                           (on-upload-complete)="onUploadCompleted($event)">
+                    </ngx-uploadcare-widget>
                   </div>
               </div>
           </div>
@@ -30,7 +33,7 @@
               </div>
           </div>
           <div class="col-md-2">
-              <input type="submit" (click)="updateProfile()" class="profile-edit-btn" name="btnAddMore" value="{{buttonLabel}}"/>
+              <input type="submit" (click)="clickUpdate()" class="profile-edit-btn" name="btnAddMore" value="{{buttonLabel}}"/>
           </div>
       </div>
       <div class="row">
@@ -72,7 +75,7 @@
                                       <label>Email</label>
                                   </div>
                                   <div class="col-md-6">
-                                    <p><input [disabled]="!isEditing" style="border:none"  type="text"  [(ngModel)]="user.email" name="email"  required ></p>
+                                    <p><input disabled="true" style="border:none"  type="text"  [(ngModel)]="user.email" name="email"  required ></p>
                                   </div>
                               </div>
                               <div class="row">

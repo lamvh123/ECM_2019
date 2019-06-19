@@ -96,39 +96,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     //this.loadScript('/assets/js/pages/forms/basic-form-elements.js');
   }
 
-  updateProfile() {
+  clickUpdate() {
     if (this.isEditing) {
-      var configUrl = '';
-      if (this.auth.adminLogedIn()) {
-        configUrl = '';
-      } else if (this.auth.trainingStaffLogedIn()) {
-        configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/UpdateProfile';
-      }
-      const body = new HttpParams()
-        .set('Id', this.user.Id)
-        .set('FullName', this.user.name)
-        .set('Avatar', this.user.Avatar)
-        .set('Email', this.user.email)
-        .set('Sex', this.user.Sex)
-        .set('PhoneNumber', this.user.PhoneNumber);
-
-      this.http.post<any>(configUrl, body).subscribe(res => {
-          console.log(res);
-          this.user.name = res.Full_Name;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          console.log(res);
-
-        },
-        error => {
-          if (error instanceof HttpErrorResponse) {
-            if (error.status === 401) {
-
-            }
-          }
-        });
+      this.updateProfile();
       this.isEditing = false;
       this.setButtonLabel();
     } else {
@@ -137,12 +107,52 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
+  updateProfile() {
+    var configUrl = '';
+    if (this.auth.adminLogedIn()) {
+      configUrl = '';
+    } else if (this.auth.trainingStaffLogedIn()) {
+      configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/UpdateProfile';
+    }
+    const body = new HttpParams()
+      .set('Id', this.user.Id)
+      .set('FullName', this.user.name)
+      .set('Avatar', this.user.Avatar)
+      .set('Email', this.user.email)
+      .set('Sex', this.user.Sex)
+      .set('PhoneNumber', this.user.PhoneNumber);
+
+    this.http.post<any>(configUrl, body).subscribe(res => {
+        console.log(res);
+        this.user.name = res.Full_Name;
+        this.user.email = res.Email;
+        this.user.PhoneNumber = res.PhoneNumber;
+        this.user.Sex = res.Sex;
+        this.user.Id = res.Id;
+        console.log(res);
+
+      },
+      error => {
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 401) {
+
+          }
+        }
+      });
+  }
+
   setButtonLabel() {
     if (this.isEditing) {
       this.buttonLabel = 'Save';
     } else {
       this.buttonLabel = 'Edit Profile';
     }
+  }
+
+  onUploadCompleted($event: any) {
+    console.log($event);
+    this.user.Avatar = $event['originalUrl'];
+    this.updateProfile();
   }
 }
 

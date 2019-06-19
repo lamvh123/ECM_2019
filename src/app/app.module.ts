@@ -26,6 +26,7 @@ import { AddCourseComponent } from './add-course/add-course.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { ProgramDetailComponent } from './program-detail/program-detail.component';
 import { ViewSyllabusComponent } from './view-syllabus/view-syllabus.component';
+import { UcWidgetModule } from 'ngx-uploadcare-widget';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ViewSyllabusComponent } from './view-syllabus/view-syllabus.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    UcWidgetModule
   ],
   providers: [AuthService,AuthGuard,AdminGuardGuard,TrainingStaffGuard,{provide:HTTP_INTERCEPTORS,
   useClass:TokenInterceptorService,multi:true}],

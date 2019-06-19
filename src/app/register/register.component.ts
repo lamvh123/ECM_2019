@@ -28,4 +28,11 @@ export class RegisterComponent implements OnInit {
   }
 
 
+  openLoginForm() {
+
+  }
+
+  loginUser() {
+
+  }
 }

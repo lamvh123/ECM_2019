@@ -16,6 +16,7 @@ import { ViewCourseComponent } from './view-course/view-course.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { ProgramDetailComponent } from './program-detail/program-detail.component';
+import { ViewSyllabusComponent } from './view-syllabus/view-syllabus.component';
 
 
 const routes: Routes = [
@@ -58,6 +59,10 @@ const routes: Routes = [
       {
         path: 'course-detail/:id',
         component: CourseDetailComponent
+      },
+      {
+        path: 'syllabus/:id',
+        component: ViewSyllabusComponent
       }]
   },
 

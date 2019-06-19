@@ -77,15 +77,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     body.appendChild(script);
   }
   ngAfterViewInit() {
-    this.loadScript('/assets/bundles/libscripts.bundle.js');
-    this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    this.loadScript('/assets/bundles/morphingsearchscripts.bundle.js');
-    this.loadScript('/assets/plugins/autosize/autosize.js');
-    this.loadScript('/assets/plugins/momentjs/moment.js');
-    this.loadScript('/assets/plugins/dropzone/dropzone.js');
-    this.loadScript('/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js');
-    this.loadScript('/assets/js/pages/forms/basic-form-elements.js');
+    // this.loadScript('/assets/bundles/libscripts.bundle.js');
+    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+    // this.loadScript('/assets/bundles/morphingsearchscripts.bundle.js');
+    // this.loadScript('/assets/plugins/autosize/autosize.js');
+    // this.loadScript('/assets/plugins/momentjs/moment.js');
+    // this.loadScript('/assets/plugins/dropzone/dropzone.js');
+    // this.loadScript('/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js');
+    //this.loadScript('/assets/js/pages/forms/basic-form-elements.js');
   }
   updateProfile() {
     var configUrl = "";

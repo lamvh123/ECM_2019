@@ -9,7 +9,7 @@
   <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
 
     <div class="thumbnail card">
-      <img src="assets/images/course-3.jpg" alt="" class="img-fluid">
+      <img src="assets/images/course-3.jpg" alt="" style="cursor: pointer" (click)="navigateToSyllabus(course)" class="img-fluid">
       <div class="caption  body">
         <h3>{{course.Name}}</h3>
         <p>{{course.StartDate}}</p>

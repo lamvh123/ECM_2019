@@ -22,15 +22,15 @@ export class ViewCourseComponent implements OnInit,AfterViewInit {
     console.log(this.programId)
   }
   ngAfterViewInit() {
-    this.loadScript('/assets/bundles/libscripts.bundle.js');
-    this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    // this.loadScript('/assets/bundles/morphingsearchscripts.bundle.js');
-    this.loadScript('/assets/plugins/autosize/autosize.js');
-    this.loadScript('/assets/plugins/momentjs/moment.js');
-    this.loadScript('/assets/plugins/dropzone/dropzone.js');
-    this.loadScript('/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js');
-    this.loadScript('/assets/js/pages/forms/basic-form-elements.js');
+    // this.loadScript('/assets/bundles/libscripts.bundle.js');
+    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+    // // this.loadScript('/assets/bundles/morphingsearchscripts.bundle.js');
+    // this.loadScript('/assets/plugins/autosize/autosize.js');
+    // this.loadScript('/assets/plugins/momentjs/moment.js');
+    // this.loadScript('/assets/plugins/dropzone/dropzone.js');
+    // // this.loadScript('/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js');
+    // this.loadScript('/assets/js/pages/forms/basic-form-elements.js');
   }
 
   public loadScript(url: string) {
@@ -77,5 +77,9 @@ export class ViewCourseComponent implements OnInit,AfterViewInit {
 
   navigateToViewCourseDetail(course){
     this.router.navigate(['/Training-staff/course-detail',course.Id]);
+  }
+
+  navigateToSyllabus(course){
+    this.router.navigate(['/Training-staff/syllabus',course.Id]);
   }
 }

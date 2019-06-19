@@ -167,7 +167,7 @@
         <div class="menu">
             <ul class="list">
                 <li class="header">MAIN NAVIGATION</li>
-                <li [ngClass]="{'active open': urlName=='/Training-staff/profile'}"><a href="index.html"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+                <li [ngClass]="{'active open': urlName=='/Training-staff/profile'}"><a href="/Training-staff/profile"><i class="zmdi zmdi-home"></i><span>Profile</span></a></li>
                 <li><a href="events.html"><i class="zmdi zmdi-calendar-check"></i><span>Event Management</span> </a></li>
                 <!-- <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account"></i><span>Teacher</span> </a>
                     <ul class="ml-menu">
@@ -186,17 +186,11 @@
                     </ul>
                 </li> -->
                 <li><a href=""><i class="zmdi zmdi-account-outline"></i><span>Student</span> </a></li>
-                <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-graduation-cap"></i><span>Courses</span> </a>
+                
+                <li [ngClass]="{'active open': urlName=='/Training-staff/program'||urlName=='/Training-staff/add-program'}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span>Program</span> </a>
                     <ul class="ml-menu">
-                        <li><a href="courses.html">All Courses</a></li>
-                        <li [ngClass]="{'active': name=='/Admin-menu/profile'}"><a href="add-courses.html">Add Courses</a></li>                       
-                        <li><a href="courses-info.html">Courses Info</a></li>
-                    </ul>
-                </li>
-                <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span>Program</span> </a>
-                    <ul class="ml-menu">
-                        <li><a href="/Training-staff/view-program">All Program</a></li>
-                        <li><a href="/Training-staff/add-program">Add Program</a></li>
+                        <li [ngClass]="{'active': urlName=='/Training-staff/program'}" ><a href="/Training-staff/view-program">All Program</a></li>
+                        <li [ngClass]="{'active': urlName=='/Training-staff/add-program'}"><a href="/Training-staff/add-program">Add Program</a></li>
                     </ul>
                 </li>
                 <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-city-alt"></i><span>Class</span> </a>

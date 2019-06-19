@@ -30,7 +30,7 @@
               </div>
           </div>
           <div class="col-md-2">
-              <input type="submit" (click)="updateProfile()" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+              <input type="submit" (click)="updateProfile()" class="profile-edit-btn" name="btnAddMore" value="{{buttonLabel}}"/>
           </div>
       </div>
       <div class="row">
@@ -64,7 +64,7 @@
                                       <label>Name</label>
                                   </div>
                                   <div class="col-md-6">
-                                    <p><input style="border:none" [(ngModel)]="user.name" type="text"   name="fullname"  required ></p>
+                                    <p><input [disabled]="!isEditing" style="border:none" [(ngModel)]="user.name" type="text"   name="fullname"  required ></p>
                                   </div>
                               </div>
                               <div class="row">
@@ -72,7 +72,7 @@
                                       <label>Email</label>
                                   </div>
                                   <div class="col-md-6">
-                                    <p><input style="border:none"  type="text"  [(ngModel)]="user.email" name="email"  required ></p>
+                                    <p><input [disabled]="!isEditing" style="border:none"  type="text"  [(ngModel)]="user.email" name="email"  required ></p>
                                   </div>
                               </div>
                               <div class="row">
@@ -80,7 +80,7 @@
                                       <label>Phone</label>
                                   </div>
                                   <div class="col-md-6">
-                                    <p><input style="border:none"  type="text"  [(ngModel)]="user.PhoneNumber" name="phone"  required ></p>
+                                    <p><input [disabled]="!isEditing" style="border:none"  type="text"  [(ngModel)]="user.PhoneNumber" name="phone"  required ></p>
                                   </div>
                               </div>
                               <div class="row">
@@ -88,7 +88,13 @@
                                       <label>Sex</label>
                                   </div>
                                   <div class="col-md-6">
-                                    <p><input style="border:none"  type="text"  [(ngModel)]="user.Sex" name="sex"  required ></p>
+                                    <p *ngIf="user.Sex; then male; else female"></p>
+                                      <ng-template  #male>
+                                        <input [disabled]="!isEditing" style="border:none"  type="text"  value="Male" name="sex"  required >
+                                      </ng-template>
+                                      <ng-template  #female>
+                                        <input [disabled]="!isEditing" style="border:none"  type="text"  value="Female" name="sex"  required >
+                                      </ng-template>
                                   </div>
                               </div>
                   </div>

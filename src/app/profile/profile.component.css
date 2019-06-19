@@ -94,3 +94,12 @@ body{
     font-weight: 600;
     color: #0062cc;
 }
+
+input:enabled{
+  background: #e6e3e1;
+  border: 1px solid #ccc;
+}
+input:disabled{
+  background: transparent;
+  border: none;
+}

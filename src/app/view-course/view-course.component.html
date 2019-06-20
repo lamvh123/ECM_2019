@@ -9,14 +9,15 @@
   <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
 
     <div class="thumbnail card">
-      <img src="assets/images/course-3.jpg" alt="" style="cursor: pointer" (click)="navigateToSyllabus(course)" class="img-fluid">
+      <img src="assets/images/course-3.jpg" alt="" style="cursor: pointer" (click)="navigateToViewCourseDetail(course)" class="img-fluid">
       <div class="caption  body">
         <h3>{{course.Name}}</h3>
         <p>{{course.StartDate}}</p>
-        <p>Price: <strong class="col-blush">{{course.Fee}}$</strong> Time: <strong class="col-green">9 months</strong></p>
-        <p>Prof.: Prof. <strong>Will Smith</strong></p>
-        <p>Students: <strong class="col-green">115</strong></p>
-        <button (click)="navigateToViewCourseDetail(course)"class="btn  btn-raised btn-info waves-effect" role="button">Read more</button>
+        <p>Price: <strong class="col-blush">{{course.Fee}}$</strong></p>
+        <!-- Time: <strong class="col-green">9 months</strong> -->
+        <!-- <p>Prof.: Prof. <strong>Will Smith</strong></p>
+        <p>Students: <strong class="col-green">115</strong></p> -->
+        <button (click)="navigateToSyllabus(course)"class="btn  btn-raised btn-info waves-effect" role="button">View Syllabus</button>
       </div>
     </div>
   </div>

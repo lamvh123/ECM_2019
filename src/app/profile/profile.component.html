@@ -1,156 +1,162 @@
 <div class="container emp-profile">
   <form method="post">
-      <div class="row">
-          <div class="col-md-4">
-              <div class="profile-img">
-                  <img src="{{user.Avatar}}" alt=""/>
-                  <div class="file btn btn-lg btn-primary">
-<!--                      Change Photo-->
-<!--                      <input type="file" name="file"/>-->
-                    <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
-                                           (on-upload-complete)="onUploadCompleted($event)">
-                    </ngx-uploadcare-widget>
-                  </div>
-              </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-img">
+          <img src="{{user.Avatar}}" alt=""/>
+          <div class="file btn btn-lg btn-primary">
+            <!--                      Change Photo-->
+            <!--                      <input type="file" name="file"/>-->
+            <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
+                                   (on-upload-complete)="onUploadCompleted($event)">
+            </ngx-uploadcare-widget>
           </div>
-          <div class="col-md-6">
-              <div class="profile-head">
-                          <h5>
-                              {{user.name}}
-                          </h5>
-                          <h6>
-                              Web Developer and Designer
-                          </h6>
-                          <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      <li class="nav-item">
-                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-          <div class="col-md-2">
-              <input type="submit" (click)="clickUpdate()" class="profile-edit-btn" name="btnAddMore" value="{{buttonLabel}}"/>
-          </div>
+        </div>
       </div>
-      <div class="row">
-          <div class="col-md-4">
-              <div class="profile-work">
-                  <p>WORK LINK</p>
-                  <a href="">Website Link</a><br/>
-                  <a href="">Bootsnipp Profile</a><br/>
-                  <a href="">Bootply Profile</a>
-                  <p>SKILLS</p>
-                  <a href="">Web Designer</a><br/>
-                  <a href="">Web Developer</a><br/>
-                  <a href="">WordPress</a><br/>
-                  <a href="">WooCommerce</a><br/>
-                  <a href="">PHP, .Net</a><br/>
-              </div>
-          </div>
-          <div class="col-md-8">
-              <div class="tab-content profile-tab" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>User Id</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>Kshiti123</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Name</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <p><input [disabled]="!isEditing" style="border:none" [(ngModel)]="user.name" type="text"   name="fullname"  required ></p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Email</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <p><input disabled="true" style="border:none"  type="text"  [(ngModel)]="user.email" name="email"  required ></p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Phone</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <p><input [disabled]="!isEditing" style="border:none"  type="text"  [(ngModel)]="user.PhoneNumber" name="phone"  required ></p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Sex</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <p *ngIf="user.Sex; then male; else female"></p>
-                                      <ng-template  #male>
-                                        <input [disabled]="!isEditing" style="border:none"  type="text"  value="Male" name="sex"  required >
-                                      </ng-template>
-                                      <ng-template  #female>
-                                        <input [disabled]="!isEditing" style="border:none"  type="text"  value="Female" name="sex"  required >
-                                      </ng-template>
-                                  </div>
-                              </div>
-                  </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Experience</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>Expert</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Hourly Rate</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>10$/hr</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Total Projects</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>230</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>English Level</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>Expert</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Availability</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>6 months</p>
-                                  </div>
-                              </div>
-                      <div class="row">
-                          <div class="col-md-12">
-                              <label>Your Bio</label><br/>
-                              <p>Your detail description</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
+      <div class="col-md-6">
+        <div class="profile-head">
+          <h5>
+            {{user.name}}
+          </h5>
+          <h6>
+            Web Developer and Designer
+          </h6>
+          <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                 aria-selected="true">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                 aria-selected="false">Timeline</a>
+            </li>
+          </ul>
+        </div>
       </div>
-  </form>           
+      <div class="col-md-2">
+        <input type="submit" (click)="clickUpdate()" class="profile-edit-btn" name="btnAddMore"
+               value="{{buttonLabel}}"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-work">
+          <p>WORK LINK</p>
+          <a href="">Website Link</a><br/>
+          <a href="">Bootsnipp Profile</a><br/>
+          <a href="">Bootply Profile</a>
+          <p>SKILLS</p>
+          <a href="">Web Designer</a><br/>
+          <a href="">Web Developer</a><br/>
+          <a href="">WordPress</a><br/>
+          <a href="">WooCommerce</a><br/>
+          <a href="">PHP, .Net</a><br/>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>User Id</label>
+              </div>
+              <div class="col-md-6">
+                <p>Kshiti123</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Name</label>
+              </div>
+              <div class="col-md-6">
+                <p><input [disabled]="!isEditing" style="border:none" [(ngModel)]="user.name" type="text"
+                          name="fullname" required></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <p><input disabled="true" style="border:none" type="text" [(ngModel)]="user.email" name="email"
+                          required></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Phone</label>
+              </div>
+              <div class="col-md-6">
+                <p><input [disabled]="!isEditing" style="border:none" type="text" [(ngModel)]="user.PhoneNumber"
+                          name="phone" required></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Sex</label>
+              </div>
+              <div class="col-md-6">
+                <p *ngIf="user.Sex; then male; else female"></p>
+                <ng-template #male>
+                  <input [disabled]="!isEditing" style="border:none" type="text" value="Male" name="sex" required>
+                </ng-template>
+                <ng-template #female>
+                  <input [disabled]="!isEditing" style="border:none" type="text" value="Female" name="sex" required>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Experience</label>
+              </div>
+              <div class="col-md-6">
+                <p>Expert</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Hourly Rate</label>
+              </div>
+              <div class="col-md-6">
+                <p>10$/hr</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Total Projects</label>
+              </div>
+              <div class="col-md-6">
+                <p>230</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>English Level</label>
+              </div>
+              <div class="col-md-6">
+                <p>Expert</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Availability</label>
+              </div>
+              <div class="col-md-6">
+                <p>6 months</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Your Bio</label><br/>
+                <p>Your detail description</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

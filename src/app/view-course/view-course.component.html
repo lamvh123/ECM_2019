@@ -1,15 +1,17 @@
 <div class="row">
-    <div class="input-field col s12 required" id="id_email_container">
-        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="courseName" name="coursename" type="text">
-        <button type="submit" name="_submit" class="btn searchBtn" (click)="getCourseWithCenterId()">Submit</button>
-        <button type="Add course" name="addcourse" class="btn searchBtn" (click)="redirectToAddCourse()">Add Course</button>
-    </div>
+  <div class="input-field col s12 required" id="id_email_container">
+    <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="courseName" name="coursename"
+           type="text">
+    <button type="submit" name="_submit" class="btn searchBtn" (click)="getCourseWithCenterId()">Submit</button>
+    <button type="Add course" name="addcourse" class="btn searchBtn" (click)="redirectToAddCourse()">Add Course</button>
+  </div>
 </div>
 <div class="row clearfix" style="width: 1180px">
   <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
 
     <div class="thumbnail card">
-      <img src="assets/images/course-3.jpg" alt="" style="cursor: pointer" (click)="navigateToViewCourseDetail(course)" class="img-fluid">
+      <img src="assets/images/course-3.jpg" alt="" style="cursor: pointer" (click)="navigateToViewCourseDetail(course)"
+           class="img-fluid">
       <div class="caption  body">
         <h3>{{course.Name}}</h3>
         <p>{{course.StartDate}}</p>
@@ -17,7 +19,9 @@
         <!-- Time: <strong class="col-green">9 months</strong> -->
         <!-- <p>Prof.: Prof. <strong>Will Smith</strong></p>
         <p>Students: <strong class="col-green">115</strong></p> -->
-        <button (click)="navigateToSyllabus(course)"class="btn  btn-raised btn-info waves-effect" role="button">View Syllabus</button>
+        <button (click)="navigateToSyllabus(course)" class="btn  btn-raised btn-info waves-effect" role="button">View
+          Syllabus
+        </button>
       </div>
     </div>
   </div>

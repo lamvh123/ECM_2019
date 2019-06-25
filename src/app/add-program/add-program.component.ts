@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { HttpParams, HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {HttpParams, HttpClient} from '@angular/common/http';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-add-program',
@@ -13,14 +13,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AddProgramComponent implements OnInit, AfterViewInit {
 
-  constructor(private _router: Router, private http: HttpClient,private route:ActivatedRoute) { }
+  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  }
+
   courseName = '';
   image = '';
+
   ngOnInit() {
-    
+
   }
+
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -28,29 +32,31 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     script.defer = true;
     body.appendChild(script);
   }
+
   ngAfterViewInit() {
     // this.loadScript('/assets/bundles/libscripts.bundle.js');
     // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
 
   }
+
   //this is add program
   addCourse() {
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddProgram';
-    const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter";
+    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
     this.http.get(url).toPromise().then(data => {
-      const body = new HttpParams()
-        .set('ProgramName', this.courseName)
-        .set('Image', this.image).set('CenterId', data["Id"]);
-      this.http.post<any>(configUrl, body).toPromise().then(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    },
+        const body = new HttpParams()
+          .set('ProgramName', this.courseName)
+          .set('Image', this.image).set('CenterId', data['Id']);
+        this.http.post<any>(configUrl, body).toPromise().then(
+          res => {
+            console.log(res);
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      },
       error => {
         console.log(error);
       });

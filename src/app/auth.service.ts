@@ -1,45 +1,54 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http'
-import { Observable } from 'rxjs';
-import { Router} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-private _registerUrl = "http://localhost:3000/api/register"
-private _loginUrl= "https://educationcentermanagementapi-dev-as.azurewebsites.net/token";
-  constructor(private http:HttpClient,private route:Router) { }
-  registerUser(user){
-    return this.http.post<any>(this._registerUrl,user);
+  private _registerUrl = 'http://localhost:3000/api/register';
+  private _loginUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/token';
+
+  constructor(private http: HttpClient, private route: Router) {
   }
 
-  loginUser(user):Observable<any>{
-    const body = new HttpParams()
-  .set('username', 'systemadmin@gmail.com')
-  .set('password', '@Systemadmin2019')
-  return this.http.post(this._loginUrl, body);
+  registerUser(user) {
+    return this.http.post<any>(this._registerUrl, user);
   }
-  logedIn(){
+
+  loginUser(user): Observable<any> {
+    const body = new HttpParams()
+      .set('username', 'systemadmin@gmail.com')
+      .set('password', '@Systemadmin2019');
+    return this.http.post(this._loginUrl, body);
+  }
+
+  logedIn() {
     return !!localStorage.getItem('token');
   }
-  getToken(){
+
+  getToken() {
     return localStorage.getItem('token');
   }
-  logout(){
+
+  logout() {
     localStorage.removeItem('token');
     this.route.navigate(['/login']);
   }
-  adminLogedIn(){
+
+  adminLogedIn() {
     var role = localStorage.getItem('role');
-    if(this.logedIn()&&role=='SystemAdmin'){
-         return true;
+    if (this.logedIn() && role == 'SystemAdmin') {
+      return true;
     }
     return false;
   }
-  trainingStaffLogedIn(){
+
+  trainingStaffLogedIn() {
     var role = localStorage.getItem('role');
-    if(this.logedIn()&&role=='TrainingStaff'){
-         return true;
+    if (this.logedIn() && role == 'TrainingStaff') {
+      return true;
     }
     return false;
   }

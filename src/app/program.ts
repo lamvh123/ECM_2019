@@ -5,6 +5,7 @@ export class Program {
     Courses:String;
     CreatedAt:String;
     Id:number;
+    Detail: String;
     Image:String;
     Name:String;
     UpdatedAt:String;

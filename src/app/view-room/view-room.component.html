@@ -34,13 +34,24 @@
               </tr>
               </thead>
               <tbody *ngFor="let roomModel of rooms; index as i">
-              <tr>
+              <tr *ngIf="roomModel.Building.$ref==null then thenBlock; else elseBlock;">
+              </tr>
+              <ng-template #thenBlock>
                 <td>{{i}}</td>
                 <td>{{roomModel.RoomNumber}}</td>
                 <td>{{roomModel.Capacity}}</td>
                 <td>{{roomModel.Building.Name}}</td>
                 <td>{{roomModel.Building.Address}}</td>
-              </tr>
+              </ng-template>
+              <ng-template #elseBlock>
+                <td>{{i}}</td>
+                <td>{{roomModel.RoomNumber}}</td>
+                <td>{{roomModel.Capacity}}</td>
+                <td>{{getBuildingById(roomModel.Building.$ref).Name}}</td>
+                <td>{{getBuildingById(roomModel.Building.$ref).Address}}</td>
+<!--                <td>Name nak</td>-->
+<!--                <td>Address nak</td>-->
+              </ng-template>
               </tbody>
             </table>
           </div>

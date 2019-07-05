@@ -6,7 +6,10 @@ import {Building} from '../building';
 @Component({
   selector: 'app-view-building',
   templateUrl: './view-building.component.html',
-  styleUrls: ['./view-building.component.css']
+  styleUrls: ['./view-building.component.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
+    '../css/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css',
+    '../css/assets/css/main.css',
+    '../css/assets/css/themes/all-themes.css']
 })
 export class ViewBuildingComponent implements OnInit {
 

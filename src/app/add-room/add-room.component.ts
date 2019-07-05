@@ -6,7 +6,9 @@ import {Building} from '../building';
 @Component({
   selector: 'app-add-room',
   templateUrl: './add-room.component.html',
-  styleUrls: ['./add-room.component.css']
+  styleUrls: ['./add-room.component.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
+    '../css/assets/css/main.css',
+    '../css/assets/css/themes/all-themes.css']
 })
 export class AddRoomComponent implements OnInit {
 

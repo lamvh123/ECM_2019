@@ -7,14 +7,18 @@ import {Room} from '../room';
 @Component({
   selector: 'app-view-room',
   templateUrl: './view-room.component.html',
-  styleUrls: ['./view-room.component.css']
+  styleUrls: ['./view-room.component.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
+    '../css/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css',
+    '../css/assets/css/main.css',
+    '../css/assets/css/themes/all-themes.css']
 })
 export class ViewRoomComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  rooms: Room[];
+  buildings: Building[] = [];
+  rooms: Room[] = [];
   centerId = {
     Id: '',
     name: ''
@@ -48,20 +52,33 @@ export class ViewRoomComponent implements OnInit {
         console.log(res);
         this.rooms = res;
         console.log(this.rooms);
-
-
-        this.formatRoom();
+        this.getAvailbleBuildings();
       },
       error => {
         console.log(error);
       });
   }
 
-  formatRoom() {
-
+  getAvailbleBuildings() {
+    for (const r of this.rooms) {
+      if (r.Building.$ref == null) {
+        this.buildings.push(r.Building);
+      }
+    }
+    console.log(this.buildings);
   }
 
   ngAfterViewInit() {
+
+  }
+
+  getBuildingById(id: number) {
+    for (const b of this.buildings) {
+      if (b.$id === id) {
+        return b;
+      }
+    }
+    return null;
   }
 
   public loadScript(url: string) {

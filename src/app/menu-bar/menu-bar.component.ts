@@ -68,6 +68,18 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     if (this._router.url == '/Training-staff/add-program') {
       return '/Training-staff/add-program';
     }
+    if (this._router.url == '/Training-staff/view-building') {
+      return '/Training-staff/view-building';
+    }
+    if (this._router.url == '/Training-staff/add-building') {
+      return '/Training-staff/add-building';
+    }
+    if (this._router.url == '/Training-staff/view-room') {
+      return '/Training-staff/view-room';
+    }
+    if (this._router.url == '/Training-staff/add-room') {
+      return '/Training-staff/add-room';
+    }
     return '';
 
   }

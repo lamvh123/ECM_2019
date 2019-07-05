@@ -27,6 +27,10 @@ import {CourseDetailComponent} from './course-detail/course-detail.component';
 import {ProgramDetailComponent} from './program-detail/program-detail.component';
 import {ViewSyllabusComponent} from './view-syllabus/view-syllabus.component';
 import {UcWidgetModule} from 'ngx-uploadcare-widget';
+import { AddBuildingComponent } from './add-building/add-building.component';
+import { ViewBuildingComponent } from './view-building/view-building.component';
+import { ViewRoomComponent } from './view-room/view-room.component';
+import { AddRoomComponent } from './add-room/add-room.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +52,10 @@ import {UcWidgetModule} from 'ngx-uploadcare-widget';
     CourseDetailComponent,
     ProgramDetailComponent,
     ViewSyllabusComponent,
+    AddBuildingComponent,
+    ViewBuildingComponent,
+    ViewRoomComponent,
+    AddRoomComponent,
 
   ],
   imports: [

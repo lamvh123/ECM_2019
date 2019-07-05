@@ -17,6 +17,10 @@ import {AddCourseComponent} from './add-course/add-course.component';
 import {CourseDetailComponent} from './course-detail/course-detail.component';
 import {ProgramDetailComponent} from './program-detail/program-detail.component';
 import {ViewSyllabusComponent} from './view-syllabus/view-syllabus.component';
+import {AddBuildingComponent} from './add-building/add-building.component';
+import {ViewBuildingComponent} from './view-building/view-building.component';
+import {ViewRoomComponent} from './view-room/view-room.component';
+import {AddRoomComponent} from './add-room/add-room.component';
 
 
 const routes: Routes = [
@@ -63,7 +67,24 @@ const routes: Routes = [
       {
         path: 'syllabus/:id',
         component: ViewSyllabusComponent
-      }]
+      },
+      {
+        path: 'view-building',
+        component: ViewBuildingComponent
+      },
+      {
+        path: 'add-building',
+        component: AddBuildingComponent
+      },
+      {
+        path: 'view-room',
+        component: ViewRoomComponent
+      },
+      {
+        path: 'add-room',
+        component: AddRoomComponent
+      }
+    ]
   },
 
   {path: '**', component: ErrorPageComponent}];

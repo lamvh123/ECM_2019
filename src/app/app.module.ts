@@ -27,10 +27,13 @@ import {CourseDetailComponent} from './course-detail/course-detail.component';
 import {ProgramDetailComponent} from './program-detail/program-detail.component';
 import {ViewSyllabusComponent} from './view-syllabus/view-syllabus.component';
 import {UcWidgetModule} from 'ngx-uploadcare-widget';
-import { AddBuildingComponent } from './add-building/add-building.component';
-import { ViewBuildingComponent } from './view-building/view-building.component';
-import { ViewRoomComponent } from './view-room/view-room.component';
-import { AddRoomComponent } from './add-room/add-room.component';
+
+import {AddBuildingComponent} from './add-building/add-building.component';
+import {ViewBuildingComponent} from './view-building/view-building.component';
+import {ViewRoomComponent} from './view-room/view-room.component';
+import {AddRoomComponent} from './add-room/add-room.component';
+
+import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,7 @@ import { AddRoomComponent } from './add-room/add-room.component';
     ViewBuildingComponent,
     ViewRoomComponent,
     AddRoomComponent,
+    AdmissionStaffMenubarComponent,
 
   ],
   imports: [

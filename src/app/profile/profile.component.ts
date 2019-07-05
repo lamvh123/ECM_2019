@@ -28,7 +28,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getProfile();
-    console.log('asd');
     this.setButtonLabel();
   }
 
@@ -48,7 +47,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         error => {
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
-
+              console.log(error.status);
             }
           }
         });
@@ -67,7 +66,27 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           console.log(error);
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
-
+              console.log(error.status);
+            }
+          }
+        });
+    }
+    else if (this.auth.admissionStaffLogedIn()) {
+      const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/Profile';
+      this.http.get<any>(configUrl).subscribe(res => {
+          console.log(res);
+          this.user.name = res.FullName;
+          this.user.email = res.Email;
+          this.user.PhoneNumber = res.PhoneNumber;
+          this.user.Sex = res.Sex;
+          this.user.Id = res.Id;
+          this.user.Avatar = res.Avatar;
+        },
+        error => {
+          console.log(error);
+          if (error instanceof HttpErrorResponse) {
+            if (error.status === 401) {
+              console.log(error.status);
             }
           }
         });

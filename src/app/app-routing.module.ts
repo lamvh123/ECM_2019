@@ -21,6 +21,8 @@ import {AddBuildingComponent} from './add-building/add-building.component';
 import {ViewBuildingComponent} from './view-building/view-building.component';
 import {ViewRoomComponent} from './view-room/view-room.component';
 import {AddRoomComponent} from './add-room/add-room.component';
+import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
+import {AdmissionStaffGuard} from './admission-staff.guard';
 
 
 const routes: Routes = [
@@ -29,7 +31,17 @@ const routes: Routes = [
   {path: 'special', component: SpecialEventsComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-
+  {
+    path: 'Admission-staff',
+    component: AdmissionStaffMenubarComponent,
+    canActivate: [AdmissionStaffGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      }
+    ]
+  },
   {
     path: 'Training-staff',
     component: MenuBarComponent,

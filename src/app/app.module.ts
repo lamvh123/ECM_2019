@@ -27,6 +27,7 @@ import {CourseDetailComponent} from './course-detail/course-detail.component';
 import {ProgramDetailComponent} from './program-detail/program-detail.component';
 import {ViewSyllabusComponent} from './view-syllabus/view-syllabus.component';
 import {UcWidgetModule} from 'ngx-uploadcare-widget';
+import { AdmissionStaffMenubarComponent } from './admission-staff-menubar/admission-staff-menubar.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {UcWidgetModule} from 'ngx-uploadcare-widget';
     CourseDetailComponent,
     ProgramDetailComponent,
     ViewSyllabusComponent,
+    AdmissionStaffMenubarComponent,
 
   ],
   imports: [

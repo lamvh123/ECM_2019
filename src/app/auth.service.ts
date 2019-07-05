@@ -52,4 +52,13 @@ export class AuthService {
     }
     return false;
   }
+
+  admissionStaffLogedIn(){
+    var role = localStorage.getItem('role');
+    console.log(role);
+    if (this.logedIn() && role == 'AdmissionStaff') {
+      return true;
+    }
+    return false;
+  }
 }

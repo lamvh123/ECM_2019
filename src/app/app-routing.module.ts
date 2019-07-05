@@ -17,6 +17,8 @@ import {AddCourseComponent} from './add-course/add-course.component';
 import {CourseDetailComponent} from './course-detail/course-detail.component';
 import {ProgramDetailComponent} from './program-detail/program-detail.component';
 import {ViewSyllabusComponent} from './view-syllabus/view-syllabus.component';
+import { AdmissionStaffMenubarComponent } from './admission-staff-menubar/admission-staff-menubar.component';
+import { AdmissionStaffGuard } from './admission-staff.guard';
 
 
 const routes: Routes = [
@@ -25,7 +27,17 @@ const routes: Routes = [
   {path: 'special', component: SpecialEventsComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-
+  {
+    path:'Admission-staff',
+    component: AdmissionStaffMenubarComponent,
+    canActivate:[AdmissionStaffGuard],
+    children:[
+      {
+        path: 'profile',
+        component: ProfileComponent
+      }
+    ]
+  },
   {
     path: 'Training-staff',
     component: MenuBarComponent,

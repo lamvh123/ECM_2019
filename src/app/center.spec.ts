@@ -1,4 +1,4 @@
-import { Center } from './center';
+import {Center} from './center';
 
 describe('Center', () => {
   it('should create an instance', () => {

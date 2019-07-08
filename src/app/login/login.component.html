@@ -1,4 +1,3 @@
-
 <!-- <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -17,35 +16,38 @@
 <body class="login-page authentication">
 
 <div class="container">
-    
-    <div class="card">
-        <h1 class="title"><span>Swift University</span>Login <span class="msg">Sign in to start your session</span></h1>
-        <div class="col-sm-12">
-            <form id="sign_in" method="POST">
-                <div class="input-group"> <span class="input-group-addon"> <i id="user-icon" class="zmdi zmdi-account"></i> </span>
-                    <div class="form-line">
-                        <input type="text" class="form-control" [(ngModel)]="loginUserData.username" name="username" placeholder="Username" required autofocus>
-                    </div>
-                </div>
-                <div class="input-group"> <span class="input-group-addon"> <i class="zmdi zmdi-lock"></i> </span>
-                    <div class="form-line">
-                        <input type="password" class="form-control" [(ngModel)]="loginUserData.password" name="password" placeholder="Password" required>
-                    </div>
-                </div>
-                <div class="">
-                    <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
-                    <label for="rememberme">Remember Me</label>
-                </div>
-                <div class="text-center">
-                    <button (click)="loginUser()" class="btn btn-raised waves-effect g-bg-blush2" >SIGN IN</button>
-                    <a href="sign-up.html" class="btn btn-raised waves-effect" >SIGN UP</a>
-                </div>
-                <div class="text-center"> <a href="forgot-password.html">Forgot Password?</a></div>
-            </form>
+
+  <div class="card">
+    <h1 class="title"><span>Swift University</span>Login <span class="msg">Sign in to start your session</span></h1>
+    <div class="col-sm-12">
+      <form id="sign_in" method="POST">
+        <div class="input-group"><span class="input-group-addon"> <i id="user-icon"
+                                                                     class="zmdi zmdi-account"></i> </span>
+          <div class="form-line">
+            <input type="text" class="form-control" [(ngModel)]="loginUserData.username" name="username"
+                   placeholder="Username" required autofocus>
+          </div>
         </div>
-    </div>    
+        <div class="input-group"><span class="input-group-addon"> <i class="zmdi zmdi-lock"></i> </span>
+          <div class="form-line">
+            <input type="password" class="form-control" [(ngModel)]="loginUserData.password" name="password"
+                   placeholder="Password" required>
+          </div>
+        </div>
+        <div class="">
+          <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
+          <label for="rememberme">Remember Me</label>
+        </div>
+        <div class="text-center">
+          <button (click)="loginUser()" class="btn btn-raised waves-effect g-bg-blush2">SIGN IN</button>
+          <a href="sign-up.html" class="btn btn-raised waves-effect">SIGN UP</a>
+        </div>
+        <div class="text-center"><a href="forgot-password.html">Forgot Password?</a></div>
+      </form>
+    </div>
+  </div>
 </div>
 <div class="theme-bg"></div>
-<!-- Jquery Core Js --> 
+<!-- Jquery Core Js -->
 
 </body>

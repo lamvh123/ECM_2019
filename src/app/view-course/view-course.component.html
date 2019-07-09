@@ -5,7 +5,6 @@
       <!--      <small class="text-muted">Welcome to Swift application</small>-->
     </div>
 
-
     <div class="row">
       <div class="input-field col s12 required" id="id_email_container">
         <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="courseName" name="coursename"
@@ -16,8 +15,18 @@
       </div>
     </div>
 
-    <div class="row clearfix">
-      <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+<!--    <div class="row">-->
+<!--      <div class="input-field col s12 required" id="id_email_container">-->
+<!--        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="courseName" name="coursename"-->
+<!--               type="text">-->
+<!--        <button type="submit" name="_submit" class="btn searchBtn" (click)="getCourseWithCenterId()">Submit</button>-->
+<!--        <button type="Add course" name="addcourse" class="btn searchBtn" (click)="redirectToAddCourse()">Add Course-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <div class="row clearfix View-all-course-content">
+      <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-4 course-div">
         <div class="thumbnail card">
           <ng-container
             *ngIf="course.Image!=null; then imgNotNull; else imgNull">
@@ -35,7 +44,7 @@
 
           <div class="caption  body">
             <h3>{{course.Name}}</h3>
-<!--            <p>{{course.Description}}</p>-->
+            <!--            <p>{{course.Description}}</p>-->
             <p>Price: <strong class="col-blush">{{course.Fee}}$</strong> for <strong
               class="col-green">{{course.TotalSession}}</strong> sessions</p>
             <!--            <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>-->

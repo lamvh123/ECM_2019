@@ -1,8 +1,14 @@
+:host{
+    width: 100%;
+}
 .course-div{
     margin-top: 30px;
 }
 .row{
     margin-left: 0%;
+}
+.all-program-content{
+    padding-right: 2%;
 }
 .searchBtn{
     margin-left: 20px!important;

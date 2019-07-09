@@ -51,6 +51,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
         console.log(res);
         this.courseName = res.Name;
         this.image = res.Image;
+        this.description = res.Description;
       },
       err => {
         console.log(err);
@@ -81,7 +82,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
-    // this.redirectToAllPrograms();
+    this.redirectToAllPrograms();
   }
 
   onUploadCompleted($event: any) {
@@ -91,6 +92,6 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   }
 
   redirectToAllPrograms() {
-    this._router.navigate(['/Training-staff/program']);
+    this._router.navigate(['/Training-staff/view-program']);
   }
 }

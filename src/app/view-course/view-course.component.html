@@ -1,28 +1,56 @@
-<div class="row">
-  <div class="input-field col s12 required" id="id_email_container">
-    <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="courseName" name="coursename"
-           type="text">
-    <button type="submit" name="_submit" class="btn searchBtn" (click)="getCourseWithCenterId()">Submit</button>
-    <button type="Add course" name="addcourse" class="btn searchBtn" (click)="redirectToAddCourse()">Add Course</button>
-  </div>
-</div>
-<div class="row clearfix" style="width: 1180px">
-  <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-4 course-div">
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
+  <div class="container-fluid">
+    <div class="block-header">
+      <h2>All Courses Of {{programId}}</h2>
+      <!--      <small class="text-muted">Welcome to Swift application</small>-->
+    </div>
 
-    <div class="thumbnail card">
-      <img src="assets/images/course-3.jpg" alt="" style="cursor: pointer" (click)="navigateToViewCourseDetail(course)"
-           class="img-fluid">
-      <div class="caption  body">
-        <h3>{{course.Name}}</h3>
-        <p>{{course.StartDate}}</p>
-        <p>Price: <strong class="col-blush">{{course.Fee}}$</strong></p>
-        <!-- Time: <strong class="col-green">9 months</strong> -->
-        <!-- <p>Prof.: Prof. <strong>Will Smith</strong></p>
-        <p>Students: <strong class="col-green">115</strong></p> -->
-        <button (click)="navigateToSyllabus(course)" class="btn  btn-raised btn-info waves-effect" role="button">View
-          Syllabus
+
+    <div class="row">
+      <div class="input-field col s12 required" id="id_email_container">
+        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="courseName" name="coursename"
+               type="text">
+        <button type="submit" name="_submit" class="btn searchBtn" (click)="getCourseWithCenterId()">Submit</button>
+        <button type="Add course" name="addcourse" class="btn searchBtn" (click)="redirectToAddCourse()">Add Course
         </button>
       </div>
     </div>
+
+    <div class="row clearfix">
+      <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="thumbnail card">
+          <ng-container
+            *ngIf="course.Image!=null; then imgNotNull; else imgNull">
+          </ng-container>
+          <ng-template #imgNotNull>
+            <img src="{{course.Image}}" alt="" class="img-fluid"
+                 (click)="navigateToViewCourseDetail(course)"
+                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+          </ng-template>
+          <ng-template #imgNull>
+            <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"
+                 (click)="navigateToViewCourseDetail(course)"
+                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+          </ng-template>
+
+          <div class="caption  body">
+            <h3>{{course.Name}}</h3>
+<!--            <p>{{course.Description}}</p>-->
+            <p>Price: <strong class="col-blush">{{course.Fee}}$</strong> for <strong
+              class="col-green">{{course.TotalSession}}</strong> sessions</p>
+            <!--            <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>-->
+            <a class="btn  btn-raised btn-info waves-effect" role="button" (click)="navigateToSyllabus(course)">View
+              Syllabus</a>
+          </div>
+        </div>
+      </div>
+
+      <!--      <div class="col-sm-12 text-center">-->
+      <!--        <a href="#" class="btn btn-raised waves-effect g-bg-blush2" role="button">Load more</a>-->
+      <!--      </div>-->
+    </div>
+
   </div>
-</div>
+</section>
+
+<div class="color-bg"></div>

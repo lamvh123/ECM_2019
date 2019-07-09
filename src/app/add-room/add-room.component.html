@@ -40,18 +40,15 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <div class="form-line">
-                    <select [(ngModel)]="selectedName" class="form-control"
-                            (change)="selectedValueChanged($event.target.value)">
-                      <option value=""></option>
-                      <option *ngFor="let building of buildings" [value]="building.Id"
-                              [attr.selected]="building.Id==buildingId?true:false">
-                        {{building.Name}}
-                      </option>
-                    </select>
-                  </div>
+              <div class="col-lg-3 col-md-6 col-md-12">
+                <div class="form-group drop-custum">
+                  <select [(ngModel)]="selectedName" class="form-control show-tick"
+                          (change)="selectedValueChanged($event.target.value)">
+                    <option value="" selected>--- Choose Building ---</option>
+                    <option *ngFor="let building of buildings" [value]="building.Id">
+                      {{building.Name}}
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>

@@ -1,92 +1,107 @@
-<div class="row clearfix" style="width: 1200px">
-  <div class="col-lg-12 col-md-12 col-sm-12">
-    <div class="card">
-      <div class="header">
-        <h2>Course Basic Information
-          <small>Description text here...</small>
-        </h2>
-        <ul class="header-dropdown">
-          <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                  role="button" aria-haspopup="true" aria-expanded="false"><i
-            class="zmdi zmdi-more-vert"></i></a>
-            <ul class="dropdown-menu pull-right">
-              <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-              <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-              <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a>
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <h2>Add Course</h2>
+      <!--      <small class="text-muted">Welcome to Swift application</small>-->
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Course Basic Information
+              <small>Description text here...</small>
+            </h2>
+            <ul class="header-dropdown">
+              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                      role="button" aria-haspopup="true" aria-expanded="false"><i
+                class="zmdi zmdi-more-vert"></i></a>
+                <ul class="dropdown-menu pull-right">
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                </ul>
               </li>
             </ul>
-          </li>
-        </ul>
-      </div>
-      <div class="body">
-        <div class="row clearfix">
+          </div>
+          <div class="body">
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <input type="text" [(ngModel)]="courseModel.Name" class="form-control" placeholder="Name">
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <input type="number" [(ngModel)]="courseModel.TotalSession" class="form-control" placeholder="Total Session">
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <input type="number" [(ngModel)]="courseModel.Fee" class="form-control" placeholder="Course Price">
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-md-12">
+                <div class="form-group drop-custum">
+                  <select class="form-control show-tick"
+                          (change)="selectedValueChanged($event.target.value)">
+                    <option *ngFor="let sub of subjects" [value]="sub.Id"
+                            [selected]="sub.Id==this.courseModel.Subject.Id?true:false">
+                      {{sub.Name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
 
-          <div class="col-sm-12">
-            <div class="form-group">
-              <div class="form-line">
-                <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
+                                       (on-upload-complete)="onUploadCompleted($event)"></ngx-uploadcare-widget>
+                <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                  <img *ngIf="courseModel.Image!=''" src="{{courseModel.Image}}"
+                       [ngStyle]="{'width':'100%', 'height':'100%', 'object-fit': 'cover'}">
+                  <div *ngIf="courseModel.Image==''" class="dz-message">
+                    <h3>Upload image of program</h3>
+                  </div>
+                </form>
+              </div>
+              <!--              <div class="col-lg-4 col-md-12">-->
+              <!--                <div class="form-group drop-custum">-->
+              <!--                  <select class="form-control show-tick">-->
+              <!--                    <option value="">&#45;&#45; Department &#45;&#45;</option>-->
+              <!--                    <option value="10">Male</option>-->
+              <!--                    <option value="20">Female</option>-->
+              <!--                  </select>-->
+              <!--                </div>-->
+              <!--              </div>-->
+              <!--              -->
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <textarea rows="4" class="form-control no-resize" [(ngModel)]="courseModel.Description"
+                              placeholder="Course Description"></textarea>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="form-group">
-              <div class="form-line">
-                <input type="date" [(ngModel)]="StartDate" id="datePicker" class="datepicker form-control"
-                       placeholder="Starts From">
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="form-group">
-              <div class="form-line">
-                <input type="text" class="form-control" placeholder="Course Duration">
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="form-group">
-              <div class="form-line">
-                <input type="number" [(ngModel)]="Fee" class="form-control" placeholder="Course Price">
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="form-group">
-              <div class="form-line">
-                <input type="text" class="form-control" placeholder="Course Incharge">
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <form action="/" id="frmFileUpload" class="dropzone" method="post"
-                  enctype="multipart/form-data">
-              <div class="dz-message">
-                <div class="drag-icon-cph"><i class="material-icons">touch_app</i></div>
-                <h3>Drop files here or click to upload.</h3>
-                <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually
-                  uploaded.)</em>
-              </div>
-              <div class="fallback">
-                <input name="file" type="file" multiple/>
-              </div>
-            </form>
-          </div>
-          <div class="col-sm-12">
-            <div class="form-group">
-              <div class="form-line">
-                                    <textarea rows="4" class="form-control no-resize" [(ngModel)]="Description"
-                                              placeholder="Course Description"></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12">
-            <input (click)="updateCourse()" type="submit" value="Submit"
-                   class="btn btn-raised waves-effect g-bg-blush2">
-            <input value="Cancel" type="submit" class="btn btn-raised btn-default waves-effect">
-          </div>
 
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <button (click)="updateCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Submit
+                </button>
+                <button type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
-</div>
+</section>
+
+<div class="color-bg"></div>

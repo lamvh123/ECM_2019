@@ -1,64 +1,69 @@
-<div class="row clearfix" style="width: 1200px">
-  <div class="col-lg-12 col-md-12 col-sm-12">
-    <div class="card">
-      <div class="header">
-        <h2>Course Basic Information
-          <small>Description text here...</small>
-        </h2>
-        <ul class="header-dropdown">
-          <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                  role="button" aria-haspopup="true" aria-expanded="false"><i
-            class="zmdi zmdi-more-vert"></i></a>
-            <ul class="dropdown-menu pull-right">
-              <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-              <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-              <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a>
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
+  <div class="container-fluid">
+    <div class="block-header">
+      <h2>Add Program</h2>
+      <small class="text-muted">Welcome to Swift application</small>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Course Basic Information
+              <small>Description text here...</small>
+            </h2>
+            <ul class="header-dropdown">
+              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                      role="button" aria-haspopup="true" aria-expanded="false"><i
+                class="zmdi zmdi-more-vert"></i></a>
+                <ul class="dropdown-menu pull-right">
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                </ul>
               </li>
             </ul>
-          </li>
-        </ul>
-      </div>
-      <div class="body">
-        <div class="row clearfix">
-          <form class="needs-validation" style="width: 96%">
-            <div class="col-sm-12">
-              <div class="form-group">
-                <div class="form-line">
-                  <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name" name="coursename"
-                         required>
+          </div>
+          <div class="body">
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name"
+                           name="coursename" required>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12">
-              <form action="/" id="frmFileUpload" class="dropzone" method="post"
-                    enctype="multipart/form-data">
-                <div class="dz-message">
-                  <div class="drag-icon-cph"><i class="material-icons">touch_app</i></div>
-                  <h3>Drop files here or click to upload.</h3>
-                  <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually
-                    uploaded.)</em>
-                </div>
-                <div class="fallback">
-                  <input name="file" type="file" multiple/>
-                </div>
-              </form>
-            </div>
-            <div class="col-sm-12">
-              <div class="form-group">
-                <div class="form-line">
-                                    <textarea rows="4" class="form-control no-resize"
-                                              placeholder="Course Description"></textarea>
+
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
+                                       (on-upload-complete)="onUploadCompleted($event)"></ngx-uploadcare-widget>
+                <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                  <img *ngIf="image!=''" src="{{image}}"
+                       [ngStyle]="{'width':'100%', 'height':'100%', 'object-fit': 'cover'}">
+                  <div *ngIf="image==''" class="dz-message">
+                    <h3>Upload image of program</h3>
+                  </div>
+                </form>
+              </div>
+
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <textarea [(ngModel)]="description" rows="4" class="form-control no-resize"
+                              placeholder="Course Description"></textarea>
+                  </div>
                 </div>
               </div>
+
+              <div class="col-sm-12">
+                <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Submit
+                </button>
+                <button (click)="redirectToAllProgram()" type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
+              </div>
             </div>
-            <div class="col-sm-12">
-              <input (click)="addCourse()" type="submit" value="Submit"
-                     class="btn btn-raised waves-effect g-bg-blush2">
-              <input value="Cancel" type="submit" class="btn btn-raised btn-default waves-effect">
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>

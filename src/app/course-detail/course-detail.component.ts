@@ -1,33 +1,40 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpParams, HttpClient} from '@angular/common/http';
+import {Subject} from '../subject';
 import {Course} from '../course';
+import {Building} from '../building';
 
 
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
-  styleUrls: ['./course-detail.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../css/assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
-    '../css/assets/plugins/waitme/waitMe.css',
-    '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css']
+  styleUrls: ['./course-detail.component.css'
+    , '../css/assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../css/assets/plugins/dropzone/dropzone.css'
+    , '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
+    , '../css/assets/plugins/waitme/waitMe.css'
+    , '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css'
+    , '../css/assets/css/main.css'
+    , '../css/assets/css/themes/all-themes.css']
 })
 export class CourseDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
   }
 
-  courseName = '';
-  Image = '';
-  Fee = '';
-  StartDate;
-  Description = '';
-  courseId;
+  courseModel: Course;
+  courseId = '';
+  subjects: Subject[];
+  centerId = {
+    Id: '',
+    name: ''
+  };
 
   ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('id');
     console.log(this.courseId);
+    this.getSubjectsWithCenterId();
     this.loadCourseById();
   }
 
@@ -52,13 +59,14 @@ export class CourseDetailComponent implements OnInit {
   loadCourseById() {
     const body = new HttpParams().set('courseId', this.courseId);
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCourseById';
-    this.http.get<any>(configUrl, {params: body}).toPromise().then(res => {
+    this.http.get<Course>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
-        this.courseName = res.Name;
-        this.Image = res.Image;
-        this.Fee = res.Fee;
-        this.StartDate = res.StartDate.substring(0, 10);
-        this.Description = res.Description;
+        this.courseModel = res;
+        // this.courseName = res.Name;
+        // this.Image = res.Image;
+        // this.Fee = res.Fee;
+        // this.StartDate = res.StartDate.substring(0, 10);
+        // this.Description = res.Description;
 
       },
       error => {
@@ -67,17 +75,20 @@ export class CourseDetailComponent implements OnInit {
   }
 
   updateCourse() {
+    console.log(this.courseModel);
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/UpdateCourse';
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
+    this.http.get(url).toPromise().then(data => {
         const body = new HttpParams()
-          .set('courseId', this.courseId)
-          .set('CourseName', this.courseName)
-          .set('StartDate', this.StartDate)
-          .set('Image', this.Image)
-          .set('Description', this.Description)
-          .set('Fee', this.Fee)
+          .set('courseId', this.courseModel.Id + '')
+          .set('CourseName', this.courseModel.Name)
+          .set('Image', this.courseModel.Image)
+          .set('SubjectId', this.courseModel.Subject.Id + '')
+          .set('TotalSession', this.courseModel.TotalSession)
+          .set('Description', this.courseModel.Description)
+          .set('Fee', this.courseModel.Fee + '')
           .set('CenterId', data['Id']);
+        console.log(body);
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
@@ -93,4 +104,40 @@ export class CourseDetailComponent implements OnInit {
 
   }
 
+  onUploadCompleted($event: any) {
+    this.courseModel.Image = $event.originalUrl;
+  }
+
+  selectedValueChanged(value: any) {
+    this.courseModel.SubjectId = value;
+  }
+
+  getSubjectsWithCenterId() {
+    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
+    this.http.get(url).toPromise().then((data) => {
+        this.centerId.Id = data['Id'];
+        this.getAllSubjects();
+      },
+      error => {
+        console.log(error);
+      });
+
+  }
+
+  getAllSubjects() {
+
+    const body = new HttpParams()
+      .set('centerId', this.centerId.Id + '')
+      .set('subjectName', '');
+
+    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchSubject';
+    this.http.get<Subject[]>(configUrl, {params: body}).toPromise().then(res => {
+        console.log(res);
+        this.subjects = res;
+        console.log(this.subjects);
+      },
+      error => {
+        console.log(error);
+      });
+  }
 }

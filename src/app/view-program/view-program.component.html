@@ -1,28 +1,52 @@
-<div class="row">
-  <div class="input-field col s12 required" id="id_email_container">
-    <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="programName" name="coursename"
-           type="text">
-    <button type="submit" name="_submit" class="btn searchBtn" (click)="searchProgramByName()">Submit</button>
-  </div>
-</div>
-<div class="row clearfix" style="width: 1190px">
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
+  <div class="container-fluid">
+    <div class="block-header">
+      <h2>All Programs</h2>
+      <!--      <small class="text-muted">Welcome to Swift application</small>-->
+    </div>
 
-  <div *ngFor="let program of programs" class="col-sm-12 col-md-6 col-lg-4 col-xl-4 course-div">
-
-
-    <div class="thumbnail card">
-      <img src="{{program.Image}}" style="cursor: pointer" alt="" class="img-fluid"
-           (click)="navigateToProgramDetail(program)">
-      <div class="caption  body">
-        <h3>{{program.Name}}</h3>
-        <p>Detail: {{program.Detail}}</p>
-        <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>
-        <!-- <p>Prof.: Prof. <strong>Will Smith</strong></p>
-        <p>Students: <strong class="col-green">115</strong></p> -->
-        <button (click)="selectProgram(program)" class="btn  btn-raised btn-info waves-effect" role="button">View
-          Courses
-        </button>
+    <div class="row">
+      <div class="input-field col s12 required" id="id_email_container">
+        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="programName" name="coursename"
+               type="text">
+        <button type="submit" name="_submit" class="btn searchBtn" (click)="searchProgramByName()">Submit</button>
       </div>
     </div>
+
+    <div class="row clearfix">
+      <div *ngFor="let program of programs" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
+        <div class="thumbnail card">
+          <ng-container
+            *ngIf="program.Image!=null; then imgNotNull; else imgNull">
+          </ng-container>
+          <ng-template #imgNotNull>
+            <img src="{{program.Image}}" alt="" class="img-fluid"
+                 (click)="navigateToProgramDetail(program)"
+                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+          </ng-template>
+          <ng-template #imgNull>
+            <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"
+                 (click)="navigateToProgramDetail(program)"
+                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+          </ng-template>
+
+
+          <div class="caption  body">
+            <h3>{{program.Name}}</h3>
+<!--            <p>Detail: {{program.Description}}</p>-->
+            <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>
+            <a class="btn  btn-raised btn-info waves-effect" role="button" (click)="selectProgram(program)">View
+              courses</a>
+          </div>
+        </div>
+      </div>
+
+      <!--      <div class="col-sm-12 text-center">-->
+      <!--        <a href="#" class="btn btn-raised waves-effect g-bg-blush2" role="button">Load more</a>-->
+      <!--      </div>-->
+    </div>
+
   </div>
-</div>
+</section>
+
+<div class="color-bg"></div>

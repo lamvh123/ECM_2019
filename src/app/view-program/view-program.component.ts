@@ -7,8 +7,10 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-view-program',
   templateUrl: './view-program.component.html',
-  styleUrls: ['./view-program.component.css', '../css/assets/css/main.css',
+  styleUrls: ['./view-program.component.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css', '../css/assets/css/main.css',
     '../css/assets/css/themes/all-themes.css']
+  // styleUrls: ['./view-program.component.css', '../css/assets/css/main.css',
+  //   '../css/assets/css/themes/all-themes.css']
 })
 export class ViewProgramComponent implements OnInit, AfterViewInit {
 

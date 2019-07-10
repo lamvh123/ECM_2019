@@ -9,13 +9,13 @@ import {Subject} from '../subject';
   selector: 'app-add-course',
   templateUrl: './add-course.component.html',
   styleUrls: ['./add-course.component.css'
-    , '../css/assets/plugins/bootstrap/css/bootstrap.min.css'
-    , '../css/assets/plugins/dropzone/dropzone.css'
-    , '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
-    , '../css/assets/plugins/waitme/waitMe.css'
-    , '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css'
-    , '../css/assets/css/main.css'
-    , '../css/assets/css/themes/all-themes.css']
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/plugins/dropzone/dropzone.css'
+    , '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
+    , '../../assets/plugins/waitme/waitMe.css'
+    , '../../assets/plugins/bootstrap-select/css/bootstrap-select.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class AddCourseComponent implements OnInit, AfterViewInit {
 
@@ -55,8 +55,8 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/bundles/libscripts.bundle.js');
     // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    this.loadScript('/assets/plugins/momentjs/moment.js');
-    this.loadScript('/assets/js/TrainingDept/addcourse.js');
+    // this.loadScript('/assets/plugins/momentjs/moment.js');
+    // this.loadScript('/assets/js/TrainingDept/addcourse.js');
   }
 
   addCourse() {
@@ -85,7 +85,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
-      this.redirectToViewCourse();
+    this.redirectToViewCourse();
   }
 
 
@@ -126,6 +126,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
         console.log(error);
       });
   }
+
   redirectToViewCourse() {
     this._router.navigate(['/Training-staff/view-course', this.programId]);
   }

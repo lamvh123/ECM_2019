@@ -1,4 +1,4 @@
-<section class="content">
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
   <div class="container-fluid">
     <div class="block-header">
       <h2>Add Course</h2>
@@ -9,7 +9,7 @@
         <div class="card">
           <div class="header">
             <h2>Course Basic Information
-              <small>Description text here...</small>
+<!--              <small>Description text here...</small>-->
             </h2>
             <ul class="header-dropdown">
               <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
@@ -27,22 +27,25 @@
             <div class="row clearfix">
               <div class="col-sm-12">
                 <div class="form-group">
+                  <label for="courseName">Course Name:</label>
                   <div class="form-line">
-                    <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name">
+                    <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name" id="courseName">
                   </div>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="form-group">
+                  <label for="courseTotalSession">Total Session(s):</label>
                   <div class="form-line">
-                    <input type="number" [(ngModel)]="totalSession" class="form-control" placeholder="Total Session">
+                    <input type="number" [(ngModel)]="totalSession" class="form-control" placeholder="Total Session" id="courseTotalSession">
                   </div>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="form-group">
+                  <label for="courseFee">Fee:</label>
                   <div class="form-line">
-                    <input type="number" [(ngModel)]="Fee" class="form-control" placeholder="Course Price">
+                    <input type="number" [(ngModel)]="Fee" class="form-control" placeholder="Course Price" id="courseFee">
                   </div>
                 </div>
               </div>
@@ -56,7 +59,8 @@
 
               <div class="col-lg-3 col-md-6 col-md-12">
                 <div class="form-group drop-custum">
-                  <select class="form-control show-tick"
+                  <label for="courseSubject">Subject:</label>
+                  <select id="courseSubject" class="form-control show-tick"
                           (change)="selectedValueChanged($event.target.value)">
                     <option value="" selected>--- Choose Subject ---</option>
                     <option *ngFor="let sub of subjects" [value]="sub.Id">
@@ -89,9 +93,10 @@
               <!--              -->
               <div class="col-sm-12">
                 <div class="form-group">
+                  <label for="courseDescription">Course Description:</label>
                   <div class="form-line">
                     <textarea rows="4" class="form-control no-resize" [(ngModel)]="Description"
-                              placeholder="Course Description"></textarea>
+                              placeholder="Course Description" id="courseDescription"></textarea>
                   </div>
                 </div>
               </div>
@@ -99,7 +104,7 @@
 
             <div class="row clearfix">
               <div class="col-sm-12">
-                <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Submit
+                <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Course
                 </button>
                 <button (click)="redirectToViewCourse()" type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
               </div>
@@ -113,3 +118,18 @@
 </section>
 
 <div class="color-bg"></div>
+
+<!-- Jquery Core Js -->
+<script src="../../assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+<script src="../../assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+<script src="../../assets/bundles/morphingsearchscripts.bundle.js"></script> <!-- Main top morphing search -->
+
+
+<script src="../../assets/plugins/autosize/autosize.js"></script> <!-- Autosize Plugin Js -->
+<script src="../../assets/plugins/momentjs/moment.js"></script> <!-- Moment Plugin Js -->
+<script src="../../assets/plugins/dropzone/dropzone.js"></script> <!-- Dropzone Plugin Js -->
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+<script src="../../assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+<script src="../../assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
+<script src="../../assets/js/pages/forms/basic-form-elements.js"></script>

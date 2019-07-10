@@ -27,9 +27,10 @@
             <div class="row clearfix">
               <div class="col-sm-12">
                 <div class="form-group">
+                  <label for="programName">Program Name:</label>
                   <div class="form-line">
                     <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name"
-                           name="coursename" required>
+                           name="coursename" id="programName">
                   </div>
                 </div>
               </div>
@@ -48,9 +49,10 @@
 
               <div class="col-sm-12">
                 <div class="form-group">
+                  <label for="programDescription">Description:</label>
                   <div class="form-line">
                     <textarea [(ngModel)]="description" rows="4" class="form-control no-resize"
-                              placeholder="Course Description"></textarea>
+                              placeholder="Course Description" id="programDescription"></textarea>
                   </div>
                 </div>
               </div>

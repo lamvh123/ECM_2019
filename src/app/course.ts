@@ -1,5 +1,6 @@
 import {Center} from './center';
 import {Subject} from './subject';
+import {Program} from './program';
 
 export class Course {
   $id: string;
@@ -11,7 +12,7 @@ export class Course {
   Id: number;
   Image: string;
   Name: string;
-  Program: string;
+  Program: Program;
   TotalSession: string;
   SubjectId: string;
   Subject: Subject;

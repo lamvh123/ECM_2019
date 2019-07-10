@@ -4,23 +4,24 @@ import {HttpParams, HttpClient} from '@angular/common/http';
 import {Subject} from '../subject';
 import {Course} from '../course';
 import {Building} from '../building';
+import {Router} from '@angular/router';
 
 
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
   styleUrls: ['./course-detail.component.css'
-    , '../css/assets/plugins/bootstrap/css/bootstrap.min.css'
-    , '../css/assets/plugins/dropzone/dropzone.css'
-    , '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
-    , '../css/assets/plugins/waitme/waitMe.css'
-    , '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css'
-    , '../css/assets/css/main.css'
-    , '../css/assets/css/themes/all-themes.css']
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/plugins/dropzone/dropzone.css'
+    , '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
+    , '../../assets/plugins/waitme/waitMe.css'
+    , '../../assets/plugins/bootstrap-select/css/bootstrap-select.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class CourseDetailComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private _routers: Router, private route: ActivatedRoute, private http: HttpClient) {
   }
 
   courseModel: Course;
@@ -57,11 +58,15 @@ export class CourseDetailComponent implements OnInit {
   }
 
   loadCourseById() {
-    const body = new HttpParams().set('courseId', this.courseId);
+    const body = new HttpParams().set('courseId', this.courseId)
+      .set('CenterId', this.centerId.Id);
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCourseById';
     this.http.get<Course>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.courseModel = res;
+        if (this.courseModel.Subject != null) {
+          this.courseModel.SubjectId = this.courseModel.Subject.Id + '';
+        }
         // this.courseName = res.Name;
         // this.Image = res.Image;
         // this.Fee = res.Fee;
@@ -83,7 +88,7 @@ export class CourseDetailComponent implements OnInit {
           .set('courseId', this.courseModel.Id + '')
           .set('CourseName', this.courseModel.Name)
           .set('Image', this.courseModel.Image)
-          .set('SubjectId', this.courseModel.Subject.Id + '')
+          .set('SubjectId', this.courseModel.SubjectId + '')
           .set('TotalSession', this.courseModel.TotalSession)
           .set('Description', this.courseModel.Description)
           .set('Fee', this.courseModel.Fee + '')
@@ -101,7 +106,7 @@ export class CourseDetailComponent implements OnInit {
       error => {
         console.log(error);
       });
-
+    this.redirectToProgram(this.courseModel.Program.Id);
   }
 
   onUploadCompleted($event: any) {
@@ -115,6 +120,7 @@ export class CourseDetailComponent implements OnInit {
   getSubjectsWithCenterId() {
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
     this.http.get(url).toPromise().then((data) => {
+        console.log(data);
         this.centerId.Id = data['Id'];
         this.getAllSubjects();
       },
@@ -129,7 +135,7 @@ export class CourseDetailComponent implements OnInit {
     const body = new HttpParams()
       .set('centerId', this.centerId.Id + '')
       .set('subjectName', '');
-
+    console.log(body);
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchSubject';
     this.http.get<Subject[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
@@ -140,4 +146,10 @@ export class CourseDetailComponent implements OnInit {
         console.log(error);
       });
   }
+
+
+  redirectToProgram(programId: number) {
+    this._routers.navigate(['/Training-staff/view-course', programId]);
+  }
+
 }

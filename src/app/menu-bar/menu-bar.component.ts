@@ -6,12 +6,12 @@ import * as $ from 'jquery';
 @Component({
   selector: 'app-menu-bar',
   templateUrl: './menu-bar.component.html',
-  styleUrls: ['./menu-bar.component.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../css/assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
-    '../css/assets/plugins/waitme/waitMe.css',
-    '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css',
-    '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./menu-bar.component.css', '../../assets/plugins/bootstrap/css/bootstrap.min.css',
+    '../../assets/plugins/dropzone/dropzone.css', '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
+    '../../assets/plugins/waitme/waitMe.css',
+    '../../assets/plugins/bootstrap-select/css/bootstrap-select.css',
+    '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
 })
 export class MenuBarComponent implements OnInit, AfterViewInit {
   constructor(private _router: Router, private route: ActivatedRoute) {

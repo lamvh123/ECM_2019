@@ -6,13 +6,13 @@ import {Router, ActivatedRoute} from '@angular/router';
   selector: 'app-add-program',
   templateUrl: './add-program.component.html',
   styleUrls: ['./add-program.component.css'
-    , '../css/assets/plugins/bootstrap/css/bootstrap.min.css'
-    , '../css/assets/plugins/dropzone/dropzone.css'
-    , '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
-    , '../css/assets/plugins/waitme/waitMe.css'
-    , '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css'
-    , '../css/assets/css/main.css'
-    , '../css/assets/css/themes/all-themes.css']
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/plugins/dropzone/dropzone.css'
+    , '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
+    , '../../assets/plugins/waitme/waitMe.css'
+    , '../../assets/plugins/bootstrap-select/css/bootstrap-select.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class AddProgramComponent implements OnInit, AfterViewInit {
 

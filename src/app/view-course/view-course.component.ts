@@ -6,8 +6,10 @@ import {Course} from '../course';
 @Component({
   selector: 'app-view-course',
   templateUrl: './view-course.component.html',
-  styleUrls: ['./view-course.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./view-course.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class ViewCourseComponent implements OnInit, AfterViewInit {
 
@@ -62,7 +64,10 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
 
   getAllCourse() {
 
-    const body = new HttpParams().set('courseName', this.courseName).set('programId', this.programId).set('centerId', this.centerId + '');
+    const body = new HttpParams()
+      .set('courseName', this.courseName.trim().toLowerCase())
+      .set('programId', this.programId)
+      .set('centerId', this.centerId + '');
 
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchCourse';
     this.http.get<Course[]>(configUrl, {params: body}).toPromise().then(res => {

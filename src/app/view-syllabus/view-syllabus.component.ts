@@ -6,8 +6,8 @@ declare function alertSuccess():any;
 @Component({
   selector: 'app-view-syllabus',
   templateUrl: './view-syllabus.component.html',
-  styleUrls: ['./view-syllabus.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./view-syllabus.component.css', '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
 })
 export class ViewSyllabusComponent implements OnInit, AfterViewInit {
 

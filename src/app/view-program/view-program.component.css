@@ -23,6 +23,10 @@
   padding-left: 2px;
 }
 
+:host{
+  width: 100%;
+}
+
 /* fallback */
 @font-face {
   font-family: 'Material Icons';

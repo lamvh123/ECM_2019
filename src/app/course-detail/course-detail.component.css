@@ -1,4 +1,8 @@
 
+:host{
+  width: 100%;
+}
+
 /* fallback */
 @font-face {
   font-family: 'Material Icons';

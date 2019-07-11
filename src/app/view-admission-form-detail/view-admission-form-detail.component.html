@@ -1,91 +1,92 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-    <div class="container-fluid">
-      <div class="block-header">
-        <h2>Add Course</h2>
-        <!--      <small class="text-muted">Welcome to Swift application</small>-->
-      </div>
-      <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="card">
-            <div class="header">
-              <h2>Course Basic Information
-  <!--              <small>Description text here...</small>-->
-              </h2>
-              <ul class="header-dropdown">
-                <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                        role="button" aria-haspopup="true" aria-expanded="false"><i
-                  class="zmdi zmdi-more-vert"></i></a>
-                  <ul class="dropdown-menu pull-right">
-                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-            <div class="body">
-              <div class="row clearfix">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <label for="courseName">Form Name:</label>
-                    <div class="form-line">
-                      <input type="text"  class="form-control" placeholder="Name" id="formName">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                  <div class="form-group">
-                    <label for="courseTotalSession">Date</label>
-                    <div class="form-line">
-                      <input type="date" [(ngModel)]="form.StartDate"  class="form-control" placeholder="Start date" id="startdate">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                  <div class="form-group">
-                    <label for="courseFee">Fee:</label>
-                    <div class="form-line">
-                      <input type="number"  class="form-control" placeholder="Course Price" id="courseFee">
-                    </div>
-                  </div>
-                </div>
-  
-                <div class="col-lg-3 col-md-6 col-md-12">
-                  <div class="form-group drop-custum">
-                    <label for="courseSubject">Location:</label>
-                    <select id="courseSubject" class="form-control show-tick"
-                       [(ngModel)] ="buildingId">
-                      <option [value]="-1">--- Choose location ---</option>
-                      <option *ngFor="let building of listBuilding" [value]="building.Id">
-                        {{building.Name}} - {{building.Address}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-  
-                
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <label for="courseDescription">Course Description:</label>
-                    <div class="form-line">
-                      <textarea rows="4" class="form-control no-resize"
-                                placeholder="Course Description" id="courseDescription"></textarea>
-                    </div>
+  <div class="container-fluid">
+    <div class="block-header">
+      <h2>Add Course</h2>
+      <!--      <small class="text-muted">Welcome to Swift application</small>-->
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Course Basic Information
+              <!--              <small>Description text here...</small>-->
+            </h2>
+            <ul class="header-dropdown">
+              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                      role="button" aria-haspopup="true" aria-expanded="false"><i
+                class="zmdi zmdi-more-vert"></i></a>
+                <ul class="dropdown-menu pull-right">
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="courseName">Form Name:</label>
+                  <div class="form-line">
+                    <input type="text" class="form-control" placeholder="Name" id="formName">
                   </div>
                 </div>
               </div>
-  
-              <div class="row clearfix">
-                <div class="col-sm-12">
-                  <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Course
-                  </button>
-                  <button (click)="redirectToViewCourse()" type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="courseTotalSession">Date</label>
+                  <div class="form-line">
+                    <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"
+                           id="startdate">
+                  </div>
                 </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="courseFee">Fee:</label>
+                  <div class="form-line">
+                    <input type="number" class="form-control" placeholder="Course Price" id="courseFee">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6 col-md-12">
+                <div class="form-group drop-custum">
+                  <label for="courseSubject">Location:</label>
+                  <select id="courseSubject" class="form-control show-tick"
+                          [(ngModel)]="buildingId">
+                    <option [value]="-1">--- Choose location ---</option>
+                    <option *ngFor="let building of listBuilding" [value]="building.Id">
+                      {{building.Name}} - {{building.Address}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="courseDescription">Course Description:</label>
+                  <div class="form-line">
+                      <textarea rows="4" class="form-control no-resize"
+                                placeholder="Course Description" id="courseDescription"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Course
+                </button>
+                <button type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-  
     </div>
-  </section>
+
+  </div>
+</section>

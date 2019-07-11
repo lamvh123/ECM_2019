@@ -1,7 +1,7 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
   <div class="container-fluid">
     <div class="block-header">
-      <h2>All Courses Of {{programId}}</h2>
+      <h2>All Courses Of <font color="#78b83e"><b>{{this.currentProgram.Name}}</b></font></h2>
       <!--      <small class="text-muted">Welcome to Swift application</small>-->
     </div>
 
@@ -26,7 +26,7 @@
     <!--    </div>-->
 
     <div class="row clearfix">
-      <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-4 course-div">
+      <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
         <div class="thumbnail card">
           <ng-container
             *ngIf="course.Image!=null; then imgNotNull; else imgNull">

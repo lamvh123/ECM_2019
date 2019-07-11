@@ -62,10 +62,10 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    this.loadScript('../../assets/bundles/mainscripts.bundle.js');
   }
 
   public loadScript(url: string) {

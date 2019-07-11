@@ -24,8 +24,8 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
     if (this._router.url == '/Admission-staff/profile') {
       return '/Admission-staff/profile';
     }
-    if (this._router.url == '/Training-staff/view-program') {
-      return '/Training-staff/program';
+    if (this._router.url == '/Admission-staff/admissionform') {
+      return '/Admission-staff/admissionform';
     }
     if (this._router.url.includes('/Training-staff/program-detail')) {
       return '/Training-staff/program';

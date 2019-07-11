@@ -23,6 +23,7 @@ import {ViewRoomComponent} from './view-room/view-room.component';
 import {AddRoomComponent} from './add-room/add-room.component';
 import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
 import {AdmissionStaffGuard} from './admission-staff.guard';
+import { ViewAdmissionFormComponent } from './view-admission-form/view-admission-form.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'admissionform',
+        component: ViewAdmissionFormComponent
       }
     ]
   },

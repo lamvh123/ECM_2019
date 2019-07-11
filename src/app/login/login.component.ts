@@ -10,8 +10,8 @@ declare var logInForm: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css', '../css/assets/css/login.css',
+  styleUrls: ['./login.component.css', '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css', '../../assets/css/login.css',
   ]
 })
 export class LoginComponent implements OnInit, AfterViewInit {

@@ -7,9 +7,9 @@ import {Router, ActivatedRoute, Routes} from '@angular/router';
   selector: 'app-add-building',
   templateUrl: './add-building.component.html',
   styleUrls: ['./add-building.component.css',
-    '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+    '../../assets/plugins/bootstrap/css/bootstrap.min.css',
+    '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
   // styleUrls: ['./add-building.component.css', '../css/assets/css/main.css',
   //   '../css/assets/css/themes/all-themes.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
   //   '../css/assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',

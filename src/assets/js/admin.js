@@ -147,7 +147,7 @@ $.AdminSwift.leftSideBar = {
 };
 
 $('.sidebar .menu .list').slimscroll({
-	height:'calc(100vh - 100px)',
+	height:'calc(100vh - 184px)',
 	color: 'rgba(0,0,0,0.2)',
 	size: '4px',
 	alwaysVisible: false,
@@ -296,7 +296,6 @@ $.AdminSwift.select = {
 }
 //==========================================================================================================================
 
-
 /* Browser - Function ======================================================================================================
 *  You can manage browser
 *  
@@ -373,8 +372,6 @@ $(function () {
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 });
 
-//==========================================================================================================================
-
 //header navbar menu add remove class fro z index =================================================================================
 $(window).scroll(function() {    
     var scroll = $(window).scrollTop();
@@ -390,6 +387,19 @@ $(window).scroll(function() {
     } else {
         $(".morphsearch").removeClass("m-top");
     }
+});
+
+
+$(function () {
+    skinChanger();
+    activateNotificationAndTasksScroll();
+
+    setSkinListHeightAndScroll();
+    setSettingListHeightAndScroll();
+    $(window).resize(function () {
+        setSkinListHeightAndScroll();
+        setSettingListHeightAndScroll();
+    });
 });
 
 //Skin changer

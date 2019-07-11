@@ -1,13 +1,13 @@
 import {Center} from './center';
 
 export class Program {
-  $id: String;
-  Courses: String;
-  CreatedAt: String;
+  $id: string;
+  Courses: string;
+  CreatedAt: string;
   Id: number;
-  Detail: String;
-  Image: String;
-  Name: String;
-  UpdatedAt: String;
+  Description: string;
+  Image: string;
+  Name: string;
+  UpdatedAt: string;
   Center: Center;
 }

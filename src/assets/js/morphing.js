@@ -1,8 +1,10 @@
+//==========================================================================================================================
+
 /* Morfing Search  - Function =======================================================================================================
 *  You can manage the Search
 *  
 */
-$(function () {    
+$(function () {
     $('.control').click(function () {
         $('body').addClass('mode-search');
         $('.input-search').focus();
@@ -10,8 +12,10 @@ $(function () {
     $('.icon-close').click(function () {
         $('body').removeClass('mode-search');
     });
+});
 
 // Morph Search =======================================================================
+$(function() {
     var morphSearch = document.getElementById( 'morphsearch' ),
         input = morphSearch.querySelector( 'input.morphsearch-input' ),
         ctrlClose = morphSearch.querySelector( 'span.morphsearch-close' ),
@@ -60,16 +64,5 @@ $(function () {
 
     /***** for demo purposes only: don't allow to submit the form *****/
     morphSearch.querySelector( 'button[type="submit"]' ).addEventListener( 'click', function(ev) { ev.preventDefault(); } );
-
-// End Morph Search =======================================================================
-
-    skinChanger();
-    activateNotificationAndTasksScroll();
-
-    setSkinListHeightAndScroll();
-    setSettingListHeightAndScroll();
-    $(window).resize(function () {
-        setSkinListHeightAndScroll();
-        setSettingListHeightAndScroll();
-    });
 });
+// End Morph Search =======================================================================

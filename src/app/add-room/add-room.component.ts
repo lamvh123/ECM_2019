@@ -6,9 +6,14 @@ import {Building} from '../building';
 @Component({
   selector: 'app-add-room',
   templateUrl: './add-room.component.html',
-  styleUrls: ['./add-room.component.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./add-room.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/plugins/dropzone/dropzone.css'
+    , '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
+    , '../../assets/plugins/waitme/waitMe.css'
+    , '../../assets/plugins/bootstrap-select/css/bootstrap-select.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class AddRoomComponent implements OnInit {
 

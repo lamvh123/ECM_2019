@@ -5,11 +5,14 @@ import {Router, ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-add-program',
   templateUrl: './add-program.component.html',
-  styleUrls: ['./add-program.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../css/assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
-    '../css/assets/plugins/waitme/waitMe.css',
-    '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css']
+  styleUrls: ['./add-program.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/plugins/dropzone/dropzone.css'
+    , '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
+    , '../../assets/plugins/waitme/waitMe.css'
+    , '../../assets/plugins/bootstrap-select/css/bootstrap-select.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class AddProgramComponent implements OnInit, AfterViewInit {
 
@@ -18,6 +21,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
 
   courseName = '';
   image = '';
+  description = '';
 
   ngOnInit() {
 
@@ -47,7 +51,9 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     this.http.get(url).toPromise().then(data => {
         const body = new HttpParams()
           .set('ProgramName', this.courseName)
-          .set('Image', this.image).set('CenterId', data['Id']);
+          .set('Image', this.image)
+          .set('Description', this.description)
+          .set('CenterId', data['Id']);
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
@@ -60,7 +66,14 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
-
+    this.redirectToAllProgram();
   }
 
+  onUploadCompleted($event: any) {
+    this.image = $event.originalUrl;
+  }
+
+  redirectToAllProgram() {
+    this._router.navigate(['/Training-staff/view-program']);
+  }
 }

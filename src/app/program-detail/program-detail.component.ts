@@ -5,11 +5,14 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 @Component({
   selector: 'app-program-detail',
   templateUrl: './program-detail.component.html',
-  styleUrls: ['./program-detail.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../css/assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
-    '../css/assets/plugins/waitme/waitMe.css',
-    '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css']
+  styleUrls: ['./program-detail.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/plugins/dropzone/dropzone.css'
+    , '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
+    , '../../assets/plugins/waitme/waitMe.css'
+    , '../../assets/plugins/bootstrap-select/css/bootstrap-select.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class ProgramDetailComponent implements OnInit, AfterViewInit {
 
@@ -51,6 +54,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
         console.log(res);
         this.courseName = res.Name;
         this.image = res.Image;
+        this.description = res.Description;
       },
       err => {
         console.log(err);
@@ -72,6 +76,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
+            this.redirectToAllPrograms();
           },
           err => {
             console.log(err);
@@ -81,7 +86,6 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
-    // this.redirectToAllPrograms();
   }
 
   onUploadCompleted($event: any) {
@@ -91,6 +95,6 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   }
 
   redirectToAllPrograms() {
-    this._router.navigate(['/Training-staff/program']);
+    this._router.navigate(['/Training-staff/view-program']);
   }
 }

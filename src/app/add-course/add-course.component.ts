@@ -1,16 +1,21 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {HttpParams, HttpClient} from '@angular/common/http';
+import {Building} from '../building';
+import {Subject} from '../subject';
 
 
 @Component({
   selector: 'app-add-course',
   templateUrl: './add-course.component.html',
-  styleUrls: ['./add-course.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../css/assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
-    '../css/assets/plugins/waitme/waitMe.css',
-    '../css/assets/plugins/bootstrap-select/css/bootstrap-select.css']
+  styleUrls: ['./add-course.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/plugins/dropzone/dropzone.css'
+    , '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'
+    , '../../assets/plugins/waitme/waitMe.css'
+    , '../../assets/plugins/bootstrap-select/css/bootstrap-select.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class AddCourseComponent implements OnInit, AfterViewInit {
 
@@ -19,13 +24,21 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
 
   programId;
   courseName = '';
-  Image = '';
+  image = '';
   Fee = '';
-  StartDate;
   Description = '';
+  totalSession: '';
+  subjectId = '';
+  centerId = {
+    Id: '',
+    name: ''
+  };
+  subjects: Subject[];
+
 
   ngOnInit() {
     this.programId = this.route.snapshot.paramMap.get('id');
+    this.getSubjectsWithCenterId();
   }
 
   public loadScript(url: string) {
@@ -42,22 +55,24 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/bundles/libscripts.bundle.js');
     // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    this.loadScript('/assets/plugins/momentjs/moment.js');
-    this.loadScript('/assets/js/TrainingDept/addcourse.js');
+    // this.loadScript('/assets/plugins/momentjs/moment.js');
+    // this.loadScript('/assets/js/TrainingDept/addcourse.js');
   }
 
   addCourse() {
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddCourse';
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
+    this.http.get(url).toPromise().then(data => {
         const body = new HttpParams()
           .set('CourseName', this.courseName)
-          .set('Image', this.Image)
+          .set('Image', this.image)
           .set('Fee', this.Fee)
-          .set('StartDate', this.StartDate)
+          .set('TotalSession', this.totalSession)
           .set('Description', this.Description)
           .set('ProgramId', this.programId)
+          .set('SubjectId', this.subjectId)
           .set('CenterId', data['Id']);
+        console.log(body);
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
@@ -70,8 +85,49 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
-
+    this.redirectToViewCourse();
   }
 
 
+  onUploadCompleted($event: any) {
+    this.image = $event.originalUrl;
+  }
+
+  selectedValueChanged(value: any) {
+    this.subjectId = value;
+    console.log(value);
+  }
+
+  getSubjectsWithCenterId() {
+    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
+    this.http.get(url).toPromise().then((data) => {
+        this.centerId.Id = data['Id'];
+        this.getAllSubjects();
+      },
+      error => {
+        console.log(error);
+      });
+
+  }
+
+  getAllSubjects() {
+
+    const body = new HttpParams()
+      .set('centerId', this.centerId.Id + '')
+      .set('subjectName', '');
+
+    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchSubject';
+    this.http.get<Subject[]>(configUrl, {params: body}).toPromise().then(res => {
+        console.log(res);
+        this.subjects = res;
+        console.log(this.subjects);
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  redirectToViewCourse() {
+    this._router.navigate(['/Training-staff/view-course', this.programId]);
+  }
 }

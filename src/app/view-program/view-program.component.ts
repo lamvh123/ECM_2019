@@ -7,8 +7,12 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-view-program',
   templateUrl: './view-program.component.html',
-  styleUrls: ['./view-program.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./view-program.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
+  // styleUrls: ['./view-program.component.css', '../css/assets/css/main.css',
+  //   '../css/assets/css/themes/all-themes.css']
 })
 export class ViewProgramComponent implements OnInit, AfterViewInit {
 
@@ -58,15 +62,10 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.loadScript('/assets/bundles/libscripts.bundle.js');
-    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    // this.loadScript('/assets/bundles/morphingsearchscripts.bundle.js');
-    // this.loadScript('/assets/plugins/autosize/autosize.js');
-    // this.loadScript('/assets/plugins/momentjs/moment.js');
-    // this.loadScript('/assets/plugins/dropzone/dropzone.js');
-    // // this.loadScript('/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js');
-    // this.loadScript('/assets/js/pages/forms/basic-form-elements.js');
+    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
   }
 
   public loadScript(url: string) {
@@ -86,7 +85,7 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
         this.centerId.Id = data['Id'];
         const body = new HttpParams()
           .set('centerId', this.centerId.Id + '')
-          .set('programName', this.programName);
+          .set('programName', this.programName.trim().toLowerCase());
 
         const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchProgram';
         this.http.get<Program[]>(configUrl, {params: body}).toPromise().then(res => {

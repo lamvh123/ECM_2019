@@ -7,10 +7,10 @@ import {Room} from '../room';
 @Component({
   selector: 'app-view-room',
   templateUrl: './view-room.component.html',
-  styleUrls: ['./view-room.component.css', '../css/assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../css/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css',
-    '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./view-room.component.css', '../../assets/plugins/bootstrap/css/bootstrap.min.css',
+    '../../assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css',
+    '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
 })
 export class ViewRoomComponent implements OnInit {
 

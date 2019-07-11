@@ -1,5 +1,50 @@
-﻿"use strict";
-var realtime = 'on';
+﻿var realtime = 'on';
+function initRealTimeChart() {
+	"use strict";
+    //Real time ==========================================================================================
+    var plot = $.plot('#real_time_chart', [getRandomData()], {
+        series: {
+            shadowSize: 0,
+            color: 'rgb(0, 188, 212)'
+        },
+        grid: {
+            borderColor: '#f3f3f3',
+            borderWidth: 1,
+            tickColor: '#f3f3f3'
+        },
+        lines: {
+            fill: true
+        },
+        yaxis: {
+            min: 0,
+            max: 100
+        },
+        xaxis: {
+            min: 0,
+            max: 100
+        }
+    });
+
+    function updateRealTime() {
+        plot.setData([getRandomData()]);
+        plot.draw();
+
+        var timeout;
+        if (realtime === 'on') {
+            timeout = setTimeout(updateRealTime, 320);
+        } else {
+            clearTimeout(timeout);
+        }
+    }
+
+    updateRealTime();
+
+    $('#realtime').on('change', function () {
+        realtime = this.checked ? 'on' : 'off';
+        updateRealTime();
+    });
+    //====================================================================================================
+}
 
 function initSparkline() {
     $(".sparkline").each(function () {
@@ -55,11 +100,11 @@ function getRandomData() {
     return res;
 }
 
+
 "use strict";
+
 $(function () {
     new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line'));
-    new Chart(document.getElementById("bar_chart").getContext("2d"), getChartJs('bar'));   
-    
 });
 
 function getChartJs(type) {
@@ -72,7 +117,7 @@ function getChartJs(type) {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [{
                     label: "My First dataset",
-                    data: [66, 59, 80, 72, 56, 55, 54],
+                    data: [65, 59, 80, 81, 56, 55, 40],
                     borderColor: 'rgba(0, 188, 212, 0.75)',
                     backgroundColor: 'rgba(0, 188, 212, 0.3)',
                     pointBorderColor: 'rgba(0, 188, 212, 0)',
@@ -80,7 +125,7 @@ function getChartJs(type) {
                     pointBorderWidth: 1
                 }, {
                         label: "My Second dataset",
-                        data: [28, 48, 40, 32, 80, 50, 89],
+                        data: [28, 48, 40, 19, 86, 27, 90],
                         borderColor: 'rgba(233, 30, 99, 0.75)',
                         backgroundColor: 'rgba(233, 30, 99, 0.3)',
                         pointBorderColor: 'rgba(233, 30, 99, 0)',
@@ -94,28 +139,5 @@ function getChartJs(type) {
             }
         }
     }
-    else if (type === 'bar') {
-        config = {
-            type: 'bar',
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
-                    label: "My First dataset",
-                    data: [55, 69, 70, 81, 56, 55, 82],
-                    backgroundColor: '#dd5e89'
-                }, {
-                        label: "My Second dataset",
-                        data: [28, 48, 51, 19, 86, 32, 81],
-                        backgroundColor: '#f7bb97'
-                    }]
-            },
-            options: {
-                responsive: true,
-                legend: false
-            }
-        }
-    }
-   
     return config;
 }
-

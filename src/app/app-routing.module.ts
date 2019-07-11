@@ -23,6 +23,8 @@ import {ViewRoomComponent} from './view-room/view-room.component';
 import {AddRoomComponent} from './add-room/add-room.component';
 import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
 import {AdmissionStaffGuard} from './admission-staff.guard';
+import {AddSlotComponent} from './add-slot/add-slot.component';
+import {ViewSlotComponent} from './view-slot/view-slot.component';
 
 
 const routes: Routes = [
@@ -95,6 +97,14 @@ const routes: Routes = [
       {
         path: 'add-room',
         component: AddRoomComponent
+      },
+      {
+        path: 'view-slot',
+        component: ViewSlotComponent
+      },
+      {
+        path: 'add-slot',
+        component: AddSlotComponent
       }
     ]
   },

@@ -24,6 +24,7 @@ import {AddRoomComponent} from './add-room/add-room.component';
 import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
 import {AdmissionStaffGuard} from './admission-staff.guard';
 import { ViewAdmissionFormComponent } from './view-admission-form/view-admission-form.component';
+import { ViewAdmissionFormDetailComponent } from './view-admission-form-detail/view-admission-form-detail.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,10 @@ const routes: Routes = [
       {
         path: 'admissionform',
         component: ViewAdmissionFormComponent
+      },
+      {
+        path:'form-detail/:id',
+        component:ViewAdmissionFormDetailComponent
       }
     ]
   },

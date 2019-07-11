@@ -4,19 +4,20 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Course } from '../course';
 import { async } from '@angular/core/testing';
+import { AdmissionForm } from '../admission-form';
 
 @Component({
   selector: 'app-view-admission-form',
   templateUrl: './view-admission-form.component.html',
-  styleUrls: ['./view-admission-form.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./view-admission-form.component.css', '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
 })
 export class ViewAdmissionFormComponent implements OnInit {
   center:Center;
   listCourse: Course[];
   courseId = -1;
   isClosed = -1;
-
+  listForm: AdmissionForm[];
   constructor(private http: HttpClient, private router: Router) { }
 
    ngOnInit() {
@@ -48,12 +49,16 @@ export class ViewAdmissionFormComponent implements OnInit {
     var parameters = new HttpParams().set('courseId', this.courseId + '').set('centerId', this.center.Id + '')
       .set('isClosed', this.isClosed + '');
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/SearchAdmissionForm';
-    this.http.get(url, { params: parameters }).toPromise().then((data) => {
+    this.http.get<AdmissionForm[]>(url, { params: parameters }).toPromise().then((data) => {
       console.log(data);
+      this.listForm = data;
     },
       error => {
         console.log(error);
       }
     )
+  }
+  navigateToAdmissionFormDetail(form){
+    this.router.navigate(['/Admission-staff/form-detail', form.Id]);
   }
 }

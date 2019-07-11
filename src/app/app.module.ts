@@ -35,6 +35,7 @@ import {AddRoomComponent} from './add-room/add-room.component';
 
 import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
 import { ViewAdmissionFormComponent } from './view-admission-form/view-admission-form.component';
+import { ViewAdmissionFormDetailComponent } from './view-admission-form-detail/view-admission-form-detail.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { ViewAdmissionFormComponent } from './view-admission-form/view-admission
     AddRoomComponent,
     AdmissionStaffMenubarComponent,
     ViewAdmissionFormComponent,
+    ViewAdmissionFormDetailComponent,
 
   ],
   imports: [

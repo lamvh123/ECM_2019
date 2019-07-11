@@ -1,162 +1,90 @@
-<div class="container emp-profile">
-  <form method="post">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="profile-img">
-          <img src="{{user.Avatar}}" alt=""/>
-          <div class="file btn btn-lg btn-primary">
-            <!--                      Change Photo-->
-            <!--                      <input type="file" name="file"/>-->
-            <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
-                                   (on-upload-complete)="onUploadCompleted($event)">
-            </ngx-uploadcare-widget>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="profile-head">
-          <h5>
-            {{user.name}}
-          </h5>
-          <h6>
-            Web Developer and Designer
-          </h6>
-          <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                 aria-selected="true">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                 aria-selected="false">Timeline</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <input type="submit" (click)="clickUpdate()" class="profile-edit-btn" name="btnAddMore"
-               value="{{buttonLabel}}"/>
-      </div>
+<section class="content profile-page" style="min-height: 850px;" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
+  <div class="container-fluid">
+    <div class="block-header">
+      <h2>Profile</h2>
     </div>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="profile-work">
-          <p>WORK LINK</p>
-          <a href="">Website Link</a><br/>
-          <a href="">Bootsnipp Profile</a><br/>
-          <a href="">Bootply Profile</a>
-          <p>SKILLS</p>
-          <a href="">Web Designer</a><br/>
-          <a href="">Web Developer</a><br/>
-          <a href="">WordPress</a><br/>
-          <a href="">WooCommerce</a><br/>
-          <a href="">PHP, .Net</a><br/>
+    <div class="row clearfix">
+      <div class="col-lg-4 col-md-12 col-sm-12">
+        <div class=" card">
+          <img src="{{user.Avatar}}" class="img-fluid" alt=""
+               style="border-radius: 50%; width: 350px; height: 350px; display: block;  margin-left: auto;  margin-right: auto;  margin-top: 15px;   margin-bottom:15px; alignment: center">
         </div>
+        <ngx-uploadcare-widget *ngIf="isEditing" images-only="true" public-key="929f11755f971c537f17"
+                               (on-upload-complete)="onUploadCompleted($event)"
+                               style="margin-left: auto;  margin-right: auto; margin-top: 15px;   margin-bottom:15px;"></ngx-uploadcare-widget>
       </div>
-      <div class="col-md-8">
-        <div class="tab-content profile-tab" id="myTabContent">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>User Id</label>
-              </div>
-              <div class="col-md-6">
-                <p>Kshiti123</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Name</label>
-              </div>
-              <div class="col-md-6">
-                <p><input [disabled]="!isEditing" style="border:none" [(ngModel)]="user.name" type="text"
-                          name="fullname" required></p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Email</label>
-              </div>
-              <div class="col-md-6">
-                <p><input disabled="true" style="border:none" type="text" [(ngModel)]="user.email" name="email"
-                          required></p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Phone</label>
-              </div>
-              <div class="col-md-6">
-                <p><input [disabled]="!isEditing" style="border:none" type="text" [(ngModel)]="user.PhoneNumber"
-                          name="phone" required></p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Sex</label>
-              </div>
-              <div class="col-md-6">
-                <p *ngIf="user.Sex; then male; else female"></p>
-                <ng-template #male>
-                  <input [disabled]="!isEditing" style="border:none" type="text" value="Male" name="sex" required>
-                </ng-template>
-                <ng-template #female>
-                  <input [disabled]="!isEditing" style="border:none" type="text" value="Female" name="sex" required>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Experience</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Hourly Rate</label>
-              </div>
-              <div class="col-md-6">
-                <p>10$/hr</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Total Projects</label>
-              </div>
-              <div class="col-md-6">
-                <p>230</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>English Level</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Availability</label>
-              </div>
-              <div class="col-md-6">
-                <p>6 months</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label>Your Bio</label><br/>
-                <p>Your detail description</p>
+      <div class="col-lg-8 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="body">
+            <div class="row clearfix">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                  <div class="body">
+                    <div class="demo-masked-input">
+                      <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12"><b>Full Name</b>
+                          <div class="input-group">
+                            <div class="form-line" style="display: flex">
+                              <span class="input-group-addon"> <i class="material-icons">person</i> </span>
+                              <input type="text" class="form-control text" [disabled]="!isEditing"
+                                     [(ngModel)]="user.name" placeholder="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12"><b>Email</b>
+                          <div class="input-group">
+                            <div class="form-line" style="display: flex">
+                              <span class="input-group-addon"> <i class="material-icons">email</i> </span>
+                              <input type="text" class="form-control text" disabled [(ngModel)]="user.email"
+                                     placeholder="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12"><b>Phone Number</b>
+                          <div class="input-group">
+                            <div class="form-line" style="display: flex">
+                              <span class="input-group-addon"> <i class="material-icons">phone</i> </span>
+                              <input type="text" class="form-control text" [disabled]="!isEditing"
+                                     [(ngModel)]="user.PhoneNumber"
+                                     placeholder="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 demo-radio-button"><b>Gender</b>
+                          <div class="input-group"><span class="input-group-addon"> </span>
+                            <input name="sex" type="radio" id="male" class="radio-col-cyan form-check-input"
+                                   [disabled]="!isEditing" [value]="true" [(ngModel)]="user.Sex"
+                                   (change)="changedGender()">
+                            <label for="male">Male</label>
+
+                            <input name="sex" type="radio" id="female" class="radio-col-cyan form-check-input"
+                                   [disabled]="!isEditing" [value]="false" [(ngModel)]="user.Sex">
+                            <label for="female">Female</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" style="display: flex">
+                        <button *ngIf="!isEditing" type="button" class="btn btn-raised bg-teal waves-effect"
+                                (click)="clickUpdate()">
+                          Update Profile
+                        </button>
+                        <button *ngIf="isEditing" type="button" class="btn btn-raised bg-teal waves-effect"
+                                (click)="clickSubmit()">
+                          Submit
+                        </button>
+                        <button *ngIf="isEditing" type="button" class="btn btn-raised bg-teal waves-effect"
+                                (click)="clickCancel()">
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </form>
-</div>
+  </div>
+</section>

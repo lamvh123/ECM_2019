@@ -238,6 +238,15 @@
               Room</a></li>
           </ul>
         </li>
+        <li [ngClass]="{'active open': urlName=='/Training-staff/view-slot'||urlName=='/Training-staff/add-slot'}"><a
+          href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span>Slots</span> </a>
+          <ul class="ml-menu">
+            <li [ngClass]="{'active': urlName=='/Training-staff/view-slot'}"><a href="/Training-staff/view-slot">All
+              Slots</a></li>
+            <li [ngClass]="{'active': urlName=='/Training-staff/add-slot'}"><a href="/Training-staff/add-slot">Add
+              Slot</a></li>
+          </ul>
+        </li>
 <!--        <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-mood"></i><span>Buildings</span> </a>-->
 <!--          <ul class="ml-menu">-->
 <!--            <li><a href="staffs.html">Buildings info</a></li>-->

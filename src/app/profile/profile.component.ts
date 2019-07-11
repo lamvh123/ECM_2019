@@ -9,7 +9,10 @@ declare var $: any;
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class ProfileComponent implements OnInit, AfterViewInit {
   user = {
@@ -20,6 +23,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     Id: '',
     Avatar: ''
   };
+
   isEditing = false;
   buttonLabel = '';
 
@@ -70,8 +74,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
             }
           }
         });
-    }
-    else if (this.auth.admissionStaffLogedIn()) {
+    } else if (this.auth.admissionStaffLogedIn()) {
       const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/Profile';
       this.http.get<any>(configUrl).subscribe(res => {
           console.log(res);
@@ -115,16 +118,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     //this.loadScript('/assets/js/pages/forms/basic-form-elements.js');
   }
 
-  clickUpdate() {
-    if (this.isEditing) {
-      this.updateProfile();
-      this.isEditing = false;
-      this.setButtonLabel();
-    } else {
-      this.isEditing = true;
-      this.setButtonLabel();
-    }
-  }
 
   updateProfile() {
     var configUrl = '';
@@ -171,7 +164,27 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   onUploadCompleted($event: any) {
     console.log($event);
     this.user.Avatar = $event['originalUrl'];
+  }
+
+  clickUpdate() {
+    this.isEditing = true;
+  }
+
+  clickSubmit() {
     this.updateProfile();
+    this.isEditing = false;
+  }
+
+  clickCancel() {
+    this.isEditing = false;
+  }
+
+  changedGender() {
+    if (this.user.Sex == 'true') {
+      this.user.Sex = 'false';
+    } else {
+      this.user.Sex = 'true';
+    }
   }
 }
 

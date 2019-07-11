@@ -62,5 +62,17 @@ export class ViewAdmissionFormDetailComponent implements OnInit {
     this.buildingId = value;
     console.log(value);
   }
+  updateForm(){
+    var para = new HttpParams().set("AdmissionFormId",this.formId)
+    .set("CourseId","")
+    const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/UpdateAdmissionForm";
+    this.http.post<Building[]>(url, para ).toPromise().then(data => {
+      this.listBuilding = data;
+      console.log(this.listBuilding);
+    },
+    error=>{
+      console.log(error);
+    });
+  }
 
 }

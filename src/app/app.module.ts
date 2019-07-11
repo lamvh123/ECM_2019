@@ -34,8 +34,9 @@ import {ViewRoomComponent} from './view-room/view-room.component';
 import {AddRoomComponent} from './add-room/add-room.component';
 
 import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
-import { AddSlotComponent } from './add-slot/add-slot.component';
-import { ViewSlotComponent } from './view-slot/view-slot.component';
+import {AddSlotComponent} from './add-slot/add-slot.component';
+import {ViewSlotComponent} from './view-slot/view-slot.component';
+import {ViewAdmissionFormComponent} from './view-admission-form/view-admission-form.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { ViewSlotComponent } from './view-slot/view-slot.component';
     AdmissionStaffMenubarComponent,
     AddSlotComponent,
     ViewSlotComponent,
+    ViewAdmissionFormComponent,
 
   ],
   imports: [

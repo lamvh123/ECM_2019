@@ -25,6 +25,7 @@ import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admissio
 import {AdmissionStaffGuard} from './admission-staff.guard';
 import {AddSlotComponent} from './add-slot/add-slot.component';
 import {ViewSlotComponent} from './view-slot/view-slot.component';
+import {ViewAdmissionFormComponent} from './view-admission-form/view-admission-form.component';
 
 
 const routes: Routes = [
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'admissionform',
+        component: ViewAdmissionFormComponent
       }
     ]
   },

@@ -23,7 +23,7 @@
   padding-left: 2px;
 }
 
-:host{
+:host {
   width: 100%;
 }
 
@@ -49,5 +49,18 @@
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+.btn-group-align {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-group-align div {
+  display: inline;
+}
+
+.btn-group-align div:last-child {
+  margin-left: auto;
 }
 

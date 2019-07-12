@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Building} from '../building';
@@ -11,7 +11,7 @@ import {Building} from '../building';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class ViewBuildingComponent implements OnInit {
+export class ViewBuildingComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -57,6 +57,10 @@ export class ViewBuildingComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    this.loadScript('../../assets/bundles/mainscripts.bundle.js');
   }
 
   public loadScript(url: string) {

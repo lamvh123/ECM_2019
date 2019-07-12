@@ -43,8 +43,12 @@
             <h3>{{program.Name}}</h3>
             <!--            <p>Detail: {{program.Description}}</p>-->
             <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>
-            <a class="btn  btn-raised btn-info waves-effect" role="button" (click)="selectProgram(program)">View
-              courses</a>
+            <div class="btn-group-align">
+              <div><a class="btn  btn-raised btn-info waves-effect" role="button"
+                      (click)="navigateToProgramDetail(program)">View detail</a></div>
+              <div><a class="btn  btn-raised btn-info waves-effect" role="button" (click)="selectProgram(program)">View
+                courses</a></div>
+            </div>
           </div>
         </div>
       </div>
@@ -59,9 +63,3 @@
 
 <div class="color-bg"></div>
 
-
-<script src="../../assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
-<script src="../../assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
-<script src="../../assets/bundles/morphingsearchscripts.bundle.js"></script> <!-- Main top morphing search -->
-
-<script src="../../assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->

@@ -1,12 +1,14 @@
 <div class="row">
   <div class="input-field col s12 required col-lg-4 col-xl-4" id="id_email_container">
-    <input placeholder="Search..."  maxlength="254"
-      type="text">
-    <button type="submit" name="_submit" (click)="getAdmissionForm()" class="btn searchBtn" >Submit</button>
+    <input placeholder="Search..." maxlength="254"
+           type="text">
+    <button type="submit" name="_submit" (click)="getAdmissionForm()" class="btn searchBtn">Submit</button>
   </div>
+
   <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 10px" >
     
     <select [(ngModel)]="courseId" class="form-control" id="list-course">
+
       <option [value]="-1">All</option>
       <option *ngFor="let course of listCourse; let i = index" [value]="course.Id">
         {{course.Name}}
@@ -16,18 +18,20 @@
 </div>
 <div class="row clearfix all-program-content">
 
-  <div  *ngFor="let form of listForm" class="col-sm-12 col-md-6 col-lg-4 col-xl-4 course-div">
+  <div *ngFor="let form of listForm" class="col-sm-12 col-md-6 col-lg-4 col-xl-4 course-div">
 
 
     <div class="thumbnail card">
-      <img src="{{form.Course.Image}}" style="cursor: pointer" alt="" class="img-fluid" (click)="navigateToProgramDetail(program)">
+      <img src="{{form.Course.Image}}" style="cursor: pointer" alt="" class="img-fluid"
+           (click)="navigateToAdmissionFormDetail(form)">
       <div class="caption  body">
         <h3>{{form.Course.Name}}</h3>
         <p></p>
         Time: <strong class="col-green">{{form.StartDate}}</strong>
         <!-- <p>Prof.: Prof. <strong>Will Smith</strong></p>
         <p>Students: <strong class="col-green">115</strong></p> -->
-        <button class="btn  btn-raised btn-info waves-effect" (click)="navigateToAdmissionFormDetail(form)" role="button">View
+        <button class="btn  btn-raised btn-info waves-effect" (click)="navigateToAdmissionFormDetail(form)"
+                role="button">View
           Form detail
         </button>
       </div>

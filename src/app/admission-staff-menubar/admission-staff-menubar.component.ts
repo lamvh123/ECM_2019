@@ -60,6 +60,7 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit() {
+
     
      this.loadScript('/assets/bundles/libscripts.bundle.js');
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
@@ -70,6 +71,7 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
     // this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js');
     //   this.loadScript('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js');
     //    this.loadScript('https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/js/bootstrap-select.min.js');
+
 
   }
 

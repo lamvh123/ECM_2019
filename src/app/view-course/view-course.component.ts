@@ -2,6 +2,7 @@ import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Course} from '../course';
+import {Program} from '../program';
 
 @Component({
   selector: 'app-view-course',
@@ -20,23 +21,20 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
   programId;
   courseName = '';
   ListOfCourse: Course[];
+  currentProgram: Program;
 
   ngOnInit() {
     this.programId = this.route.snapshot.paramMap.get('id');
+    this.loadProgramById(this.programId);
     this.getCourseWithCenterId();
     console.log(this.programId);
   }
 
   ngAfterViewInit() {
-    // this.loadScript('/assets/bundles/libscripts.bundle.js');
-    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    // // this.loadScript('/assets/bundles/morphingsearchscripts.bundle.js');
-    // this.loadScript('/assets/plugins/autosize/autosize.js');
-    // this.loadScript('/assets/plugins/momentjs/moment.js');
-    // this.loadScript('/assets/plugins/dropzone/dropzone.js');
-    // // this.loadScript('/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js');
-    // this.loadScript('/assets/js/pages/forms/basic-form-elements.js');
+    this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    this.loadScript('../../assets/bundles/mainscripts.bundle.js');
   }
 
   public loadScript(url: string) {
@@ -47,6 +45,19 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
     script.async = false;
     script.defer = true;
     body.appendChild(script);
+  }
+
+  loadProgramById(pId: number) {
+    const body = new HttpParams().set('programId', this.programId);
+    this.http.get<Program>('https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetProgramById', {params: body}).toPromise().then(
+      res => {
+        console.log(res);
+        this.currentProgram = res;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   getCourseWithCenterId() {

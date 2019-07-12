@@ -1,0 +1,6 @@
+#courseSubject,#isClose{
+    -webkit-appearance: menulist;
+}
+:host{
+    width: 100%;
+}

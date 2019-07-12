@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule,NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -41,7 +41,9 @@ import { ViewAdmissionFormDetailComponent } from './view-admission-form-detail/v
 import {AddSlotComponent} from './add-slot/add-slot.component';
 import {ViewSlotComponent} from './view-slot/view-slot.component';
 
-
+import { DatePipe } from '@angular/common';
+import { AddNewFormComponent } from './add-new-form/add-new-form.component'
+import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,7 @@ import {ViewSlotComponent} from './view-slot/view-slot.component';
     ViewSlotComponent,
     ViewAdmissionFormComponent,
     ViewAdmissionFormDetailComponent,
+    AddNewFormComponent,
 
   ],
   imports: [
@@ -79,12 +82,13 @@ import {ViewSlotComponent} from './view-slot/view-slot.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    UcWidgetModule
+    UcWidgetModule,
+    NgSelect2Module
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService, multi: true
-  }],
+  },DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

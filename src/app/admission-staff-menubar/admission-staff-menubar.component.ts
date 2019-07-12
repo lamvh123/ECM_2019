@@ -18,6 +18,7 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
   ngOnInit() {
     this.urlName = this.className();
     console.log(this.urlName);
+    
   }
 
   className(): String {
@@ -27,8 +28,8 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
     if (this._router.url == '/Admission-staff/admissionform') {
       return '/Admission-staff/admissionform';
     }
-    if (this._router.url.includes('/Training-staff/program-detail')) {
-      return '/Training-staff/program';
+    if (this._router.url.includes('/Admission-staff/form-detail')) {
+      return '/Admission-staff/form-detail';
     }
     if (this._router.url.includes('/Training-staff/view-course')) {
       return '/Training-staff/program';
@@ -59,10 +60,17 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.loadScript('/assets/bundles/libscripts.bundle.js');
+    
+     this.loadScript('/assets/bundles/libscripts.bundle.js');
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
+    this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js');
+    // this.loadScript('/assets/js/initSelect2.js')
+    // this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js');
+    //   this.loadScript('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js');
+    //    this.loadScript('https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/js/bootstrap-select.min.js');
+
   }
 
 }

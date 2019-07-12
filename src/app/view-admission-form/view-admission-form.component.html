@@ -4,9 +4,9 @@
       type="text">
     <button type="submit" name="_submit" (click)="getAdmissionForm()" class="btn searchBtn" >Submit</button>
   </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" >
+  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 10px" >
     
-    <select [(ngModel)]="courseId" class="form-control">
+    <select [(ngModel)]="courseId" class="form-control" id="list-course">
       <option [value]="-1">All</option>
       <option *ngFor="let course of listCourse; let i = index" [value]="course.Id">
         {{course.Name}}

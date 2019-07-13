@@ -15,9 +15,12 @@ import { AdmissionForm } from '../admission-form';
 export class ViewAdmissionFormComponent implements OnInit {
   center:Center;
   listCourse: Course[];
-  courseId = -1;
+  courseId ;
   isClosed = -1;
   listForm: AdmissionForm[];
+  isClose;
+  startDate;
+  boolArr:string[] = ['true','false'];
   constructor(private http: HttpClient, private router: Router) { }
 
    ngOnInit() {
@@ -27,7 +30,6 @@ export class ViewAdmissionFormComponent implements OnInit {
   getInitData() {
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetCenter';
     this.http.get(url).toPromise().then((data) => {
-      console.log(data['Id']);
       this.center.Id = data['Id'];
       const getAllCourseUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllCourse';
       var para = new HttpParams().set('centerId', this.center.Id + '');
@@ -46,7 +48,18 @@ export class ViewAdmissionFormComponent implements OnInit {
       });
   }
   getAdmissionForm() {
-    var parameters = new HttpParams().set('courseId', this.courseId + '').set('centerId', this.center.Id + '')
+    if(this.isClose==null){
+      this.isClosed = -1;
+    }
+    else{
+      if(this.isClose=='false'){
+        this.isClosed = 0;
+      }
+      else if(this.isClose=='true'){
+        this.isClosed = 1;
+      }
+    }
+    var parameters = new HttpParams().set('courseId', this.courseId==null?'-1' : this.courseId+'').set('centerId', this.center.Id + '')
       .set('isClosed', this.isClosed + '');
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/SearchAdmissionForm';
     this.http.get<AdmissionForm[]>(url, { params: parameters }).toPromise().then((data) => {

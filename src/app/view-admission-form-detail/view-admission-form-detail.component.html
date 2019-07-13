@@ -12,8 +12,8 @@
               <!--              <small>Description text here...</small>-->
             </h2>
             <ul class="header-dropdown">
-              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i
-                class="zmdi zmdi-more-vert"></i></a>
+              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                  role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
 
                 <ul class="dropdown-menu pull-right">
                   <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
@@ -43,6 +43,14 @@
                   </div>
                 </div>
               </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="Link">Google Link</label>
+                  <div class="form-line">
+                    <input type="text" [(ngModel)]="form.GoogleFormLink" class="form-control" placeholder="Link" id="Link" />
+                  </div>
+                </div>
+              </div>
               <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="courseTotalSession">Date</label>
@@ -54,29 +62,20 @@
               </div>
 
               <div class="col-lg-4 col-md-6 col-md-12">
-                <div class="form-group drop-custum" style="padding-top: 2px;">
+                <div style="padding-top: 19px;">
                   <label for="courseSubject">Location:</label>
-                  <!-- <ng-select2 [data]="listBuildingOptions"
-                  bindLabel="text"
-                  bindValue="id" placeholder="placeholder" width="300" exampleData>
-                  </ng-select2> -->
-                  <!-- <select select2 class="form-control" id="favouriteValue" [(ngModel)]="buildingId">
-                    <option *ngFor="let building of listBuilding" [ngValue]="building.Id">{{building.Name}}</option>
-                  </select> -->
-                  <ng-select2 [data]="exampleData" placeholder="No city selected" bindLabel="text"
-                  bindValue="id" [(ngModel)]="buildingId">
-                  </ng-select2>
-                  {{buildingId}}
-                  <!-- <mdb-select [options]="listBuildingOptions" placeholder="Choose your option" label="Example label"></mdb-select> -->
+                  <ng-select [items]="listBuilding" bindLabel="Name" bindValue="Id" placeholder="Select building"
+                    [(ngModel)]="selectedBuilding">
+                  </ng-select>     
                 </div>
               </div>
+
               <div class="col-lg-4 col-md-6 col-md-12">
-                <div class="form-group drop-custum" style="padding-top: 2px;">
+                <div  style="padding-top: 19px;">
                   <label for="isClose">Closed:</label>
-                  <select id="isClose" class="form-control" name="isClose" [(ngModel)]="isClose">
-                    <option [value]="true">true</option>
-                    <option [value]="false">false</option>
-                  </select>
+                  <ng-select [items]="boolArr" 
+                    [(ngModel)]="isClose">
+                  </ng-select> 
                 </div>
 
               </div>
@@ -98,4 +97,3 @@
   </div>
 
 </section>
-

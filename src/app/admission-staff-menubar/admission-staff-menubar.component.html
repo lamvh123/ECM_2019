@@ -184,7 +184,7 @@
       <div class="menu">
         <ul class="list">
           <li class="header">MAIN NAVIGATION</li>
-          <li [ngClass]="{'active open': urlName=='/Admission-staff/profile'}"><a href="/Training-staff/profile"><i
+          <li [ngClass]="{'active open': urlName=='/Admission-staff/profile'}"><a href="/Admission-staff/profile"><i
             class="zmdi zmdi-home"></i><span>Profile</span></a></li>
           <li><a href="events.html"><i class="zmdi zmdi-calendar-check"></i><span>Event Management</span> </a></li>
           <!-- <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account"></i><span>Teacher</span> </a>
@@ -205,12 +205,12 @@
           </li> -->
           <li><a href=""><i class="zmdi zmdi-account-outline"></i><span>Student</span> </a></li>
   
-          <li [ngClass]="{'active open': urlName=='/Admission-staff/admissionform'||urlName=='/Admission-staff/form-detail'}"><a
+          <li [ngClass]="{'active open': urlName=='/Admission-staff/admissionform'||urlName=='/Admission-staff/form-detail'||urlName=='/Admission-staff/addForm'}"><a
             href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span>Admission Form</span> </a>
             <ul class="ml-menu">
               <li [ngClass]="{'active': urlName=='/Admission-staff/admissionform'||urlName=='/Admission-staff/form-detail'}"><a href="/Admission-staff/admissionform">
                 View all form</a></li>
-              <li [ngClass]="{'active': urlName=='/Admission-staff/asd'}"><a href="/Admission-staff/admissionform">Add new
+              <li [ngClass]="{'active': urlName=='/Admission-staff/addForm'}"><a href="/Admission-staff/addForm">Add new
                 form</a></li>
             </ul>
           </li>

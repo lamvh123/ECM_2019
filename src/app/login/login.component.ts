@@ -1,7 +1,7 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {AuthService} from '../auth.service';
-import {Router} from '@angular/router';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 declare var jquery: any;
 declare var $: any;
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   };
 
   constructor(private _auth: AuthService,
-              private _router: Router, private http: HttpClient) {
+    private _router: Router, private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -44,13 +44,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.loadScript('../../assets/bundles/libscripts.bundle.js');
-    this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-    this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement> document.body;
+    const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;

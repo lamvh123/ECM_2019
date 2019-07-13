@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-redirect',
@@ -8,17 +8,18 @@ import {Router} from '@angular/router';
   styleUrls: ['./redirect.component.css']
 })
 export class RedirectComponent implements OnInit {
-
-  constructor(private auth: AuthService, private _router: Router) {
+  param;
+  url;
+  constructor(private auth: AuthService, private _router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.url = this.route.snapshot.paramMap.get('url');
+    this.param = this.route.snapshot.paramMap.get('param');
     if (!this.auth.logedIn) {
       this._router.navigate(['/login']);
     } else {
-      if (this.auth.adminLogedIn) {
-        this._router.navigate(['/Admin-menu/profile']);
-      }
+      this._router.navigate([this.url, this.param]);
     }
   }
 

@@ -11,6 +11,7 @@ export class AdmissionForm {
     Name:string;
     StartDate:string;
     program:Program;
+    GoogleFormLink:string;
     constructor(){
         this.Building = new Building();
         this.Course = new Course();

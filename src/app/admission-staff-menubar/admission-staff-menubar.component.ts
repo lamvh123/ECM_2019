@@ -5,20 +5,26 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'app-admission-staff-menubar',
   templateUrl: './admission-staff-menubar.component.html',
   styleUrls: ['./admission-staff-menubar.component.css', '../../assets/plugins/bootstrap/css/bootstrap.min.css',
-  '../../assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
-  '../../assets/plugins/waitme/waitMe.css',
-  '../../assets/plugins/bootstrap-select/css/bootstrap-select.css',
-  '../../assets/css/main.css',
-  '../../assets/css/themes/all-themes.css']
+    '../../assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
+    '../../assets/plugins/waitme/waitMe.css',
+    '../../assets/plugins/bootstrap-select/css/bootstrap-select.css',
+    '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
 })
-export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
+export class AdmissionStaffMenubarComponent implements OnInit, AfterViewInit {
   urlName;
-  constructor(private _router: Router, private route: ActivatedRoute) { }
+  constructor(private _router: Router, private route: ActivatedRoute) {
+    this.route.params.subscribe((data) => {
+      this.urlName = this.className();
+      console.log(this.urlName);
+
+    } )
+  }
 
   ngOnInit() {
-    this.urlName = this.className();
-    console.log(this.urlName);
-    
+    // this.urlName = this.className();
+    //console.log(this.urlName);
+
   }
 
   className(): String {
@@ -31,8 +37,8 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
     if (this._router.url.includes('/Admission-staff/form-detail')) {
       return '/Admission-staff/form-detail';
     }
-    if (this._router.url.includes('/Training-staff/view-course')) {
-      return '/Training-staff/program';
+    if (this._router.url.includes('/Admission-staff/addForm')) {
+      return '/Admission-staff/addForm';
     }
     if (this._router.url.includes('/Training-staff/add-course')) {
       return '/Training-staff/program';
@@ -50,7 +56,7 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
 
   }
   public loadScript(url: string) {
-    const body = <HTMLDivElement> document.body;
+    const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -61,12 +67,12 @@ export class AdmissionStaffMenubarComponent implements OnInit,AfterViewInit {
 
   ngAfterViewInit() {
 
-    
-     this.loadScript('/assets/bundles/libscripts.bundle.js');
+
+    this.loadScript('/assets/bundles/libscripts.bundle.js');
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
-    this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js');
+    // this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js');
     // this.loadScript('/assets/js/initSelect2.js')
     // this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js');
     //   this.loadScript('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js');

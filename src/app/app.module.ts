@@ -43,7 +43,8 @@ import {ViewSlotComponent} from './view-slot/view-slot.component';
 
 import { DatePipe } from '@angular/common';
 import { AddNewFormComponent } from './add-new-form/add-new-form.component'
-import { NgSelect2Module } from 'ng-select2';
+
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { NgSelect2Module } from 'ng-select2';
     FormsModule,
     HttpClientModule,
     UcWidgetModule,
-    NgSelect2Module
+    NgSelectModule
+    
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

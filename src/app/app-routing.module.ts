@@ -28,6 +28,8 @@ import { ViewAdmissionFormComponent } from './view-admission-form/view-admission
 import { ViewAdmissionFormDetailComponent } from './view-admission-form-detail/view-admission-form-detail.component';
 import { ViewSlotComponent } from './view-slot/view-slot.component';
 import { AddSlotComponent } from './add-slot/add-slot.component';
+import { AddNewFormComponent } from './add-new-form/add-new-form.component';
+import { RedirectComponent } from './redirect/redirect.component';
 
 
 
@@ -39,6 +41,7 @@ const routes: Routes = [
   {path: 'special', component: SpecialEventsComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path:'redirect/:url/:param',component:RedirectComponent},
   {
     path: 'Admission-staff',
     component: AdmissionStaffMenubarComponent,
@@ -55,6 +58,10 @@ const routes: Routes = [
       {
         path:'form-detail/:id',
         component:ViewAdmissionFormDetailComponent
+      },
+      {
+        path:'addForm',
+        component:AddNewFormComponent
       }
     ]
   },

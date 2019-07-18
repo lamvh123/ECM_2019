@@ -10,6 +10,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angul
 import { Observable } from 'rxjs';
 import { Slot } from '../slot';
 import { forEach } from '@angular/router/src/utils/collection';
+
 @Component({
   selector: 'app-view-admission-form-detail',
   templateUrl: './view-admission-form-detail.component.html',
@@ -22,28 +23,29 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   centerId;
   form: AdmissionForm;
   listBuilding: Observable<Building[]>;
-  listOfSlot:Slot[];
+  listOfSlot: Slot[];
   isClose = "true";
   startDate;
   selectedSlot;
-  boolArr:string[] = ['true','false'];
-  selectedDayArr:any[];
-  dayArr:any[] = [{dayNumber:2,dayString:'Monday'},{dayNumber:3,dayString:'Tuesday'},
-  {dayNumber:4,dayString:'Wednesday'},{dayNumber:5,dayString:'Thursday'},
-  {dayNumber:6,dayString:'Friday'},{dayNumber:7,dayString:'Saturday'},{dayNumber:8,dayString:'Sunday'}];
+  boolArr: string[] = ['true', 'false'];
+  selectedDayArr;
+  dayArr: any[] = [{ dayNumber: 2, dayString: 'Monday' }, { dayNumber: 3, dayString: 'Tuesday' },
+  { dayNumber: 4, dayString: 'Wednesday' }, { dayNumber: 5, dayString: 'Thursday' },
+  { dayNumber: 6, dayString: 'Friday' }, { dayNumber: 7, dayString: 'Saturday' }, { dayNumber: 8, dayString: 'Sunday' }];
   public selectedBuilding = 0;
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private datepipe: DatePipe) { }
 
   ngOnInit() {
+    this.selectedDayArr = new Array();
     this.formId = this.route.snapshot.paramMap.get('id');
     this.form = new AdmissionForm();
     this.getInitData();
   }
 
-  addSelectedDay(item){
+  addSelectedDay(item) {
     this.selectedDayArr.push(item.dayNumber);
-    this.dayArr = this.dayArr.filter(obj => obj.dayNumber!=item.dayNumber);
+    this.dayArr = this.dayArr.filter(obj => obj.dayNumber != item.dayNumber);
   }
 
   getInitData() {
@@ -60,6 +62,16 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
         this.selectedBuilding = this.form.Building.Id;
         this.isClose = this.form.IsClosed + "";
         this.selectedSlot = data['Slot'].ID;
+        var dayarr = Object.keys(data['Weeks']).map(i => data['Weeks'][i]);
+        var arr = new Array();
+        console.log(dayarr);
+        if(this.selectedDayArr ==null || this.selectedDayArr == undefined){
+          this.selectedDayArr = new Array();
+        }
+        dayarr.forEach(function (item:any) {
+          arr.push(item.DayOfWeek);
+        })
+        this.selectedDayArr = arr;
         console.log(this.form);
         this.getAllBuilding();
       },
@@ -90,8 +102,8 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
     var para = new HttpParams().set('centerId', this.centerId + '');
     this.http.get<Slot[]>(url, { params: para }).toPromise().then(data => {
       this.listOfSlot = data;
-      this.listOfSlot.forEach(function(item){
-        item.displayText = item.Name+": "+item.From+"-"+item.To;
+      this.listOfSlot.forEach(function (item) {
+        item.displayText = item.Name + ": " + item.From + "-" + item.To;
       })
       console.log(this.listOfSlot)
     },
@@ -105,10 +117,10 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
     let dateString = this.datepipe.transform(date, 'MM-dd-yyyy');
     var para = new HttpParams().set("AdmissionFormId", this.formId)
       .set("CourseId", this.form.Course.Id + "").set("StartDate", dateString).set("Name", this.form.Name)
-      .set("SlotId",this.selectedSlot+"")
+      .set("SlotId", this.selectedSlot + "")
       .set("BuildingId", this.selectedBuilding + "")
       .set("IsClosed", this.isClose).set("CenterId", this.centerId)
-      .set("DaysPerWeek",JSON.stringify(this.selectedDayArr));
+      .set("DaysPerWeek", JSON.stringify(this.selectedDayArr));
     const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/UpdateAdmissionForm";
     console.log(para)
     this.http.post<any>(url, para).toPromise().then(data => {

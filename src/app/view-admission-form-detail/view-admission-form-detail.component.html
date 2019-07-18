@@ -77,7 +77,26 @@
                     [(ngModel)]="isClose">
                   </ng-select> 
                 </div>
+              </div>
 
+              <div class="col-lg-6 col-md-6 col-md-12">
+                <div style="padding-top: 19px;">
+                  <label for="listDay">Selected days:</label>
+                  <ng-select [items]="dayArr" bindLabel="dayString" bindValue="dayNumber" placeholder="Select day of week" multiple="true"
+                    [(ngModel)]="selectedDayArr">
+                  </ng-select>   
+                  {{selectedDayArr}}
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-md-12">
+                <div style="padding-top: 19px;">
+                  <label for="selectedSlot">Selected slot:</label>
+                  <ng-select [items]="listOfSlot" bindLabel="displayText" bindValue="ID" placeholder="Select time " 
+                    [(ngModel)]="selectedSlot">
+                  </ng-select>   
+                  {{selectedSlot}}
+                </div>
               </div>
 
             </div>

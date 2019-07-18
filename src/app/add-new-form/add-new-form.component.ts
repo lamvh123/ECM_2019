@@ -7,6 +7,7 @@ import { Building } from '../building';
 import { Observable } from 'rxjs';
 import { AdmissionForm } from '../admission-form';
 import { DatePipe } from '@angular/common';
+import { Slot } from '../slot';
 
 @Component({
   selector: 'app-add-new-form',
@@ -24,6 +25,12 @@ export class AddNewFormComponent implements OnInit {
   selectedBuilding;
   listBuilding: Observable<Building[]>;
   form: AdmissionForm;
+  selectedDayArr: any[];
+  dayArr: any[] = [{ dayNumber: 2, dayString: 'Monday' }, { dayNumber: 3, dayString: 'Tuesday' },
+  { dayNumber: 4, dayString: 'Wednesday' }, { dayNumber: 5, dayString: 'Thursday' },
+  { dayNumber: 6, dayString: 'Friday' }, { dayNumber: 7, dayString: 'Saturday' }, { dayNumber: 8, dayString: 'Sunday' }];
+  listOfSlot: Slot[];
+  selectedSlot;
   constructor(private http: HttpClient, private router: Router, private datepipe: DatePipe) {
 
   }
@@ -59,24 +66,41 @@ export class AddNewFormComponent implements OnInit {
         }
       );
       this.getAllBuilding();
+      this.getAllSlot();
     },
       error => {
         console.log(error);
       });
   }
+
+  getAllSlot() {
+    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllSlot';
+    var para = new HttpParams().set('centerId', this.centerId + '');
+    this.http.get<Slot[]>(url, { params: para }).toPromise().then(data => {
+      this.listOfSlot = data;
+      this.listOfSlot.forEach(function (item) {
+        item.displayText = item.Name + ": " + item.From + "-" + item.To;
+      })
+      console.log(this.listOfSlot)
+    },
+      error => {
+        console.log(error);
+      });
+  }
+
   CreateForm() {
     var date = new Date(this.form.StartDate);
     let dateString = this.datepipe.transform(date, 'MM-dd-yyyy');
     var para = new HttpParams()
       .set("CourseId", this.courseId + "").set("StartDate", dateString).set("Name", this.form.Name).set("BuildingId", this.selectedBuilding + "")
-      .set("CenterId", this.centerId).set("GoogleFormLink", this.form.GoogleFormLink);
+      .set("CenterId", this.centerId).set("DaysPerWeek", JSON.stringify(this.selectedDayArr)).set('SlotId', this.selectedSlot);
     const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/CreateAdmissionForm";
     console.log(para)
     this.http.post<any>(url, para).toPromise().then(data => {
       console.log(data);
       if (data['Id'] != null && data['Id'] != 0) {
-        
-        this.router.navigate(['/redirect', "/Admission-staff/form-detail",data['Id']]);
+
+        this.router.navigate(['/redirect', "/Admission-staff/form-detail", data['Id']]);
       }
     },
       error => {

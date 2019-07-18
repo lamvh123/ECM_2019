@@ -7,4 +7,5 @@ export class Slot {
   From: string;
   To: string;
   Center: Center;
+  displayText: string;
 }

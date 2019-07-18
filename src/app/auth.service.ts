@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,13 @@ export class AuthService {
     return this.http.post(this._loginUrl, body);
   }
 
-  logedIn():boolean {
+  logedIn(): boolean {
+    var expired = false;
+    if (new Date().getTime() > Number(localStorage.getItem('expiretime'))) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      localStorage.removeItem('expiretime');
+    }
     return !!localStorage.getItem('token');
   }
 
@@ -34,10 +40,12 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('expiretime')
     this.route.navigate(['/login']);
   }
 
-  adminLogedIn():boolean {
+  adminLogedIn(): boolean {
     var role = localStorage.getItem('role');
     if (this.logedIn() && role == 'SystemAdmin') {
       return true;
@@ -45,7 +53,7 @@ export class AuthService {
     return false;
   }
 
-  trainingStaffLogedIn():boolean {
+  trainingStaffLogedIn(): boolean {
     var role = localStorage.getItem('role');
     if (this.logedIn() && role == 'TrainingStaff') {
       return true;
@@ -53,7 +61,7 @@ export class AuthService {
     return false;
   }
 
-  admissionStaffLogedIn():boolean{
+  admissionStaffLogedIn(): boolean {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'AdmissionStaff') {

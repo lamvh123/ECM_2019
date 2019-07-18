@@ -69,9 +69,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
       .set('password', this.loginUserData.password).set('grant_type', 'password');
     this.http.post<any>('https://educationcentermanagementapi-dev-as.azurewebsites.net/token', body).subscribe(
       res => {
-        console.log(res);
+        var expireDate = new Date(new Date().getTime()+60*24*60000);
         localStorage.setItem('token', res.access_token);
         localStorage.setItem('role', res.role);
+        localStorage.setItem('expiretime',expireDate.getTime()+"");
         if (this._auth.adminLogedIn()) {
           // this._router.navigate(['/Admin-menu']);
           this._router.navigate(['/Admin-menu/profile']);

@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule,NO_ERRORS_SCHEMA} from '@angular/core';
+import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -35,16 +35,19 @@ import {AddRoomComponent} from './add-room/add-room.component';
 
 import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
 
-import { ViewAdmissionFormComponent } from './view-admission-form/view-admission-form.component';
-import { ViewAdmissionFormDetailComponent } from './view-admission-form-detail/view-admission-form-detail.component';
+import {ViewAdmissionFormComponent} from './view-admission-form/view-admission-form.component';
+import {ViewAdmissionFormDetailComponent} from './view-admission-form-detail/view-admission-form-detail.component';
 
 import {AddSlotComponent} from './add-slot/add-slot.component';
 import {ViewSlotComponent} from './view-slot/view-slot.component';
 
-import { DatePipe } from '@angular/common';
-import { AddNewFormComponent } from './add-new-form/add-new-form.component'
+import {DatePipe} from '@angular/common';
+import {AddNewFormComponent} from './add-new-form/add-new-form.component';
 
-import { NgSelectModule } from '@ng-select/ng-select';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {NgSelect2Module} from 'ng-select2';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
+import { HeaderMenuComponent } from './header-menu/header-menu.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +79,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ViewAdmissionFormComponent,
     ViewAdmissionFormDetailComponent,
     AddNewFormComponent,
+    HeaderMenuComponent,
 
   ],
   imports: [
@@ -84,13 +88,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     HttpClientModule,
     UcWidgetModule,
-    NgSelectModule
-    
+    NgSelectModule,
+    NgSelect2Module,
+    AmazingTimePickerModule
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService, multi: true
-  },DatePipe],
+  }, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

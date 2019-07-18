@@ -23,7 +23,7 @@
 
     <div class="row clearfix">
       <div *ngFor="let program of programs" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
-        <div class="thumbnail card">
+        <div class="thumbnail card" style="">
           <ng-container
             *ngIf="program.Image!=null; then imgNotNull; else imgNull">
           </ng-container>
@@ -44,10 +44,9 @@
             <!--            <p>Detail: {{program.Description}}</p>-->
             <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>
             <div class="btn-group-align">
-              <div><a class="btn  btn-raised btn-info waves-effect" role="button"
-                      (click)="navigateToProgramDetail(program)">View detail</a></div>
-              <div><a class="btn  btn-raised btn-info waves-effect" role="button" (click)="selectProgram(program)">View
-                courses</a></div>
+              <div><a class="btn  btn-raised btn-info waves-effect" role="button" (click)="navigateToProgramDetail(program)">Detail</a></div>
+              <div><a class="btn  btn-raised btn-info waves-effect" role="button" (click)="selectProgram(program)">Courses</a>
+              </div>
             </div>
           </div>
         </div>

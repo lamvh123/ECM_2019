@@ -2,3 +2,7 @@
 :host{
   width: 100%;
 }
+
+.login-page{
+  min-height: 100vh;
+}

@@ -28,7 +28,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   startDate;
   selectedSlot;
   boolArr: string[] = ['true', 'false'];
-  selectedDayArr;
+  selectedDayArr: number[];
   dayArr: any[] = [{ dayNumber: 2, dayString: 'Monday' }, { dayNumber: 3, dayString: 'Tuesday' },
   { dayNumber: 4, dayString: 'Wednesday' }, { dayNumber: 5, dayString: 'Thursday' },
   { dayNumber: 6, dayString: 'Friday' }, { dayNumber: 7, dayString: 'Saturday' }, { dayNumber: 8, dayString: 'Sunday' }];
@@ -61,14 +61,16 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
         this.form.StartDate = this.form.StartDate.substr(0, 10);
         this.selectedBuilding = this.form.Building.Id;
         this.isClose = this.form.IsClosed + "";
-        this.selectedSlot = data['Slot'].ID;
+        if (data['Slot'] != null && data['Slot'] != undefined) {
+          this.selectedSlot = data['Slot'].ID;
+        }
         var dayarr = Object.keys(data['Weeks']).map(i => data['Weeks'][i]);
         var arr = new Array();
         console.log(dayarr);
-        if(this.selectedDayArr ==null || this.selectedDayArr == undefined){
-          this.selectedDayArr = new Array();
-        }
-        dayarr.forEach(function (item:any) {
+        // if(this.selectedDayArr ==null || this.selectedDayArr == undefined){
+        //   this.selectedDayArr = new Array();
+        // }
+        dayarr.forEach(function (item: any) {
           arr.push(item.DayOfWeek);
         })
         this.selectedDayArr = arr;
@@ -119,8 +121,10 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
       .set("CourseId", this.form.Course.Id + "").set("StartDate", dateString).set("Name", this.form.Name)
       .set("SlotId", this.selectedSlot + "")
       .set("BuildingId", this.selectedBuilding + "")
-      .set("IsClosed", this.isClose).set("CenterId", this.centerId)
-      .set("DaysPerWeek", JSON.stringify(this.selectedDayArr));
+      .set("IsClosed", this.isClose).set("CenterId", this.centerId);
+    this.selectedDayArr.forEach(item => {
+      para = para.append('DaysPerWeek', item + "");
+    });
     const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/UpdateAdmissionForm";
     console.log(para)
     this.http.post<any>(url, para).toPromise().then(data => {

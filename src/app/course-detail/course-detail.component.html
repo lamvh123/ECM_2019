@@ -101,13 +101,13 @@
               <!--                </div>-->
               <!--              </div>-->
               <!--              -->
+              
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="courseDescription">Description:</label>
-                  <div class="form-line">
-                    <textarea rows="4" class="form-control no-resize" [(ngModel)]="courseModel.Description"
-                              placeholder="Course Description" id="courseDescription"></textarea>
-                  </div>
+                  <label for="toolbar">Description:</label>
+                  <quill-editor [(ngModel)]="courseModel.Description"
+                  placeholder="Enter Text"
+                  [modules]="quillConfig"></quill-editor>
                 </div>
               </div>
             </div>

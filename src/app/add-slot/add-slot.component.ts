@@ -31,7 +31,8 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
     Center: this.center,
     Name: '',
     From: '00:00',
-    To: '00:00'
+    To: '00:00',
+    displayText:''
   };
   programId;
   courseName = '';

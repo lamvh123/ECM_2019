@@ -30,6 +30,8 @@ import { ViewSlotComponent } from './view-slot/view-slot.component';
 import { AddSlotComponent } from './add-slot/add-slot.component';
 import { AddNewFormComponent } from './add-new-form/add-new-form.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import {ViewSubjectsComponent} from './view-subjects/view-subjects.component';
+import {AddSubjectComponent} from './add-subject/add-subject.component';
 
 
 
@@ -126,7 +128,19 @@ const routes: Routes = [
       {
         path: 'add-slot',
         component: AddSlotComponent
-      }
+      },
+      {
+        path: 'view-subject',
+        component: ViewSubjectsComponent
+      },
+      {
+        path: 'add-subject',
+        component: AddSubjectComponent
+      },
+      // {
+      //   path: 'course-detail/:id',
+      //   component: CourseDetailComponent
+      // }
     ]
   },
 

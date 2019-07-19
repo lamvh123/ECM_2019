@@ -95,8 +95,7 @@
                 <div class="form-group">
                   <label for="courseDescription">Course Description:</label>
                   <div class="form-line">
-                    <textarea rows="4" class="form-control no-resize" [(ngModel)]="Description"
-                              placeholder="Course Description" id="courseDescription"></textarea>
+                    <ckeditor  id="courseDescription" [(ngModel)]="Description" [editor]="Editor" (ready)="onReady($event)"></ckeditor>
                   </div>
                 </div>
               </div>

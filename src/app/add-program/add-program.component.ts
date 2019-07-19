@@ -1,6 +1,7 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Router, ActivatedRoute} from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-add-program',
@@ -16,6 +17,15 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class AddProgramComponent implements OnInit, AfterViewInit {
 
+  public Editor = ClassicEditor;
+
+  public onReady(editor) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+  }
+
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
 
@@ -24,7 +34,6 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   description = '';
 
   ngOnInit() {
-
   }
 
   public loadScript(url: string) {
@@ -46,6 +55,8 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
 
   //this is add program
   addCourse() {
+    console.log(this.description);
+
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddProgram';
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
     this.http.get(url).toPromise().then(data => {
@@ -57,6 +68,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
+            this.redirectToAllProgram();
           },
           err => {
             console.log(err);
@@ -66,7 +78,6 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
-    this.redirectToAllProgram();
   }
 
   onUploadCompleted($event: any) {

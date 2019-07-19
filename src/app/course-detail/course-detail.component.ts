@@ -97,6 +97,7 @@ export class CourseDetailComponent implements OnInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
+            this.redirectToProgram(this.courseModel.Program.Id);
           },
           err => {
             console.log(err);
@@ -106,7 +107,6 @@ export class CourseDetailComponent implements OnInit {
       error => {
         console.log(error);
       });
-    this.redirectToProgram(this.courseModel.Program.Id);
   }
 
   onUploadCompleted($event: any) {

@@ -46,13 +46,11 @@
                   </div>
                 </form>
               </div>
-
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="programDescription">Program Description:</label>
                   <div class="form-line">
-                    <textarea [(ngModel)]="description" rows="4" class="form-control no-resize"
-                              placeholder="Course Description" id="programDescription"></textarea>
+                    <ckeditor  id="programDescription" [(ngModel)]="description" [editor]="Editor" (ready)="onReady($event)"></ckeditor>
                   </div>
                 </div>
               </div>

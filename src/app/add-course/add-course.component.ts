@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Building} from '../building';
 import {Subject} from '../subject';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 @Component({
@@ -18,6 +19,14 @@ import {Subject} from '../subject';
     , '../../assets/css/themes/all-themes.css']
 })
 export class AddCourseComponent implements OnInit, AfterViewInit {
+  public Editor = ClassicEditor;
+
+  public onReady(editor) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+  }
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -76,6 +85,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
+            this.redirectToViewCourse();
           },
           err => {
             console.log(err);
@@ -85,7 +95,6 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
-    this.redirectToViewCourse();
   }
 
 

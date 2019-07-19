@@ -1,7 +1,7 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
   <div class="container-fluid">
     <div class="block-header">
-      <h2>Add Course</h2>
+      <h2>Add New Admission Form</h2>
       <!--      <small class="text-muted">Welcome to Swift application</small>-->
     </div>
     <div class="row clearfix">
@@ -12,7 +12,7 @@
             <div class="row clearfix">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="coursename">Course Name:</label>
+                  <label>Course:</label>
                   <div>
                     <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course" [(ngModel)]="courseId">
                     </ng-select>
@@ -27,17 +27,17 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="Link">Google Link</label>
-                  <div class="form-line">
-                    <input type="text" [(ngModel)]="form.GoogleFormLink" class="form-control" placeholder="Link" id="Link" />
-                  </div>
-                </div>
-              </div>
+<!--              <div class="col-sm-12">-->
+<!--                <div class="form-group">-->
+<!--                  <label for="Link">Google Link</label>-->
+<!--                  <div class="form-line">-->
+<!--                    <input type="text" [(ngModel)]="form.GoogleFormLink" class="form-control" placeholder="Link" id="Link" />-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
               <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">
-                  <label for="courseTotalSession">Date</label>
+                  <label for="courseTotalSession"> Start Date</label>
                   <div class="form-line">
                     <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"
                       id="startdate" />

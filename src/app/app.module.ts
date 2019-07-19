@@ -48,6 +48,9 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {NgSelect2Module} from 'ng-select2';
 import { AmazingTimePickerModule } from 'amazing-time-picker';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
+import { AddSubjectComponent } from './add-subject/add-subject.component';
+import { ViewSubjectsComponent } from './view-subjects/view-subjects.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -80,6 +83,8 @@ import { HeaderMenuComponent } from './header-menu/header-menu.component';
     ViewAdmissionFormDetailComponent,
     AddNewFormComponent,
     HeaderMenuComponent,
+    AddSubjectComponent,
+    ViewSubjectsComponent,
 
   ],
   imports: [
@@ -90,7 +95,8 @@ import { HeaderMenuComponent } from './header-menu/header-menu.component';
     UcWidgetModule,
     NgSelectModule,
     NgSelect2Module,
-    AmazingTimePickerModule
+    AmazingTimePickerModule,
+    CKEditorModule
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

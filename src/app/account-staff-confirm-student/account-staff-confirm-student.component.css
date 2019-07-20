@@ -1,3 +1,9 @@
 :host{
     width:100%;
+    padding-left:2%;
+    padding-right:2%;
+}
+studenttbl{
+    max-width: 100%;
+    overflow: auto
 }

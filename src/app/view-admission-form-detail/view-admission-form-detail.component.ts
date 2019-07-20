@@ -28,7 +28,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   startDate;
   selectedSlot;
   boolArr: string[] = ['true', 'false'];
-  selectedDayArr: number[];
+  selectedDayArr;
   dayArr: any[] = [{ dayNumber: 2, dayString: 'Monday' }, { dayNumber: 3, dayString: 'Tuesday' },
   { dayNumber: 4, dayString: 'Wednesday' }, { dayNumber: 5, dayString: 'Thursday' },
   { dayNumber: 6, dayString: 'Friday' }, { dayNumber: 7, dayString: 'Saturday' }, { dayNumber: 8, dayString: 'Sunday' }];

@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Course } from '../course';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Center } from '../center';
-import { Building } from '../building';
-import { Observable } from 'rxjs';
-import { AdmissionForm } from '../admission-form';
-import { DatePipe } from '@angular/common';
-import { Slot } from '../slot';
+import {Component, OnInit} from '@angular/core';
+import {Course} from '../course';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {Center} from '../center';
+import {Building} from '../building';
+import {Observable} from 'rxjs';
+import {AdmissionForm} from '../admission-form';
+import {DatePipe} from '@angular/common';
+import {Slot} from '../slot';
 
 @Component({
   selector: 'app-add-new-form',
@@ -26,11 +26,12 @@ export class AddNewFormComponent implements OnInit {
   listBuilding: Observable<Building[]>;
   form: AdmissionForm;
   selectedDayArr: any[];
-  dayArr: any[] = [{ dayNumber: 2, dayString: 'Monday' }, { dayNumber: 3, dayString: 'Tuesday' },
-  { dayNumber: 4, dayString: 'Wednesday' }, { dayNumber: 5, dayString: 'Thursday' },
-  { dayNumber: 6, dayString: 'Friday' }, { dayNumber: 7, dayString: 'Saturday' }, { dayNumber: 8, dayString: 'Sunday' }];
+  dayArr: any[] = [{dayNumber: 2, dayString: 'Monday'}, {dayNumber: 3, dayString: 'Tuesday'},
+    {dayNumber: 4, dayString: 'Wednesday'}, {dayNumber: 5, dayString: 'Thursday'},
+    {dayNumber: 6, dayString: 'Friday'}, {dayNumber: 7, dayString: 'Saturday'}, {dayNumber: 8, dayString: 'Sunday'}];
   listOfSlot: Slot[];
   selectedSlot;
+
   constructor(private http: HttpClient, private router: Router, private datepipe: DatePipe) {
 
   }
@@ -40,34 +41,36 @@ export class AddNewFormComponent implements OnInit {
     this.getInitData();
 
   }
+
   getAllBuilding() {
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllBuilding';
     var para = new HttpParams().set('centerId', this.centerId + '');
-    this.http.get<Observable<Building[]>>(url, { params: para }).toPromise().then(data => {
-      this.listBuilding = data;
-      console.log(this.listBuilding);
-    },
+    this.http.get<Observable<Building[]>>(url, {params: para}).toPromise().then(data => {
+        this.listBuilding = data;
+        console.log(this.listBuilding);
+      },
       error => {
         console.log(error);
       });
   }
+
   getInitData() {
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetCenter';
     this.http.get(url).toPromise().then((data) => {
-      this.centerId = data['Id'];
-      const getAllCourseUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllCourse';
-      var para = new HttpParams().set('centerId', this.centerId + '');
-      this.http.get<Course[]>(getAllCourseUrl, { params: para }).toPromise().then(data => {
-        this.listCourse = data;
-        console.log(this.listCourse);
+        this.centerId = data['Id'];
+        const getAllCourseUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllCourse';
+        var para = new HttpParams().set('centerId', this.centerId + '');
+        this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
+            this.listCourse = data;
+            console.log(this.listCourse);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+        this.getAllBuilding();
+        this.getAllSlot();
       },
-        error => {
-          console.log(error);
-        }
-      );
-      this.getAllBuilding();
-      this.getAllSlot();
-    },
       error => {
         console.log(error);
       });
@@ -76,13 +79,13 @@ export class AddNewFormComponent implements OnInit {
   getAllSlot() {
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllSlot';
     var para = new HttpParams().set('centerId', this.centerId + '');
-    this.http.get<Slot[]>(url, { params: para }).toPromise().then(data => {
-      this.listOfSlot = data;
-      this.listOfSlot.forEach(function (item) {
-        item.displayText = item.Name + ": " + item.From + "-" + item.To;
-      })
-      console.log(this.listOfSlot)
-    },
+    this.http.get<Slot[]>(url, {params: para}).toPromise().then(data => {
+        this.listOfSlot = data;
+        this.listOfSlot.forEach(function(item) {
+          item.displayText = item.Name + ': ' + item.From + '-' + item.To;
+        });
+        console.log(this.listOfSlot);
+      },
       error => {
         console.log(error);
       });
@@ -92,20 +95,24 @@ export class AddNewFormComponent implements OnInit {
     var date = new Date(this.form.StartDate);
     let dateString = this.datepipe.transform(date, 'MM-dd-yyyy');
     var para = new HttpParams()
-      .set("CourseId", this.courseId + "").set("StartDate", dateString).set("Name", this.form.Name).set("BuildingId", this.selectedBuilding + "")
-      .set("CenterId", this.centerId).set('SlotId', this.selectedSlot);
-      this.selectedDayArr.forEach(item => {
-        para = para.append('DaysPerWeek', item + "");
-      });
-    const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/CreateAdmissionForm";
-    console.log(para)
+      .set('CourseId', this.courseId + '')
+      .set('StartDate', dateString)
+      .set('Name', this.form.Name)
+      .set('BuildingId', this.selectedBuilding + '')
+      .set('CenterId', this.centerId)
+      .set('SlotId', this.selectedSlot);
+    this.selectedDayArr.forEach(item => {
+      para = para.append('DaysPerWeek', item + '');
+    });
+    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/CreateAdmissionForm';
+    console.log(para);
     this.http.post<any>(url, para).toPromise().then(data => {
-      console.log(data);
-      if (data['Id'] != null && data['Id'] != 0) {
+        console.log(data);
+        if (data['Id'] != null && data['Id'] != 0) {
 
-        this.router.navigate(['/redirect', "/Admission-staff/form-detail", data['Id']]);
-      }
-    },
+          this.router.navigate(['/redirect', '/Admission-staff/form-detail', data['Id']]);
+        }
+      },
       error => {
         console.log(error);
       });

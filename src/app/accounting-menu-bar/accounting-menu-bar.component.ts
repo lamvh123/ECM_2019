@@ -67,7 +67,16 @@ export class AccountingMenuBarComponent implements OnInit {
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
   }
-
+  logout() {
+    const r = confirm('Do you really want to logout?');
+    if (r === true) {
+      localStorage.clear();
+      this.redirectToLogin();
+    }
+  }
+  redirectToLogin() {
+    this._router.navigateByUrl('/login');
+  }
 }
 
 

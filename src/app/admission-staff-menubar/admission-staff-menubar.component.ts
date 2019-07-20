@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-admission-staff-menubar',
@@ -13,12 +13,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AdmissionStaffMenubarComponent implements OnInit, AfterViewInit {
   urlName;
+
   constructor(private _router: Router, private route: ActivatedRoute) {
     this.route.params.subscribe((data) => {
       this.urlName = this.className();
       console.log(this.urlName);
 
-    } )
+    });
   }
 
   ngOnInit() {
@@ -55,8 +56,9 @@ export class AdmissionStaffMenubarComponent implements OnInit, AfterViewInit {
     return '';
 
   }
+
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -81,4 +83,14 @@ export class AdmissionStaffMenubarComponent implements OnInit, AfterViewInit {
 
   }
 
+  logout() {
+    const r = confirm('Do you really want to logout?');
+    if (r === true) {
+      localStorage.clear();
+      this.redirectToLogin();
+    }
+  }
+  redirectToLogin() {
+    this._router.navigateByUrl('/login');
+  }
 }

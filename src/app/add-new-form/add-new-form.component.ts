@@ -93,7 +93,10 @@ export class AddNewFormComponent implements OnInit {
     let dateString = this.datepipe.transform(date, 'MM-dd-yyyy');
     var para = new HttpParams()
       .set("CourseId", this.courseId + "").set("StartDate", dateString).set("Name", this.form.Name).set("BuildingId", this.selectedBuilding + "")
-      .set("CenterId", this.centerId).set("DaysPerWeek", JSON.stringify(this.selectedDayArr)).set('SlotId', this.selectedSlot);
+      .set("CenterId", this.centerId).set('SlotId', this.selectedSlot);
+      this.selectedDayArr.forEach(item => {
+        para = para.append('DaysPerWeek', item + "");
+      });
     const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/CreateAdmissionForm";
     console.log(para)
     this.http.post<any>(url, para).toPromise().then(data => {

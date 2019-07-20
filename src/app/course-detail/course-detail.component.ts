@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Subject} from '../subject';
 import {Course} from '../course';
 import {Building} from '../building';
 import {Router} from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 @Component({
@@ -19,10 +20,12 @@ import {Router} from '@angular/router';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class CourseDetailComponent implements OnInit {
+export class CourseDetailComponent implements OnInit, AfterViewInit {
 
-  constructor(private _routers: Router, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private routers: Router, private route: ActivatedRoute, private http: HttpClient) {
   }
+
+  Editor = ClassicEditor;
 
   courseModel: Course;
   courseId = '';
@@ -31,6 +34,15 @@ export class CourseDetailComponent implements OnInit {
     Id: '',
     name: ''
   };
+
+  public onReady(editor) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+  }
+
+  // end text editor
 
   ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('id');
@@ -149,7 +161,7 @@ export class CourseDetailComponent implements OnInit {
 
 
   redirectToProgram(programId: number) {
-    this._routers.navigate(['/Training-staff/view-course', programId]);
+    this.routers.navigate(['/Training-staff/view-course', programId]);
   }
 
 }

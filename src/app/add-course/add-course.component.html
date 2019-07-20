@@ -9,7 +9,7 @@
         <div class="card">
           <div class="header">
             <h2>Course Basic Information
-<!--              <small>Description text here...</small>-->
+              <!--              <small>Description text here...</small>-->
             </h2>
             <ul class="header-dropdown">
               <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
@@ -37,7 +37,8 @@
                 <div class="form-group">
                   <label for="courseTotalSession">Total Session(s):</label>
                   <div class="form-line">
-                    <input type="number" [(ngModel)]="totalSession" class="form-control" placeholder="Total Session" id="courseTotalSession">
+                    <input type="number" [(ngModel)]="totalSession" class="form-control" placeholder="Total Session"
+                           id="courseTotalSession">
                   </div>
                 </div>
               </div>
@@ -45,7 +46,8 @@
                 <div class="form-group">
                   <label for="courseFee">Fee:</label>
                   <div class="form-line">
-                    <input type="number" [(ngModel)]="Fee" class="form-control" placeholder="Course Price" id="courseFee">
+                    <input type="number" [(ngModel)]="Fee" class="form-control" placeholder="Course Price"
+                           id="courseFee">
                   </div>
                 </div>
               </div>
@@ -95,17 +97,29 @@
                 <div class="form-group">
                   <label for="courseDescription">Course Description:</label>
                   <div class="form-line">
-                    <ckeditor  id="courseDescription" [(ngModel)]="Description" [editor]="Editor" (ready)="onReady($event)"></ckeditor>
+                    <ckeditor id="courseDescription" [(ngModel)]="Description" [editor]="Editor"
+                              (ready)="onReady($event)"></ckeditor>
                   </div>
                 </div>
               </div>
             </div>
 
+<!--            <div class="col-sm-12">-->
+<!--              <div class="form-group">-->
+<!--                <label for="programDescriptionVer2">Description:</label>-->
+<!--                <quill-editor [(ngModel)]="Description" id="programDescriptionVer2"-->
+<!--                              placeholder="Enter Text"-->
+<!--                              [modules]="quillConfig"></quill-editor>-->
+<!--              </div>-->
+<!--            </div>-->
+
             <div class="row clearfix">
               <div class="col-sm-12">
                 <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Course
                 </button>
-                <button (click)="redirectToViewCourse()" type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
+                <button (click)="redirectToViewCourse()" type="submit" class="btn btn-raised btn-default waves-effect">
+                  Cancel
+                </button>
               </div>
             </div>
           </div>

@@ -32,6 +32,7 @@ import { AddNewFormComponent } from './add-new-form/add-new-form.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import {ViewSubjectsComponent} from './view-subjects/view-subjects.component';
 import {AddSubjectComponent} from './add-subject/add-subject.component';
+import {LogoutComponent} from './logout/logout.component';
 
 
 
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path: 'events', component: EventsComponent},
   {path: 'special', component: SpecialEventsComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'logout', component: LogoutComponent},
   {path: 'register', component: RegisterComponent},
   {path:'redirect/:url/:param',component:RedirectComponent},
   {

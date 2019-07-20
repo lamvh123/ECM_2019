@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ProfileComponent } from '../profile/profile.component';
+import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {ProfileComponent} from '../profile/profile.component';
 import * as $ from 'jquery';
 
 @Component({
@@ -97,7 +97,7 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -111,8 +111,6 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
-
-
 
 
     //   $(document).ready(function() {
@@ -134,5 +132,17 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
 
     // });
 
+  }
+
+  logout() {
+    const r = confirm('Do you really want to logout?');
+    if (r === true) {
+      localStorage.clear();
+      this.redirectToLogin();
+    }
+  }
+
+  redirectToLogin() {
+    this._router.navigateByUrl('/login');
   }
 }

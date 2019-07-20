@@ -46,11 +46,13 @@ import {AddNewFormComponent} from './add-new-form/add-new-form.component';
 
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgSelect2Module} from 'ng-select2';
-import { AmazingTimePickerModule } from 'amazing-time-picker';
-import { HeaderMenuComponent } from './header-menu/header-menu.component';
-import { AddSubjectComponent } from './add-subject/add-subject.component';
-import { ViewSubjectsComponent } from './view-subjects/view-subjects.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {AmazingTimePickerModule} from 'amazing-time-picker';
+import {HeaderMenuComponent} from './header-menu/header-menu.component';
+import {AddSubjectComponent} from './add-subject/add-subject.component';
+import {ViewSubjectsComponent} from './view-subjects/view-subjects.component';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {QuillModule} from 'ngx-quill';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     HeaderMenuComponent,
     AddSubjectComponent,
     ViewSubjectsComponent,
+    LogoutComponent,
 
   ],
   imports: [
@@ -96,7 +99,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     NgSelectModule,
     NgSelect2Module,
     AmazingTimePickerModule,
-    CKEditorModule
+    CKEditorModule,
+    // QuillModule
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

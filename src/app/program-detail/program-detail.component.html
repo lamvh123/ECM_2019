@@ -49,18 +49,19 @@
 
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="programDescription">Description:</label>
+                  <label for="courseDescription">Course Description:</label>
                   <div class="form-line">
-                    <textarea [(ngModel)]="description" rows="4" class="form-control no-resize"
-                              placeholder="Course Description" id="programDescription"></textarea>
+                    <ckeditor id="courseDescription" [(ngModel)]="description" [editor]="Editor"
+                              (ready)="onReady($event)"></ckeditor>
                   </div>
-                </div>
-              </div>
 
-              <div class="col-sm-12">
-                <button (click)="updateProgram()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Update
-                </button>
-                <button type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
+                </div>
+
+                <div class="col-sm-12">
+                  <button (click)="updateProgram()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Update
+                  </button>
+                  <button type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
+                </div>
               </div>
             </div>
           </div>

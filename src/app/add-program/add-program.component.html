@@ -9,7 +9,7 @@
         <div class="card">
           <div class="header">
             <h2>Program Basic Information
-<!--              <small>Description text here...</small>-->
+              <!--              <small>Description text here...</small>-->
             </h2>
             <ul class="header-dropdown">
               <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
@@ -50,15 +50,27 @@
                 <div class="form-group">
                   <label for="programDescription">Program Description:</label>
                   <div class="form-line">
-                    <ckeditor  id="programDescription" [(ngModel)]="description" [editor]="Editor" (ready)="onReady($event)"></ckeditor>
+                    <ckeditor id="programDescription" [(ngModel)]="description" [editor]="Editor"
+                              (ready)="onReady($event)"></ckeditor>
                   </div>
                 </div>
               </div>
+              <!--              <div class="col-sm-12">-->
+              <!--                <div class="form-group">-->
+              <!--                  <label for="programDescriptionVer2">Description:</label>-->
+              <!--                  <quill-editor [(ngModel)]="description" id="programDescriptionVer2"-->
+              <!--                                placeholder="Enter Text"-->
+              <!--                                [modules]="quillConfig"></quill-editor>-->
+              <!--                </div>-->
+              <!--              </div>-->
+              <!--            </div>-->
 
               <div class="col-sm-12">
                 <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Program
                 </button>
-                <button (click)="redirectToAllProgram()" type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
+                <button (click)="redirectToAllProgram()" type="submit" class="btn btn-raised btn-default waves-effect">
+                  Cancel
+                </button>
               </div>
             </div>
           </div>

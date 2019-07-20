@@ -49,11 +49,10 @@
 
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="programDescription">Program Description:</label>
-                  <div class="form-line">
-                    <textarea [(ngModel)]="description" rows="4" class="form-control no-resize"
-                              placeholder="Course Description" id="programDescription"></textarea>
-                  </div>
+                  <label for="toolbar">Description:</label>
+                  <quill-editor [(ngModel)]="description"
+                  placeholder="Enter Text"
+                  [modules]="quillConfig"></quill-editor>
                 </div>
               </div>
 

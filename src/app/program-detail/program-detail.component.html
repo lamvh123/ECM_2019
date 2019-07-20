@@ -13,8 +13,7 @@
             </h2>
             <ul class="header-dropdown">
               <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                      role="button" aria-haspopup="true" aria-expanded="false"><i
-                class="zmdi zmdi-more-vert"></i></a>
+                  role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
                 <ul class="dropdown-menu pull-right">
                   <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
                   <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
@@ -30,17 +29,17 @@
                   <label for="programName">Program Name:</label>
                   <div class="form-line">
                     <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name"
-                           name="coursename" id="programName">
+                      name="coursename" id="programName">
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
-                                       (on-upload-complete)="onUploadCompleted($event)"></ngx-uploadcare-widget>
+                  (on-upload-complete)="onUploadCompleted($event)"></ngx-uploadcare-widget>
                 <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
                   <img *ngIf="image!=''" src="{{image}}"
-                       [ngStyle]="{'width':'100%', 'height':'100%', 'object-fit': 'cover'}">
+                    [ngStyle]="{'width':'100%', 'height':'100%', 'object-fit': 'cover'}">
                   <div *ngIf="image==''" class="dz-message">
                     <h3>Upload image of program</h3>
                   </div>
@@ -49,11 +48,10 @@
 
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="programDescription">Description:</label>
-                  <div class="form-line">
-                    <textarea [(ngModel)]="description" rows="4" class="form-control no-resize"
-                              placeholder="Course Description" id="programDescription"></textarea>
-                  </div>
+                  <label for="toolbar">Description:</label>
+                  <quill-editor [(ngModel)]="description"
+                  placeholder="Enter Text"
+                  [modules]="quillConfig"></quill-editor>
                 </div>
               </div>
 

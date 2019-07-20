@@ -28,7 +28,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   startDate;
   selectedSlot;
   boolArr: string[] = ['true', 'false'];
-  selectedDayArr:Array<number>;
+  selectedDayArr: number[];
   dayArr: any[] = [{ dayNumber: 2, dayString: 'Monday' }, { dayNumber: 3, dayString: 'Tuesday' },
   { dayNumber: 4, dayString: 'Wednesday' }, { dayNumber: 5, dayString: 'Thursday' },
   { dayNumber: 6, dayString: 'Friday' }, { dayNumber: 7, dayString: 'Saturday' }, { dayNumber: 8, dayString: 'Sunday' }];
@@ -64,6 +64,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
         if (data['Slot'] != null && data['Slot'] != undefined) {
           this.selectedSlot = data['Slot'].ID;
         }
+
         if (data['Weeks'] != null && data['Weeks'] != undefined) {
           var dayarr = Object.keys(data['Weeks']).map(i => data['Weeks'][i]);
           var arr = new Array<number>();
@@ -120,8 +121,10 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
       .set("CourseId", this.form.Course.Id + "").set("StartDate", dateString).set("Name", this.form.Name)
       .set("SlotId", this.selectedSlot + "")
       .set("BuildingId", this.selectedBuilding + "")
-      .set("IsClosed", this.isClose).set("CenterId", this.centerId)
-      .set("DaysPerWeek", JSON.stringify(this.selectedDayArr));
+      .set("IsClosed", this.isClose).set("CenterId", this.centerId);
+    this.selectedDayArr.forEach(item => {
+      para = para.append('DaysPerWeek', item + "");
+    });
     const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/UpdateAdmissionForm";
     console.log(para)
     this.http.post<any>(url, para).toPromise().then(data => {

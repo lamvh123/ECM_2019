@@ -1,7 +1,7 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {AuthService} from '../auth.service';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 declare var jquery: any;
 declare var $: any;
@@ -39,15 +39,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     if (this.auth.adminLogedIn()) {
       const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/Systemmanagement/Profile';
       this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-          console.log(res.FullName);
-        },
+        console.log(res);
+        this.user.name = res.FullName;
+        this.user.email = res.Email;
+        this.user.PhoneNumber = res.PhoneNumber;
+        this.user.Sex = res.Sex;
+        this.user.Id = res.Id;
+        this.user.Avatar = res.Avatar;
+        console.log(res.FullName);
+      },
         error => {
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
@@ -58,14 +58,14 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     } else if (this.auth.trainingStaffLogedIn()) {
       const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/Profile';
       this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-        },
+        console.log(res);
+        this.user.name = res.FullName;
+        this.user.email = res.Email;
+        this.user.PhoneNumber = res.PhoneNumber;
+        this.user.Sex = res.Sex;
+        this.user.Id = res.Id;
+        this.user.Avatar = res.Avatar;
+      },
         error => {
           console.log(error);
           if (error instanceof HttpErrorResponse) {
@@ -75,17 +75,36 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           }
         });
     } else if (this.auth.admissionStaffLogedIn()) {
-      console.log("adasd")
       const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/Profile';
       this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-        },
+        console.log(res);
+        this.user.name = res.FullName;
+        this.user.email = res.Email;
+        this.user.PhoneNumber = res.PhoneNumber;
+        this.user.Sex = res.Sex;
+        this.user.Id = res.Id;
+        this.user.Avatar = res.Avatar;
+      },
+        error => {
+          console.log(error);
+          if (error instanceof HttpErrorResponse) {
+            if (error.status === 401) {
+              console.log(error.status);
+            }
+          }
+        });
+    }
+    else if (this.auth.accountingStaffLoggedin()) {
+      const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/profile';
+      this.http.get<any>(configUrl).subscribe(res => {
+        console.log(res);
+        this.user.name = res.FullName;
+        this.user.email = res.Email;
+        this.user.PhoneNumber = res.PhoneNumber;
+        this.user.Sex = res.Sex;
+        this.user.Id = res.Id;
+        this.user.Avatar = res.Avatar;
+      },
         error => {
           console.log(error);
           if (error instanceof HttpErrorResponse) {
@@ -98,7 +117,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement> document.body;
+    const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -131,15 +150,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       .set('PhoneNumber', this.user.PhoneNumber);
 
     this.http.post<any>(configUrl, body).subscribe(res => {
-        console.log(res);
-        this.user.name = res.Full_Name;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        console.log(res);
+      console.log(res);
+      this.user.name = res.Full_Name;
+      this.user.email = res.Email;
+      this.user.PhoneNumber = res.PhoneNumber;
+      this.user.Sex = res.Sex;
+      this.user.Id = res.Id;
+      console.log(res);
 
-      },
+    },
       error => {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401) {

@@ -26,12 +26,16 @@
             "styles": [
               "src/styles.css",
               "node_modules/select2/dist/css/select2.min.css",
-             "node_modules/@ng-select/ng-select/themes/material.theme.css"
-             
+              "node_modules/@ng-select/ng-select/themes/material.theme.css",
+              "node_modules/quill/dist/quill.bubble.css",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/select2/dist/js/select2.min.js"
+              "node_modules/select2/dist/js/select2.min.js",
+              "node_modules/ngx-quill/bundles/ngx-quill.umd.js",
+              "node_modules/quill/dist/quill.min.js"
             ],
             "es5BrowserSupport": true
           },
@@ -65,7 +69,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngApp:build"
+            "browserTarget": "ngApp:build",
+            "port": 4300
           },
           "configurations": {
             "production": {

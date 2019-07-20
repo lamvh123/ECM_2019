@@ -69,4 +69,13 @@ export class AuthService {
     }
     return false;
   }
+
+  accountingStaffLoggedin(){
+    var role = localStorage.getItem('role');
+    console.log(role);
+    if (this.logedIn() && role == 'AccountingStaff') {
+      return true;
+    }
+    return false;
+  }
 }

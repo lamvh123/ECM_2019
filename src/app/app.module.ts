@@ -43,8 +43,10 @@ import {ViewSlotComponent} from './view-slot/view-slot.component';
 
 import { DatePipe } from '@angular/common';
 import { AddNewFormComponent } from './add-new-form/add-new-form.component'
-
+import { QuillModule } from 'ngx-quill'
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AccountingMenuBarComponent } from './accounting-menu-bar/accounting-menu-bar.component';
+import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-student/account-staff-confirm-student.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ViewAdmissionFormComponent,
     ViewAdmissionFormDetailComponent,
     AddNewFormComponent,
+    AccountingMenuBarComponent,
+    AccountStaffConfirmStudentComponent,
 
   ],
   imports: [
@@ -84,8 +88,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     HttpClientModule,
     UcWidgetModule,
-    NgSelectModule   
-    
+    NgSelectModule,
+    QuillModule
+
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

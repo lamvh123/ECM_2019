@@ -28,7 +28,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   startDate;
   selectedSlot;
   boolArr: string[] = ['true', 'false'];
-  selectedDayArr;
+  selectedDayArr:Array<number>;
   dayArr: any[] = [{ dayNumber: 2, dayString: 'Monday' }, { dayNumber: 3, dayString: 'Tuesday' },
   { dayNumber: 4, dayString: 'Wednesday' }, { dayNumber: 5, dayString: 'Thursday' },
   { dayNumber: 6, dayString: 'Friday' }, { dayNumber: 7, dayString: 'Saturday' }, { dayNumber: 8, dayString: 'Sunday' }];
@@ -37,7 +37,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private datepipe: DatePipe) { }
 
   ngOnInit() {
-    this.selectedDayArr = new Array();
+   
     this.formId = this.route.snapshot.paramMap.get('id');
     this.form = new AdmissionForm();
     this.getInitData();
@@ -61,17 +61,18 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
         this.form.StartDate = this.form.StartDate.substr(0, 10);
         this.selectedBuilding = this.form.Building.Id;
         this.isClose = this.form.IsClosed + "";
-        this.selectedSlot = data['Slot'].ID;
-        var dayarr = Object.keys(data['Weeks']).map(i => data['Weeks'][i]);
-        var arr = new Array();
-        console.log(dayarr);
-        if(this.selectedDayArr ==null || this.selectedDayArr == undefined){
-          this.selectedDayArr = new Array();
+        if (data['Slot'] != null && data['Slot'] != undefined) {
+          this.selectedSlot = data['Slot'].ID;
         }
-        dayarr.forEach(function (item:any) {
-          arr.push(item.DayOfWeek);
-        })
-        this.selectedDayArr = arr;
+        if (data['Weeks'] != null && data['Weeks'] != undefined) {
+          var dayarr = Object.keys(data['Weeks']).map(i => data['Weeks'][i]);
+          var arr = new Array<number>();
+          console.log(dayarr);
+          dayarr.forEach(function (item: any) {
+            arr.push(item.DayOfWeek);
+          })
+          this.selectedDayArr = arr;
+        }
         console.log(this.form);
         this.getAllBuilding();
       },

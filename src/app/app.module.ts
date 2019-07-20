@@ -84,7 +84,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     HttpClientModule,
     UcWidgetModule,
-    NgSelectModule
+    NgSelectModule   
     
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {

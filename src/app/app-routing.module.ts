@@ -30,6 +30,9 @@ import { ViewSlotComponent } from './view-slot/view-slot.component';
 import { AddSlotComponent } from './add-slot/add-slot.component';
 import { AddNewFormComponent } from './add-new-form/add-new-form.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import { AccountingMenuBarComponent } from './accounting-menu-bar/accounting-menu-bar.component';
+import { AccountStaffGuard } from './account-staff.guard';
+import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-student/account-staff-confirm-student.component';
 
 
 
@@ -62,6 +65,21 @@ const routes: Routes = [
       {
         path:'addForm',
         component:AddNewFormComponent
+      }
+    ]
+  },
+  {
+    path:'Account-staff',
+    component:AccountingMenuBarComponent,
+    canActivate:[AccountStaffGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path:'student',
+        component : AccountStaffConfirmStudentComponent
       }
     ]
   },

@@ -19,12 +19,15 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   listCourse: Course[];
   listForm: AdmissionForm[];
   selectedCourseId;
-  selectedFormId ;
-  studentName="";
-  phoneNumber="";
+  selectedFormId;
+  studentName = "";
+  phoneNumber = "";
   pageSize = 20;
   currentPage = 1;
   listStudent: Student[];
+  totalData = 0;
+  empty = true;
+  listPage:any[];
   ngOnInit() {
     this.getInitData();
   }
@@ -43,7 +46,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
         error => {
           console.log(error);
         });
-        this.loadStudentData();
+      this.loadStudentData();
     },
       error => {
         console.log(error);
@@ -80,21 +83,54 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
     }
   }
 
+  pagination(totalData:number){
+    this.listPage = new Array();
+    if(totalData%this.pageSize==0){
+      for(var i = 1;i<=totalData/this.pageSize;i++){
+        this.listPage.push({value:i,text:'Page '+i+'/'+totalData/this.pageSize});
+      }
+    }
+    else{
+      for(var i = 1;i<=Math.floor(totalData/this.pageSize)+1;i++){
+        this.listPage.push({value:i,text:'Page '+i+'/'+Math.floor(totalData/this.pageSize)+1});
+      }
+    }
+  }
+
   loadStudentData() {
-    var param = new HttpParams().set("admissionFormId", this.selectedFormId == null ? "-1" : this.selectedFormId)
-      .set("studentName", this.studentName).set("phoneNumber", this.phoneNumber)
-      .set("centerId", this.centerId)
-      .set("pageSize", this.pageSize + "")
-      .set("currentPage", this.currentPage + "")
-    var url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/SearchRegisteredStudent";
-    this.http.get<Student[]>(url, { params: param }).toPromise().then(data => {
-      
-      this.listStudent = data;
-      console.log(this.listStudent);
+    var paramToGetTotal = new HttpParams().set("admissionFormId", this.selectedFormId == null ? "-1" : this.selectedFormId)
+      .set("studentName", this.studentName).set("phoneNumber", this.phoneNumber).set("courseId",this.selectedCourseId==null?"-1":this.selectedCourseId)
+      .set("centerId", this.centerId);
+    var getTotalurl = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/GetTotalRegisteredStudent";
+    this.http.get<number>(getTotalurl, { params: paramToGetTotal }).toPromise().then(data => {
+      this.totalData = data;
+      console.log(data);
+      if(this.totalData == 0){
+        this.empty = true;
+      }
+      if (this.totalData != 0) {
+        this.pagination(this.totalData);
+        this.empty = false;
+        var param = new HttpParams().set("admissionFormId", this.selectedFormId == null ? "-1" : this.selectedFormId)
+          .set("studentName", this.studentName).set("phoneNumber", this.phoneNumber)
+          .set("courseId",this.selectedCourseId==null?"-1":this.selectedCourseId)
+          .set("centerId", this.centerId)
+          .set("pageSize", this.pageSize + "")
+          .set("currentPage", this.currentPage + "")
+        var url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/SearchRegisteredStudent";
+        this.http.get<Student[]>(url, { params: param }).toPromise().then(data => {
+          this.listStudent = data;
+          console.log(this.listStudent);
+        },
+          error => {
+            console.log(error);
+          })
+      }
     },
       error => {
         console.log(error);
       })
+
   }
 
 }

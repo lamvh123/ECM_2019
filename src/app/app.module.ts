@@ -41,18 +41,19 @@ import {ViewAdmissionFormDetailComponent} from './view-admission-form-detail/vie
 import {AddSlotComponent} from './add-slot/add-slot.component';
 import {ViewSlotComponent} from './view-slot/view-slot.component';
 
-import {DatePipe} from '@angular/common';
-import {AddNewFormComponent} from './add-new-form/add-new-form.component';
 
-import {NgSelectModule} from '@ng-select/ng-select';
 import {NgSelect2Module} from 'ng-select2';
 import {AmazingTimePickerModule} from 'amazing-time-picker';
 import {HeaderMenuComponent} from './header-menu/header-menu.component';
 import {AddSubjectComponent} from './add-subject/add-subject.component';
 import {ViewSubjectsComponent} from './view-subjects/view-subjects.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
-import {QuillModule} from 'ngx-quill';
 import { LogoutComponent } from './logout/logout.component';
+import { DatePipe } from '@angular/common';
+import { AddNewFormComponent } from './add-new-form/add-new-form.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AccountingMenuBarComponent } from './accounting-menu-bar/accounting-menu-bar.component';
+import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-student/account-staff-confirm-student.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,8 @@ import { LogoutComponent } from './logout/logout.component';
     AddSubjectComponent,
     ViewSubjectsComponent,
     LogoutComponent,
+    AccountingMenuBarComponent,
+    AccountStaffConfirmStudentComponent
 
   ],
   imports: [
@@ -100,7 +103,6 @@ import { LogoutComponent } from './logout/logout.component';
     NgSelect2Module,
     AmazingTimePickerModule,
     CKEditorModule,
-    // QuillModule
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

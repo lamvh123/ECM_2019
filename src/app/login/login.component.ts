@@ -39,6 +39,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       console.log('1');
       this._router.navigate(['/Admission-staff/profile']);
     }
+    if (!!this._auth.accountingStaffLoggedin()) {
+      this._router.navigate(['/Account-staff/profile'])
+    }
 
 
   }
@@ -69,10 +72,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
       .set('password', this.loginUserData.password).set('grant_type', 'password');
     this.http.post<any>('https://educationcentermanagementapi-dev-as.azurewebsites.net/token', body).subscribe(
       res => {
-        var expireDate = new Date(new Date().getTime()+60*24*60000);
+        var expireDate = new Date(new Date().getTime() + 60 * 24 * 60000);
         localStorage.setItem('token', res.access_token);
         localStorage.setItem('role', res.role);
-        localStorage.setItem('expiretime',expireDate.getTime()+"");
+        localStorage.setItem('expiretime', expireDate.getTime() + "");
         if (this._auth.adminLogedIn()) {
           // this._router.navigate(['/Admin-menu']);
           this._router.navigate(['/Admin-menu/profile']);
@@ -82,6 +85,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         if (this._auth.admissionStaffLogedIn()) {
           this._router.navigate(['/Admission-staff/profile']);
+        }
+        if (this._auth.accountingStaffLoggedin()) {
+          this._router.navigate(['/Account-staff/profile'])
         }
       },
       err => {

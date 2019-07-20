@@ -24,17 +24,18 @@ import {AddRoomComponent} from './add-room/add-room.component';
 import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
 import {AdmissionStaffGuard} from './admission-staff.guard';
 
-import { ViewAdmissionFormComponent } from './view-admission-form/view-admission-form.component';
-import { ViewAdmissionFormDetailComponent } from './view-admission-form-detail/view-admission-form-detail.component';
-import { ViewSlotComponent } from './view-slot/view-slot.component';
-import { AddSlotComponent } from './add-slot/add-slot.component';
-import { AddNewFormComponent } from './add-new-form/add-new-form.component';
-import { RedirectComponent } from './redirect/redirect.component';
+import {ViewAdmissionFormComponent} from './view-admission-form/view-admission-form.component';
+import {ViewAdmissionFormDetailComponent} from './view-admission-form-detail/view-admission-form-detail.component';
+import {ViewSlotComponent} from './view-slot/view-slot.component';
+import {AddSlotComponent} from './add-slot/add-slot.component';
+import {AddNewFormComponent} from './add-new-form/add-new-form.component';
+import {RedirectComponent} from './redirect/redirect.component';
 import {ViewSubjectsComponent} from './view-subjects/view-subjects.component';
 import {AddSubjectComponent} from './add-subject/add-subject.component';
 import {LogoutComponent} from './logout/logout.component';
-
-
+import {AccountingMenuBarComponent} from './accounting-menu-bar/accounting-menu-bar.component';
+import {AccountStaffGuard} from './account-staff.guard';
+import {AccountStaffConfirmStudentComponent} from './account-staff-confirm-student/account-staff-confirm-student.component';
 
 
 
@@ -45,7 +46,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'register', component: RegisterComponent},
-  {path:'redirect/:url/:param',component:RedirectComponent},
+  {path: 'redirect/:url/:param', component: RedirectComponent},
   {
     path: 'Admission-staff',
     component: AdmissionStaffMenubarComponent,
@@ -60,12 +61,27 @@ const routes: Routes = [
         component: ViewAdmissionFormComponent
       },
       {
-        path:'form-detail/:id',
-        component:ViewAdmissionFormDetailComponent
+        path: 'form-detail/:id',
+        component: ViewAdmissionFormDetailComponent
       },
       {
-        path:'addForm',
-        component:AddNewFormComponent
+        path: 'addForm',
+        component: AddNewFormComponent
+      }
+    ]
+  },
+  {
+    path: 'Account-staff',
+    component: AccountingMenuBarComponent,
+    canActivate: [AccountStaffGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'student',
+        component: AccountStaffConfirmStudentComponent
       }
     ]
   },

@@ -24,33 +24,11 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
   constructor(private atp: AmazingTimePickerService, private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
 
-  center: Center;
-  slotModel: Slot = {
-    $id: '',
-    ID: -1,
-    Center: this.center,
-    Name: '',
-    From: '00:00',
-    To: '00:00',
-    displayText:''
-  };
-  programId;
-  courseName = '';
-  image = '';
-  Fee = '';
-  Description = '';
-  totalSession: '';
-  subjectId = '';
-  centerId = {
-    Id: '',
-    name: ''
-  };
-  subjects: Subject[];
-
+  Name: string;
+  From = '00:00';
+  To = '00:00';
 
   ngOnInit() {
-    this.programId = this.route.snapshot.paramMap.get('id');
-    this.getSubjectsWithCenterId();
   }
 
   public loadScript(url: string) {
@@ -72,18 +50,14 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/js/TrainingDept/addcourse.js');
   }
 
-  addCourse() {
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddCourse';
+  addSlot() {
+    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddSlot';
     const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
     this.http.get(url).toPromise().then(data => {
         const body = new HttpParams()
-          .set('CourseName', this.courseName)
-          .set('Image', this.image)
-          .set('Fee', this.Fee)
-          .set('TotalSession', this.totalSession)
-          .set('Description', this.Description)
-          .set('ProgramId', this.programId)
-          .set('SubjectId', this.subjectId)
+          .set('Name', this.Name)
+          .set('From', this.From + ':00')
+          .set('To', this.To + ':00')
           .set('CenterId', data['Id']);
         console.log(body);
         this.http.post<any>(configUrl, body).toPromise().then(
@@ -98,56 +72,26 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
-    this.redirectToViewCourse();
+    this.redirectToViewSlot();
   }
 
-
-  onUploadCompleted($event: any) {
-    this.image = $event.originalUrl;
-  }
-
-  selectedValueChanged(value: any) {
-    this.subjectId = value;
-    console.log(value);
-  }
-
-  getSubjectsWithCenterId() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId.Id = data['Id'];
-        this.getAllSubjects();
-      },
-      error => {
-        console.log(error);
-      });
-
-  }
-
-  getAllSubjects() {
-
-    const body = new HttpParams()
-      .set('centerId', this.centerId.Id + '')
-      .set('subjectName', '');
-
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchSubject';
-    this.http.get<Subject[]>(configUrl, {params: body}).toPromise().then(res => {
-        console.log(res);
-        this.subjects = res;
-        console.log(this.subjects);
-      },
-      error => {
-        console.log(error);
-      });
-  }
-
-  redirectToViewCourse() {
-    this._router.navigate(['/Training-staff/view-course', this.programId]);
+  redirectToViewSlot() {
+    this._router.navigate(['/Training-staff/view-slot']);
   }
 
   chooseTimeFrom() {
     const amazingTimePicker = this.atp.open();
     amazingTimePicker.afterClose().subscribe(time => {
       console.log(time);
+      this.From = time;
+    });
+  }
+
+  chooseTimeTo() {
+    const amazingTimePicker = this.atp.open();
+    amazingTimePicker.afterClose().subscribe(time => {
+      console.log(time);
+      this.To = time;
     });
   }
 }

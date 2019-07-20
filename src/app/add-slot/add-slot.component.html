@@ -29,27 +29,26 @@
                 <div class="form-group">
                   <label for="courseName">Course Name:</label>
                   <div class="form-line">
-                    <input type="text" [(ngModel)]="slotModel.Name" class="form-control" placeholder="Name" id="courseName">
+                    <input type="text" [(ngModel)]="Name" class="form-control" placeholder="Name"
+                           id="courseName">
                   </div>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="slotFrom">From</label>
-                  <div class="form-line">
-                    <p style="display: inline;width: 80%" id="slotFrom">{{slotModel.From}}</p>
-                    <i style="display: inline;width: 20%; alignment: right" (click)="chooseTimeFrom()" class="zmdi zmdi-edit"></i>
-<!--                    <button id="slotFrom" (click)="chooseTimeFrom()" type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>-->
-<!--                    <input id="slotFrom" atp-time-picker value="19:00" onlyHour="false" onlyAM="false"/>-->
+                  <div class="form-line" (click)="chooseTimeFrom()">
+                    <p style="display: inline;width: 80%" id="slotFrom">{{From}}</p>
+                    <i style="display: inline;width: 20%; alignment: right" class="zmdi zmdi-edit"></i>
                   </div>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="slotTo">To:</label>
-                  <div class="form-line">
-                    <p style="display: inline;width: 80%" id="slotTo">{{slotModel.To}}</p>
-                    <i style="display: inline;width: 20%; alignment: right" (click)="chooseTimeFrom()" class="zmdi zmdi-edit"></i>
+                  <div class="form-line" (click)="chooseTimeTo()">
+                    <p style="display: inline;width: 80%" id="slotTo">{{To}}</p>
+                    <i style="display: inline;width: 20%; alignment: right" class="zmdi zmdi-edit"></i>
                   </div>
                 </div>
               </div>
@@ -57,9 +56,11 @@
 
             <div class="row clearfix">
               <div class="col-sm-12">
-                <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Course
+                <button (click)="addSlot()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Course
                 </button>
-                <button (click)="redirectToViewCourse()" type="submit" class="btn btn-raised btn-default waves-effect">Cancel</button>
+                <button (click)="redirectToViewSlot()" type="submit" class="btn btn-raised btn-default waves-effect">
+                  Cancel
+                </button>
               </div>
             </div>
           </div>

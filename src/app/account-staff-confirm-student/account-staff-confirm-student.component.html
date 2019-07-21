@@ -1,23 +1,38 @@
 <div class="row">
-
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 10px">
+  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
     <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course" (change)="ReLoadForm()"
       (clear)="ReLoadForm()" [(ngModel)]="selectedCourseId">
     </ng-select>
   </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 10px">
+  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
     <ng-select [items]="listForm" bindLabel="Name" bindValue="Id" [(ngModel)]="selectedFormId"
-      placeholder="Select status">
+      placeholder="Select Form">
     </ng-select>
   </div>
-
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 10px">
-    <input placeholder="Search..." id="coursename" maxlength="254" name="coursename" type="text">
+  <div class="col-lg-4 col-xl-4">
+    <div class="form-group">
+      <div class="form-line">
+        <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Type Name">
+      </div>
+    </div>
   </div>
   <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-    <button type="submit" name="_submit" (click)="loadStudentData()" class="btn searchBtn">Search</button>
+    <button type="submit" name="_submit" (click)="searchStudent()" class="btn searchBtn">Search</button>
   </div>
 </div>
+<div *ngIf="msg=='success'" class="alert alert-success alert-dismissible fade show" role="alert">
+  Data has been updated successfully
+  <button (click)="removeMessage()" type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div *ngIf="msg=='error'" class="alert alert-warning alert-dismissible fade show" role="alert">
+    Data has been updated unsuccessfully
+    <button (click)="removeMessage()" type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {{msg}}
 <div class="row clearfix all-program-content">
   <div *ngIf="empty"></div>
   <div *ngIf="!empty">
@@ -34,14 +49,19 @@
           <th scope="col">Parent's Name</th>
           <th scope="col">Parent's Phone</th>
           <th scope="col">Parent's Gmail</th>
-          <th scope="col">Payment Confirm</th>
-          <th scope="col">Payment Reject</th>
+          <th scope="col">Payment's Status</th>
+          <th scope="col">Action</th>
+
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let student of listStudent;let index = index;">
           <th></th>
-          <th scope="row">{{index}}</th>
+          <th scope="row">
+            <div class="checkbox">
+              <input type="checkbox" [(ngModel)]="student.selected" />
+            </div>
+          </th>
           <td>{{student.Name}}</td>
           <td>{{student.Email}}</td>
           <td>{{student.Dob}}</td>
@@ -50,22 +70,44 @@
           <td>{{student.Parent_Name}}</td>
           <td>{{student.Parent_Phone}}</td>
           <td>{{student.Parent_Gmail}}</td>
+          <td>{{student.IsPayment}}</td>
           <td>
-            <i class="fa fa-check" style="font-size:24px;color:green" aria-hidden="true"></i>
-
-          <td>
-            <i style="font-size:24px;color:red" class="fa">&#f00d;</i>
+            <div class="row">
+              <div class="col-lg-5 col-xl-5">
+                <button (click)="ConfirmFee(student,index)" class="confirm-btn"><i class="fa fa-check"
+                    style="font-size:24px;color:green" aria-hidden="true"></i></button>
+              </div>
+              <div class="col-lg-5 col-xl-5">
+                <button (click)="RejectFee(student,index)" class="confirm-btn"><i style="font-size:24px;color:red"
+                    class="fa fa-times"></i></button>
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 10px">
-      <p>Showing {{pageSize*currentPage-pageSize+1}} to {{pageSize*currentPage}} of {{totalData}} items</p>
+    <div class="row">
+      <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
+        <ng-select [items]="listPageSize" placeholder="Select page size" [(ngModel)]="pageSize"
+          (change)="changePageSize()">
+        </ng-select>
+      </div>
+      <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">
+        <p>Showing {{pageSize*currentPage-pageSize+1}} to {{pageSize*currentPage}} of {{totalData}} items</p>
+      </div>
+      <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
+        <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"
+          [(ngModel)]="currentPage" (change)="changePage()">
+        </ng-select>
+      </div>
     </div>
-    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
-    <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page" [(ngModel)]="currentPage"
-      (change)="loadStudentData()">
-    </ng-select>
+    <div class="row">
+      <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+        <button type="submit" name="_submit" (click)="ConfirmMultiple()" class="btn searchBtn">Confirm all</button>
+      </div>
+      <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+        <button type="submit" name="_submit" (click)="RejectMultiple()" class="btn searchBtn">Reject all</button>
+      </div>
     </div>
   </div>
 </div>

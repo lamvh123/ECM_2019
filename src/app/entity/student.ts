@@ -11,4 +11,5 @@ export class Student {
     Phone : string;
     sex : boolean;
     realSex:string;
+    selected:boolean = false;
 }

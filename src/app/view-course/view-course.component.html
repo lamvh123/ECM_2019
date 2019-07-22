@@ -15,7 +15,7 @@
     </div>
     <div class="row clearfix">
       <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
-        <div class="thumbnail card" style="min-width: 20vh">
+        <div class="thumbnail card" style="min-width: 20vh;border: #e6e6e6 1px solid">
           <ng-container
             *ngIf="course.Image!=null; then imgNotNull; else imgNull">
           </ng-container>

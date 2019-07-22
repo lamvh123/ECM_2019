@@ -43,55 +43,62 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     // });
   }
 
-  className(): String {
-    if (this._router.url == '/Training-staff/profile') {
+  className(): string {
+    if (this._router.url.includes('profile')) {
       return '/Training-staff/profile';
     }
-    if (this._router.url == '/Training-staff/view-program') {
-      return '/Training-staff/program';
+
+    if (this._router.url.includes('view-program')) {
+      return '/Training-staff/view-program';
     }
-    if (this._router.url.includes('/Training-staff/program-detail')) {
-      return '/Training-staff/program';
+    if (this._router.url.includes('program-detail')) {
+      return '/Training-staff/view-program';
     }
-    if (this._router.url.includes('/Training-staff/view-course')) {
-      return '/Training-staff/program';
-    }
-    if (this._router.url.includes('/Training-staff/add-course')) {
-      return '/Training-staff/program';
-    }
-    if (this._router.url.includes('/Training-staff/course-detail')) {
-      return '/Training-staff/program';
-    }
-    if (this._router.url.includes('/Training-staff/syllabus')) {
-      return '/Training-staff/program';
-    }
-    if (this._router.url == '/Training-staff/add-program') {
+    if (this._router.url.includes('add-program')) {
       return '/Training-staff/add-program';
     }
-    if (this._router.url == '/Training-staff/view-building') {
+
+    if (this._router.url.includes('view-course')) {
+      return '/Training-staff/view-course';
+    }
+    if (this._router.url.includes('course-detail')) {
+      return '/Training-staff/view-course';
+    }
+    if (this._router.url.includes('add-course')) {
+      return '/Training-staff/add-course';
+    }
+
+    // if (this._router.url.includes('/Training-staff/syllabus')) {
+    //   return '/Training-staff/program';
+    // }
+    if (this._router.url.includes('/Training-staff/view-building')) {
       return '/Training-staff/view-building';
     }
-    if (this._router.url == '/Training-staff/add-building') {
+    if (this._router.url.includes('/Training-staff/add-building')) {
       return '/Training-staff/add-building';
     }
-    if (this._router.url == '/Training-staff/view-room') {
+
+    if (this._router.url.includes('/Training-staff/view-room')) {
       return '/Training-staff/view-room';
     }
-    if (this._router.url == '/Training-staff/add-room') {
+    if (this._router.url.includes('/Training-staff/add-room')) {
       return '/Training-staff/add-room';
     }
-    if (this._router.url === '/Training-staff/view-slot') {
+
+    if (this._router.url.includes('/Training-staff/view-slot')) {
       return '/Training-staff/view-slot';
     }
-    if (this._router.url === '/Training-staff/add-slot') {
+    if (this._router.url.includes('/Training-staff/add-slot')) {
       return '/Training-staff/add-slot';
     }
-    if (this._router.url == '/Training-staff/add-subject') {
-      return '/Training-staff/add-subject';
-    }
-    if (this._router.url == '/Training-staff/view-subject') {
+
+    if (this._router.url.includes('/Training-staff/view-subject')) {
       return '/Training-staff/view-subject';
     }
+    if (this._router.url.includes('/Training-staff/add-subject')) {
+      return '/Training-staff/add-subject';
+    }
+
     return '';
 
   }

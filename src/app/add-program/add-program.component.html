@@ -66,7 +66,9 @@
               <!--            </div>-->
 
               <div class="col-sm-12">
-                <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Program
+                <button (click)="addProgram()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Program
+                  <!--                <button (click)="changeStatus()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add-->
+                  <!--                  Program-->
                 </button>
                 <button (click)="redirectToAllProgram()" type="submit" class="btn btn-raised btn-default waves-effect">
                   Cancel
@@ -77,6 +79,40 @@
         </div>
       </div>
     </div>
+    <!--    <div id="success-box" *ngIf="addStatus==1">-->
+    <!--      <div class="dot"></div>-->
+    <!--      <div class="dot two"></div>-->
+    <!--      <div class="face">-->
+    <!--        <div class="eye"></div>-->
+    <!--        <div class="eye right"></div>-->
+    <!--        <div class="mouth happy"></div>-->
+    <!--      </div>-->
+    <!--      <div class="shadow scale"></div>-->
+    <!--      <div class="message">-->
+    <!--        <h1 class="alert">Success!</h1>-->
+    <!--        <p>yay, everything is working.</p>-->
+    <!--      </div>-->
+    <!--      <button class="button-box" (click)="changeStatus()">-->
+    <!--        <h1 class="green">continue</h1>-->
+    <!--      </button>-->
+    <!--    </div>-->
+    <!--    <div id="error-box" *ngIf="addStatus==-1">-->
+    <!--      <div class="dot"></div>-->
+    <!--      <div class="dot two"></div>-->
+    <!--      <div class="face2">-->
+    <!--        <div class="eye"></div>-->
+    <!--        <div class="eye right"></div>-->
+    <!--        <div class="mouth sad"></div>-->
+    <!--      </div>-->
+    <!--      <div class="shadow move"></div>-->
+    <!--      <div class="message">-->
+    <!--        <h1 class="alert">Error!</h1>-->
+    <!--        <p>oh no, something went wrong.-->
+    <!--      </div>-->
+    <!--      <button class="button-box" (click)="changeStatus()">-->
+    <!--        <h1 class="red">try again</h1>-->
+    <!--      </button>-->
+    <!--    </div>-->
   </div>
 </section>
 

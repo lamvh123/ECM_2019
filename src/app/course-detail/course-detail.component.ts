@@ -70,8 +70,9 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   }
 
   loadCourseById() {
-    const body = new HttpParams().set('courseId', this.courseId)
-      .set('CenterId', this.centerId.Id);
+    const body = new HttpParams().set('courseId', this.courseId);
+    // const body = new HttpParams().set('courseId', this.courseId)
+    //   .set('CenterId', this.centerId.Id);
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCourseById';
     this.http.get<Course>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
@@ -109,15 +110,17 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
-            this.redirectToProgram(this.courseModel.Program.Id);
+            this.showMessage(true);
           },
           err => {
             console.log(err);
+            this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
@@ -138,6 +141,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
 
   }
@@ -156,12 +160,38 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
 
-  redirectToProgram(programId: number) {
-    this.routers.navigate(['/Training-staff/view-course', programId]);
+  // redirectToProgram(programId: number) {
+  //   this.routers.navigate(['/Training-staff/view-course', programId]);
+  // }
+
+
+  redirectToAllCourse() {
+    this.routers.navigateByUrl('/Training-staff/view-course/' + this.courseModel.Program.Id);
   }
 
+  redirectToUpdateCourse() {
+    this.routers.navigateByUrl('/Training-staff/course-detail' + this.courseModel.Id);
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'A course was updated successfully.' +
+        '\nDo you want to update anything else?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToUpdateCourse();
+    } else {
+      this.redirectToAllCourse();
+    }
+  }
 }

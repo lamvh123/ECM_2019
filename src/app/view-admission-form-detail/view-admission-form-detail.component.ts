@@ -29,15 +29,15 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   selectedSlot;
   boolArr: string[] = ['true', 'false'];
   selectedDayArr;
-  dayArr: any[] = [{ dayNumber: 2, dayString: 'Monday' }, { dayNumber: 3, dayString: 'Tuesday' },
-  { dayNumber: 4, dayString: 'Wednesday' }, { dayNumber: 5, dayString: 'Thursday' },
-  { dayNumber: 6, dayString: 'Friday' }, { dayNumber: 7, dayString: 'Saturday' }, { dayNumber: 8, dayString: 'Sunday' }];
+  dayArr: any[] = [{ dayNumber: 1, dayString: 'Monday' }, { dayNumber: 2, dayString: 'Tuesday' },
+  { dayNumber: 3, dayString: 'Wednesday' }, { dayNumber: 4, dayString: 'Thursday' },
+  { dayNumber: 5, dayString: 'Friday' }, { dayNumber: 6, dayString: 'Saturday' }, { dayNumber: 0, dayString: 'Sunday' }];
   public selectedBuilding = 0;
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private datepipe: DatePipe) { }
 
   ngOnInit() {
-   
+
     this.formId = this.route.snapshot.paramMap.get('id');
     this.form = new AdmissionForm();
     this.getInitData();

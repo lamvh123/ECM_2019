@@ -1,5 +1,5 @@
 <!-- main content -->
-<section class="content">
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
   <div class="container-fluid">
     <div class="block-header">
       <h2>Add Building</h2>
@@ -56,7 +56,7 @@
 <!--              </div>-->
               <div class="col-sm-12">
                 <button type="submit" (click)="addBuilding()" class="btn btn-raised g-bg-blush2">Submit</button>
-                <button type="submit" class="btn btn-raised btn-default">Cancel</button>
+                <button type="submit" (click)="redirectToViewBuilding()" class="btn btn-raised btn-default">Cancel</button>
               </div>
             </div>
           </div>

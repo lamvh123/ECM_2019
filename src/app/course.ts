@@ -18,4 +18,5 @@ export class Course {
   Subject: Subject;
   Syllabuses: any;
   UpdatedAt: string;
+  $ref: string;
 }

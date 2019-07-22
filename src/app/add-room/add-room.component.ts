@@ -59,14 +59,17 @@ export class AddRoomComponent implements OnInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
+            this.showMessage(true);
           },
           err => {
             console.log(err);
+            this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
 
   }
@@ -82,6 +85,7 @@ export class AddRoomComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
 
   }
@@ -100,11 +104,39 @@ export class AddRoomComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
   selectedValueChanged(value: any) {
     this.buildingId = value;
     console.log(value);
+  }
+
+
+
+  redirectToAllRoom() {
+    this._router.navigateByUrl('/Training-staff/view-room');
+  }
+
+  redirectToAddRoom() {
+    this._router.navigateByUrl('/Training-staff/add-room');
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'A room was added successfully.' +
+        '\nDo you want to add more rooms?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToAddRoom();
+    } else {
+      this.redirectToAllRoom();
+    }
   }
 }

@@ -16,7 +16,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
     , '../../assets/css/themes/all-themes.css']
 })
 export class AddSubjectComponent implements OnInit, AfterViewInit {
-  Name: string;;
+  Name: string;
+;
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -53,19 +54,43 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
-            this.redirectToViewSubject();
+            this.showMessage(true);
           },
           err => {
             console.log(err);
+            this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
-  redirectToViewSubject() {
-    this.router.navigate(['/Training-staff/view-subject']);
+
+  redirectToAllSubject() {
+    this.router.navigateByUrl('/Training-staff/view-subject');
+  }
+
+  redirectToAddSubject() {
+    this.router.navigateByUrl('/Training-staff/add-subject');
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'A subject was added successfully.' +
+        '\nDo you want to add more subjects?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToAddSubject();
+    } else {
+      this.redirectToAllSubject();
+    }
   }
 }

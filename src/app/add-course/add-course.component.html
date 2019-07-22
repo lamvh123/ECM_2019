@@ -44,7 +44,7 @@
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="form-group">
-                  <label for="courseFee">Fee:</label>
+                  <label for="courseFee">Fee (VND):</label>
                   <div class="form-line">
                     <input type="number" [(ngModel)]="Fee" class="form-control" placeholder="Course Price"
                            id="courseFee">
@@ -79,7 +79,7 @@
                   <img *ngIf="image!=''" src="{{image}}"
                        [ngStyle]="{'width':'100%', 'height':'100%', 'object-fit': 'cover'}">
                   <div *ngIf="image==''" class="dz-message">
-                    <h3>Upload image of program</h3>
+                    <h3>Upload image of course</h3>
                   </div>
                 </form>
               </div>

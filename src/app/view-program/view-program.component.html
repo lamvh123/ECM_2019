@@ -23,7 +23,7 @@
 
     <div class="row clearfix">
       <div *ngFor="let program of programs" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
-        <div class="thumbnail card" style="min-width: 20vh">
+        <div class="thumbnail card" style="min-width: 20vh;border: #e6e6e6 1px solid">
           <ng-container
             *ngIf="program.Image!=null; then imgNotNull; else imgNull">
           </ng-container>

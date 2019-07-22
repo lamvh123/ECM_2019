@@ -170,15 +170,17 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
-            this.redirectToViewCourse();
+            this.showMessage(true);
           },
           err => {
             console.log(err);
+            this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
@@ -200,6 +202,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
 
   }
@@ -218,10 +221,37 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
+  // redirectToViewCourse() {
+  //   this.router.navigate(['/Training-staff/view-course', this.programId]);
+  // }
+
+
+  redirectToAddCourse() {
+    this.router.navigateByUrl('/Training-staff/add-course/' + this.programId);
+  }
+
   redirectToViewCourse() {
-    this.router.navigate(['/Training-staff/view-course', this.programId]);
+    this.router.navigateByUrl('/Training-staff/view-course/' + this.programId);
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'A course was added successfully.' +
+        '\nDo you want to add more courses?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToAddCourse();
+    } else {
+      this.redirectToViewCourse();
+    }
   }
 }

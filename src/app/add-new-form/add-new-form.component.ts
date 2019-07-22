@@ -26,9 +26,9 @@ export class AddNewFormComponent implements OnInit {
   listBuilding: Observable<Building[]>;
   form: AdmissionForm;
   selectedDayArr: any[];
-  dayArr: any[] = [{dayNumber: 2, dayString: 'Monday'}, {dayNumber: 3, dayString: 'Tuesday'},
-    {dayNumber: 4, dayString: 'Wednesday'}, {dayNumber: 5, dayString: 'Thursday'},
-    {dayNumber: 6, dayString: 'Friday'}, {dayNumber: 7, dayString: 'Saturday'}, {dayNumber: 8, dayString: 'Sunday'}];
+  dayArr: any[] = [{dayNumber: 1, dayString: 'Monday'}, {dayNumber: 2, dayString: 'Tuesday'},
+    {dayNumber: 3, dayString: 'Wednesday'}, {dayNumber: 4, dayString: 'Thursday'},
+    {dayNumber: 5, dayString: 'Friday'}, {dayNumber: 6, dayString: 'Saturday'}, {dayNumber: 0, dayString: 'Sunday'}];
   listOfSlot: Slot[];
   selectedSlot;
 
@@ -118,5 +118,31 @@ export class AddNewFormComponent implements OnInit {
       });
   }
 
+
+
+  // redirectToAllProgram() {
+  //   this.router.navigateByUrl('/Training-staff/view-program');
+  // }
+  //
+  // redirectToAddProgram() {
+  //   this.router.navigateByUrl('/Training-staff/add-program');
+  // }
+  //
+  // private showMessage(status: boolean) {
+  //   let messageConfirm;
+  //   if (status) {
+  //     messageConfirm = 'A program was added successfully.' +
+  //       '\nDo you want to add more programs?';
+  //   } else {
+  //     messageConfirm = 'Something go wrong.' +
+  //       '\nDo you want to try again?';
+  //   }
+  //   const r = confirm(messageConfirm);
+  //   if (r === true) {
+  //     this.redirectToAddProgram();
+  //   } else {
+  //     this.redirectToAllProgram();
+  //   }
+  // }
 
 }

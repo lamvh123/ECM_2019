@@ -59,15 +59,42 @@ export class AddBuildingComponent implements OnInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
+            this.showMessage(true);
           },
           err => {
             console.log(err);
+            this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
 
+  }
+
+  redirectToViewBuilding() {
+    this._router.navigateByUrl('/Training-staff/view-building');
+  }
+  redirectToAddBuilding() {
+    this._router.navigateByUrl('/Training-staff/add-building');
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'A building was added successfully.' +
+        '\nDo you want to add more buildings?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToAddBuilding();
+    } else {
+      this.redirectToViewBuilding();
+    }
   }
 }

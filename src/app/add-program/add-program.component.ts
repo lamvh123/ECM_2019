@@ -143,7 +143,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   }
 
   //this is add program
-  addCourse() {
+  addProgram() {
     console.log(this.description);
 
     const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddProgram';
@@ -157,15 +157,17 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
-            this.redirectToAllProgram();
+            this.showMessage(true);
           },
           err => {
             console.log(err);
+            this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
@@ -174,6 +176,27 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   }
 
   redirectToAllProgram() {
-    this.router.navigate(['/Training-staff/view-program']);
+    this.router.navigateByUrl('/Training-staff/view-program');
+  }
+
+  redirectToAddProgram() {
+    this.router.navigateByUrl('/Training-staff/add-program');
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'A program was added successfully.' +
+        '\nDo you want to add more programs?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToAddProgram();
+    } else {
+      this.redirectToAllProgram();
+    }
   }
 }

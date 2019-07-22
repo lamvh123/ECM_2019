@@ -1,5 +1,5 @@
 <!-- main content -->
-<section class="content">
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
   <div class="container-fluid">
     <div class="block-header">
       <h2>Add Room</h2>
@@ -71,7 +71,7 @@
               <!--              </div>-->
               <div class="col-sm-12">
                 <button type="submit" (click)="addRoom()" class="btn btn-raised g-bg-blush2">Add Room</button>
-                <button type="submit" class="btn btn-raised btn-default">Cancel</button>
+                <button type="submit" (click)="redirectToAllRoom()" class="btn btn-raised btn-default">Cancel</button>
               </div>
             </div>
           </div>

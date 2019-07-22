@@ -145,6 +145,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
       },
       err => {
         console.log(err);
+        this.showMessage(false);
       }
     );
   }
@@ -163,15 +164,18 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
-            this.redirectToAllPrograms();
+            this.showMessage(true);
+            // this.redirectToAllPrograms();
           },
           err => {
             console.log(err);
+            this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
@@ -190,5 +194,31 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
       editor.ui.view.toolbar.element,
       editor.ui.getEditableElement()
     );
+  }
+
+
+  redirectToAllProgram() {
+    this._router.navigateByUrl('/Training-staff/view-program');
+  }
+
+  redirectToUpdateProgram() {
+    this._router.navigateByUrl('/Training-staff/program-detail' + this.programId);
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'A program was updated successfully.' +
+        '\nDo you want to update anything else?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToUpdateProgram();
+    } else {
+      this.redirectToAllProgram();
+    }
   }
 }

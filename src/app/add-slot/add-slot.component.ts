@@ -63,21 +63,20 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
+            this.showMessage(true);
           },
           err => {
             console.log(err);
+            this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
-    this.redirectToViewSlot();
   }
 
-  redirectToViewSlot() {
-    this._router.navigate(['/Training-staff/view-slot']);
-  }
 
   chooseTimeFrom() {
     const amazingTimePicker = this.atp.open();
@@ -93,5 +92,32 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
       console.log(time);
       this.To = time;
     });
+  }
+
+
+
+  redirectToAllSlot() {
+    this._router.navigateByUrl('/Training-staff/view-slot');
+  }
+
+  redirectToAddSlot() {
+    this._router.navigateByUrl('/Training-staff/add-slot');
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'A slot was added successfully.' +
+        '\nDo you want to add more slots?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToAddSlot();
+    } else {
+      this.redirectToAllSlot();
+    }
   }
 }

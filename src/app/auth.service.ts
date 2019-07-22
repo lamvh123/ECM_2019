@@ -78,4 +78,13 @@ export class AuthService {
     }
     return false;
   }
+
+  centerAdminLoggedIn(){
+    var role = localStorage.getItem('role');
+    console.log(role);
+    if (this.logedIn() && role == 'CenterAdmin') {
+      return true;
+    }
+    return false;
+  }
 }

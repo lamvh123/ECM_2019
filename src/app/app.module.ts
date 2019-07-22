@@ -54,7 +54,9 @@ import { AddNewFormComponent } from './add-new-form/add-new-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AccountingMenuBarComponent } from './accounting-menu-bar/accounting-menu-bar.component';
 import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-student/account-staff-confirm-student.component';
-
+import { CenterAdminMenubarComponent } from './center-admin-menubar/center-admin-menubar.component';
+import { CenterAdminGrantAccountComponent } from './center-admin-grant-account/center-admin-grant-account.component';
+import { NgHttpLoaderModule } from 'ng-http-loader'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,7 +92,9 @@ import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-stu
     ViewSubjectsComponent,
     LogoutComponent,
     AccountingMenuBarComponent,
-    AccountStaffConfirmStudentComponent
+    AccountStaffConfirmStudentComponent,
+    CenterAdminMenubarComponent,
+    CenterAdminGrantAccountComponent
 
   ],
   imports: [
@@ -103,6 +107,7 @@ import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-stu
     NgSelect2Module,
     AmazingTimePickerModule,
     CKEditorModule,
+    NgHttpLoaderModule
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

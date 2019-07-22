@@ -42,7 +42,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (!!this._auth.accountingStaffLoggedin()) {
       this._router.navigate(['/Account-staff/profile'])
     }
-
+    if(!!this._auth.centerAdminLoggedIn()){
+      this._router.navigate(['/CenterAdmin/profile'])
+    }
 
   }
 
@@ -88,6 +90,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         if (this._auth.accountingStaffLoggedin()) {
           this._router.navigate(['/Account-staff/profile'])
+        }
+        if(this._auth.centerAdminLoggedIn()){
+          this._router.navigate(['/CenterAdmin/profile'])
         }
       },
       err => {

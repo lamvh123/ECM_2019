@@ -8,4 +8,5 @@ export class Slot {
   To: string;
   Center: Center;
   displayText: string;
+  $ref: string
 }

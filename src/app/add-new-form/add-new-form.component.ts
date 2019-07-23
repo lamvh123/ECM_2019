@@ -51,6 +51,7 @@ export class AddNewFormComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
@@ -73,6 +74,7 @@ export class AddNewFormComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
@@ -88,6 +90,7 @@ export class AddNewFormComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
@@ -110,39 +113,41 @@ export class AddNewFormComponent implements OnInit {
         console.log(data);
         if (data['Id'] != null && data['Id'] != 0) {
 
-          this.router.navigate(['/redirect', '/Admission-staff/form-detail', data['Id']]);
+          // this.router.navigate(['/redirect', '/Admission-staff/form-detail', data['Id']]);
         }
+        this.showMessage(true);
       },
       error => {
         console.log(error);
+        this.showMessage(false);
       });
   }
 
 
 
-  // redirectToAllProgram() {
-  //   this.router.navigateByUrl('/Training-staff/view-program');
-  // }
-  //
-  // redirectToAddProgram() {
-  //   this.router.navigateByUrl('/Training-staff/add-program');
-  // }
-  //
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A program was added successfully.' +
-  //       '\nDo you want to add more programs?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToAddProgram();
-  //   } else {
-  //     this.redirectToAllProgram();
-  //   }
-  // }
+  redirectToAllAdmissionForm() {
+    this.router.navigateByUrl('/Admission-staff/admissionform');
+  }
+
+  redirectToAddAdmissionForm() {
+    this.router.navigateByUrl('/Admission-staff/addForm');
+  }
+
+  private showMessage(status: boolean) {
+    let messageConfirm;
+    if (status) {
+      messageConfirm = 'An admission form was added successfully.' +
+        '\nDo you want to add more admission forms?';
+    } else {
+      messageConfirm = 'Something go wrong.' +
+        '\nDo you want to try again?';
+    }
+    const r = confirm(messageConfirm);
+    if (r === true) {
+      this.redirectToAddAdmissionForm();
+    } else {
+      this.redirectToAllAdmissionForm();
+    }
+  }
 
 }

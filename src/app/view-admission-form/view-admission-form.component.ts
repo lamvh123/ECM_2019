@@ -6,6 +6,7 @@ import {Course} from '../course';
 import {async} from '@angular/core/testing';
 import {AdmissionForm} from '../admission-form';
 import {Program} from '../program';
+import {Slot} from '../slot';
 
 @Component({
   selector: 'app-view-admission-form',
@@ -23,6 +24,7 @@ export class ViewAdmissionFormComponent implements OnInit {
   startDate;
   boolArr: string[] = ['true', 'false'];
   availbleCourses: Course[] = [];
+  availbleSlots: Slot[] = [];
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -70,6 +72,7 @@ export class ViewAdmissionFormComponent implements OnInit {
         console.log(data);
         this.listForm = data;
         this.getAvailbleCourses();
+        this.getAvailbleSlots();
       },
       error => {
         console.log(error);
@@ -94,6 +97,24 @@ export class ViewAdmissionFormComponent implements OnInit {
     for (const c of this.availbleCourses) {
       if (c.$id === refId) {
         return c;
+      }
+    }
+    return null;
+  }
+
+  getAvailbleSlots() {
+    for (const f of this.listForm) {
+      if (f.Slot.$ref == null) {
+        this.availbleSlots.push(f.Slot);
+      }
+    }
+    console.log(this.availbleSlots);
+  }
+
+  getSlotByRefId(refId: string) {
+    for (const s of this.availbleSlots) {
+      if (s.$id === refId) {
+        return s;
       }
     }
     return null;

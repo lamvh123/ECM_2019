@@ -44,7 +44,13 @@
               </h3>
               Start date: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>
               <!--              Day(s) in week: <strong class="col-green">{{form.}}</strong><br/>-->
-              Slot: <strong class="col-green">{{form.Slot.From}}-{{form.Slot.To}}</strong><br/>
+              <ng-container *ngIf="form.Slot.$ref==null; then refSlotIsNull; else refSlotNotNull;"></ng-container>
+              <ng-template #refSlotIsNull>
+                Slot: <strong class="col-green">{{form.Slot.From}}-{{form.Slot.To}}</strong><br/>
+              </ng-template>
+              <ng-template #refSlotNotNull>
+                Slot: <strong class="col-green">{{getSlotByRefId(form.Slot.$ref).From}}-{{getSlotByRefId(form.Slot.$ref).To}}</strong><br/>
+              </ng-template>
               <div class="btn-group-align">
                 <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"
                         (click)="navigateToAdmissionFormDetail(form)">Detail</a></div>
@@ -73,7 +79,13 @@
               <h3>{{getCoursegById(form.Course.$ref).Name}}</h3>
               Start date: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>
               <!--              Day(s) in week: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>-->
-              Slot: <strong class="col-green">{{form.Slot.From}}-{{form.Slot.To}}</strong><br/>
+              <ng-container *ngIf="form.Slot.$ref==null; then refSlotIsNull; else refSlotNotNull;"></ng-container>
+              <ng-template #refSlotIsNull>
+                Slot: <strong class="col-green">{{form.Slot.From}}-{{form.Slot.To}}</strong><br/>
+              </ng-template>
+              <ng-template #refSlotNotNull>
+                Slot: <strong class="col-green">{{getSlotByRefId(form.Slot.$ref).From}}-{{getSlotByRefId(form.Slot.$ref).To}}</strong><br/>
+              </ng-template>
               <div class="btn-group-align">
                 <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"
                         (click)="navigateToAdmissionFormDetail(form)">Detail</a></div>

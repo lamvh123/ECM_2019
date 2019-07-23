@@ -56,7 +56,8 @@ import { AccountingMenuBarComponent } from './accounting-menu-bar/accounting-men
 import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-student/account-staff-confirm-student.component';
 import { CenterAdminMenubarComponent } from './center-admin-menubar/center-admin-menubar.component';
 import { CenterAdminGrantAccountComponent } from './center-admin-grant-account/center-admin-grant-account.component';
-import { NgHttpLoaderModule } from 'ng-http-loader'; 
+import { NgHttpLoaderModule } from 'ng-http-loader';
+import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,7 +95,8 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
     AccountingMenuBarComponent,
     AccountStaffConfirmStudentComponent,
     CenterAdminMenubarComponent,
-    CenterAdminGrantAccountComponent
+    CenterAdminGrantAccountComponent,
+    CenterStaffViewClosedAdmissionFormComponent
 
   ],
   imports: [

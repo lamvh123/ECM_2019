@@ -76,7 +76,9 @@
             </ng-template>
 
             <div class="caption  body">
-              <h3>{{getCoursegById(form.Course.$ref).Name}}</h3>
+              <h3>{{getCoursegById(form.Course.$ref).Name}}
+                <span *ngIf="form.IsClosed" class="closed-form">(Closed)</span>
+              </h3>
               Start date: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>
               <!--              Day(s) in week: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>-->
               <ng-container *ngIf="form.Slot.$ref==null; then refSlotIsNull; else refSlotNotNull;"></ng-container>

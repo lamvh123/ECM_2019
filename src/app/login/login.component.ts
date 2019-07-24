@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 declare var jquery: any;
 declare var $: any;
@@ -10,11 +10,16 @@ declare var logInForm: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css', '../../assets/css/main.css',
-    '../../assets/css/themes/all-themes.css', '../../assets/css/login.css',
+  styleUrls: ['./login.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css'
+    , '../../assets/css/login.css',
   ]
 })
 export class LoginComponent implements OnInit, AfterViewInit {
+  loginFail = false;
+  loginMessage: string;
   loginUserData = {
     username: '',
     password: '',
@@ -22,7 +27,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   };
 
   constructor(private _auth: AuthService,
-    private _router: Router, private http: HttpClient) {
+              private _router: Router, private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -40,10 +45,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/Admission-staff/profile']);
     }
     if (!!this._auth.accountingStaffLoggedin()) {
-      this._router.navigate(['/Account-staff/profile'])
+      this._router.navigate(['/Account-staff/profile']);
     }
-    if(!!this._auth.centerAdminLoggedIn()){
-      this._router.navigate(['/CenterAdmin/profile'])
+    if (!!this._auth.centerAdminLoggedIn()) {
+      this._router.navigate(['/CenterAdmin/profile']);
     }
 
   }
@@ -55,7 +60,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -71,32 +76,32 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginUser() {
     const body = new HttpParams()
       .set('username', this.loginUserData.username)
-      .set('password', this.loginUserData.password).set('grant_type', 'password');
+      .set('password', this.loginUserData.password)
+      .set('grant_type', 'password');
     this.http.post<any>('https://educationcentermanagementapi-dev-as.azurewebsites.net/token', body).subscribe(
       res => {
         var expireDate = new Date(new Date().getTime() + 60 * 24 * 60000);
         localStorage.setItem('token', res.access_token);
         localStorage.setItem('role', res.role);
-        localStorage.setItem('expiretime', expireDate.getTime() + "");
+        localStorage.setItem('expiretime', expireDate.getTime() + '');
         if (this._auth.adminLogedIn()) {
-          // this._router.navigate(['/Admin-menu']);
           this._router.navigate(['/Admin-menu/profile']);
-        }
-        if (this._auth.trainingStaffLogedIn()) {
+        } else if (this._auth.trainingStaffLogedIn()) {
           this._router.navigate(['/Training-staff/profile']);
-        }
-        if (this._auth.admissionStaffLogedIn()) {
+        } else if (this._auth.admissionStaffLogedIn()) {
           this._router.navigate(['/Admission-staff/profile']);
-        }
-        if (this._auth.accountingStaffLoggedin()) {
-          this._router.navigate(['/Account-staff/profile'])
-        }
-        if(this._auth.centerAdminLoggedIn()){
-          this._router.navigate(['/CenterAdmin/profile'])
+        } else if (this._auth.accountingStaffLoggedin()) {
+          this._router.navigate(['/Account-staff/profile']);
+        } else if (this._auth.centerAdminLoggedIn()) {
+          this._router.navigate(['/CenterAdmin/profile']);
+        } else {
+          console.log(res);
         }
       },
       err => {
         console.log(err);
+        this.loginMessage = err.error.error_description;
+        this.loginFail = true;
       }
     );
 

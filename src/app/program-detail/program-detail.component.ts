@@ -202,7 +202,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   }
 
   redirectToUpdateProgram() {
-    this._router.navigateByUrl('/Training-staff/program-detail' + this.programId);
+    this._router.navigateByUrl('/Training-staff/program-detail/' + this.programId);
   }
 
   private showMessage(status: boolean) {

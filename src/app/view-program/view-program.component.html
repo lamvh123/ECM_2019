@@ -1,7 +1,8 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
   <div class="container-fluid">
     <div class="block-header">
-      <h2>All Programs</h2>
+      <h2 *ngIf="programs!=null && programs.length>0">All Programs</h2>
+      <h2 *ngIf="programs==null || programs.length<=0">There is no program in database.</h2>
       <!--      <small class="text-muted">Welcome to Swift application</small>-->
     </div>
 

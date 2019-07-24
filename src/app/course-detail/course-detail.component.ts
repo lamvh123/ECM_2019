@@ -175,7 +175,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   }
 
   redirectToUpdateCourse() {
-    this.routers.navigateByUrl('/Training-staff/course-detail' + this.courseModel.Id);
+    this.routers.navigateByUrl('/Training-staff/course-detail/' + this.courseModel.Id);
   }
 
   private showMessage(status: boolean) {

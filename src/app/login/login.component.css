@@ -1,8 +1,21 @@
 
-:host{
+:host {
   width: 100%;
 }
 
-.login-page{
+.login-page {
   min-height: 100vh;
+}
+
+.alert-fix {
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem
+}
+
+.alert-danger-fix {
+  background-color: #f2dede;
+  border-color: #ebcccc;
+  color: #a94442
 }

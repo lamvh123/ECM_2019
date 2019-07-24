@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="block-header">
       <h2>Add Room</h2>
-      <small class="text-muted">Welcome to Swift application</small>
+<!--      <small class="text-muted">Welcome to Swift application</small>-->
     </div>
     <div class="row clearfix">
       <div class="col-lg-12 col-md-12">
@@ -28,23 +28,26 @@
             <div class="row clearfix">
               <div class="col-sm-12">
                 <div class="form-group">
+                  <label for="roomName">Room name:</label>
                   <div class="form-line">
-                    <input type="text" class="form-control" placeholder="Room Number " [(ngModel)]="roomNumber">
+                    <input type="text" class="form-control" placeholder="Room Number " [(ngModel)]="roomNumber" id="roomName">
                   </div>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
+                  <label for="capacity">Capacity:</label>
                   <div class="form-line">
-                    <input type="text" class="form-control" placeholder="Capacity" [(ngModel)]="capacity">
+                    <input type="text" class="form-control" placeholder="Capacity" [(ngModel)]="capacity" id="capacity">
                   </div>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-md-12">
                 <div class="form-group drop-custum">
+                  <label for="selectBuidling">Select Buidling:</label>
                   <select [(ngModel)]="selectedName" class="form-control show-tick"
-                          (change)="selectedValueChanged($event.target.value)">
-                    <option value="" selected>--- Choose Building ---</option>
+                          (change)="selectedValueChanged($event.target.value)" id="selectBuidling">
+<!--                    <option value="" selected>-&#45;&#45; Choose Building -&#45;&#45;</option>-->
                     <option *ngFor="let building of buildings" [value]="building.Id">
                       {{building.Name}}
                     </option>

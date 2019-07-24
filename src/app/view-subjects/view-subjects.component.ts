@@ -7,7 +7,10 @@ import {Subject} from '../subject';
 @Component({
   selector: 'app-view-subjects',
   templateUrl: './view-subjects.component.html',
-  styleUrls: ['./view-subjects.component.css']
+  styleUrls: ['./view-subjects.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class ViewSubjectsComponent implements OnInit, AfterViewInit {
 

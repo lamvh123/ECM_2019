@@ -37,7 +37,7 @@
 <!--              </div>-->
               <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">
-                  <label for="courseTotalSession"> Start Date</label>
+                  <label for="startdate"> Start Date</label>
                   <div class="form-line">
                     <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"
                       id="startdate" />
@@ -47,9 +47,9 @@
 
               <div class="col-lg-4 col-md-6 col-md-12">
                 <div style="padding-top: 19px;">
-                  <label for="courseSubject">Location:</label>
+                  <label for="building">Location:</label>
                   <ng-select [items]="listBuilding" bindLabel="Name" bindValue="Id" placeholder="Select building"
-                    [(ngModel)]="selectedBuilding">
+                    [(ngModel)]="selectedBuilding" id="building">
                   </ng-select>     
                 </div>
               </div>
@@ -68,7 +68,7 @@
                 <div style="padding-top: 19px;">
                   <label for="listDay">Selected days:</label>
                   <ng-select [items]="dayArr" bindLabel="dayString" bindValue="dayNumber" placeholder="Select day of week" multiple="true"
-                    [(ngModel)]="selectedDayArr">
+                    [(ngModel)]="selectedDayArr" id="listDay">
                   </ng-select>   
                 
                 </div>
@@ -78,7 +78,7 @@
                 <div style="padding-top: 19px;">
                   <label for="selectedSlot">Selected slot:</label>
                   <ng-select [items]="listOfSlot" bindLabel="displayText" bindValue="ID" placeholder="Select time " 
-                    [(ngModel)]="selectedSlot">
+                    [(ngModel)]="selectedSlot" id="selectedSlot">
                   </ng-select>   
                 
                 </div>

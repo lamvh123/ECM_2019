@@ -57,10 +57,14 @@ import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-stu
 import { CenterAdminMenubarComponent } from './center-admin-menubar/center-admin-menubar.component';
 import { CenterAdminGrantAccountComponent } from './center-admin-grant-account/center-admin-grant-account.component';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+
 import { AutoGenerateClassComponent } from './auto-generate-class/auto-generate-class.component';
 import { AutoGenerateTimetableComponent } from './auto-generate-timetable/auto-generate-timetable.component';
 import { ListOfClassComponent } from './list-of-class/list-of-class.component';
 import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component'; 
+
+import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component'; 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,8 +106,8 @@ import { ListStudentOfClassComponent } from './list-student-of-class/list-studen
     AutoGenerateClassComponent,
     AutoGenerateTimetableComponent,
     ListOfClassComponent,
-    ListStudentOfClassComponent
-
+    ListStudentOfClassComponent,
+    CenterStaffViewClosedAdmissionFormComponent
   ],
   imports: [
     BrowserModule,

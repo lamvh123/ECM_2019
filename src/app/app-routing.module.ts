@@ -39,6 +39,10 @@ import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-stu
 import { CenterAdminMenubarComponent } from './center-admin-menubar/center-admin-menubar.component';
 import { CenterAdminGrantAccountComponent } from './center-admin-grant-account/center-admin-grant-account.component';
 import { CenterAdminGuard } from './center-admin.guard';
+import { AutoGenerateClassComponent } from './auto-generate-class/auto-generate-class.component';
+import { AutoGenerateTimetableComponent } from './auto-generate-timetable/auto-generate-timetable.component';
+import { ListOfClassComponent } from './list-of-class/list-of-class.component';
+import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component';
 
 
 
@@ -158,6 +162,22 @@ const routes: Routes = [
         path: 'add-subject',
         component: AddSubjectComponent
       },
+      {
+        path:'GenerateClass',
+        component : AutoGenerateClassComponent
+      },
+      {
+        path:'GenerateTimetable',
+        component: AutoGenerateTimetableComponent
+      },
+      {
+        path:'ListClasses',
+        component:ListOfClassComponent
+      },
+      {
+        path:'ListStudentOfClass',
+        component:ListStudentOfClassComponent
+      }
       // {
       //   path: 'course-detail/:id',
       //   component: CourseDetailComponent

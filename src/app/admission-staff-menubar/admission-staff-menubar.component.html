@@ -462,7 +462,7 @@
 <section class="content">
   <div class="container-fluid">
     <div class="row clearfix">
-      <router-outlet></router-outlet>
+      <router-outlet (activate)="receiveMsg($event)"></router-outlet>
     </div>
   </div>
 </section>

@@ -19,28 +19,13 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
 
   urlName;
   programName = '';
-
-  ngOnInit() {
+  receiveMsg($event){
     this.urlName = this.className();
     console.log(this.urlName);
-    //   $(document).ready(function() {
-    //     alert('ok');
-    //     // $() will work as an alias for jQuery() inside of this function
-    //     $.getScript("/assets/bundles/libscripts.bundle.js", function (data, textStatus, jqxhr) {
-    //       console.log( textStatus );
-    //     });
-    //     console.log("ok1");
-    //     $.getScript("/assets/bundles/vendorscripts.bundle.js", function (data, textStatus, jqxhr) {
-    //       console.log( textStatus );
-    //     });
-    //     console.log("ok1");
-    //     $.getScript("/assets/bundles/mainscripts.bundle.js", function (data, textStatus, jqxhr) {
-    //       console.log( textStatus );
-    //     });
-    //     console.log("ok1");
-    //      $('.dtp-content').hide();
-
-    // });
+  }
+  ngOnInit() {
+    // this.urlName = this.className();
+    // console.log(this.urlName);
   }
 
   className(): string {
@@ -97,6 +82,12 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     }
     if (this._router.url.includes('/Training-staff/add-subject')) {
       return '/Training-staff/add-subject';
+    }
+    if(this._router.url.includes('/Training-staff/GenerateClass')){
+      return '/Training-staff/GenerateClass';
+    }
+    if(this._router.url.includes('/Training-staff/GenerateTimetable')){
+      return '/Training-staff/GenerateTimetable';
     }
 
     return '';

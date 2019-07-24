@@ -45,6 +45,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if(!!this._auth.centerAdminLoggedIn()){
       this._router.navigate(['/CenterAdmin/profile'])
     }
+    if(!!this._auth.StudentLoggedIn()){
+      this._router.navigate(['/Student/profile'])
+    }
 
   }
 
@@ -93,6 +96,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         if(this._auth.centerAdminLoggedIn()){
           this._router.navigate(['/CenterAdmin/profile'])
+        }
+        if(!!this._auth.StudentLoggedIn()){
+          this._router.navigate(['/Student/profile'])
         }
       },
       err => {

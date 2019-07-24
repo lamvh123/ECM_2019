@@ -63,7 +63,9 @@ import { AutoGenerateTimetableComponent } from './auto-generate-timetable/auto-g
 import { ListOfClassComponent } from './list-of-class/list-of-class.component';
 import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component'; 
 
-import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component'; 
+import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component';
+import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
+import { ViewTimetableComponent } from './view-timetable/view-timetable.component'; 
 
 @NgModule({
   declarations: [
@@ -107,7 +109,9 @@ import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view
     AutoGenerateTimetableComponent,
     ListOfClassComponent,
     ListStudentOfClassComponent,
-    CenterStaffViewClosedAdmissionFormComponent
+    CenterStaffViewClosedAdmissionFormComponent,
+    OfficalStudentMenuBarComponent,
+    ViewTimetableComponent
   ],
   imports: [
     BrowserModule,

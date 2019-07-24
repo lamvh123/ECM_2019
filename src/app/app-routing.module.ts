@@ -43,6 +43,9 @@ import { AutoGenerateClassComponent } from './auto-generate-class/auto-generate-
 import { AutoGenerateTimetableComponent } from './auto-generate-timetable/auto-generate-timetable.component';
 import { ListOfClassComponent } from './list-of-class/list-of-class.component';
 import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component';
+import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
+import { StudentGuard } from './student.guard';
+import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
 
 
 
@@ -196,6 +199,21 @@ const routes: Routes = [
       {
         path: 'GrantAccount',
         component: CenterAdminGrantAccountComponent
+      }
+    ]
+  },
+  {
+    path: 'Student',
+    component: OfficalStudentMenuBarComponent,
+    canActivate: [StudentGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'ViewTimetable',
+        component: ViewTimetableComponent
       }
     ]
   },

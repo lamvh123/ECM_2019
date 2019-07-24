@@ -1,0 +1,59 @@
+<div style="width: 100%">
+  <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
+    <table class="table studenttbl">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Full Name</th>
+          <th scope="col">Phone number</th>
+          <th scope="col">Email</th>
+          <th scope="col">Sex</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of ListStudent;let index = index;">
+          <th scope="row" style="vertical-align: bottom">
+            {{index+1}}
+          </th>
+          <td>{{student.Full_name}}</td>
+          <td>{{student.PhoneNumber}}</td>
+          <td>{{student.Email}}</td>
+          <td>{{student.realSex}}</td>
+          <!-- <td [class.check-availble]="student.IsPayment"
+            [class.reject-availble]="!student.IsPayment">{{student.IsPayment}}</td>
+        <td>
+          <div class="row">
+            <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>
+
+            <ng-template #canCheck>
+              <div class="col-lg-5 col-xl-5">
+                <button (click)="ConfirmFee(student,index)" class="confirm-btn">
+                  <i class="fa fa-check check-availble" style="font-size:24px" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="col-lg-5 col-xl-5">
+                <button class="confirm-btn">
+                  <i class="fa fa-times reject-unavailble" style="font-size:24px"></i>
+                </button>
+              </div>
+            </ng-template>
+            <ng-template #cannotCheck>
+              <div class="col-lg-5 col-xl-5">
+                <button class="confirm-btn">
+                  <i class="fa fa-check check-unavailble" style="font-size:24px" aria-hidden="true"></i>
+                </button>
+              </div>
+
+              <div class="col-lg-5 col-xl-5">
+                <button (click)="RejectFee(student,index)" class="confirm-btn">
+                  <i class="fa fa-times reject-availble" style="font-size:24px"></i>
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

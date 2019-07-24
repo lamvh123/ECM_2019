@@ -87,4 +87,13 @@ export class AuthService {
     }
     return false;
   }
+
+  StudentLoggedIn(){
+    var role = localStorage.getItem('role');
+    console.log(role);
+    if (this.logedIn() && role == 'Student') {
+      return true;
+    }
+    return false;
+  }
 }

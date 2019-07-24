@@ -21,7 +21,11 @@ export class AdmissionStaffMenubarComponent implements OnInit, AfterViewInit {
 
     });
   }
-
+  receiveMsg($event){
+    // this.urlName = $event;
+    this.urlName = this.className();
+    console.log(this.urlName);
+  }
   ngOnInit() {
     // this.urlName = this.className();
     //console.log(this.urlName);

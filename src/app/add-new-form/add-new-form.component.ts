@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,Output,EventEmitter} from '@angular/core';
 import {Course} from '../course';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {Center} from '../center';
 import {Building} from '../building';
 import {Observable} from 'rxjs';
@@ -31,11 +31,14 @@ export class AddNewFormComponent implements OnInit {
     {dayNumber: 5, dayString: 'Friday'}, {dayNumber: 6, dayString: 'Saturday'}, {dayNumber: 0, dayString: 'Sunday'}];
   listOfSlot: Slot[];
   selectedSlot;
-
-  constructor(private http: HttpClient, private router: Router, private datepipe: DatePipe) {
+  @Output() messageEvent = new EventEmitter<string>();
+  constructor(private http: HttpClient, private router: Router, 
+    private datepipe: DatePipe,private route: ActivatedRoute) {
 
   }
-
+  sendUrl(){
+    this.messageEvent.emit(this.route.url+"");
+  }
   ngOnInit() {
     this.form = new AdmissionForm();
     this.getInitData();
@@ -112,7 +115,6 @@ export class AddNewFormComponent implements OnInit {
     this.http.post<any>(url, para).toPromise().then(data => {
         console.log(data);
         if (data['Id'] != null && data['Id'] != 0) {
-
           // this.router.navigate(['/redirect', '/Admission-staff/form-detail', data['Id']]);
         }
         this.showMessage(true);

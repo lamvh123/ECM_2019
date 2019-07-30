@@ -5,4 +5,6 @@ export class Subject {
   Name: string;
   Center: Center;
   Classes: string;
+  // $id: string;
+  // $ref: string;
 }

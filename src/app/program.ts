@@ -1,7 +1,8 @@
 import {Center} from './center';
 
 export class Program {
-  $id: string;
+  // $id: string;
+  // $ref: string;
   Courses: string;
   CreatedAt: string;
   Id: number;

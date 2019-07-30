@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Slot} from '../slot';
 import {Program} from '../program';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-view-slot',
@@ -17,14 +18,12 @@ export class ViewSlotComponent implements OnInit, AfterViewInit {
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
-  centerId;
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   slotList: Slot[];
 
   ngOnInit() {
-    // this.programId = this.route.snapshot.paramMap.get('id');
-    // this.loadProgramById(this.programId);
-    this.getCourseWithCenterId();
-    // console.log(this.programId);
+    this.getAllSlots();
   }
 
   ngAfterViewInit() {
@@ -44,25 +43,11 @@ export class ViewSlotComponent implements OnInit, AfterViewInit {
     body.appendChild(script);
   }
 
-  getCourseWithCenterId() {
-
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId = data['Id'];
-        this.getAllSlots();
-      },
-      error => {
-        console.log(error);
-      });
-
-  }
-
   getAllSlots() {
-
     const body = new HttpParams()
-      .set('centerId', this.centerId + '');
+      .set('centerId', this.apiContext.centerId + '');
 
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetAllSlot';
+    const configUrl = this.apiContext.host + this.apiTraining.getAllSlot;
     this.http.get<Slot[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.slotList = res;

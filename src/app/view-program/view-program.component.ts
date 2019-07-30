@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Program} from '../program';
 import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 import {Router} from '@angular/router';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-view-program',
@@ -19,38 +20,22 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
   constructor(private http: HttpClient, private router: Router) {
   }
 
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   programs: Program[];
 
   programName = '';
-  centerId = {
-    Id: '',
-    name: ''
-  };
 
   ngOnInit() {
-    this.getProgramWithCenterId();
-  }
-
-  getProgramWithCenterId() {
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchProgram';
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId.Id = data['Id'];
-        this.getAllProgram();
-      },
-      error => {
-        console.log(error);
-      });
-
+    this.getAllProgram();
   }
 
   getAllProgram() {
-
     const body = new HttpParams()
-      .set('centerId', this.centerId.Id + '')
+      .set('centerId', this.apiContext.centerId + '')
       .set('programName', '');
 
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchProgram';
+    const configUrl = this.apiContext.host + this.apiTraining.searchProgram;
     this.http.get<Program[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.programs = res;
@@ -79,23 +64,15 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
   }
 
   searchProgramByName() {
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchProgram';
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId.Id = data['Id'];
-        const body = new HttpParams()
-          .set('centerId', this.centerId.Id + '')
-          .set('programName', this.programName.trim().toLowerCase());
+    const body = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '')
+      .set('programName', this.programName.trim().toLowerCase());
 
-        const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchProgram';
-        this.http.get<Program[]>(configUrl, {params: body}).toPromise().then(res => {
-            console.log(res);
-            this.programs = res;
-            console.log(this.programName);
-          },
-          error => {
-            console.log(error);
-          });
+    const configUrl = this.apiContext.host + this.apiTraining.searchProgram;
+    this.http.get<Program[]>(configUrl, {params: body}).toPromise().then(res => {
+        console.log(res);
+        this.programs = res;
+        console.log(this.programName);
       },
       error => {
         console.log(error);

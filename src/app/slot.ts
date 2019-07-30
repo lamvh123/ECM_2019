@@ -1,12 +1,12 @@
 import {Center} from './center';
 
 export class Slot {
-  $id: string;
+  // $id: string;
   ID: number;
   Name: string;
   From: string;
   To: string;
   Center: Center;
   displayText: string;
-  $ref: string
+  // $ref: string;
 }

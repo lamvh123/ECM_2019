@@ -5,7 +5,7 @@ import {Center} from './center';
 import {Slot} from './slot';
 
 export class AdmissionForm {
-  $id: number;
+  // $id: string;
   Building: Building;
   Center: Center;
   Course: Course;
@@ -16,6 +16,8 @@ export class AdmissionForm {
   StartDate: string;
   program: Program;
   GoogleFormLink: string;
+  // $ref: string;
+
 
   constructor() {
     this.Building = new Building();

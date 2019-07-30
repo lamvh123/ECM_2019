@@ -5,6 +5,7 @@ import {Course} from '../course';
 import {AdmissionForm} from '../admission-form';
 import {Student} from '../entity/student';
 import {ItemsList} from '@ng-select/ng-select/ng-select/items-list';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-center-admin-grant-account',
@@ -18,7 +19,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) {
   }
 
-  centerId;
+  apiContext = new APIContext();
   listCourse: Course[];
   listForm: AdmissionForm[];
   selectedCourseId;
@@ -40,29 +41,25 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   getInitData() {
-    var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/GetCenter';
-    this.http.get(url).toPromise().then(data => {
-        this.centerId = data['Id'];
-        var getCourseUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/GetAllCourse';
-        var param = new HttpParams().set('centerId', this.centerId);
-        this.http.get<Course[]>(getCourseUrl, {params: param}).toPromise().then(data => {
-            console.log(data);
-            this.listCourse = data;
-            this.getAllForm();
-          },
-          error => {
-            console.log(error);
-          });
-        this.loadStudentData();
+    const getCourseUrl = this.apiContext.host + 'api/CenterManagement/GetAllCourse';
+    const param = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '');
+    this.http.get<Course[]>(getCourseUrl, {params: param}).toPromise().then(data => {
+        console.log(data);
+        this.listCourse = data;
+        this.getAllForm();
       },
       error => {
         console.log(error);
       });
+    this.loadStudentData();
+
   }
 
   getAllForm() {
-    var param = new HttpParams().set('centerId', this.centerId);
-    var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/GetAllAdmissionForm';
+    const param = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '');
+    const url = this.apiContext.host + 'api/CenterManagement/GetAllAdmissionForm';
     this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
         this.listForm = data;
         console.log(data);
@@ -75,8 +72,10 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   ReLoadForm() {
     this.selectedFormId = null;
     if (this.selectedCourseId != null && this.selectedCourseId != undefined) {
-      var param = new HttpParams().set('courseId', this.selectedCourseId).set('centerId', this.centerId);
-      var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/GetAllAdmissionForm';
+      const param = new HttpParams()
+        .set('courseId', this.selectedCourseId)
+        .set('centerId', this.apiContext.centerId + '');
+      const url = this.apiContext.host + 'api/CenterManagement/GetAllAdmissionForm';
       this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
           this.listForm = data;
           console.log(data);
@@ -92,11 +91,11 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   pagination(totalData: number) {
     this.listPage = new Array();
     if (totalData % this.pageSize == 0) {
-      for (var i = 1; i <= totalData / this.pageSize; i++) {
+      for (let i = 1; i <= totalData / this.pageSize; i++) {
         this.listPage.push({value: i, text: 'Page ' + i});
       }
     } else {
-      for (var i = 1; i <= Math.floor(totalData / this.pageSize) + 1; i++) {
+      for (let i = 1; i <= Math.floor(totalData / this.pageSize) + 1; i++) {
         this.listPage.push({value: i, text: 'Page ' + i});
       }
     }
@@ -109,10 +108,13 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   loadStudentData() {
-    var paramToGetTotal = new HttpParams().set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
-      .set('studentName', this.studentName).set('phoneNumber', this.phoneNumber).set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
-      .set('centerId', this.centerId);
-    var getTotalurl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/GetTotalRegisteredStudent';
+    const paramToGetTotal = new HttpParams()
+      .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
+      .set('studentName', this.studentName)
+      .set('phoneNumber', this.phoneNumber)
+      .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
+      .set('centerId', this.apiContext.centerId + '');
+    const getTotalurl = this.apiContext.host + 'api/CenterManagement/GetTotalRegisteredStudent';
     this.http.get<number>(getTotalurl, {params: paramToGetTotal}).toPromise().then(data => {
         this.totalData = data;
         console.log(data);
@@ -122,22 +124,24 @@ export class CenterAdminGrantAccountComponent implements OnInit {
         if (this.totalData != 0) {
           this.pagination(this.totalData);
           this.empty = false;
-          var param = new HttpParams().set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
-            .set('studentName', this.studentName).set('phoneNumber', this.phoneNumber)
+          const param = new HttpParams()
+            .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
+            .set('studentName', this.studentName)
+            .set('phoneNumber', this.phoneNumber)
             .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
-            .set('centerId', this.centerId)
+            .set('centerId', this.apiContext.centerId + '')
             .set('pageSize', this.pageSize + '')
             .set('currentPage', this.currentPage + '');
-          var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/SearchRegisteredStudent';
-          this.http.get<Student[]>(url, {params: param}).toPromise().then(data => {
-              this.listStudent = data;
+          const url = this.apiContext.host + 'api/CenterManagement/SearchRegisteredStudent';
+          this.http.get<Student[]>(url, {params: param}).toPromise().then(data2 => {
+              this.listStudent = data2;
               console.log(this.listStudent);
               this.UnselectAllItem();
               this.listStudent.forEach(item => {
                 if (item.Dob != null && item.Dob != undefined && item.Dob.length >= 10) {
                   item.Dob = item.Dob.substr(0, 10);
                 }
-                if (item.sex == true) {
+                if (item.sex) {
                   item.realSex = 'Male';
                 } else {
                   item.realSex = 'Female';
@@ -169,10 +173,9 @@ export class CenterAdminGrantAccountComponent implements OnInit {
     this.loadStudentData();
   }
 
-  grantAccountForOne(Student: Student) {
-    var centerId = this.centerId;
-    var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/GrantAccountForStudent';
-    var param = new Array().push({RegisteredCandidateId: Student.Id, CenterId: centerId});
+  grantAccountForOne(student: Student) {
+    const url = this.apiContext.host + 'api/CenterManagement/GrantAccountForStudent';
+    const param = new Array().push({RegisteredCandidateId: student.Id, CenterId: this.apiContext.centerId});
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
         this.msg = 'success';
@@ -184,13 +187,11 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   grantAccountForMany() {
-    var centerId = this.centerId;
-    var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/GrantAccountForStudent';
-    var param = new Array();
-    var listSelectedStudent = this.listStudent.filter(item => item.selected == true && item.IsPayment == true
-      && item.IsGrantedAccount == false);
+    const url = this.apiContext + 'api/CenterManagement/GrantAccountForStudent';
+    const param = new Array();
+    const listSelectedStudent = this.listStudent.filter(item => item.selected && item.IsPayment && item.IsGrantedAccount);
     listSelectedStudent.forEach(item => {
-      param.push({RegisteredCandidateId: item.Id, CenterId: centerId});
+      param.push({RegisteredCandidateId: item.Id, CenterId: this.apiContext.centerId});
     });
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
@@ -204,6 +205,6 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   removeMessage() {
-    this.msg = "";
+    this.msg = '';
   }
 }

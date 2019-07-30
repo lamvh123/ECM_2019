@@ -63,17 +63,18 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
         this.http.post<any>(configUrl, body).toPromise().then(
           res => {
             console.log(res);
-            this.showMessage(true);
+            // this.showMessage(true);
+            this.redirectToAllSlot();
           },
           err => {
             console.log(err);
-            this.showMessage(false);
+            // this.showMessage(false);
           }
         );
       },
       error => {
         console.log(error);
-        this.showMessage(false);
+        // this.showMessage(false);
       });
   }
 
@@ -104,20 +105,20 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
     this._router.navigateByUrl('/Training-staff/add-slot');
   }
 
-  private showMessage(status: boolean) {
-    let messageConfirm;
-    if (status) {
-      messageConfirm = 'A slot was added successfully.' +
-        '\nDo you want to add more slots?';
-    } else {
-      messageConfirm = 'Something go wrong.' +
-        '\nDo you want to try again?';
-    }
-    const r = confirm(messageConfirm);
-    if (r === true) {
-      this.redirectToAddSlot();
-    } else {
-      this.redirectToAllSlot();
-    }
-  }
+  // private showMessage(status: boolean) {
+  //   let messageConfirm;
+  //   if (status) {
+  //     messageConfirm = 'A slot was added successfully.' +
+  //       '\nDo you want to add more slots?';
+  //   } else {
+  //     messageConfirm = 'Something go wrong.' +
+  //       '\nDo you want to try again?';
+  //   }
+  //   const r = confirm(messageConfirm);
+  //   if (r === true) {
+  //     this.redirectToAddSlot();
+  //   } else {
+  //     this.redirectToAllSlot();
+  //   }
+  // }
 }

@@ -7,6 +7,7 @@ import {async} from '@angular/core/testing';
 import {AdmissionForm} from '../admission-form';
 import {Program} from '../program';
 import {Slot} from '../slot';
+import {APIContext} from '../APIContext';
 
 @Component({
   selector: 'app-view-admission-form',
@@ -15,7 +16,8 @@ import {Slot} from '../slot';
     '../../assets/css/themes/all-themes.css']
 })
 export class ViewAdmissionFormComponent implements OnInit {
-  center: Center;
+  apiContext = new APIContext();
+
   listCourse: Course[];
   courseId;
   isClosed = -1;
@@ -30,29 +32,24 @@ export class ViewAdmissionFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.center = new Center();
     this.getInitData();
+    // this.getAvailbleCourses();
+    // this.getAvailbleSlots();
   }
 
   getInitData() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.center.Id = data['Id'];
-        const getAllCourseUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllCourse';
-        var para = new HttpParams().set('centerId', this.center.Id + '');
-        this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
-            this.listCourse = data;
-            console.log(this.listCourse);
-            this.getAdmissionForm();
-          },
-          error => {
-            console.log(error);
-          }
-        );
+    const getAllCourseUrl = this.apiContext.host + 'api/AdmissionManagement/GetAllCourse';
+    const para = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '');
+    this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
+        this.listCourse = data;
+        console.log(this.listCourse);
+        this.getAdmissionForm();
       },
       error => {
         console.log(error);
-      });
+      }
+    );
   }
 
   getAdmissionForm() {
@@ -65,14 +62,14 @@ export class ViewAdmissionFormComponent implements OnInit {
         this.isClosed = 1;
       }
     }
-    var parameters = new HttpParams().set('courseId', this.courseId == null ? '-1' : this.courseId + '').set('centerId', this.center.Id + '')
+    const parameters = new HttpParams()
+      .set('courseId', this.courseId == null ? '-1' : this.courseId + '')
+      .set('centerId', this.apiContext.centerId + '')
       .set('isClosed', this.isClosed + '');
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/SearchAdmissionForm';
+    const url = this.apiContext.host + 'api/AdmissionManagement/SearchAdmissionForm';
     this.http.get<AdmissionForm[]>(url, {params: parameters}).toPromise().then((data) => {
         console.log(data);
         this.listForm = data;
-        this.getAvailbleCourses();
-        this.getAvailbleSlots();
       },
       error => {
         console.log(error);
@@ -82,42 +79,6 @@ export class ViewAdmissionFormComponent implements OnInit {
 
   navigateToAdmissionFormDetail(form) {
     this.router.navigate(['/Admission-staff/form-detail', form.Id]);
-  }
-
-  getAvailbleCourses() {
-    for (const f of this.listForm) {
-      if (f.Course.$ref == null) {
-        this.availbleCourses.push(f.Course);
-      }
-    }
-    console.log(this.availbleCourses);
-  }
-
-  getCoursegById(refId: string) {
-    for (const c of this.availbleCourses) {
-      if (c.$id === refId) {
-        return c;
-      }
-    }
-    return null;
-  }
-
-  getAvailbleSlots() {
-    for (const f of this.listForm) {
-      if (f.Slot.$ref == null) {
-        this.availbleSlots.push(f.Slot);
-      }
-    }
-    console.log(this.availbleSlots);
-  }
-
-  getSlotByRefId(refId: string) {
-    for (const s of this.availbleSlots) {
-      if (s.$id === refId) {
-        return s;
-      }
-    }
-    return null;
   }
 
   dateToString(date: string) {
@@ -130,7 +91,7 @@ export class ViewAdmissionFormComponent implements OnInit {
       .set('CenterId', '1')
       .set('AdmissionFormId', form.Id + '');
 
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/CloseAdmissionForm';
+    const configUrl = this.apiContext.host + 'api/AdmissionManagement/CloseAdmissionForm';
     this.http.post(configUrl, body).toPromise().then(res => {
         console.log(res);
         form.IsClosed = true;

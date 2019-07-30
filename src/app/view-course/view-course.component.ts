@@ -3,6 +3,7 @@ import {HttpParams, HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Course} from '../course';
 import {Program} from '../program';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-view-course',
@@ -17,7 +18,8 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
-  centerId;
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   programId;
   courseName = '';
   ListOfCourse: Course[];
@@ -26,7 +28,7 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.programId = this.route.snapshot.paramMap.get('id');
     this.loadProgramById(this.programId);
-    this.getCourseWithCenterId();
+    this.getAllCourse();
     console.log(this.programId);
   }
 
@@ -49,7 +51,7 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
 
   loadProgramById(pId: number) {
     const body = new HttpParams().set('programId', this.programId);
-    this.http.get<Program>('https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetProgramById', {params: body}).toPromise().then(
+    this.http.get<Program>(this.apiContext.host + this.apiTraining.getProgramByProgramId, {params: body}).toPromise().then(
       res => {
         console.log(res);
         this.currentProgram = res;
@@ -60,27 +62,13 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getCourseWithCenterId() {
-
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId = data['Id'];
-        this.getAllCourse();
-      },
-      error => {
-        console.log(error);
-      });
-
-  }
-
   getAllCourse() {
-
     const body = new HttpParams()
       .set('courseName', this.courseName.trim().toLowerCase())
       .set('programId', this.programId)
-      .set('centerId', this.centerId + '');
+      .set('centerId', this.apiContext.centerId + '');
 
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchCourse';
+    const configUrl = this.apiContext.host + this.apiTraining.searchCourse;
     this.http.get<Course[]>(configUrl, {params: body}).toPromise().then(res => {
         this.ListOfCourse = res;
         console.log(this.ListOfCourse);

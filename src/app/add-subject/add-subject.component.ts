@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Subject} from '../subject';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-add-subject',
@@ -16,8 +17,9 @@ import {HttpClient, HttpParams} from '@angular/common/http';
     , '../../assets/css/themes/all-themes.css']
 })
 export class AddSubjectComponent implements OnInit, AfterViewInit {
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   Name: string;
-;
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -44,28 +46,22 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
   }
 
   addSubject() {
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddSubject';
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then(data => {
-        const body = new HttpParams()
-          .set('Name', this.Name)
-          .set('CenterId', data['Id']);
-        console.log(body);
-        this.http.post<any>(configUrl, body).toPromise().then(
-          res => {
-            console.log(res);
-            this.showMessage(true);
-          },
-          err => {
-            console.log(err);
-            this.showMessage(false);
-          }
-        );
+    const configUrl = this.apiContext.host + this.apiTraining.addSubject;
+    const body = new HttpParams()
+      .set('Name', this.Name)
+      .set('CenterId', this.apiContext.centerId + '');
+    console.log(body);
+    this.http.post<any>(configUrl, body).toPromise().then(
+      res => {
+        console.log(res);
+        // this.showMessage(true);
+        this.redirectToAllSubject();
       },
-      error => {
-        console.log(error);
-        this.showMessage(false);
-      });
+      err => {
+        console.log(err);
+        // this.showMessage(false);
+      }
+    );
   }
 
 
@@ -77,20 +73,20 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/Training-staff/add-subject');
   }
 
-  private showMessage(status: boolean) {
-    let messageConfirm;
-    if (status) {
-      messageConfirm = 'A subject was added successfully.' +
-        '\nDo you want to add more subjects?';
-    } else {
-      messageConfirm = 'Something go wrong.' +
-        '\nDo you want to try again?';
-    }
-    const r = confirm(messageConfirm);
-    if (r === true) {
-      this.redirectToAddSubject();
-    } else {
-      this.redirectToAllSubject();
-    }
-  }
+  // private showMessage(status: boolean) {
+  //   let messageConfirm;
+  //   if (status) {
+  //     messageConfirm = 'A subject was added successfully.' +
+  //       '\nDo you want to add more subjects?';
+  //   } else {
+  //     messageConfirm = 'Something go wrong.' +
+  //       '\nDo you want to try again?';
+  //   }
+  //   const r = confirm(messageConfirm);
+  //   if (r === true) {
+  //     this.redirectToAddSubject();
+  //   } else {
+  //     this.redirectToAllSubject();
+  //   }
+  // }
 }

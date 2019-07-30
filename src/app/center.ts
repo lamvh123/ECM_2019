@@ -1,7 +1,8 @@
 export class Center {
-  $id: String;
-  ApplicationUser: String;
+  // $id: string;
+  // $ref: string;
+  ApplicationUser: string;
   Id: number;
-  Location: String;
-  Name: String;
+  Location: string;
+  Name: string;
 }

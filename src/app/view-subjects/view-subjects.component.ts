@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Building} from '../building';
 import {Subject} from '../subject';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-view-subjects',
@@ -17,34 +18,20 @@ export class ViewSubjectsComponent implements OnInit, AfterViewInit {
   constructor(private http: HttpClient, private router: Router) {
   }
 
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   subjects: Subject[];
-  centerId = {
-    Id: '',
-    name: ''
-  };
 
   ngOnInit() {
-    this.getSubjectsWithCenterId();
-  }
-
-  getSubjectsWithCenterId() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId.Id = data['Id'];
-        this.getAllSubjects();
-      },
-      error => {
-        console.log(error);
-      });
+    this.getAllSubjects();
   }
 
   getAllSubjects() {
-
     const body = new HttpParams()
-      .set('centerId', this.centerId.Id + '')
+      .set('centerId', this.apiContext.centerId + '')
       .set('subjectName', '');
 
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchSubject';
+    const configUrl = this.apiContext.host + this.apiTraining.searchSubject;
     this.http.get<Subject[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.subjects = res;

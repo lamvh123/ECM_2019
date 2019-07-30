@@ -6,6 +6,7 @@ import {Course} from '../course';
 import {Building} from '../building';
 import {Router} from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {APIContext, APITraining} from '../APIContext';
 
 
 @Component({
@@ -25,15 +26,14 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   constructor(private routers: Router, private route: ActivatedRoute, private http: HttpClient) {
   }
 
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
+
   Editor = ClassicEditor;
 
   courseModel: Course;
   courseId = '';
   subjects: Subject[];
-  centerId = {
-    Id: '',
-    name: ''
-  };
 
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -47,7 +47,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('id');
     console.log(this.courseId);
-    this.getSubjectsWithCenterId();
+    this.getAllSubjects();
     this.loadCourseById();
   }
 
@@ -73,7 +73,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
     const body = new HttpParams().set('courseId', this.courseId);
     // const body = new HttpParams().set('courseId', this.courseId)
     //   .set('CenterId', this.centerId.Id);
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCourseById';
+    const configUrl = this.apiContext.host + this.apiTraining.getCourseByCourseId;
     this.http.get<Course>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.courseModel = res;
@@ -94,34 +94,28 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
 
   updateCourse() {
     console.log(this.courseModel);
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/UpdateCourse';
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then(data => {
-        const body = new HttpParams()
-          .set('courseId', this.courseModel.Id + '')
-          .set('CourseName', this.courseModel.Name)
-          .set('Image', this.courseModel.Image)
-          .set('SubjectId', this.courseModel.SubjectId + '')
-          .set('TotalSession', this.courseModel.TotalSession)
-          .set('Description', this.courseModel.Description)
-          .set('Fee', this.courseModel.Fee + '')
-          .set('CenterId', data['Id']);
-        console.log(body);
-        this.http.post<any>(configUrl, body).toPromise().then(
-          res => {
-            console.log(res);
-            this.showMessage(true);
-          },
-          err => {
-            console.log(err);
-            this.showMessage(false);
-          }
-        );
+    const configUrl = this.apiContext.host + this.apiTraining.updateCourse;
+    const body = new HttpParams()
+      .set('courseId', this.courseModel.Id + '')
+      .set('CourseName', this.courseModel.Name)
+      .set('Image', this.courseModel.Image)
+      .set('SubjectId', this.courseModel.SubjectId + '')
+      .set('TotalSession', this.courseModel.TotalSession)
+      .set('Description', this.courseModel.Description)
+      .set('Fee', this.courseModel.Fee + '')
+      .set('CenterId', this.apiContext.centerId + '');
+    console.log(body);
+    this.http.post<any>(configUrl, body).toPromise().then(
+      res => {
+        console.log(res);
+        // this.showMessage(true);
+        this.redirectToAllCourse();
       },
-      error => {
-        console.log(error);
-        this.showMessage(false);
-      });
+      err => {
+        console.log(err);
+        // this.showMessage(false);
+      }
+    );
   }
 
   onUploadCompleted($event: any) {
@@ -132,27 +126,12 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
     this.courseModel.SubjectId = value;
   }
 
-  getSubjectsWithCenterId() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        console.log(data);
-        this.centerId.Id = data['Id'];
-        this.getAllSubjects();
-      },
-      error => {
-        console.log(error);
-        this.showMessage(false);
-      });
-
-  }
-
   getAllSubjects() {
-
     const body = new HttpParams()
-      .set('centerId', this.centerId.Id + '')
+      .set('centerId', this.apiContext.centerId + '')
       .set('subjectName', '');
     console.log(body);
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchSubject';
+    const configUrl = this.apiContext.host + this.apiTraining.searchSubject;
     this.http.get<Subject[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.subjects = res;
@@ -160,7 +139,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
       },
       error => {
         console.log(error);
-        this.showMessage(false);
+        // this.showMessage(false);
       });
   }
 
@@ -178,20 +157,20 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
     this.routers.navigateByUrl('/Training-staff/course-detail/' + this.courseModel.Id);
   }
 
-  private showMessage(status: boolean) {
-    let messageConfirm;
-    if (status) {
-      messageConfirm = 'A course was updated successfully.' +
-        '\nDo you want to update anything else?';
-    } else {
-      messageConfirm = 'Something go wrong.' +
-        '\nDo you want to try again?';
-    }
-    const r = confirm(messageConfirm);
-    if (r === true) {
-      this.redirectToUpdateCourse();
-    } else {
-      this.redirectToAllCourse();
-    }
-  }
+  // private showMessage(status: boolean) {
+  //   let messageConfirm;
+  //   if (status) {
+  //     messageConfirm = 'A course was updated successfully.' +
+  //       '\nDo you want to update anything else?';
+  //   } else {
+  //     messageConfirm = 'Something go wrong.' +
+  //       '\nDo you want to try again?';
+  //   }
+  //   const r = confirm(messageConfirm);
+  //   if (r === true) {
+  //     this.redirectToUpdateCourse();
+  //   } else {
+  //     this.redirectToAllCourse();
+  //   }
+  // }
 }

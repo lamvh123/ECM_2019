@@ -3,7 +3,7 @@ import {Subject} from './subject';
 import {Program} from './program';
 
 export class Course {
-  $id: string;
+  // $id: string;
   Center: string;
   Classes: string;
   CreatedAt: string;
@@ -18,5 +18,5 @@ export class Course {
   Subject: Subject;
   Syllabuses: any;
   UpdatedAt: string;
-  $ref: string;
+  // $ref: string;
 }

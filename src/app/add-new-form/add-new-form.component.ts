@@ -1,4 +1,4 @@
-import {Component, OnInit,Output,EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {Course} from '../course';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {AdmissionForm} from '../admission-form';
 import {DatePipe} from '@angular/common';
 import {Slot} from '../slot';
+import {APIContext} from '../APIContext';
 
 @Component({
   selector: 'app-add-new-form',
@@ -16,12 +17,12 @@ import {Slot} from '../slot';
     '../css/assets/css/themes/all-themes.css']
 })
 export class AddNewFormComponent implements OnInit {
+  apiContext = new APIContext();
   listCourse: Course[];
   courseId;
   isClosed = -1;
   isClose;
   boolArr: string[] = ['true', 'false'];
-  centerId;
   selectedBuilding;
   listBuilding: Observable<Building[]>;
   form: AdmissionForm;
@@ -32,13 +33,15 @@ export class AddNewFormComponent implements OnInit {
   listOfSlot: Slot[];
   selectedSlot;
   @Output() messageEvent = new EventEmitter<string>();
-  constructor(private http: HttpClient, private router: Router, 
-    private datepipe: DatePipe,private route: ActivatedRoute) {
+
+  constructor(private http: HttpClient, private router: Router, private datepipe: DatePipe, private route: ActivatedRoute) {
 
   }
-  sendUrl(){
-    this.messageEvent.emit(this.route.url+"");
+
+  sendUrl() {
+    this.messageEvent.emit(this.route.url + '');
   }
+
   ngOnInit() {
     this.form = new AdmissionForm();
     this.getInitData();
@@ -46,44 +49,37 @@ export class AddNewFormComponent implements OnInit {
   }
 
   getAllBuilding() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllBuilding';
-    var para = new HttpParams().set('centerId', this.centerId + '');
+    const url = this.apiContext.host + 'api/AdmissionManagement/GetAllBuilding';
+    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
     this.http.get<Observable<Building[]>>(url, {params: para}).toPromise().then(data => {
         this.listBuilding = data;
         console.log(this.listBuilding);
       },
       error => {
         console.log(error);
-        this.showMessage(false);
+        // this.showMessage(false);
       });
   }
 
   getInitData() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId = data['Id'];
-        const getAllCourseUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllCourse';
-        var para = new HttpParams().set('centerId', this.centerId + '');
-        this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
-            this.listCourse = data;
-            console.log(this.listCourse);
-          },
-          error => {
-            console.log(error);
-          }
-        );
-        this.getAllBuilding();
-        this.getAllSlot();
+    const getAllCourseUrl = this.apiContext.host + 'api/AdmissionManagement/GetAllCourse';
+    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
+    this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
+        this.listCourse = data;
+        console.log(this.listCourse);
       },
       error => {
         console.log(error);
-        this.showMessage(false);
-      });
+      }
+    );
+    this.getAllBuilding();
+    this.getAllSlot();
+
   }
 
   getAllSlot() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllSlot';
-    var para = new HttpParams().set('centerId', this.centerId + '');
+    const url = this.apiContext.host + 'api/AdmissionManagement/GetAllSlot';
+    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
     this.http.get<Slot[]>(url, {params: para}).toPromise().then(data => {
         this.listOfSlot = data;
         this.listOfSlot.forEach(function(item) {
@@ -93,38 +89,38 @@ export class AddNewFormComponent implements OnInit {
       },
       error => {
         console.log(error);
-        this.showMessage(false);
+        // this.showMessage(false);
       });
   }
 
   CreateForm() {
-    var date = new Date(this.form.StartDate);
-    let dateString = this.datepipe.transform(date, 'MM-dd-yyyy');
-    var para = new HttpParams()
+    const date = new Date(this.form.StartDate);
+    const dateString = this.datepipe.transform(date, 'MM-dd-yyyy');
+    let para = new HttpParams()
       .set('CourseId', this.courseId + '')
       .set('StartDate', dateString)
       .set('Name', this.form.Name)
       .set('BuildingId', this.selectedBuilding + '')
-      .set('CenterId', this.centerId)
+      .set('CenterId', this.apiContext.centerId + '')
       .set('SlotId', this.selectedSlot);
     this.selectedDayArr.forEach(item => {
       para = para.append('DaysPerWeek', item + '');
     });
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/CreateAdmissionForm';
+    const url = this.apiContext.host + 'api/AdmissionManagement/CreateAdmissionForm';
     console.log(para);
     this.http.post<any>(url, para).toPromise().then(data => {
         console.log(data);
         if (data['Id'] != null && data['Id'] != 0) {
           // this.router.navigate(['/redirect', '/Admission-staff/form-detail', data['Id']]);
         }
-        this.showMessage(true);
+        // this.showMessage(true);
+        this.redirectToAllAdmissionForm();
       },
       error => {
         console.log(error);
-        this.showMessage(false);
+        // this.showMessage(false);
       });
   }
-
 
 
   redirectToAllAdmissionForm() {
@@ -135,21 +131,21 @@ export class AddNewFormComponent implements OnInit {
     this.router.navigateByUrl('/Admission-staff/addForm');
   }
 
-  private showMessage(status: boolean) {
-    let messageConfirm;
-    if (status) {
-      messageConfirm = 'An admission form was added successfully.' +
-        '\nDo you want to add more admission forms?';
-    } else {
-      messageConfirm = 'Something go wrong.' +
-        '\nDo you want to try again?';
-    }
-    const r = confirm(messageConfirm);
-    if (r === true) {
-      this.redirectToAddAdmissionForm();
-    } else {
-      this.redirectToAllAdmissionForm();
-    }
-  }
+  // private showMessage(status: boolean) {
+  //   let messageConfirm;
+  //   if (status) {
+  //     messageConfirm = 'An admission form was added successfully.' +
+  //       '\nDo you want to add more admission forms?';
+  //   } else {
+  //     messageConfirm = 'Something go wrong.' +
+  //       '\nDo you want to try again?';
+  //   }
+  //   const r = confirm(messageConfirm);
+  //   if (r === true) {
+  //     this.redirectToAddAdmissionForm();
+  //   } else {
+  //     this.redirectToAllAdmissionForm();
+  //   }
+  // }
 
 }

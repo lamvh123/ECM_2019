@@ -7,4 +7,6 @@ export class Room {
   Center: Center;
   Id: number;
   RoomNumber: string;
+  // $id: string;
+  // $ref: string;
 }

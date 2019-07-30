@@ -2,6 +2,7 @@ import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-program-detail',
@@ -20,6 +21,8 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
 
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   programId;
   courseName = '';
   image = '';
@@ -27,90 +30,6 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   public Editor = ClassicEditor;
   // text editor
   description = '<p>Testing</p>';
-  // hasFocus = false;
-  //
-  // atValues = [
-  //   { id: 1, value: 'Fredrik Sundqvist', link: 'https://google.com' },
-  //   { id: 2, value: 'Patrik Sjölin' }
-  // ];
-  // hashValues = [
-  //   { id: 3, value: 'Fredrik Sundqvist 2' },
-  //   { id: 4, value: 'Patrik Sjölin 2' }
-  // ]
-  //
-  // quillConfig={
-  //
-  //   toolbar: {
-  //     container: [
-  //       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-  //       ['code-block'],
-  //       [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-  //       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  //       //[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-  //       //[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-  //       //[{ 'direction': 'rtl' }],                         // text direction
-  //
-  //       //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-  //       //[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  //
-  //       //[{ 'font': [] }],
-  //       //[{ 'align': [] }],
-  //
-  //       ['clean'],                                         // remove formatting button
-  //
-  //       ['link'],
-  //       //['link', 'image', 'video']
-  //       ['emoji'],
-  //     ],
-  //     handlers: {'emoji': function() {}}
-  //   },
-  //   // autoLink: true,
-  //
-  //   // mention: {
-  //   //   allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
-  //   //   mentionDenotationChars: ["@", "#"],
-  //   //   source: (searchTerm, renderList, mentionChar) => {
-  //   //     let values;
-  //
-  //   //     if (mentionChar === "@") {
-  //   //       values = this.atValues;
-  //   //     } else {
-  //   //       values = this.hashValues;
-  //   //     }
-  //
-  //   //     if (searchTerm.length === 0) {
-  //   //       renderList(values, searchTerm);
-  //   //     } else {
-  //   //       const matches = [];
-  //   //       for (var i = 0; i < values.length; i++)
-  //   //         if (~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())) matches.push(values[i]);
-  //   //       renderList(matches, searchTerm);
-  //   //     }
-  //   //   },
-  //   // },
-  //
-  //   keyboard: {
-  //     bindings: {
-  //       // shiftEnter: {
-  //       //   key: 13,
-  //       //   shiftKey: true,
-  //       //   handler: (range, context) => {
-  //       //     // Handle shift+enter
-  //       //     console.log("shift+enter")
-  //       //   }
-  //       // },
-  //       enter:{
-  //         key:13,
-  //         handler: (range, context)=>{
-  //           console.log("enter");
-  //           return true;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  // Editor: any;
-  // end text editor
 
   ngOnInit() {
     this.programId = this.route.snapshot.paramMap.get('id');
@@ -135,8 +54,9 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   }
 
   loadProgramById() {
-    const body = new HttpParams().set('programId', this.programId);
-    this.http.get<any>('https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetProgramById', {params: body}).toPromise().then(
+    const body = new HttpParams()
+      .set('programId', this.programId);
+    this.http.get<any>(this.apiContext.host + this.apiTraining.getProgramByProgramId, {params: body}).toPromise().then(
       res => {
         console.log(res);
         this.courseName = res.Name;
@@ -145,38 +65,30 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
       },
       err => {
         console.log(err);
-        this.showMessage(false);
+        // this.showMessage(false);
       }
     );
   }
 
   updateProgram() {
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/UpdateProgram';
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get<any>(url).toPromise().then(data => {
-        console.log(data);
-        const body = new HttpParams()
-          .set('ProgramId', this.programId)
-          .set('ProgramName', this.courseName)
-          .set('Description', this.description)
-          .set('Image', this.image)
-          .set('CenterId', data['Id']);
-        this.http.post<any>(configUrl, body).toPromise().then(
-          res => {
-            console.log(res);
-            this.showMessage(true);
-            // this.redirectToAllPrograms();
-          },
-          err => {
-            console.log(err);
-            this.showMessage(false);
-          }
-        );
+    const configUrl = this.apiContext.host + this.apiTraining.updateProgram;
+    const body = new HttpParams()
+      .set('ProgramId', this.programId)
+      .set('ProgramName', this.courseName)
+      .set('Description', this.description)
+      .set('Image', this.image)
+      .set('CenterId', this.apiContext.centerId + '');
+    this.http.post<any>(configUrl, body).toPromise().then(
+      res => {
+        console.log(res);
+        // this.showMessage(true);
+        this.redirectToAllProgram();
       },
-      error => {
-        console.log(error);
-        this.showMessage(false);
-      });
+      err => {
+        console.log(err);
+        // this.showMessage(false);
+      }
+    );
   }
 
   onUploadCompleted($event: any) {
@@ -205,20 +117,20 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
     this._router.navigateByUrl('/Training-staff/program-detail/' + this.programId);
   }
 
-  private showMessage(status: boolean) {
-    let messageConfirm;
-    if (status) {
-      messageConfirm = 'A program was updated successfully.' +
-        '\nDo you want to update anything else?';
-    } else {
-      messageConfirm = 'Something go wrong.' +
-        '\nDo you want to try again?';
-    }
-    const r = confirm(messageConfirm);
-    if (r === true) {
-      this.redirectToUpdateProgram();
-    } else {
-      this.redirectToAllProgram();
-    }
-  }
+  // private showMessage(status: boolean) {
+  //   let messageConfirm;
+  //   if (status) {
+  //     messageConfirm = 'A program was updated successfully.' +
+  //       '\nDo you want to update anything else?';
+  //   } else {
+  //     messageConfirm = 'Something go wrong.' +
+  //       '\nDo you want to try again?';
+  //   }
+  //   const r = confirm(messageConfirm);
+  //   if (r === true) {
+  //     this.redirectToUpdateProgram();
+  //   } else {
+  //     this.redirectToAllProgram();
+  //   }
+  // }
 }

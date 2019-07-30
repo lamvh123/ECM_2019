@@ -1,7 +1,8 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { AuthService } from '../auth.service';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {AuthService} from '../auth.service';
+import {APIContext, APITraining} from '../APIContext';
 
 declare var jquery: any;
 declare var $: any;
@@ -15,6 +16,8 @@ declare var $: any;
     , '../../assets/css/themes/all-themes.css']
 })
 export class ProfileComponent implements OnInit, AfterViewInit {
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   user = {
     name: '',
     email: '',
@@ -37,17 +40,17 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   getProfile() {
     if (this.auth.adminLogedIn()) {
-      const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/Systemmanagement/Profile';
+      const configUrl = this.apiContext.host + 'api/Systemmanagement/Profile';
       this.http.get<any>(configUrl).subscribe(res => {
-        console.log(res);
-        this.user.name = res.FullName;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        this.user.Avatar = res.Avatar;
-        console.log(res.FullName);
-      },
+          console.log(res);
+          this.user.name = res.FullName;
+          this.user.email = res.Email;
+          this.user.PhoneNumber = res.PhoneNumber;
+          this.user.Sex = res.Sex;
+          this.user.Id = res.Id;
+          this.user.Avatar = res.Avatar;
+          console.log(res.FullName);
+        },
         error => {
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
@@ -56,16 +59,16 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           }
         });
     } else if (this.auth.trainingStaffLogedIn()) {
-      const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/Profile';
+      const configUrl = this.apiContext.host + this.apiTraining.getProfile;
       this.http.get<any>(configUrl).subscribe(res => {
-        console.log(res);
-        this.user.name = res.FullName;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        this.user.Avatar = res.Avatar;
-      },
+          console.log(res);
+          this.user.name = res.FullName;
+          this.user.email = res.Email;
+          this.user.PhoneNumber = res.PhoneNumber;
+          this.user.Sex = res.Sex;
+          this.user.Id = res.Id;
+          this.user.Avatar = res.Avatar;
+        },
         error => {
           console.log(error);
           if (error instanceof HttpErrorResponse) {
@@ -75,16 +78,16 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           }
         });
     } else if (this.auth.admissionStaffLogedIn()) {
-      const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/Profile';
+      const configUrl = this.apiContext.host + 'api/AdmissionManagement/Profile';
       this.http.get<any>(configUrl).subscribe(res => {
-        console.log(res);
-        this.user.name = res.FullName;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        this.user.Avatar = res.Avatar;
-      },
+          console.log(res);
+          this.user.name = res.FullName;
+          this.user.email = res.Email;
+          this.user.PhoneNumber = res.PhoneNumber;
+          this.user.Sex = res.Sex;
+          this.user.Id = res.Id;
+          this.user.Avatar = res.Avatar;
+        },
         error => {
           console.log(error);
           if (error instanceof HttpErrorResponse) {
@@ -93,18 +96,17 @@ export class ProfileComponent implements OnInit, AfterViewInit {
             }
           }
         });
-    }
-    else if (this.auth.accountingStaffLoggedin()) {
-      const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/profile';
+    } else if (this.auth.accountingStaffLoggedin()) {
+      const configUrl = this.apiContext.host + 'api/AccoungtingDept/profile';
       this.http.get<any>(configUrl).subscribe(res => {
-        console.log(res);
-        this.user.name = res.FullName;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        this.user.Avatar = res.Avatar;
-      },
+          console.log(res);
+          this.user.name = res.FullName;
+          this.user.email = res.Email;
+          this.user.PhoneNumber = res.PhoneNumber;
+          this.user.Sex = res.Sex;
+          this.user.Id = res.Id;
+          this.user.Avatar = res.Avatar;
+        },
         error => {
           console.log(error);
           if (error instanceof HttpErrorResponse) {
@@ -113,18 +115,17 @@ export class ProfileComponent implements OnInit, AfterViewInit {
             }
           }
         });
-    }
-    else if (this.auth.centerAdminLoggedIn()) {
-      const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/CenterManagement/profile';
+    } else if (this.auth.centerAdminLoggedIn()) {
+      const configUrl = this.apiContext.host + 'api/CenterManagement/profile';
       this.http.get<any>(configUrl).subscribe(res => {
-        console.log(res);
-        this.user.name = res.FullName;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        this.user.Avatar = res.Avatar;
-      },
+          console.log(res);
+          this.user.name = res.FullName;
+          this.user.email = res.Email;
+          this.user.PhoneNumber = res.PhoneNumber;
+          this.user.Sex = res.Sex;
+          this.user.Id = res.Id;
+          this.user.Avatar = res.Avatar;
+        },
         error => {
           console.log(error);
           if (error instanceof HttpErrorResponse) {
@@ -133,18 +134,17 @@ export class ProfileComponent implements OnInit, AfterViewInit {
             }
           }
         });
-    }
-    else if (this.auth.StudentLoggedIn()) {
-      const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/Student/profile';
+    } else if (this.auth.StudentLoggedIn()) {
+      const configUrl = this.apiContext.host + 'api/Student/profile';
       this.http.get<any>(configUrl).subscribe(res => {
-        console.log(res);
-        this.user.name = res.FullName;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        this.user.Avatar = res.Avatar;
-      },
+          console.log(res);
+          this.user.name = res.FullName;
+          this.user.email = res.Email;
+          this.user.PhoneNumber = res.PhoneNumber;
+          this.user.Sex = res.Sex;
+          this.user.Id = res.Id;
+          this.user.Avatar = res.Avatar;
+        },
         error => {
           console.log(error);
           if (error instanceof HttpErrorResponse) {
@@ -157,7 +157,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -179,7 +179,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     if (this.auth.adminLogedIn()) {
       configUrl = '';
     } else if (this.auth.trainingStaffLogedIn()) {
-      configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/UpdateProfile';
+      configUrl = this.apiContext.host + this.apiTraining.updateProfile;
     }
     const body = new HttpParams()
       .set('Id', this.user.Id)
@@ -190,15 +190,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       .set('PhoneNumber', this.user.PhoneNumber);
 
     this.http.post<any>(configUrl, body).subscribe(res => {
-      console.log(res);
-      this.user.name = res.Full_Name;
-      this.user.email = res.Email;
-      this.user.PhoneNumber = res.PhoneNumber;
-      this.user.Sex = res.Sex;
-      this.user.Id = res.Id;
-      console.log(res);
+        console.log(res);
+        this.user.name = res.Full_Name;
+        this.user.email = res.Email;
+        this.user.PhoneNumber = res.PhoneNumber;
+        this.user.Sex = res.Sex;
+        this.user.Id = res.Id;
+        console.log(res);
 
-    },
+      },
       error => {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401) {

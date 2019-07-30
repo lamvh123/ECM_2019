@@ -7,14 +7,15 @@
     <div class="row clearfix">
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
-          
+
           <div class="body">
             <div class="row clearfix">
               <div class="col-sm-12">
                 <div class="form-group">
                   <label>Course:</label>
                   <div>
-                    <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course" [(ngModel)]="courseId">
+                    <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
+                               [(ngModel)]="courseId">
                     </ng-select>
                   </div>
                 </div>
@@ -23,24 +24,24 @@
                 <div class="form-group">
                   <label for="formName">Form Name:</label>
                   <div class="form-line">
-                    <input type="text" [(ngModel)]="form.Name" class="form-control" placeholder="Name" id="formName" />
+                    <input type="text" [(ngModel)]="form.Name" class="form-control" placeholder="Name" id="formName"/>
                   </div>
                 </div>
               </div>
-<!--              <div class="col-sm-12">-->
-<!--                <div class="form-group">-->
-<!--                  <label for="Link">Google Link</label>-->
-<!--                  <div class="form-line">-->
-<!--                    <input type="text" [(ngModel)]="form.GoogleFormLink" class="form-control" placeholder="Link" id="Link" />-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
+              <!--              <div class="col-sm-12">-->
+              <!--                <div class="form-group">-->
+              <!--                  <label for="Link">Google Link</label>-->
+              <!--                  <div class="form-line">-->
+              <!--                    <input type="text" [(ngModel)]="form.GoogleFormLink" class="form-control" placeholder="Link" id="Link" />-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </div>-->
               <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="startdate"> Start Date</label>
                   <div class="form-line">
                     <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"
-                      id="startdate" />
+                           id="startdate"/>
                   </div>
                 </div>
               </div>
@@ -49,8 +50,8 @@
                 <div style="padding-top: 19px;">
                   <label for="building">Location:</label>
                   <ng-select [items]="listBuilding" bindLabel="Name" bindValue="Id" placeholder="Select building"
-                    [(ngModel)]="selectedBuilding" id="building">
-                  </ng-select>     
+                             [(ngModel)]="selectedBuilding" id="building">
+                  </ng-select>
                 </div>
               </div>
 
@@ -67,20 +68,21 @@
               <div class="col-lg-6 col-md-6 col-md-12">
                 <div style="padding-top: 19px;">
                   <label for="listDay">Selected days:</label>
-                  <ng-select [items]="dayArr" bindLabel="dayString" bindValue="dayNumber" placeholder="Select day of week" multiple="true"
-                    [(ngModel)]="selectedDayArr" id="listDay">
-                  </ng-select>   
-                
+                  <ng-select [items]="dayArr" bindLabel="dayString" bindValue="dayNumber"
+                             placeholder="Select day of week" multiple="true"
+                             [(ngModel)]="selectedDayArr" id="listDay">
+                  </ng-select>
+
                 </div>
               </div>
 
               <div class="col-lg-6 col-md-6 col-md-12">
                 <div style="padding-top: 19px;">
                   <label for="selectedSlot">Selected slot:</label>
-                  <ng-select [items]="listOfSlot" bindLabel="displayText" bindValue="ID" placeholder="Select time " 
-                    [(ngModel)]="selectedSlot" id="selectedSlot">
-                  </ng-select>   
-                
+                  <ng-select [items]="listOfSlot" bindLabel="displayText" bindValue="ID" placeholder="Select time "
+                             [(ngModel)]="selectedSlot" id="selectedSlot">
+                  </ng-select>
+
                 </div>
               </div>
 

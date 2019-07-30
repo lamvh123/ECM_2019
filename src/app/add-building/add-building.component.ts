@@ -2,6 +2,7 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Router, ActivatedRoute, Routes} from '@angular/router';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-add-building',
@@ -18,7 +19,9 @@ import {Router, ActivatedRoute, Routes} from '@angular/router';
 })
 
 
-export class AddBuildingComponent implements OnInit {
+export class AddBuildingComponent implements OnInit, AfterViewInit {
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -47,54 +50,48 @@ export class AddBuildingComponent implements OnInit {
 
   }
 
-  //this is add program
   addBuilding() {
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddBuilding';
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then(data => {
-        const body = new HttpParams()
-          .set('Name', this.buildingName)
-          .set('Address', this.buildingAddress)
-          .set('CenterId', data['Id']);
-        this.http.post<any>(configUrl, body).toPromise().then(
-          res => {
-            console.log(res);
-            this.showMessage(true);
-          },
-          err => {
-            console.log(err);
-            this.showMessage(false);
-          }
-        );
+    const configUrl = this.apiContext.host + this.apiTraining.addBuilding;
+    const body = new HttpParams()
+      .set('Name', this.buildingName)
+      .set('Address', this.buildingAddress)
+      .set('CenterId', this.apiContext.centerId + '');
+    this.http.post<any>(configUrl, body).toPromise().then(
+      res => {
+        console.log(res);
+        // this.showMessage(true);
+        this.redirectToViewBuilding();
       },
-      error => {
-        console.log(error);
-        this.showMessage(false);
-      });
-
+      err => {
+        console.log(err);
+        // this.showMessage(false);
+      }
+    );
   }
+
 
   redirectToViewBuilding() {
     this._router.navigateByUrl('/Training-staff/view-building');
   }
+
   redirectToAddBuilding() {
     this._router.navigateByUrl('/Training-staff/add-building');
   }
 
-  private showMessage(status: boolean) {
-    let messageConfirm;
-    if (status) {
-      messageConfirm = 'A building was added successfully.' +
-        '\nDo you want to add more buildings?';
-    } else {
-      messageConfirm = 'Something go wrong.' +
-        '\nDo you want to try again?';
-    }
-    const r = confirm(messageConfirm);
-    if (r === true) {
-      this.redirectToAddBuilding();
-    } else {
-      this.redirectToViewBuilding();
-    }
-  }
+  // private showMessage(status: boolean) {
+  //   let messageConfirm;
+  //   if (status) {
+  //     messageConfirm = 'A building was added successfully.' +
+  //       '\nDo you want to add more buildings?';
+  //   } else {
+  //     messageConfirm = 'Something go wrong.' +
+  //       '\nDo you want to try again?';
+  //   }
+  //   const r = confirm(messageConfirm);
+  //   if (r === true) {
+  //     this.redirectToAddBuilding();
+  //   } else {
+  //     this.redirectToViewBuilding();
+  //   }
+  // }
 }

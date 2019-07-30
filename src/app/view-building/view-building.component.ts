@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Building} from '../building';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-view-building',
@@ -16,36 +17,22 @@ export class ViewBuildingComponent implements OnInit, AfterViewInit {
   constructor(private http: HttpClient, private router: Router) {
   }
 
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   buildings: Building[];
-  centerId = {
-    Id: '',
-    name: ''
-  };
 
   ngOnInit() {
-    this.getProgramWithCenterId();
-  }
-
-  getProgramWithCenterId() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId.Id = data['Id'];
-        this.getAllBuildings();
-      },
-      error => {
-        console.log(error);
-      });
-
+    this.getAllBuildings();
   }
 
   getAllBuildings() {
 
     const body = new HttpParams()
-      .set('centerId', this.centerId.Id + '')
+      .set('centerId', this.apiContext.centerId + '')
       .set('name', '')
       .set('address', '');
 
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchBuilding';
+    const configUrl = this.apiContext.host + this.apiTraining.searchBuilding;
     this.http.get<Building[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.buildings = res;

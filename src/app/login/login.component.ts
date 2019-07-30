@@ -2,6 +2,7 @@ import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {APIContext} from '../APIContext';
 
 declare var jquery: any;
 declare var $: any;
@@ -18,6 +19,7 @@ declare var logInForm: any;
   ]
 })
 export class LoginComponent implements OnInit, AfterViewInit {
+  apiContext = new APIContext();
   loginFail = false;
   loginMessage: string;
   loginUserData = {
@@ -50,8 +52,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (!!this._auth.centerAdminLoggedIn()) {
       this._router.navigate(['/CenterAdmin/profile']);
     }
-    if(!!this._auth.StudentLoggedIn()){
-      this._router.navigate(['/Student/profile'])
+    if (!!this._auth.StudentLoggedIn()) {
+      this._router.navigate(['/Student/profile']);
     }
 
   }
@@ -81,9 +83,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       .set('username', this.loginUserData.username)
       .set('password', this.loginUserData.password)
       .set('grant_type', 'password');
-    this.http.post<any>('https://educationcentermanagementapi-dev-as.azurewebsites.net/token', body).subscribe(
+    this.http.post<any>(this.apiContext.host + 'token', body).subscribe(
       res => {
-        var expireDate = new Date(new Date().getTime() + 60 * 24 * 60000);
+        const expireDate = new Date(new Date().getTime() + 60 * 24 * 60000);
         localStorage.setItem('token', res.access_token);
         localStorage.setItem('role', res.role);
         localStorage.setItem('expiretime', expireDate.getTime() + '');
@@ -100,8 +102,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         } else {
           console.log(res);
         }
-        if(!!this._auth.StudentLoggedIn()){
-          this._router.navigate(['/Student/profile'])
+        if (!!this._auth.StudentLoggedIn()) {
+          this._router.navigate(['/Student/profile']);
         }
       },
       err => {

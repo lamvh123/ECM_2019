@@ -10,6 +10,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, FormsModule} from '@angular
 import {Observable} from 'rxjs';
 import {Slot} from '../slot';
 import {forEach} from '@angular/router/src/utils/collection';
+import {APIContext} from '../APIContext';
 
 @Component({
   selector: 'app-view-admission-form-detail',
@@ -19,8 +20,8 @@ import {forEach} from '@angular/router/src/utils/collection';
 })
 export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   @ViewChild('myselect') myselect;
+  apiContext = new APIContext();
   formId;
-  centerId;
   form: AdmissionForm;
   listBuilding: Observable<Building[]>;
   listOfSlot: Slot[];
@@ -50,48 +51,41 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   getInitData() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        console.log(data['Id']);
-        this.centerId = data['Id'];
+    const getAllCourseUrl = this.apiContext.host + 'api/AdmissionManagement/GetAdmissionFormById';
+    var para = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '')
+      .set('admissionFormId', this.formId);
+    this.http.get<AdmissionForm>(getAllCourseUrl, {params: para}).toPromise().then(data => {
+        this.form = data;
+        this.form.StartDate = this.form.StartDate.substr(0, 10);
+        this.selectedBuilding = this.form.Building.Id;
+        this.isClose = this.form.IsClosed + '';
+        if (data['Slot'] != null && data['Slot'] != undefined) {
+          this.selectedSlot = data['Slot'].ID;
+        }
 
-        const getAllCourseUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAdmissionFormById';
-        var para = new HttpParams().set('centerId', this.centerId + '').set('admissionFormId', this.formId);
-        this.http.get<AdmissionForm>(getAllCourseUrl, {params: para}).toPromise().then(data => {
-            this.form = data;
-            this.form.StartDate = this.form.StartDate.substr(0, 10);
-            this.selectedBuilding = this.form.Building.Id;
-            this.isClose = this.form.IsClosed + '';
-            if (data['Slot'] != null && data['Slot'] != undefined) {
-              this.selectedSlot = data['Slot'].ID;
-            }
-
-            if (data['Weeks'] != null && data['Weeks'] != undefined) {
-              var dayarr = Object.keys(data['Weeks']).map(i => data['Weeks'][i]);
-              var arr = new Array<number>();
-              console.log(dayarr);
-              dayarr.forEach(function(item: any) {
-                arr.push(item.DayOfWeek);
-              });
-              this.selectedDayArr = arr;
-            }
-            console.log(this.form);
-            this.getAllBuilding();
-          },
-          error => {
-            console.log(error);
-          }
-        );
-        this.getAllSlot();
+        if (data['Weeks'] != null && data['Weeks'] != undefined) {
+          var dayarr = Object.keys(data['Weeks']).map(i => data['Weeks'][i]);
+          var arr = new Array<number>();
+          console.log(dayarr);
+          dayarr.forEach(function(item: any) {
+            arr.push(item.DayOfWeek);
+          });
+          this.selectedDayArr = arr;
+        }
+        console.log(this.form);
+        this.getAllBuilding();
       },
       error => {
         console.log(error);
-      });
+      }
+    );
+    this.getAllSlot();
   }
 
   getAllBuilding() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllBuilding';
-    var para = new HttpParams().set('centerId', this.centerId + '');
+    const url = this.apiContext.host + 'api/AdmissionManagement/GetAllBuilding';
+    var para = new HttpParams().set('centerId', this.apiContext.centerId + '');
     this.http.get<Observable<Building[]>>(url, {params: para}).toPromise().then(data => {
         this.listBuilding = data;
         console.log(this.listBuilding);
@@ -102,8 +96,8 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   getAllSlot() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/GetAllSlot';
-    var para = new HttpParams().set('centerId', this.centerId + '');
+    const url = this.apiContext.host + 'api/AdmissionManagement/GetAllSlot';
+    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
     this.http.get<Slot[]>(url, {params: para}).toPromise().then(data => {
         this.listOfSlot = data;
         this.listOfSlot.forEach(function(item) {
@@ -123,11 +117,11 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
       .set('CourseId', this.form.Course.Id + '').set('StartDate', dateString).set('Name', this.form.Name)
       .set('SlotId', this.selectedSlot + '')
       .set('BuildingId', this.selectedBuilding + '')
-      .set('IsClosed', false + '').set('CenterId', this.centerId);
+      .set('IsClosed', false + '').set('CenterId', this.apiContext.centerId + '');
     this.selectedDayArr.forEach(item => {
       para = para.append('DaysPerWeek', item + '');
     });
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AdmissionManagement/UpdateAdmissionForm';
+    const url = this.apiContext.host + 'api/AdmissionManagement/UpdateAdmissionForm';
     console.log(para);
     this.http.post<any>(url, para).toPromise().then(data => {
 

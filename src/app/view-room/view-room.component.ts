@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Building} from '../building';
 import {Room} from '../room';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-view-room',
@@ -17,56 +18,32 @@ export class ViewRoomComponent implements OnInit, AfterViewInit {
   constructor(private http: HttpClient, private router: Router) {
   }
 
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
   buildings: Building[] = [];
   rooms: Room[] = [];
-  centerId = {
-    Id: '',
-    name: ''
-  };
 
   ngOnInit() {
-    this.getRoomWithCenterId();
-  }
-
-  getRoomWithCenterId() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId.Id = data['Id'];
-        this.getAllRooms();
-      },
-      error => {
-        console.log(error);
-      });
-
+    this.getAllRooms();
   }
 
   getAllRooms() {
-
     const body = new HttpParams()
-      .set('centerId', this.centerId.Id + '')
+      .set('centerId', this.apiContext.centerId + '')
       .set('roomNumber', '')
       .set('buildingId', '-1');
 
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchRoom';
+    const configUrl = this.apiContext.host + this.apiTraining.searchRoom;
     this.http.get<Room[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.rooms = res;
         console.log(this.rooms);
-        this.getAvailbleBuildings();
       },
       error => {
         console.log(error);
       });
   }
 
-  getAvailbleBuildings() {
-    for (const r of this.rooms) {
-      if (r.Building.$ref == null) {
-        this.buildings.push(r.Building);
-      }
-    }
-    console.log(this.buildings);
-  }
 
   ngAfterViewInit() {
     // this.loadScript('../../assets/bundles/libscripts.bundle.js');
@@ -75,14 +52,6 @@ export class ViewRoomComponent implements OnInit, AfterViewInit {
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
   }
 
-  getBuildingById(id: number) {
-    for (const b of this.buildings) {
-      if (b.$id === id) {
-        return b;
-      }
-    }
-    return null;
-  }
 
   public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;

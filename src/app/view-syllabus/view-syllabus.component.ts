@@ -1,8 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Syllabus } from '../entity/syllabus';
-declare function alertSuccess():any;
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Syllabus} from '../entity/syllabus';
+
+declare function alertSuccess(): any;
+
 @Component({
   selector: 'app-view-syllabus',
   templateUrl: './view-syllabus.component.html',
@@ -11,7 +13,9 @@ declare function alertSuccess():any;
 })
 export class ViewSyllabusComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  }
+
   courseId;
   ListOfSyllabus: Syllabus[];
 
@@ -25,12 +29,13 @@ export class ViewSyllabusComponent implements OnInit, AfterViewInit {
     syl.CourseId = this.courseId;
     this.ListOfSyllabus.push(syl);
   }
-  
-  deleteSylabus(index){
-     this.ListOfSyllabus.splice(index,1);
+
+  deleteSylabus(index) {
+    this.ListOfSyllabus.splice(index, 1);
   }
+
   saveSyllabus() {
-    const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/UpdateSyllabusForCourse";
+    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/UpdateSyllabusForCourse';
     let params = new HttpParams();
     this.http.post(url, this.ListOfSyllabus).toPromise().then(
       res => {
@@ -38,28 +43,30 @@ export class ViewSyllabusComponent implements OnInit, AfterViewInit {
         this.loadSyllabus();
         alertSuccess();
       },
-      error=>{
+      error => {
         console.log(error);
       }
     );
-   
+
   }
+
   loadSyllabus() {
-    const param = new HttpParams().set("courseId", this.courseId);
-    const url = "https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetSyllabus";
-    this.http.get<Syllabus[]>(url, { params: param }).toPromise().then(
+    const param = new HttpParams().set('courseId', this.courseId);
+    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetSyllabus';
+    this.http.get<Syllabus[]>(url, {params: param}).toPromise().then(
       res => {
         console.log(res);
         this.ListOfSyllabus = res;
-        this.ListOfSyllabus.forEach(item =>{
+        this.ListOfSyllabus.forEach(item => {
           item.CourseId = this.courseId;
-        })
+        });
       }
       , error => {
         console.log(error);
       }
-    )
+    );
   }
+
   ngAfterViewInit() {
     // this.loadScript('/assets/bundles/libscripts.bundle.js');
     // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
@@ -73,7 +80,7 @@ export class ViewSyllabusComponent implements OnInit, AfterViewInit {
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -81,7 +88,6 @@ export class ViewSyllabusComponent implements OnInit, AfterViewInit {
     script.defer = true;
     body.appendChild(script);
   }
-
 
 
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Building} from '../building';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-add-room',
@@ -21,19 +22,18 @@ export class AddRoomComponent implements OnInit {
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
 
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
+
   roomNumber: string;
   capacity: number;
   buildingId: number;
 
   buildings: Building[];
-  centerId = {
-    Id: '',
-    name: ''
-  };
   selectedName: string;
 
   ngOnInit() {
-    this.getBuildingsWithCenterId();
+    this.getAllBuildings();
   }
 
   public loadScript(url: string) {
@@ -48,55 +48,32 @@ export class AddRoomComponent implements OnInit {
 
 
   addRoom() {
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddRoom';
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then(data => {
-        const body = new HttpParams()
-          .set('RoomNumber', this.roomNumber)
-          .set('Capacity', String(this.capacity))
-          .set('BuildingId', String(this.buildingId))
-          .set('CenterId', data['Id']);
-        this.http.post<any>(configUrl, body).toPromise().then(
-          res => {
-            console.log(res);
-            this.showMessage(true);
-          },
-          err => {
-            console.log(err);
-            this.showMessage(false);
-          }
-        );
-      },
-      error => {
-        console.log(error);
-        this.showMessage(false);
-      });
-
-  }
-
-
-
-
-  getBuildingsWithCenterId() {
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then((data) => {
-        this.centerId.Id = data['Id'];
-        this.getAllBuildings();
-      },
-      error => {
-        console.log(error);
-        this.showMessage(false);
-      });
-
-  }
-  getAllBuildings() {
-
+    const configUrl = this.apiContext.host + this.apiTraining.addRoom;
     const body = new HttpParams()
-      .set('centerId', this.centerId.Id + '')
+      .set('RoomNumber', this.roomNumber)
+      .set('Capacity', String(this.capacity))
+      .set('BuildingId', String(this.buildingId))
+      .set('CenterId', this.apiContext.centerId + '');
+    this.http.post<any>(configUrl, body).toPromise().then(
+      res => {
+        console.log(res);
+        // this.showMessage(true);
+        this.redirectToAllRoom();
+      },
+      err => {
+        console.log(err);
+        // this.showMessage(false);
+      }
+    );
+  }
+
+  getAllBuildings() {
+    const body = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '')
       .set('name', '')
       .set('address', '');
 
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/SearchBuilding';
+    const configUrl = this.apiContext.host + this.apiTraining.searchBuilding;
     this.http.get<Building[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.buildings = res;
@@ -104,7 +81,7 @@ export class AddRoomComponent implements OnInit {
       },
       error => {
         console.log(error);
-        this.showMessage(false);
+        // this.showMessage(false);
       });
   }
 
@@ -112,7 +89,6 @@ export class AddRoomComponent implements OnInit {
     this.buildingId = value;
     console.log(value);
   }
-
 
 
   redirectToAllRoom() {
@@ -123,20 +99,20 @@ export class AddRoomComponent implements OnInit {
     this._router.navigateByUrl('/Training-staff/add-room');
   }
 
-  private showMessage(status: boolean) {
-    let messageConfirm;
-    if (status) {
-      messageConfirm = 'A room was added successfully.' +
-        '\nDo you want to add more rooms?';
-    } else {
-      messageConfirm = 'Something go wrong.' +
-        '\nDo you want to try again?';
-    }
-    const r = confirm(messageConfirm);
-    if (r === true) {
-      this.redirectToAddRoom();
-    } else {
-      this.redirectToAllRoom();
-    }
-  }
+  // private showMessage(status: boolean) {
+  //   let messageConfirm;
+  //   if (status) {
+  //     messageConfirm = 'A room was added successfully.' +
+  //       '\nDo you want to add more rooms?';
+  //   } else {
+  //     messageConfirm = 'Something go wrong.' +
+  //       '\nDo you want to try again?';
+  //   }
+  //   const r = confirm(messageConfirm);
+  //   if (r === true) {
+  //     this.redirectToAddRoom();
+  //   } else {
+  //     this.redirectToAllRoom();
+  //   }
+  // }
 }

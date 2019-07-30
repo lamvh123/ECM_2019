@@ -30,9 +30,16 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
   image = '';
   Fee = '';
   Description = '';
-  totalSession: '';
+  totalSession = '';
   subjectId = '';
   subjects: Subject[];
+
+  errorMsgName = '-';
+  errorMsgImage = '-';
+  errorMsgFee = '-';
+  errorMsgTotalSession = '-';
+  errorMsgSubject = '-';
+  errorMsgDescription = '-';
 
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -68,7 +75,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
   }
 
   addCourse() {
-    const configUrl = this.apiContext + this.apiTraining.addCourse;
+    const configUrl = this.apiContext.host + this.apiTraining.addCourse;
     const body = new HttpParams()
       .set('CourseName', this.courseName)
       .set('Image', this.image)
@@ -147,4 +154,99 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
   //     this.redirectToViewCourse();
   //   }
   // }
+
+
+  checkValidName() {
+    if (this.courseName != null) {
+      this.courseName = this.courseName.trim();
+    }
+    if (this.courseName == null || this.courseName === '') {
+      this.errorMsgName = 'Name is required.';
+    } else {
+      this.errorMsgName = '';
+    }
+  }
+
+  checkValidImage() {
+    if (this.image != null) {
+      this.image = this.image.trim();
+    }
+    if (this.image == null || this.image === '') {
+      this.errorMsgImage = 'Image is required.';
+    } else {
+      this.errorMsgImage = '';
+    }
+  }
+
+  checkValidFee() {
+    if (this.Fee != null) {
+      this.Fee = this.Fee.trim();
+    }
+    if (this.Fee == null || this.Fee === '') {
+      this.errorMsgFee = 'Fee is required.';
+    } else if (this.Fee.length > 9) {
+      this.errorMsgFee = 'Fee must be smaller than 1.000.000.000.';
+    } else {
+      this.errorMsgFee = '';
+    }
+  }
+
+  checkValidTotalSession() {
+    if (this.totalSession != null) {
+      this.totalSession = this.totalSession.trim();
+    }
+    if (this.totalSession == null || this.totalSession === '') {
+      this.errorMsgTotalSession = 'Total session is required.';
+    } else if (Number(this.totalSession) > 200) {
+      this.errorMsgTotalSession = 'Total session must be smaller than 200.';
+    } else {
+      this.errorMsgTotalSession = '';
+    }
+  }
+
+  checkValidSubject() {
+    if (this.subjectId != null) {
+      this.subjectId = this.subjectId.trim();
+    }
+    if (this.subjectId == null || this.subjectId === '') {
+      this.errorMsgSubject = 'Subject is required.';
+    } else {
+      this.errorMsgSubject = '';
+    }
+  }
+
+  checkValidDescription() {
+    if (this.Description != null) {
+      this.Description = this.Description.trim();
+    }
+    if (this.Description == null || this.Description === '') {
+      this.errorMsgDescription = 'Description is required.';
+    } else {
+      this.errorMsgDescription = '';
+    }
+  }
+
+  checkValidFields() {
+    if (this.errorMsgName.length !== 0 || this.errorMsgImage.length !== 0 || this.errorMsgFee.length !== 0
+      || this.errorMsgTotalSession.length !== 0 || this.errorMsgSubject.length !== 0 || this.errorMsgDescription.length !== 0) {
+      return false;
+    }
+    return true;
+  }
+
+  isInputNumber(evt) {
+    const c = String.fromCharCode(evt.which);
+    if (!(/[0-9]/.test(c))) {
+      evt.preventDefault();
+    }
+  }
+
+  verifyAllFields() {
+    this.checkValidName();
+    this.checkValidTotalSession();
+    this.checkValidFee();
+    this.checkValidSubject();
+    this.checkValidImage();
+    this.checkValidDescription();
+  }
 }

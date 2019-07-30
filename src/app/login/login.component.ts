@@ -28,6 +28,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     grant_type: ''
   };
 
+  errorMsgUsername = '-';
+  errorMsgPassword = '-';
+
+
   constructor(private _auth: AuthService,
               private _router: Router, private http: HttpClient) {
   }
@@ -115,4 +119,36 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   }
 
+  checkValidUsername() {
+    if (this.loginUserData.username != null) {
+      this.loginUserData.username = this.loginUserData.username.trim();
+    }
+    if (this.loginUserData.username == null || this.loginUserData.username === '') {
+      this.errorMsgUsername = 'Username/Email is required.';
+    } else {
+      this.errorMsgUsername = '';
+    }
+  }
+
+  checkValidPassword() {
+    if (this.loginUserData.password == null || this.loginUserData.password === '') {
+      this.errorMsgPassword = 'Password is required.';
+    } else if (this.loginUserData.password.length < 6) {
+      this.errorMsgPassword = 'Password must include at least 6 characters.';
+    } else {
+      this.errorMsgPassword = '';
+    }
+  }
+
+  checkValidFields() {
+    if (this.errorMsgUsername.length !== 0 || this.errorMsgPassword.length !== 0) {
+      return false;
+    }
+    return true;
+  }
+
+  verifyAllFields() {
+    this.checkValidUsername();
+    this.checkValidPassword();
+  }
 }

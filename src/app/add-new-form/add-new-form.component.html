@@ -15,8 +15,12 @@
                   <label>Course:</label>
                   <div>
                     <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
-                               [(ngModel)]="courseId">
+                               [(ngModel)]="courseId" required (change)="checkValidCourse()"
+                               (focusout)="checkValidCourse()">
                     </ng-select>
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgCourse!=null && errorMsgCourse.length>1">
+                    {{errorMsgCourse}}
                   </div>
                 </div>
               </div>
@@ -24,82 +28,105 @@
                 <div class="form-group">
                   <label for="formName">Form Name:</label>
                   <div class="form-line">
-                    <input type="text" [(ngModel)]="form.Name" class="form-control" placeholder="Name" id="formName"/>
+                    <input type="text" [(ngModel)]="form.Name" class="form-control" placeholder="Name" id="formName"
+                           required (change)="checkValidName()" (focusout)="checkValidName()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
+                    {{errorMsgName}}
                   </div>
                 </div>
               </div>
-              <!--              <div class="col-sm-12">-->
-              <!--                <div class="form-group">-->
-              <!--                  <label for="Link">Google Link</label>-->
-              <!--                  <div class="form-line">-->
-              <!--                    <input type="text" [(ngModel)]="form.GoogleFormLink" class="form-control" placeholder="Link" id="Link" />-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </div>-->
-              <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="form-group">
-                  <label for="startdate"> Start Date</label>
-                  <div class="form-line">
-                    <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"
-                           id="startdate"/>
-                  </div>
+            </div>
+            <!--              <div class="col-sm-12">-->
+            <!--                <div class="form-group">-->
+            <!--                  <label for="Link">Google Link</label>-->
+            <!--                  <div class="form-line">-->
+            <!--                    <input type="text" [(ngModel)]="form.GoogleFormLink" class="form-control" placeholder="Link" id="Link" />-->
+            <!--                  </div>-->
+            <!--                </div>-->
+            <!--              </div>-->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="startdate"> Start Date</label>
+                <div class="form-line">
+                  <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"
+                         id="startdate"
+                         required (change)="checkValidDate()" (focusout)="checkValidDate()">
+                </div>
+                <div class="error-msg" *ngIf="errorMsgDate!=null && errorMsgDate.length>1">
+                  {{errorMsgDate}}
                 </div>
               </div>
-
-              <div class="col-lg-4 col-md-6 col-md-12">
-                <div style="padding-top: 19px;">
-                  <label for="building">Location:</label>
-                  <ng-select [items]="listBuilding" bindLabel="Name" bindValue="Id" placeholder="Select building"
-                             [(ngModel)]="selectedBuilding" id="building">
-                  </ng-select>
-                </div>
-              </div>
-
-              <!-- <div class="col-lg-4 col-md-6 col-md-12">
-                <div  style="padding-top: 19px;">
-                  <label for="isClose">Closed:</label>
-                  <ng-select [items]="boolArr" 
-                    [(ngModel)]="isClose">
-                  </ng-select> 
-                </div>
-
-              </div> -->
-
-              <div class="col-lg-6 col-md-6 col-md-12">
-                <div style="padding-top: 19px;">
-                  <label for="listDay">Selected days:</label>
-                  <ng-select [items]="dayArr" bindLabel="dayString" bindValue="dayNumber"
-                             placeholder="Select day of week" multiple="true"
-                             [(ngModel)]="selectedDayArr" id="listDay">
-                  </ng-select>
-
-                </div>
-              </div>
-
-              <div class="col-lg-6 col-md-6 col-md-12">
-                <div style="padding-top: 19px;">
-                  <label for="selectedSlot">Selected slot:</label>
-                  <ng-select [items]="listOfSlot" bindLabel="displayText" bindValue="ID" placeholder="Select time "
-                             [(ngModel)]="selectedSlot" id="selectedSlot">
-                  </ng-select>
-
-                </div>
-              </div>
-
             </div>
 
-            <div class="row clearfix">
-              <div class="col-sm-12">
-                <button (click)="CreateForm()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Create
-                </button>
+            <div class="col-lg-4 col-md-6 col-md-12">
+              <div style="padding-top: 19px;">
+                <label for="building">Building:</label>
+                <ng-select [items]="listBuilding" bindLabel="Name" bindValue="Id" placeholder="Select building"
+                           [(ngModel)]="selectedBuilding" id="building"
+                           required (change)="checkValidBuilding()" (focusout)="checkValidBuilding()">
+                </ng-select>
+              </div>
+              <div class="error-msg" *ngIf="errorMsgBuilding!=null && errorMsgBuilding.length>1">
+                {{errorMsgBuilding}}
+              </div>
+            </div>
+
+            <!-- <div class="col-lg-4 col-md-6 col-md-12">
+              <div  style="padding-top: 19px;">
+                <label for="isClose">Closed:</label>
+                <ng-select [items]="boolArr"
+                  [(ngModel)]="isClose">
+                </ng-select>
+              </div>
+
+            </div> -->
+
+            <div class="col-lg-6 col-md-6 col-md-12">
+              <div style="padding-top: 19px;">
+                <label for="listDay">Selected days:</label>
+                <ng-select [items]="dayArr" bindLabel="dayString" bindValue="dayNumber"
+                           placeholder="Select day of week" multiple="true"
+                           [(ngModel)]="selectedDayArr" id="listDay"
+                           required (change)="checkValidDay()" (focusout)="checkValidDay()">
+                </ng-select>
 
               </div>
+              <div class="error-msg" *ngIf="errorMsgDay!=null && errorMsgDay.length>1">
+                {{errorMsgDay}}
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-md-12">
+              <div style="padding-top: 19px;">
+                <label for="selectedSlot">Selected slot:</label>
+                <ng-select [items]="listOfSlot" bindLabel="displayText" bindValue="ID" placeholder="Select time "
+                           [(ngModel)]="selectedSlot" id="selectedSlot"
+                           required (change)="checkValidSlot()" (focusout)="checkValidSlot()">
+                </ng-select>
+
+              </div>
+
+              <div class="error-msg" *ngIf="errorMsgSlot!=null && errorMsgSlot.length>1">
+                {{errorMsgSlot}}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <button *ngIf="checkValidFields()" (click)="CreateForm()" type="submit"
+                      class="btn btn-raised waves-effect g-bg-blush2">Create
+              </button>
+              <button *ngIf="!checkValidFields()" (click)="verifyAllFields()" type="submit"
+                      class="btn btn-raised waves-effect g-bg-blush2">Create
+              </button>
+
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
-
 </section>

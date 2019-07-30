@@ -187,7 +187,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   grantAccountForMany() {
-    const url = this.apiContext + 'api/CenterManagement/GrantAccountForStudent';
+    const url = this.apiContext.host + 'api/CenterManagement/GrantAccountForStudent';
     const param = new Array();
     const listSelectedStudent = this.listStudent.filter(item => item.selected && item.IsPayment && item.IsGrantedAccount);
     listSelectedStudent.forEach(item => {

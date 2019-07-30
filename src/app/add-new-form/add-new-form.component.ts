@@ -13,8 +13,9 @@ import {APIContext} from '../APIContext';
 @Component({
   selector: 'app-add-new-form',
   templateUrl: './add-new-form.component.html',
-  styleUrls: ['./add-new-form.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./add-new-form.component.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class AddNewFormComponent implements OnInit {
   apiContext = new APIContext();
@@ -32,7 +33,15 @@ export class AddNewFormComponent implements OnInit {
     {dayNumber: 5, dayString: 'Friday'}, {dayNumber: 6, dayString: 'Saturday'}, {dayNumber: 0, dayString: 'Sunday'}];
   listOfSlot: Slot[];
   selectedSlot;
+
+  errorMsgCourse = '-';
+  errorMsgName = '-';
+  errorMsgDate = '-';
+  errorMsgBuilding = '-';
+  errorMsgDay = '-';
+  errorMsgSlot = '-';
   @Output() messageEvent = new EventEmitter<string>();
+
 
   constructor(private http: HttpClient, private router: Router, private datepipe: DatePipe, private route: ActivatedRoute) {
 
@@ -148,4 +157,84 @@ export class AddNewFormComponent implements OnInit {
   //   }
   // }
 
+
+  checkValidCourse() {
+    if (this.courseId != null) {
+      this.courseId = this.courseId.trim();
+    }
+    if (this.courseId == null || this.courseId === '') {
+      this.errorMsgCourse = 'Course is required.';
+    } else {
+      this.errorMsgCourse = '';
+    }
+  }
+
+  checkValidName() {
+    if (this.form.Name != null) {
+      this.form.Name = this.form.Name.trim();
+    }
+    if (this.form.Name == null || this.form.Name === '') {
+      this.errorMsgName = 'Name is required.';
+    } else {
+      this.errorMsgName = '';
+    }
+  }
+
+  checkValidDate() {
+    if (this.form.StartDate != null) {
+      this.form.StartDate = this.form.StartDate.trim();
+    }
+    if (this.form.StartDate == null || this.form.StartDate === '') {
+      this.errorMsgDate = 'Start date is required.';
+    } else {
+      this.errorMsgDate = '';
+    }
+  }
+
+  checkValidBuilding() {
+    if (this.selectedBuilding != null) {
+      this.selectedBuilding = this.selectedBuilding.trim();
+    }
+    if (this.selectedBuilding == null || this.selectedBuilding === '') {
+      this.errorMsgBuilding = 'Building is required.';
+    } else {
+      this.errorMsgBuilding = '';
+    }
+  }
+
+  checkValidSlot() {
+    if (this.selectedSlot != null) {
+      this.selectedSlot = this.selectedSlot.trim();
+    }
+    if (this.selectedSlot == null || this.selectedSlot === '') {
+      this.errorMsgSlot = 'Slot is required.';
+    } else {
+      this.errorMsgSlot = '';
+    }
+  }
+
+  checkValidDay() {
+    if (this.selectedDayArr == null || this.selectedDayArr.length < 1) {
+      this.errorMsgDay = 'Day of week is required.';
+    } else {
+      this.errorMsgDay = '';
+    }
+  }
+
+  checkValidFields() {
+    if (this.errorMsgCourse.length !== 0 || this.errorMsgName.length !== 0 || this.errorMsgDate.length !== 0
+      || this.errorMsgBuilding.length !== 0 || this.errorMsgDay.length !== 0 || this.errorMsgSlot.length !== 0) {
+      return false;
+    }
+    return true;
+  }
+
+  verifyAllFields() {
+    this.checkValidName();
+    this.checkValidCourse();
+    this.checkValidDate();
+    this.checkValidBuilding();
+    this.checkValidDay();
+    this.checkValidSlot();
+  }
 }

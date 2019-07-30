@@ -22,6 +22,8 @@ import {APIContext, APITraining} from '../APIContext';
 export class AddBuildingComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  errorMsgName = '-';
+  errorMsgAddress = '-';
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -53,8 +55,8 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
   addBuilding() {
     const configUrl = this.apiContext.host + this.apiTraining.addBuilding;
     const body = new HttpParams()
-      .set('Name', this.buildingName)
-      .set('Address', this.buildingAddress)
+      .set('Name', this.buildingName.trim())
+      .set('Address', this.buildingAddress.trim())
       .set('CenterId', this.apiContext.centerId + '');
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
@@ -94,4 +96,39 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
   //     this.redirectToViewBuilding();
   //   }
   // }
+
+
+  checkValidName() {
+    if (this.buildingName != null) {
+      this.buildingName = this.buildingName.trim();
+    }
+    if (this.buildingName == null || this.buildingName === '') {
+      this.errorMsgName = 'Name is required.';
+    } else {
+      this.errorMsgName = '';
+    }
+  }
+
+  checkValidAddress() {
+    if (this.buildingAddress != null) {
+      this.buildingAddress = this.buildingAddress.trim();
+    }
+    if (this.buildingAddress == null || this.buildingAddress === '') {
+      this.errorMsgAddress = 'Address is required.';
+    } else {
+      this.errorMsgAddress = '';
+    }
+  }
+
+  checkValidFields() {
+    if (this.errorMsgName.length !== 0 || this.errorMsgAddress.length !== 0) {
+      return false;
+    }
+    return true;
+  }
+
+  verifyAllFields() {
+    this.checkValidName();
+    this.checkValidAddress();
+  }
 }

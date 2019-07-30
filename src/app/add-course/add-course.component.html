@@ -27,27 +27,40 @@
             <div class="row clearfix">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="courseName">Course Name:</label>
+                  <label for="courseName">Course Name <span class="error-msg">(*)</span>:</label>
                   <div class="form-line">
-                    <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name" id="courseName">
+                    <input type="text" [(ngModel)]="courseName" class="form-control" placeholder="Name" id="courseName"
+                           required (change)="checkValidName()" (focusout)="checkValidName()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
+                    {{errorMsgName}}
                   </div>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="form-group">
-                  <label for="courseTotalSession">Total Session(s):</label>
+                  <label for="courseTotalSession">Total Session(s) <span class="error-msg">(*)</span>:</label>
                   <div class="form-line">
-                    <input type="number" [(ngModel)]="totalSession" class="form-control" placeholder="Total Session"
-                           id="courseTotalSession">
+                    <input type="text" [(ngModel)]="totalSession" class="form-control"
+                           (keypress)="isInputNumber($event)"
+                           placeholder="Total Session" id="courseTotalSession" required
+                           (keypress)="checkValidTotalSession()" (focusout)="checkValidTotalSession()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgTotalSession!=null && errorMsgTotalSession.length>1">
+                    {{errorMsgTotalSession}}
                   </div>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="form-group">
-                  <label for="courseFee">Fee (VND):</label>
+                  <label for="courseFee">Fee (VND) <span class="error-msg">(*)</span>:</label>
                   <div class="form-line">
-                    <input type="number" [(ngModel)]="Fee" class="form-control" placeholder="Course Price"
-                           id="courseFee">
+                    <input type="text" [(ngModel)]="Fee" class="form-control" (keypress)="isInputNumber($event)"
+                           placeholder="Course Price" id="courseFee" (keypress)="isInputNumber($event)" required
+                           (keypress)="checkValidFee()" (focusout)="checkValidFee()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgFee!=null && errorMsgFee.length>1">
+                    {{errorMsgFee}}
                   </div>
                 </div>
               </div>
@@ -60,21 +73,31 @@
               <!--              </div>-->
 
               <div class="col-lg-3 col-md-6 col-md-12">
-                <div class="form-group drop-custum">
-                  <label for="courseSubject">Subject:</label>
-                  <select id="courseSubject" class="form-control show-tick"
-                          (change)="selectedValueChanged($event.target.value)">
-                    <option value="" selected>--- Choose Subject ---</option>
-                    <option *ngFor="let sub of subjects" [value]="sub.Id">
-                      {{sub.Name}}
-                    </option>
-                  </select>
+                <div class="form-group">
+                  <label for="courseSubject">Subject <span class="error-msg">(*)</span>:</label>
+
+                  <div class="form-line">
+                    <select id="courseSubject" class="form-control show-tick"
+                            (change)="selectedValueChanged($event.target.value)"
+                            (change)="checkValidSubject()"
+                            (focusout)="checkValidSubject()">
+                      <option value="" selected>--- Choose Subject ---</option>
+                      <option *ngFor="let sub of subjects" [value]="sub.Id">
+                        {{sub.Name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgSubject!=null && errorMsgSubject.length>1">
+                    {{errorMsgSubject}}
+                  </div>
                 </div>
               </div>
 
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
-                                       (on-upload-complete)="onUploadCompleted($event)"></ngx-uploadcare-widget>
+                                       (on-upload-complete)="onUploadCompleted($event)"
+                                       (change)="checkValidImage()"
+                                       (focusout)="checkValidImage()"></ngx-uploadcare-widget>
                 <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
                   <img *ngIf="image!=''" src="{{image}}"
                        [ngStyle]="{'width':'100%', 'height':'100%', 'object-fit': 'cover'}">
@@ -82,6 +105,9 @@
                     <h3>Upload image of course</h3>
                   </div>
                 </form>
+                <div class="error-msg" *ngIf="errorMsgImage!=null && errorMsgImage.length>1">
+                  {{errorMsgImage}}
+                </div>
               </div>
               <!--              <div class="col-lg-4 col-md-12">-->
               <!--                <div class="form-group drop-custum">-->
@@ -98,24 +124,32 @@
                   <label for="courseDescription">Course Description:</label>
                   <div class="form-line">
                     <ckeditor id="courseDescription" [(ngModel)]="Description" [editor]="Editor"
-                              (ready)="onReady($event)"></ckeditor>
+                              (ready)="onReady($event)" required (change)="checkValidDescription()"
+                              (focusout)="checkValidDescription()"></ckeditor>
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgDescription!=null && errorMsgDescription.length>1">
+                    {{errorMsgDescription}}
                   </div>
                 </div>
               </div>
             </div>
 
-<!--            <div class="col-sm-12">-->
-<!--              <div class="form-group">-->
-<!--                <label for="programDescriptionVer2">Description:</label>-->
-<!--                <quill-editor [(ngModel)]="Description" id="programDescriptionVer2"-->
-<!--                              placeholder="Enter Text"-->
-<!--                              [modules]="quillConfig"></quill-editor>-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div class="col-sm-12">-->
+            <!--              <div class="form-group">-->
+            <!--                <label for="programDescriptionVer2">Description:</label>-->
+            <!--                <quill-editor [(ngModel)]="Description" id="programDescriptionVer2"-->
+            <!--                              placeholder="Enter Text"-->
+            <!--                              [modules]="quillConfig"></quill-editor>-->
+            <!--              </div>-->
+            <!--            </div>-->
 
             <div class="row clearfix">
               <div class="col-sm-12">
-                <button (click)="addCourse()" type="submit" class="btn btn-raised waves-effect g-bg-blush2">Add Course
+                <button *ngIf="checkValidFields()" (click)="addCourse()" type="submit"
+                        class="btn btn-raised waves-effect g-bg-blush2">Add Course
+                </button>
+                <button *ngIf="!checkValidFields()" (click)="verifyAllFields()" type="submit"
+                        class="btn btn-raised waves-effect g-bg-blush2">Add Course
                 </button>
                 <button (click)="redirectToViewCourse()" type="submit" class="btn btn-raised btn-default waves-effect">
                   Cancel

@@ -8,7 +8,7 @@ export class Course {
   Classes: string;
   CreatedAt: string;
   Description: string;
-  Fee: number;
+  Fee: string;
   Id: number;
   Image: string;
   Name: string;

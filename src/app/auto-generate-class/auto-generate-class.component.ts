@@ -8,8 +8,8 @@ import {APIContext, APITraining} from '../APIContext';
 @Component({
   selector: 'app-auto-generate-class',
   templateUrl: './auto-generate-class.component.html',
-  styleUrls: ['./auto-generate-class.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./auto-generate-class.component.css', '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
 })
 export class AutoGenerateClassComponent implements OnInit {
 

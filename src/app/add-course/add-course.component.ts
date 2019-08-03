@@ -158,80 +158,98 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
 
   checkValidName() {
     if (this.courseName != null) {
-      this.courseName = this.courseName.trim();
+      this.courseName = this.formatText(this.courseName);
     }
     if (this.courseName == null || this.courseName === '') {
       this.errorMsgName = 'Name is required.';
+      return false;
     } else {
       this.errorMsgName = '';
+      return true;
     }
   }
 
   checkValidImage() {
     if (this.image != null) {
-      this.image = this.image.trim();
+      this.image = this.formatText(this.image);
     }
     if (this.image == null || this.image === '') {
       this.errorMsgImage = 'Image is required.';
+      return false;
     } else {
       this.errorMsgImage = '';
+      return true;
     }
   }
 
   checkValidFee() {
     if (this.Fee != null) {
-      this.Fee = this.Fee.trim();
+      this.Fee = this.formatText(this.Fee);
     }
     if (this.Fee == null || this.Fee === '') {
       this.errorMsgFee = 'Fee is required.';
+      return false;
     } else if (this.Fee.length > 9) {
       this.errorMsgFee = 'Fee must be smaller than 1.000.000.000.';
+      return false;
     } else {
       this.errorMsgFee = '';
+      return true;
     }
   }
 
   checkValidTotalSession() {
     if (this.totalSession != null) {
-      this.totalSession = this.totalSession.trim();
+      this.totalSession = this.formatText(this.totalSession);
     }
     if (this.totalSession == null || this.totalSession === '') {
       this.errorMsgTotalSession = 'Total session is required.';
+      return false;
     } else if (Number(this.totalSession) > 200) {
       this.errorMsgTotalSession = 'Total session must be smaller than 200.';
+      return false;
     } else {
       this.errorMsgTotalSession = '';
+      return true;
     }
   }
 
   checkValidSubject() {
     if (this.subjectId != null) {
-      this.subjectId = this.subjectId.trim();
+      this.subjectId = this.formatText(this.subjectId);
     }
     if (this.subjectId == null || this.subjectId === '') {
       this.errorMsgSubject = 'Subject is required.';
+      return false;
     } else {
       this.errorMsgSubject = '';
+      return true;
     }
   }
 
   checkValidDescription() {
     if (this.Description != null) {
-      this.Description = this.Description.trim();
+      this.Description = this.formatText(this.Description);
     }
     if (this.Description == null || this.Description === '') {
       this.errorMsgDescription = 'Description is required.';
+      return false;
     } else {
       this.errorMsgDescription = '';
+      return true;
     }
   }
 
   checkValidFields() {
-    if (this.errorMsgName.length !== 0 || this.errorMsgImage.length !== 0 || this.errorMsgFee.length !== 0
-      || this.errorMsgTotalSession.length !== 0 || this.errorMsgSubject.length !== 0 || this.errorMsgDescription.length !== 0) {
-      return false;
+    this.checkValidName();
+    this.checkValidTotalSession();
+    this.checkValidFee();
+    this.checkValidSubject();
+    this.checkValidImage();
+    this.checkValidDescription();
+    if (this.checkValidName() && this.checkValidTotalSession() && this.checkValidFee() && this.checkValidSubject() && this.checkValidImage() && this.checkValidDescription()) {
+      this.addCourse();
     }
-    return true;
   }
 
   isInputNumber(evt) {
@@ -241,12 +259,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
     }
   }
 
-  verifyAllFields() {
-    this.checkValidName();
-    this.checkValidTotalSession();
-    this.checkValidFee();
-    this.checkValidSubject();
-    this.checkValidImage();
-    this.checkValidDescription();
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
   }
 }

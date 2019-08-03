@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {LearningSession} from '../entity/learning-session';
-import {APIContext} from '../APIContext';
+import {APIContext, APIStudent} from '../APIContext';
 
 @Component({
   selector: 'app-view-timetable',
@@ -15,6 +15,7 @@ export class ViewTimetableComponent implements OnInit {
   }
 
   apiContext = new APIContext();
+  apiStudent = new APIStudent();
   listSession: LearningSession[];
 
   ngOnInit() {
@@ -22,7 +23,7 @@ export class ViewTimetableComponent implements OnInit {
   }
 
   loadTimetable() {
-    const url = this.apiContext.host + 'api/Student/GetTimeTableOfStudent';
+    const url = this.apiContext.host + this.apiStudent.getTimeTableOfStudent;
     const param = new HttpParams().set('centerId', this.apiContext.centerId + '');
     this.http.get<LearningSession[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);

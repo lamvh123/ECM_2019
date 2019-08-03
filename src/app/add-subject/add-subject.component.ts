@@ -20,6 +20,7 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   Name: string;
+  errorMsgName = '-';
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -89,4 +90,28 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
   //     this.redirectToAllSubject();
   //   }
   // }
+
+
+  checkValidName() {
+    if (this.Name != null) {
+      this.Name = this.formatText(this.Name);
+    }
+    if (this.Name == null || this.Name === '') {
+      this.errorMsgName = 'Name is required.';
+      return false;
+    } else {
+      this.errorMsgName = '';
+      return true;
+    }
+  }
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
+  }
+
+  checkValidFields() {
+    if (this.checkValidName()) {
+      this.addSubject();
+    }
+  }
+
 }

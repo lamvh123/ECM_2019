@@ -5,6 +5,7 @@ import {Course} from '../course';
 import {AdmissionForm} from '../admission-form';
 import {Student} from '../entity/student';
 import {SpinnerVisibilityService} from 'ng-http-loader';
+import {APIAccounting, APIContext} from '../APIContext';
 
 @Component({
   selector: 'app-account-staff-confirm-student',
@@ -18,7 +19,9 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, private spinner: SpinnerVisibilityService) {
   }
 
-  centerId;
+  apiContext = new APIContext();
+  apiAccounting = new APIAccounting();
+
   listCourse: Course[];
   listForm: AdmissionForm[];
   selectedCourseId;
@@ -42,35 +45,28 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   getInitData() {
     this.spinner.show();
     this.loading = true;
-    var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/GetCenter';
-    this.http.get(url).toPromise().then(data => {
-        this.centerId = data['Id'];
-        var getCourseUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/GetAllCourse';
-        var param = new HttpParams().set('centerId', this.centerId);
-        this.http.get<Course[]>(getCourseUrl, {params: param}).toPromise().then(data => {
-            console.log(data);
-            this.listCourse = data;
-            this.getAllForm();
-          },
-          error => {
-            console.log(error);
-          });
-        this.loadStudentData();
-        this.loading = false;
-        this.spinner.hide();
-
+    const getCourseUrl = this.apiContext.host + this.apiAccounting.getAllCourse;
+    const param = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '');
+    this.http.get<Course[]>(getCourseUrl, {params: param}).toPromise().then(data => {
+        console.log(data);
+        this.listCourse = data;
+        this.getAllForm();
       },
       error => {
         console.log(error);
-        this.spinner.hide();
-
       });
+    this.loadStudentData();
+    this.loading = false;
+    this.spinner.hide();
+
 
   }
 
   getAllForm() {
-    var param = new HttpParams().set('centerId', this.centerId);
-    var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/GetAllAdmissionForm';
+    const param = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '');
+    const url = this.apiContext.host + this.apiAccounting.getAllAdmissionForm;
     this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
         this.listForm = data;
         console.log(data);
@@ -83,8 +79,10 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   ReLoadForm() {
     this.selectedFormId = null;
     if (this.selectedCourseId != null && this.selectedCourseId != undefined) {
-      var param = new HttpParams().set('courseId', this.selectedCourseId).set('centerId', this.centerId);
-      var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/GetAllAdmissionForm';
+      const param = new HttpParams()
+        .set('courseId', this.selectedCourseId)
+        .set('centerId', this.apiContext.centerId + '');
+      const url = this.apiContext.host + this.apiAccounting.getAllAdmissionFormByCid;
       this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
           this.listForm = data;
           console.log(data);
@@ -100,11 +98,11 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   pagination(totalData: number) {
     this.listPage = new Array();
     if (totalData % this.pageSize == 0) {
-      for (var i = 1; i <= totalData / this.pageSize; i++) {
+      for (let i = 1; i <= totalData / this.pageSize; i++) {
         this.listPage.push({value: i, text: 'Page ' + i});
       }
     } else {
-      for (var i = 1; i <= Math.floor(totalData / this.pageSize) + 1; i++) {
+      for (let i = 1; i <= Math.floor(totalData / this.pageSize) + 1; i++) {
         this.listPage.push({value: i, text: 'Page ' + i});
       }
     }
@@ -117,10 +115,13 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   }
 
   loadStudentData() {
-    var paramToGetTotal = new HttpParams().set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
-      .set('studentName', this.studentName).set('phoneNumber', this.phoneNumber).set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
-      .set('centerId', this.centerId);
-    var getTotalurl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/GetTotalRegisteredStudent';
+    const paramToGetTotal = new HttpParams()
+      .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
+      .set('studentName', this.studentName)
+      .set('phoneNumber', this.phoneNumber)
+      .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
+      .set('centerId', this.apiContext.centerId + '');
+    const getTotalurl = this.apiContext.host + this.apiAccounting.getTotalRegisteredStudent;
     this.http.get<number>(getTotalurl, {params: paramToGetTotal}).toPromise().then(data => {
         this.totalData = data;
         console.log(data);
@@ -130,13 +131,15 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
         if (this.totalData != 0) {
           this.pagination(this.totalData);
           this.empty = false;
-          var param = new HttpParams().set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
-            .set('studentName', this.studentName).set('phoneNumber', this.phoneNumber)
+          const param = new HttpParams()
+            .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
+            .set('studentName', this.studentName)
+            .set('phoneNumber', this.phoneNumber)
             .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
-            .set('centerId', this.centerId)
+            .set('centerId', this.apiContext.centerId + '')
             .set('pageSize', this.pageSize + '')
             .set('currentPage', this.currentPage + '');
-          var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/SearchRegisteredStudent';
+          const url = this.apiContext.host + this.apiAccounting.searchRegisteredStudent;
           this.http.get<Student[]>(url, {params: param}).toPromise().then(data => {
               this.listStudent = data;
               console.log(this.listStudent);
@@ -179,10 +182,11 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
 
   ConfirmFee(item: Student, index) {
     if (item.IsPayment == false) {
-      var param = new HttpParams().set('StudentId', item.Id + '')
-        .set('CenterId', this.centerId)
+      const param = new HttpParams()
+        .set('StudentId', item.Id + '')
+        .set('CenterId', this.apiContext.centerId + '')
         .set('IsPayment', 'true');
-      var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/SetPaymentForOneStudent';
+      const url = this.apiContext.host + this.apiAccounting.setPaymentForOneStudent;
       this.http.post(url, param).toPromise().then(data => {
           console.log(data);
           this.listStudent[index].IsPayment = true;
@@ -197,10 +201,11 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
 
   RejectFee(item: Student, index) {
     if (item.IsPayment == true) {
-      var param = new HttpParams().set('StudentId', item.Id + '')
-        .set('CenterId', this.centerId)
+      const param = new HttpParams()
+        .set('StudentId', item.Id + '')
+        .set('CenterId', this.apiContext.centerId + '')
         .set('IsPayment', 'false');
-      var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/SetPaymentForOneStudent';
+      const url = this.apiContext.host + this.apiAccounting.setPaymentForOneStudent;
       this.http.post(url, param).toPromise().then(data => {
           console.log(data);
           this.listStudent[index].IsPayment = false;
@@ -214,13 +219,12 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   }
 
   ConfirmMultiple() {
-    var centerId = this.centerId;
-    var selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == false);
-    var param = new Array();
+    const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == false);
+    const param = new Array();
     selectedItems.forEach(item => {
-      param.push({StudentId: item.Id, CenterId: centerId, IsPayment: true});
+      param.push({StudentId: item.Id, CenterId: this.apiContext.centerId, IsPayment: true});
     });
-    var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/SetPaymentForManyStudent';
+    const url = this.apiContext.host + this.apiAccounting.setPaymentForManyStudent;
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
         this.loadStudentData();
@@ -234,13 +238,12 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   }
 
   RejectMultiple() {
-    var centerId = this.centerId;
-    var selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == true);
-    var param = new Array();
+    const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == true);
+    const param = new Array();
     selectedItems.forEach(item => {
-      param.push({StudentId: item.Id, CenterId: centerId, IsPayment: false});
+      param.push({StudentId: item.Id, CenterId: this.apiContext.centerId, IsPayment: false});
     });
-    var url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/AccoungtingDept/SetPaymentForManyStudent';
+    const url = this.apiContext.host + this.apiAccounting.setPaymentForManyStudent;
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
         this.loadStudentData();

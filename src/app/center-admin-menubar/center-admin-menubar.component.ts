@@ -5,7 +5,7 @@ import {Router, ActivatedRoute} from '@angular/router';
   selector: 'app-center-admin-menubar',
   templateUrl: './center-admin-menubar.component.html',
   styleUrls: ['./center-admin-menubar.component.css', '../../assets/plugins/bootstrap/css/bootstrap.min.css',
-    '../../assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
+    '../../assets/plugins/dropzone/dropzone.css', '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
     '../../assets/plugins/waitme/waitMe.css',
     '../../assets/plugins/bootstrap-select/css/bootstrap-select.css',
     '../../assets/css/main.css',

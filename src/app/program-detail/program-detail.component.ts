@@ -24,8 +24,14 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   programId;
-  courseName = '';
+  programName = '';
   image = '';
+
+
+  errorMsgName = '';
+  errorMsgImage = '';
+  errorMsgDescription = '';
+
 
   public Editor = ClassicEditor;
   // text editor
@@ -59,7 +65,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
     this.http.get<any>(this.apiContext.host + this.apiTraining.getProgramByProgramId, {params: body}).toPromise().then(
       res => {
         console.log(res);
-        this.courseName = res.Name;
+        this.programName = res.Name;
         this.image = res.Image;
         this.description = res.Description;
       },
@@ -74,7 +80,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
     const configUrl = this.apiContext.host + this.apiTraining.updateProgram;
     const body = new HttpParams()
       .set('ProgramId', this.programId)
-      .set('ProgramName', this.courseName)
+      .set('ProgramName', this.programName)
       .set('Description', this.description)
       .set('Image', this.image)
       .set('CenterId', this.apiContext.centerId + '');
@@ -133,4 +139,59 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   //     this.redirectToAllProgram();
   //   }
   // }
+
+
+  checkValidName() {
+    if (this.programName != null) {
+      this.programName = this.formatText(this.programName);
+    }
+    if (this.programName == null || this.programName === '') {
+      this.errorMsgName = 'Name is required.';
+      return false;
+    } else {
+      this.errorMsgName = '';
+      return true;
+    }
+  }
+
+  checkValidImage() {
+    if (this.image != null) {
+      this.image = this.formatText(this.image);
+    }
+    if (this.image == null || this.image === '') {
+      this.errorMsgImage = 'Image is required.';
+      return false;
+    } else {
+      this.errorMsgImage = '';
+      return true;
+    }
+  }
+
+
+  checkValidDescription() {
+    if (this.description != null) {
+      this.description = this.formatText(this.description);
+    }
+    if (this.description == null || this.description === '') {
+      this.errorMsgDescription = 'Description is required.';
+      return false;
+    } else {
+      this.errorMsgDescription = '';
+      return true;
+    }
+  }
+
+  checkValidFields() {
+    this.checkValidName();
+    this.checkValidImage();
+    this.checkValidDescription();
+    if (this.checkValidName() && this.checkValidImage() && this.checkValidDescription()) {
+      this.updateProgram();
+    }
+  }
+
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
+  }
+
 }

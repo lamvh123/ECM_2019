@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 import {AdmissionForm} from '../admission-form';
 import {DatePipe} from '@angular/common';
 import {Slot} from '../slot';
-import {APIContext} from '../APIContext';
+import {APIAdmission, APIContext} from '../APIContext';
 
 @Component({
   selector: 'app-add-new-form',
@@ -19,12 +19,13 @@ import {APIContext} from '../APIContext';
 })
 export class AddNewFormComponent implements OnInit {
   apiContext = new APIContext();
+  apiAdmission = new APIAdmission();
   listCourse: Course[];
-  courseId;
+  courseId: string;
   isClosed = -1;
   isClose;
   boolArr: string[] = ['true', 'false'];
-  selectedBuilding;
+  selectedBuilding: string;
   listBuilding: Observable<Building[]>;
   form: AdmissionForm;
   selectedDayArr: any[];
@@ -32,7 +33,7 @@ export class AddNewFormComponent implements OnInit {
     {dayNumber: 3, dayString: 'Wednesday'}, {dayNumber: 4, dayString: 'Thursday'},
     {dayNumber: 5, dayString: 'Friday'}, {dayNumber: 6, dayString: 'Saturday'}, {dayNumber: 0, dayString: 'Sunday'}];
   listOfSlot: Slot[];
-  selectedSlot;
+  selectedSlot: string;
 
   errorMsgCourse = '-';
   errorMsgName = '-';
@@ -58,7 +59,7 @@ export class AddNewFormComponent implements OnInit {
   }
 
   getAllBuilding() {
-    const url = this.apiContext.host + 'api/AdmissionManagement/GetAllBuilding';
+    const url = this.apiContext.host + this.apiAdmission.getAllBuilding;
     const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
     this.http.get<Observable<Building[]>>(url, {params: para}).toPromise().then(data => {
         this.listBuilding = data;
@@ -71,7 +72,7 @@ export class AddNewFormComponent implements OnInit {
   }
 
   getInitData() {
-    const getAllCourseUrl = this.apiContext.host + 'api/AdmissionManagement/GetAllCourse';
+    const getAllCourseUrl = this.apiContext.host + this.apiAdmission.getAllCourse;
     const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
     this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
         this.listCourse = data;
@@ -87,7 +88,7 @@ export class AddNewFormComponent implements OnInit {
   }
 
   getAllSlot() {
-    const url = this.apiContext.host + 'api/AdmissionManagement/GetAllSlot';
+    const url = this.apiContext.host + this.apiAdmission.getAllSlot;
     const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
     this.http.get<Slot[]>(url, {params: para}).toPromise().then(data => {
         this.listOfSlot = data;
@@ -115,7 +116,7 @@ export class AddNewFormComponent implements OnInit {
     this.selectedDayArr.forEach(item => {
       para = para.append('DaysPerWeek', item + '');
     });
-    const url = this.apiContext.host + 'api/AdmissionManagement/CreateAdmissionForm';
+    const url = this.apiContext.host + this.apiAdmission.createAdmissionForm;
     console.log(para);
     this.http.post<any>(url, para).toPromise().then(data => {
         console.log(data);
@@ -160,81 +161,91 @@ export class AddNewFormComponent implements OnInit {
 
   checkValidCourse() {
     if (this.courseId != null) {
-      this.courseId = this.courseId.trim();
+      this.courseId = this.formatText(this.courseId);
     }
     if (this.courseId == null || this.courseId === '') {
       this.errorMsgCourse = 'Course is required.';
+      return false;
     } else {
       this.errorMsgCourse = '';
+      return true;
     }
   }
 
   checkValidName() {
     if (this.form.Name != null) {
-      this.form.Name = this.form.Name.trim();
+      this.form.Name = this.formatText(this.form.Name);
     }
     if (this.form.Name == null || this.form.Name === '') {
       this.errorMsgName = 'Name is required.';
+      return false;
     } else {
       this.errorMsgName = '';
+      return true;
     }
   }
 
   checkValidDate() {
     if (this.form.StartDate != null) {
-      this.form.StartDate = this.form.StartDate.trim();
+      this.form.StartDate = this.formatText(this.form.StartDate);
     }
     if (this.form.StartDate == null || this.form.StartDate === '') {
       this.errorMsgDate = 'Start date is required.';
+      return false;
     } else {
       this.errorMsgDate = '';
+      return true;
     }
   }
 
   checkValidBuilding() {
     if (this.selectedBuilding != null) {
-      this.selectedBuilding = this.selectedBuilding.trim();
+      this.selectedBuilding = this.formatText(this.selectedBuilding);
     }
     if (this.selectedBuilding == null || this.selectedBuilding === '') {
       this.errorMsgBuilding = 'Building is required.';
+      return false;
     } else {
       this.errorMsgBuilding = '';
+      return true;
     }
   }
 
   checkValidSlot() {
     if (this.selectedSlot != null) {
-      this.selectedSlot = this.selectedSlot.trim();
+      this.selectedSlot = this.formatText(this.selectedSlot);
     }
     if (this.selectedSlot == null || this.selectedSlot === '') {
       this.errorMsgSlot = 'Slot is required.';
+      return false;
     } else {
       this.errorMsgSlot = '';
+      return true;
     }
   }
 
   checkValidDay() {
     if (this.selectedDayArr == null || this.selectedDayArr.length < 1) {
       this.errorMsgDay = 'Day of week is required.';
+      return false;
     } else {
       this.errorMsgDay = '';
+      return true;
     }
+  }
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
   }
 
   checkValidFields() {
-    if (this.errorMsgCourse.length !== 0 || this.errorMsgName.length !== 0 || this.errorMsgDate.length !== 0
-      || this.errorMsgBuilding.length !== 0 || this.errorMsgDay.length !== 0 || this.errorMsgSlot.length !== 0) {
-      return false;
-    }
-    return true;
-  }
-
-  verifyAllFields() {
     this.checkValidName();
     this.checkValidCourse();
     this.checkValidDate();
     this.checkValidBuilding();
     this.checkValidDay();
     this.checkValidSlot();
+    if (this.checkValidCourse() && this.checkValidName() && this.checkValidDate() && this.checkValidBuilding() && this.checkValidDay() && this.checkValidSlot()) {
+      this.CreateForm();
+    }
   }
 }

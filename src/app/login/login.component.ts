@@ -121,34 +121,39 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   checkValidUsername() {
     if (this.loginUserData.username != null) {
-      this.loginUserData.username = this.loginUserData.username.trim();
+      this.loginUserData.username = this.formatText(this.loginUserData.username);
     }
     if (this.loginUserData.username == null || this.loginUserData.username === '') {
       this.errorMsgUsername = 'Username/Email is required.';
+      return false;
     } else {
       this.errorMsgUsername = '';
+      return true;
     }
   }
 
   checkValidPassword() {
     if (this.loginUserData.password == null || this.loginUserData.password === '') {
       this.errorMsgPassword = 'Password is required.';
+      return false;
     } else if (this.loginUserData.password.length < 6) {
       this.errorMsgPassword = 'Password must include at least 6 characters.';
+      return false;
     } else {
       this.errorMsgPassword = '';
+      return true;
     }
   }
 
   checkValidFields() {
-    if (this.errorMsgUsername.length !== 0 || this.errorMsgPassword.length !== 0) {
-      return false;
-    }
-    return true;
-  }
-
-  verifyAllFields() {
     this.checkValidUsername();
     this.checkValidPassword();
+    if (this.checkValidUsername() && this.checkValidPassword()) {
+      this.loginUser();
+    }
+  }
+
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
   }
 }

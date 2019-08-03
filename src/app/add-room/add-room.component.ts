@@ -26,11 +26,16 @@ export class AddRoomComponent implements OnInit {
   apiTraining = new APITraining();
 
   roomNumber: string;
-  capacity: number;
-  buildingId: number;
+  capacity: string;
+  buildingId: string;
 
   buildings: Building[];
   selectedName: string;
+
+
+  errorMsgName = '-';
+  errorMsgCapacity = '-';
+  errorMsgBuilding = '-';
 
   ngOnInit() {
     this.getAllBuildings();
@@ -51,8 +56,8 @@ export class AddRoomComponent implements OnInit {
     const configUrl = this.apiContext.host + this.apiTraining.addRoom;
     const body = new HttpParams()
       .set('RoomNumber', this.roomNumber)
-      .set('Capacity', String(this.capacity))
-      .set('BuildingId', String(this.buildingId))
+      .set('Capacity', this.capacity)
+      .set('BuildingId', this.buildingId)
       .set('CenterId', this.apiContext.centerId + '');
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
@@ -115,4 +120,65 @@ export class AddRoomComponent implements OnInit {
   //     this.redirectToAllRoom();
   //   }
   // }
+  checkValidName() {
+    if (this.roomNumber != null) {
+      this.roomNumber = this.formatText(this.roomNumber);
+    }
+    if (this.roomNumber == null || this.roomNumber === '') {
+      this.errorMsgName = 'Name is required.';
+      return false;
+    } else {
+      this.errorMsgName = '';
+      return true;
+    }
+  }
+
+
+  checkValidCapacity() {
+    if (this.capacity != null) {
+      this.capacity = this.formatText(this.capacity);
+    }
+    if (this.capacity == null || this.capacity === '') {
+      this.errorMsgCapacity = 'Capacity is required.';
+      return false;
+    } else if (this.capacity.length > 9) {
+      this.errorMsgCapacity = 'Capacity must be smaller than 1.000.000.000.';
+      return false;
+    } else {
+      this.errorMsgCapacity = '';
+      return true;
+    }
+  }
+
+  checkValidBuilding() {
+    if (this.buildingId != null) {
+      this.buildingId = this.formatText(this.buildingId);
+    }
+    if (this.buildingId == null || this.buildingId === '') {
+      this.errorMsgBuilding = 'Building is required.';
+      return false;
+    } else {
+      this.errorMsgBuilding = '';
+      return true;
+    }
+  }
+
+  checkValidFields() {
+    this.checkValidName();
+    this.checkValidCapacity();
+    this.checkValidBuilding();
+    if (this.checkValidName() && this.checkValidCapacity() && this.checkValidBuilding()) {
+      this.addRoom();
+    }
+  }
+
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
+  }
+  isInputNumber(evt) {
+    const c = String.fromCharCode(evt.which);
+    if (!(/[0-9]/.test(c))) {
+      evt.preventDefault();
+    }
+  }
 }

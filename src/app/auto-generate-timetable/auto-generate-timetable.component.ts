@@ -9,8 +9,8 @@ import {APIContext, APITraining} from '../APIContext';
 @Component({
   selector: 'app-auto-generate-timetable',
   templateUrl: './auto-generate-timetable.component.html',
-  styleUrls: ['./auto-generate-timetable.component.css', '../css/assets/css/main.css',
-    '../css/assets/css/themes/all-themes.css']
+  styleUrls: ['./auto-generate-timetable.component.css', '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
 })
 export class AutoGenerateTimetableComponent implements OnInit {
 

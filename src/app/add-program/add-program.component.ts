@@ -23,9 +23,14 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
 
   public Editor = ClassicEditor;
 
-  courseName = '';
+  programName = '';
   image = '';
   description = '';
+
+
+  errorMsgName = '-';
+  errorMsgImage = '-';
+  errorMsgDescription = '-';
 
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -62,7 +67,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     console.log(this.description);
     const configUrl = this.apiContext.host + this.apiTraining.addProgram;
     const body = new HttpParams()
-      .set('ProgramName', this.courseName)
+      .set('ProgramName', this.programName)
       .set('Image', this.image)
       .set('Description', this.description)
       .set('CenterId', this.apiContext.centerId + '');
@@ -107,4 +112,57 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   //     this.redirectToAllProgram();
   //   }
   // }
+
+
+  checkValidName() {
+    if (this.programName != null) {
+      this.programName = this.formatText(this.programName);
+    }
+    if (this.programName == null || this.programName === '') {
+      this.errorMsgName = 'Name is required.';
+      return false;
+    } else {
+      this.errorMsgName = '';
+      return true;
+    }
+  }
+
+  checkValidImage() {
+    if (this.image != null) {
+      this.image = this.formatText(this.image);
+    }
+    if (this.image == null || this.image === '') {
+      this.errorMsgImage = 'Image is required.';
+      return false;
+    } else {
+      this.errorMsgImage = '';
+      return true;
+    }
+  }
+
+
+  checkValidDescription() {
+    if (this.description != null) {
+      this.description = this.formatText(this.description);
+    }
+    if (this.description == null || this.description === '') {
+      this.errorMsgDescription = 'Description is required.';
+      return false;
+    } else {
+      this.errorMsgDescription = '';
+      return true;
+    }
+  }
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
+  }
+
+  checkValidFields() {
+    this.checkValidName();
+    this.checkValidImage();
+    this.checkValidDescription();
+    if (this.checkValidName() && this.checkValidImage() && this.checkValidDescription()) {
+      this.addProgram();
+    }
+  }
 }

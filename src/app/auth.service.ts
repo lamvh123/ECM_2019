@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
+import {APIContext} from './APIContext';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  apiContext = new APIContext();
   private _registerUrl = 'http://localhost:3000/api/register';
-  private _loginUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/token';
+  private _loginUrl = this.apiContext.host + 'token';
 
   constructor(private http: HttpClient, private route: Router) {
   }
@@ -41,7 +43,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
-    localStorage.removeItem('expiretime')
+    localStorage.removeItem('expiretime');
     this.route.navigate(['/login']);
   }
 
@@ -70,7 +72,7 @@ export class AuthService {
     return false;
   }
 
-  accountingStaffLoggedin(){
+  accountingStaffLoggedin() {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'AccountingStaff') {
@@ -79,7 +81,7 @@ export class AuthService {
     return false;
   }
 
-  centerAdminLoggedIn(){
+  centerAdminLoggedIn() {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'CenterAdmin') {
@@ -88,7 +90,7 @@ export class AuthService {
     return false;
   }
 
-  StudentLoggedIn(){
+  StudentLoggedIn() {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'Student') {

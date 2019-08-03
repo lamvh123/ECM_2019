@@ -7,7 +7,7 @@ import {async} from '@angular/core/testing';
 import {AdmissionForm} from '../admission-form';
 import {Program} from '../program';
 import {Slot} from '../slot';
-import {APIContext} from '../APIContext';
+import {APIAdmission, APIContext} from '../APIContext';
 
 @Component({
   selector: 'app-view-admission-form',
@@ -17,6 +17,7 @@ import {APIContext} from '../APIContext';
 })
 export class ViewAdmissionFormComponent implements OnInit {
   apiContext = new APIContext();
+  apiAdmission = new APIAdmission();
 
   listCourse: Course[];
   courseId;
@@ -38,7 +39,7 @@ export class ViewAdmissionFormComponent implements OnInit {
   }
 
   getInitData() {
-    const getAllCourseUrl = this.apiContext.host + 'api/AdmissionManagement/GetAllCourse';
+    const getAllCourseUrl = this.apiContext.host + this.apiAdmission.getAllCourse;
     const para = new HttpParams()
       .set('centerId', this.apiContext.centerId + '');
     this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
@@ -66,7 +67,7 @@ export class ViewAdmissionFormComponent implements OnInit {
       .set('courseId', this.courseId == null ? '-1' : this.courseId + '')
       .set('centerId', this.apiContext.centerId + '')
       .set('isClosed', this.isClosed + '');
-    const url = this.apiContext.host + 'api/AdmissionManagement/SearchAdmissionForm';
+    const url = this.apiContext.host + this.apiAdmission.searchAdmissionForm;
     this.http.get<AdmissionForm[]>(url, {params: parameters}).toPromise().then((data) => {
         console.log(data);
         this.listForm = data;
@@ -91,7 +92,7 @@ export class ViewAdmissionFormComponent implements OnInit {
       .set('CenterId', '1')
       .set('AdmissionFormId', form.Id + '');
 
-    const configUrl = this.apiContext.host + 'api/AdmissionManagement/CloseAdmissionForm';
+    const configUrl = this.apiContext.host + this.apiAdmission.closeAdmissionForm;
     this.http.post(configUrl, body).toPromise().then(res => {
         console.log(res);
         form.IsClosed = true;

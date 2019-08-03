@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'app-accounting-menu-bar',
   templateUrl: './accounting-menu-bar.component.html',
   styleUrls: ['./accounting-menu-bar.component.css','../../assets/plugins/bootstrap/css/bootstrap.min.css',
-  '../../assets/plugins/dropzone/dropzone.css', '../css/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
+  '../../assets/plugins/dropzone/dropzone.css', '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
   '../../assets/plugins/waitme/waitMe.css',
   '../../assets/plugins/bootstrap-select/css/bootstrap-select.css',
   '../../assets/css/main.css',

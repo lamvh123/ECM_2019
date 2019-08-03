@@ -5,7 +5,7 @@ import {Course} from '../course';
 import {AdmissionForm} from '../admission-form';
 import {Student} from '../entity/student';
 import {ItemsList} from '@ng-select/ng-select/ng-select/items-list';
-import {APIContext, APITraining} from '../APIContext';
+import {APICenter, APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-center-admin-grant-account',
@@ -20,6 +20,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   apiContext = new APIContext();
+  apiCenter = new APICenter();
   listCourse: Course[];
   listForm: AdmissionForm[];
   selectedCourseId;
@@ -41,7 +42,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   getInitData() {
-    const getCourseUrl = this.apiContext.host + 'api/CenterManagement/GetAllCourse';
+    const getCourseUrl = this.apiContext.host + this.apiCenter.getAllCourse;
     const param = new HttpParams()
       .set('centerId', this.apiContext.centerId + '');
     this.http.get<Course[]>(getCourseUrl, {params: param}).toPromise().then(data => {
@@ -59,7 +60,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   getAllForm() {
     const param = new HttpParams()
       .set('centerId', this.apiContext.centerId + '');
-    const url = this.apiContext.host + 'api/CenterManagement/GetAllAdmissionForm';
+    const url = this.apiContext.host + this.apiCenter.getAllAdmissionForm;
     this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
         this.listForm = data;
         console.log(data);
@@ -75,7 +76,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
       const param = new HttpParams()
         .set('courseId', this.selectedCourseId)
         .set('centerId', this.apiContext.centerId + '');
-      const url = this.apiContext.host + 'api/CenterManagement/GetAllAdmissionForm';
+      const url = this.apiContext.host + this.apiCenter.getAllAdmissionFormByCid;
       this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
           this.listForm = data;
           console.log(data);
@@ -114,7 +115,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
       .set('phoneNumber', this.phoneNumber)
       .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
       .set('centerId', this.apiContext.centerId + '');
-    const getTotalurl = this.apiContext.host + 'api/CenterManagement/GetTotalRegisteredStudent';
+    const getTotalurl = this.apiContext.host + this.apiCenter.getTotalRegisteredStudent;
     this.http.get<number>(getTotalurl, {params: paramToGetTotal}).toPromise().then(data => {
         this.totalData = data;
         console.log(data);
@@ -132,7 +133,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
             .set('centerId', this.apiContext.centerId + '')
             .set('pageSize', this.pageSize + '')
             .set('currentPage', this.currentPage + '');
-          const url = this.apiContext.host + 'api/CenterManagement/SearchRegisteredStudent';
+          const url = this.apiContext.host + this.apiCenter.searchRegisteredStudent;
           this.http.get<Student[]>(url, {params: param}).toPromise().then(data2 => {
               this.listStudent = data2;
               console.log(this.listStudent);
@@ -174,7 +175,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   grantAccountForOne(student: Student) {
-    const url = this.apiContext.host + 'api/CenterManagement/GrantAccountForStudent';
+    const url = this.apiContext.host + this.apiCenter.grantAccountForStudent;
     const param = new Array().push({RegisteredCandidateId: student.Id, CenterId: this.apiContext.centerId});
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
@@ -187,7 +188,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   grantAccountForMany() {
-    const url = this.apiContext.host + 'api/CenterManagement/GrantAccountForStudent';
+    const url = this.apiContext.host + this.apiCenter.grantAccountForStudent;
     const param = new Array();
     const listSelectedStudent = this.listStudent.filter(item => item.selected && item.IsPayment && item.IsGrantedAccount);
     listSelectedStudent.forEach(item => {

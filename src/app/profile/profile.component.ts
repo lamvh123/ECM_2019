@@ -2,7 +2,7 @@ import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {AuthService} from '../auth.service';
-import {APIContext, APITraining} from '../APIContext';
+import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITraining} from '../APIContext';
 
 declare var jquery: any;
 declare var $: any;
@@ -18,6 +18,11 @@ declare var $: any;
 export class ProfileComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  apiAdmission = new APIAdmission();
+  apiSystem = new APISystem();
+  apiAccounting = new APIAccounting();
+  apiCenter = new APICenter();
+  apiStudent = new APIStudent();
   user = {
     name: '',
     email: '',
@@ -39,121 +44,43 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   getProfile() {
+
+    let configUrl = this.apiContext.host;
+
     if (this.auth.adminLogedIn()) {
-      const configUrl = this.apiContext.host + 'api/Systemmanagement/Profile';
-      this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-          console.log(res.FullName);
-        },
-        error => {
-          if (error instanceof HttpErrorResponse) {
-            if (error.status === 401) {
-              console.log(error.status);
-            }
-          }
-        });
+      configUrl += this.apiSystem.profile;
     } else if (this.auth.trainingStaffLogedIn()) {
-      const configUrl = this.apiContext.host + this.apiTraining.getProfile;
-      this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-        },
-        error => {
-          console.log(error);
-          if (error instanceof HttpErrorResponse) {
-            if (error.status === 401) {
-              console.log(error.status);
-            }
-          }
-        });
+      configUrl += this.apiTraining.getProfile;
     } else if (this.auth.admissionStaffLogedIn()) {
-      const configUrl = this.apiContext.host + 'api/AdmissionManagement/Profile';
-      this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-        },
-        error => {
-          console.log(error);
-          if (error instanceof HttpErrorResponse) {
-            if (error.status === 401) {
-              console.log(error.status);
-            }
-          }
-        });
+      configUrl += this.apiAdmission.profile;
     } else if (this.auth.accountingStaffLoggedin()) {
-      const configUrl = this.apiContext.host + 'api/AccoungtingDept/profile';
-      this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-        },
-        error => {
-          console.log(error);
-          if (error instanceof HttpErrorResponse) {
-            if (error.status === 401) {
-              console.log(error.status);
-            }
-          }
-        });
+      configUrl += this.apiAccounting.profile;
     } else if (this.auth.centerAdminLoggedIn()) {
-      const configUrl = this.apiContext.host + 'api/CenterManagement/profile';
-      this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-        },
-        error => {
-          console.log(error);
-          if (error instanceof HttpErrorResponse) {
-            if (error.status === 401) {
-              console.log(error.status);
-            }
-          }
-        });
+      configUrl += this.apiCenter.profile;
     } else if (this.auth.StudentLoggedIn()) {
-      const configUrl = this.apiContext.host + 'api/Student/profile';
-      this.http.get<any>(configUrl).subscribe(res => {
-          console.log(res);
-          this.user.name = res.FullName;
-          this.user.email = res.Email;
-          this.user.PhoneNumber = res.PhoneNumber;
-          this.user.Sex = res.Sex;
-          this.user.Id = res.Id;
-          this.user.Avatar = res.Avatar;
-        },
-        error => {
-          console.log(error);
-          if (error instanceof HttpErrorResponse) {
-            if (error.status === 401) {
-              console.log(error.status);
-            }
-          }
-        });
+      configUrl += this.apiStudent.profile;
+    } else {
+
     }
+
+    this.http.get<any>(configUrl).subscribe(res => {
+        console.log(res);
+        this.user.name = res.FullName;
+        this.user.email = res.Email;
+        this.user.PhoneNumber = res.PhoneNumber;
+        this.user.Sex = res.Sex;
+        this.user.Id = res.Id;
+        this.user.Avatar = res.Avatar;
+      },
+      error => {
+        console.log(error);
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 401) {
+            console.log(error.status);
+          }
+        }
+      });
+
   }
 
   public loadScript(url: string) {
@@ -175,11 +102,24 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
 
   updateProfile() {
-    var configUrl = '';
+
+
+    let configUrl = this.apiContext.host;
+
     if (this.auth.adminLogedIn()) {
-      configUrl = '';
+      configUrl += this.apiSystem.updateProfile;
     } else if (this.auth.trainingStaffLogedIn()) {
-      configUrl = this.apiContext.host + this.apiTraining.updateProfile;
+      configUrl += this.apiTraining.updateProfile;
+    } else if (this.auth.admissionStaffLogedIn()) {
+      configUrl += this.apiAdmission.updateProfile;
+    } else if (this.auth.accountingStaffLoggedin()) {
+      configUrl += this.apiAccounting.updateProfile;
+    } else if (this.auth.centerAdminLoggedIn()) {
+      configUrl += this.apiCenter.updateProfile;
+    } else if (this.auth.StudentLoggedIn()) {
+      configUrl += this.apiStudent.updateProfile;
+    } else {
+
     }
     const body = new HttpParams()
       .set('Id', this.user.Id)

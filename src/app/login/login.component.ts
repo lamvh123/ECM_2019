@@ -60,6 +60,9 @@ export class LoginComponent implements OnInit, AfterContentInit {
     if (!!this._auth.StudentLoggedIn()) {
       this._router.navigate(['/Student/profile']);
     }
+    if (!!this._auth.StudentLoggedIn()) {
+      this._router.navigate(['/Teacher/profile']);
+    }
 
   }
 
@@ -110,11 +113,12 @@ export class LoginComponent implements OnInit, AfterContentInit {
           this._router.navigate(['/Account-staff/profile']);
         } else if (this._auth.centerAdminLoggedIn()) {
           this._router.navigate(['/CenterAdmin/profile']);
+        } else if (this._auth.StudentLoggedIn()) {
+          this._router.navigate(['/Student/profile']);
+        } else if (this._auth.TeacherLoggedIn()) {
+          this._router.navigate(['/Teacher/profile']);
         } else {
           console.log(res);
-        }
-        if (!!this._auth.StudentLoggedIn()) {
-          this._router.navigate(['/Student/profile']);
         }
         this.isLoading = false;
       },

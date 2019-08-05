@@ -76,3 +76,11 @@ th,td{
 .grant-availble {
   background-color: rgb(176, 219, 125);
 }
+
+.check-availble {
+  color: rgb(176, 219, 125);
+}
+
+.reject-availble {
+  color: rgb(239, 141, 156);
+}

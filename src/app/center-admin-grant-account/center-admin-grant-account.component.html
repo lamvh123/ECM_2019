@@ -48,11 +48,6 @@
               <th scope="col">Student Email</th>
               <th scope="col">Date of birth</th>
               <th scope="col">Student's Phone</th>
-              <th scope="col">Sex</th>
-              <th scope="col">Grant account</th>
-              <th scope="col">Parent's Name</th>
-              <th scope="col">Parent's Phone</th>
-              <th scope="col">Parent's Gmail</th>
               <th scope="col">Payment's Status</th>
               <th scope="col">Grant Account</th>
             </tr>
@@ -70,12 +65,8 @@
               <td>{{student.Email}}</td>
               <td>{{student.Dob}}</td>
               <td>{{student.Phone}}</td>
-              <td>{{student.realSex}}</td>
-              <td>{{student.IsGrantedAccount}}</td>
-              <td>{{student.Parent_Name}}</td>
-              <td>{{student.Parent_Phone}}</td>
-              <td>{{student.Parent_Gmail}}</td>
-              <td>{{student.IsPayment}}</td>
+              <td [class.check-availble]="student.IsPayment"
+                  [class.reject-availble]="!student.IsPayment">{{student.IsPayment ? 'Paid' : 'Not Yet'}}</td>
               <td>
                 <div class="row" *ngIf="!student.IsGrantedAccount">
                   <div class="col-lg-5 col-xl-5">
@@ -95,7 +86,8 @@
             </ng-select>
           </div>
           <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">
-            <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}}items</p>
+            <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}}
+              items</p>
           </div>
           <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
             <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"

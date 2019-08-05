@@ -48,26 +48,28 @@ import {HeaderMenuComponent} from './header-menu/header-menu.component';
 import {AddSubjectComponent} from './add-subject/add-subject.component';
 import {ViewSubjectsComponent} from './view-subjects/view-subjects.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
-import { LogoutComponent } from './logout/logout.component';
-import { DatePipe } from '@angular/common';
-import { AddNewFormComponent } from './add-new-form/add-new-form.component';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { AccountingMenuBarComponent } from './accounting-menu-bar/accounting-menu-bar.component';
-import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-student/account-staff-confirm-student.component';
-import { CenterAdminMenubarComponent } from './center-admin-menubar/center-admin-menubar.component';
-import { CenterAdminGrantAccountComponent } from './center-admin-grant-account/center-admin-grant-account.component';
-import { NgHttpLoaderModule } from 'ng-http-loader';
+import {LogoutComponent} from './logout/logout.component';
+import {DatePipe} from '@angular/common';
+import {AddNewFormComponent} from './add-new-form/add-new-form.component';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {AccountingMenuBarComponent} from './accounting-menu-bar/accounting-menu-bar.component';
+import {AccountStaffConfirmStudentComponent} from './account-staff-confirm-student/account-staff-confirm-student.component';
+import {CenterAdminMenubarComponent} from './center-admin-menubar/center-admin-menubar.component';
+import {CenterAdminGrantAccountComponent} from './center-admin-grant-account/center-admin-grant-account.component';
+import {NgHttpLoaderModule} from 'ng-http-loader';
 
-import { AutoGenerateClassComponent } from './auto-generate-class/auto-generate-class.component';
-import { AutoGenerateTimetableComponent } from './auto-generate-timetable/auto-generate-timetable.component';
-import { ListOfClassComponent } from './list-of-class/list-of-class.component';
-import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component';
+import {AutoGenerateClassComponent} from './auto-generate-class/auto-generate-class.component';
+import {AutoGenerateTimetableComponent} from './auto-generate-timetable/auto-generate-timetable.component';
+import {ListOfClassComponent} from './list-of-class/list-of-class.component';
+import {ListStudentOfClassComponent} from './list-student-of-class/list-student-of-class.component';
 
-import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component';
-import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
-import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
-import { LoadingPageComponent } from './loading-page/loading-page.component';
-import { ViewTeacherComponent } from './view-teacher/view-teacher.component';
+import {CenterStaffViewClosedAdmissionFormComponent} from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component';
+import {OfficalStudentMenuBarComponent} from './offical-student-menu-bar/offical-student-menu-bar.component';
+import {ViewTimetableComponent} from './view-timetable/view-timetable.component';
+import {LoadingPageComponent} from './loading-page/loading-page.component';
+import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
+import {TeacherMenuBarComponent} from './teacher-menu-bar/teacher-menu-bar.component';
+import {TeacherViewTimetableComponent} from './teacher-view-timetable/teacher-view-timetable.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +117,9 @@ import { ViewTeacherComponent } from './view-teacher/view-teacher.component';
     OfficalStudentMenuBarComponent,
     ViewTimetableComponent,
     LoadingPageComponent,
-    ViewTeacherComponent
+    ViewTeacherComponent,
+    TeacherMenuBarComponent,
+    TeacherViewTimetableComponent
   ],
   imports: [
     BrowserModule,

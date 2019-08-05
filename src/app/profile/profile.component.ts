@@ -2,7 +2,7 @@ import {Component, OnInit, AfterViewInit, AfterContentInit} from '@angular/core'
 import {Router} from '@angular/router';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {AuthService} from '../auth.service';
-import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITraining} from '../APIContext';
+import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITraining, APITeacher} from '../APIContext';
 
 declare var jquery: any;
 declare var $: any;
@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
   apiAccounting = new APIAccounting();
   apiCenter = new APICenter();
   apiStudent = new APIStudent();
+  apiTeacher = new APITeacher();
   user = {
     name: '',
     email: '',
@@ -61,8 +62,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
       configUrl += this.apiCenter.profile;
     } else if (this.auth.StudentLoggedIn()) {
       configUrl += this.apiStudent.profile;
-    } else {
-
+    } else if (this.auth.TeacherLoggedIn()) {
+      configUrl += this.apiTeacher.profile;
     }
 
     this.http.get<any>(configUrl).subscribe(res => {
@@ -128,6 +129,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
       configUrl += this.apiCenter.updateProfile;
     } else if (this.auth.StudentLoggedIn()) {
       configUrl += this.apiStudent.updateProfile;
+    } else if (this.auth.TeacherLoggedIn()) {
+      configUrl += this.apiTeacher.updateProfile;
     } else {
 
     }

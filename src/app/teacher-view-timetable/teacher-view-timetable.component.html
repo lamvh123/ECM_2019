@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-lg-5 col-xl-5 col-sm-5 col-xs-12" style="padding-top: 10px">
+      <ng-select [items]="listClass" bindLabel="Name" bindValue="Id" placeholder="Select Class"
+        [(ngModel)]="selectedClass" (change)="loadTimetable()" [clearable]="false">
+      </ng-select>
+    </div>
+  </div>
+  <div class="row clearfix all-program-content">
+    <div style="width: 100%">
+      <div style="overflow-x: auto;width: 100%;height: auto;max-height: 100vh">
+        <table class="table studenttbl">
+          <thead>
+            <tr>
+              <th scope="col">SessionNumber</th>
+              <th scope="col">ClassName</th>
+              <th scope="col">LearningDay(yyyy-mm-dd)</th>
+              <th scope="col">RoomId</th>
+              <th scope="col">Slot</th>
+              <th scope="col">Start Time</th>
+              <th scope="col">End Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listSession;let index = index;">
+              <th scope="row">
+                {{item.SessionNumber}}
+              </th>
+              <td>{{item.Class.Name}}</td>
+              <td>{{item.LearningDay.substr(0,10)}}</td>
+              <td *ngIf="item.Room!=null">{{item.Room.RoomNumber}}</td>
+              <td *ngIf="item.Room==null"></td>
+              <td>{{item.slot.Name}}</td>
+              <td>{{item.slot.From}}</td>
+              <td>{{item.slot.To}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

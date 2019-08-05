@@ -3,4 +3,6 @@ export class Class {
     ClassName:string;
     selected:boolean=false;
     NumberOfStudent:number;
+    Id:number;
+    Name:string;
 }

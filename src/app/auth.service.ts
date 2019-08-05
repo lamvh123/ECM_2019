@@ -72,7 +72,7 @@ export class AuthService {
     return false;
   }
 
-  accountingStaffLoggedin() {
+  accountingStaffLoggedin(): boolean {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'AccountingStaff') {
@@ -81,7 +81,7 @@ export class AuthService {
     return false;
   }
 
-  centerAdminLoggedIn() {
+  centerAdminLoggedIn(): boolean {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'CenterAdmin') {
@@ -90,10 +90,19 @@ export class AuthService {
     return false;
   }
 
-  StudentLoggedIn() {
+  StudentLoggedIn(): boolean {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'Student') {
+      return true;
+    }
+    return false;
+  }
+
+  TeacherLoggedIn(): boolean {
+    var role = localStorage.getItem('role');
+    console.log(role);
+    if (this.logedIn() && role == 'Teacher') {
       return true;
     }
     return false;

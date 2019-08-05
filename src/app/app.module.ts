@@ -61,11 +61,13 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
 import { AutoGenerateClassComponent } from './auto-generate-class/auto-generate-class.component';
 import { AutoGenerateTimetableComponent } from './auto-generate-timetable/auto-generate-timetable.component';
 import { ListOfClassComponent } from './list-of-class/list-of-class.component';
-import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component'; 
+import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component';
 
 import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component';
 import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
-import { ViewTimetableComponent } from './view-timetable/view-timetable.component'; 
+import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
+import { LoadingPageComponent } from './loading-page/loading-page.component';
+import { ViewTeacherComponent } from './view-teacher/view-teacher.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +113,9 @@ import { ViewTimetableComponent } from './view-timetable/view-timetable.componen
     ListStudentOfClassComponent,
     CenterStaffViewClosedAdmissionFormComponent,
     OfficalStudentMenuBarComponent,
-    ViewTimetableComponent
+    ViewTimetableComponent,
+    LoadingPageComponent,
+    ViewTeacherComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<div class="login-page authentication" style="position: relative">
+<div *ngIf="!isLoading" class="login-page authentication" style="position: relative">
 
   <div class="container" style="top: 50%">
     <div class="card-top"></div>
@@ -55,3 +55,5 @@
   <div class="theme-bg"></div>
 
 </div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

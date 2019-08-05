@@ -1,5 +1,5 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div class="container-fluid">
+  <div *ngIf="!isLoading" class="container-fluid">
     <div class="block-header">
       <h2 *ngIf="programs!=null && programs.length>0">All Programs</h2>
       <h2 *ngIf="programs==null || programs.length<=0">There is no program in database.</h2>
@@ -24,7 +24,7 @@
 
     <div class="row clearfix">
       <div *ngFor="let program of programs" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
-        <div class="thumbnail card" style="min-width: 20vh;border: #e6e6e6 1px solid">
+        <div class="thumbnail card animated fadeIn" style="min-width: 20vh;border: #e6e6e6 1px solid">
           <ng-container
             *ngIf="program.Image!=null; then imgNotNull; else imgNull">
           </ng-container>
@@ -63,6 +63,7 @@
     </div>
 
   </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>
 
 <div class="color-bg"></div>

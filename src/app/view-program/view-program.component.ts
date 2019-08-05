@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, Inject} from '@angular/core';
+import {Component, OnInit, AfterViewInit, Inject, AfterContentInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Program} from '../program';
 import {MenuBarComponent} from '../menu-bar/menu-bar.component';
@@ -15,7 +15,7 @@ import {APIContext, APITraining} from '../APIContext';
   // styleUrls: ['./view-program.component.css', '../css/assets/css/main.css',
   //   '../css/assets/css/themes/all-themes.css']
 })
-export class ViewProgramComponent implements OnInit, AfterViewInit {
+export class ViewProgramComponent implements OnInit, AfterContentInit {
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -25,12 +25,14 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
   programs: Program[];
 
   programName = '';
+  isLoading = true;
 
   ngOnInit() {
     this.getAllProgram();
   }
 
   getAllProgram() {
+    this.isLoading = true;
     const body = new HttpParams()
       .set('centerId', this.apiContext.centerId + '')
       .set('programName', '');
@@ -40,18 +42,24 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
         console.log(res);
         this.programs = res;
         console.log(this.programs);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
-  ngAfterViewInit() {
-    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+  ngAfterContentInit(): void {
+    this.isLoading = false;
   }
+
+  // ngAfterViewInit() {
+  //   // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+  //   // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+  //   // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+  //   // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+  // }
 
   public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;
@@ -64,6 +72,7 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
   }
 
   searchProgramByName() {
+    this.isLoading = true;
     const body = new HttpParams()
       .set('centerId', this.apiContext.centerId + '')
       .set('programName', this.programName.trim().toLowerCase());
@@ -73,9 +82,11 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
         console.log(res);
         this.programs = res;
         console.log(this.programName);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 

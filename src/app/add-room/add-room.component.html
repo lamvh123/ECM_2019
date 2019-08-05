@@ -1,6 +1,6 @@
 <!-- main content -->
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div class="container-fluid">
+  <div *ngIf="!isLoading" class="container-fluid">
     <div class="block-header">
       <h2>Add Room</h2>
       <!--      <small class="text-muted">Welcome to Swift application</small>-->
@@ -63,7 +63,7 @@
                             id="selectBuidling"
                             (focusout)="checkValidBuilding()"
                             required>
-                      <!--                    <option value="" selected>-&#45;&#45; Choose Building -&#45;&#45;</option>-->
+                      <option value="" selected>--- Choose Building ---</option>
                       <option *ngFor="let building of buildings" [value]="building.Id">
                         {{building.Name}}
                       </option>
@@ -104,5 +104,6 @@
       </div>
     </div>
   </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>
 <!-- main content -->

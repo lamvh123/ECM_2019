@@ -1,5 +1,5 @@
 <section class="content"  [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div class="container-fluid">
+  <div *ngIf="!isLoading" class="container-fluid">
     <div class="block-header">
       <h2>ALL BUILDINGS</h2>
 <!--      <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>-->
@@ -45,4 +45,5 @@
       </div>
     </div>
   </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>

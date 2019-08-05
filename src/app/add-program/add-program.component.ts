@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, AfterContentInit} from '@angular/core';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Router, ActivatedRoute} from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -16,7 +16,7 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddProgramComponent implements OnInit, AfterViewInit {
+export class AddProgramComponent implements OnInit, AfterContentInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
@@ -31,6 +31,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   errorMsgName = '-';
   errorMsgImage = '-';
   errorMsgDescription = '-';
+  isLoading = true;
 
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -54,16 +55,19 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     script.defer = true;
     body.appendChild(script);
   }
-
-  ngAfterViewInit() {
-    // this.loadScript('/assets/bundles/libscripts.bundle.js');
-    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
-
+  ngAfterContentInit(): void {
+    this.isLoading = false;
   }
+  // ngAfterViewInit() {
+  //   // this.loadScript('/assets/bundles/libscripts.bundle.js');
+  //   // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+  //   // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+  //
+  // }
 
   //this is add program
   addProgram() {
+    this.isLoading = true;
     console.log(this.description);
     const configUrl = this.apiContext.host + this.apiTraining.addProgram;
     const body = new HttpParams()
@@ -79,6 +83,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );

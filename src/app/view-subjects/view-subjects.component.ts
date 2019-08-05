@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Building} from '../building';
@@ -13,7 +13,7 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class ViewSubjectsComponent implements OnInit, AfterViewInit {
+export class ViewSubjectsComponent implements OnInit, AfterContentInit {
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -21,12 +21,14 @@ export class ViewSubjectsComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   subjects: Subject[];
+  isLoading = true;
 
   ngOnInit() {
     this.getAllSubjects();
   }
 
   getAllSubjects() {
+    this.isLoading = true;
     const body = new HttpParams()
       .set('centerId', this.apiContext.centerId + '')
       .set('subjectName', '');
@@ -36,18 +38,24 @@ export class ViewSubjectsComponent implements OnInit, AfterViewInit {
         console.log(res);
         this.subjects = res;
         console.log(this.subjects);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
-  ngAfterViewInit() {
-    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+  ngAfterContentInit(): void {
+    this.isLoading = false;
   }
+
+  // ngAfterViewInit() {
+  //   // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+  //   // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+  //   // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+  //   // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+  // }
 
   public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;

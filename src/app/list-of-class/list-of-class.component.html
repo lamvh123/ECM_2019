@@ -1,26 +1,29 @@
 <div class="row">
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+  <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 20px">
     <ng-select [items]="listProgram" bindLabel="Name" bindValue="Id" placeholder="Select Program"
-               (change)="loadCourse()"
+               (change)="reloadCourse()"
                (clear)="reloadCourse()" [(ngModel)]="selectedProgramId">
     </ng-select>
   </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+  <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 20px">
     <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
                [(ngModel)]="selectedCourseId">
     </ng-select>
   </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-
+  <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 20px">
+    <ng-select [items]="listTimeTableStatus" bindLabel="Name" bindValue="Id" placeholder="TimeTable Is Created"
+               (clear)="resetTimeTableStatus()"
+               [(ngModel)]="selectedTimeTable">
+    </ng-select>
   </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+  <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 20px">
     <button type="submit" name="_submit" (click)="searchClass()" class="btn searchBtn">Search</button>
   </div>
 </div>
 <div *ngIf="empty"></div>
 <div *ngIf="!empty" style="width: 100%">
   <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
-    <table class="table studenttbl">
+    <table class="table studenttbl table-hover">
       <thead>
       <tr>
         <th scope="col">#</th>
@@ -29,12 +32,12 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let class of listClass;let index = index;">
+      <tr *ngFor="let class of listClass;index as i;" (click)="navigateToListStudent(class)">
         <th scope="row" style="vertical-align: bottom">
-          {{index + 1}}}
+          {{i + 1}}
         </th>
         <td>{{class.ClassName}}</td>
-        <td><a href="javascript:void(0);" (click)="navigateToListStudent(class)">{{class.NumberOfStudent}}</a></td>
+        <td>{{class.NumberOfStudent}}</td>
         <!-- <td [class.check-availble]="student.IsPayment"
           [class.reject-availble]="!student.IsPayment">{{student.IsPayment}}</td>
       <td>
@@ -72,19 +75,19 @@
       </tbody>
     </table>
   </div>
-  <div class="row">
-    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
-      <ng-select [items]="listPageSize" placeholder="Select page size" [(ngModel)]="pageSize"
-                 (change)="changePageSize()" [clearable]="false">
-      </ng-select>
-    </div>
-    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">
-      <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}} items</p>
-    </div>
-    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
-      <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"
-                 [(ngModel)]="currentPage" (change)="changePage()" [clearable]="false">
-      </ng-select>
-    </div>
-  </div>
+  <!--  <div class="row">-->
+  <!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">-->
+  <!--      <ng-select [items]="listPageSize" placeholder="Select page size" [(ngModel)]="pageSize"-->
+  <!--                 (change)="changePageSize()" [clearable]="false">-->
+  <!--      </ng-select>-->
+  <!--    </div>-->
+  <!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">-->
+  <!--      <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}} items</p>-->
+  <!--    </div>-->
+  <!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">-->
+  <!--      <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"-->
+  <!--                 [(ngModel)]="currentPage" (change)="changePage()" [clearable]="false">-->
+  <!--      </ng-select>-->
+  <!--    </div>-->
+  <!--  </div>-->
 </div>

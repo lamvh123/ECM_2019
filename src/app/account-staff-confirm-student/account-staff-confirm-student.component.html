@@ -1,143 +1,159 @@
-<ng-http-loader
-  [backgroundColor]="'#ff0000'"
-  [debounceDelay]="1000"
-  [extraDuration]="3003"
-  [minDuration]="3003"
->
-</ng-http-loader>
-<div class="row">
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-    <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course" (change)="ReLoadForm()"
-               (clear)="ReLoadForm()" [(ngModel)]="selectedCourseId">
-    </ng-select>
-  </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-    <ng-select [items]="listForm" bindLabel="Name" bindValue="Id" [(ngModel)]="selectedFormId"
-               placeholder="Select Form">
-    </ng-select>
-  </div>
-  <div class="col-lg-4 col-xl-4">
-    <div class="form-group">
-      <div class="form-line">
-        <input type="text" [(ngModel)]="studentName" class="form-control" placeholder="Type Name">
-      </div>
-    </div>
-  </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-    <button type="submit" name="_submit" (click)="searchStudent()" class="btn searchBtn">Search</button>
-  </div>
-</div>
-<div *ngIf="msg=='success'" class="alert success-bg alert-dismissible fade show" role="alert">
-  Data has been updated successfully
-  <button (click)="removeMessage()" type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div *ngIf="msg=='error'" class="alert alert-warning alert-dismissible fade show" role="alert">
-  Data has been updated unsuccessfully
-  <button (click)="removeMessage()" type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{msg}}
-<div class="row clearfix all-program-content">
-  <div *ngIf="empty"></div>
-  <div *ngIf="!empty" style="width: 100%">
-    <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
-      <table class="table studenttbl">
-        <thead>
-        <tr>
-
-          <th scope="col">#</th>
-          <th scope="col">Student Name</th>
-          <th scope="col">Student Email</th>
-          <th scope="col">Date of birth</th>
-          <th scope="col">Student's Phone</th>
-          <th scope="col">Sex</th>
-          <th scope="col">Parent's Name</th>
-          <th scope="col">Parent's Phone</th>
-          <th scope="col">Parent's Gmail</th>
-          <th scope="col">Payment's Status</th>
-          <th scope="col">Action</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let student of listStudent;let index = index;">
-          <th scope="row" style="vertical-align: bottom">
-            <div class="checkbox">
-              <input type="checkbox" name="rememberme{{index}}" id="rememberme{{index}}"
-                     class="filled-in chk-col-pink" [(ngModel)]="student.selected"/>
-              <label for="rememberme{{index}}"></label>
-            </div>
-          </th>
-          <td>{{student.Name}}</td>
-          <td>{{student.Email}}</td>
-          <td>{{student.Dob}}</td>
-          <td>{{student.Phone}}</td>
-          <td>{{student.realSex}}</td>
-          <td>{{student.Parent_Name}}</td>
-          <td>{{student.Parent_Phone}}</td>
-          <td>{{student.Parent_Gmail}}</td>
-          <td [class.check-availble]="student.IsPayment"
-              [class.reject-availble]="!student.IsPayment">{{student.IsPayment}}</td>
-          <td>
-            <div class="row">
-              <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>
-
-              <ng-template #canCheck>
-                <div class="col-lg-5 col-xl-5">
-                  <button (click)="ConfirmFee(student,index)" class="confirm-btn">
-                    <i class="fa fa-check check-availble" style="font-size:24px" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="col-lg-5 col-xl-5">
-                  <button class="confirm-btn">
-                    <i class="fa fa-times reject-unavailble" style="font-size:24px"></i>
-                  </button>
-                </div>
-              </ng-template>
-              <ng-template #cannotCheck>
-                <div class="col-lg-5 col-xl-5">
-                  <button class="confirm-btn">
-                    <i class="fa fa-check check-unavailble" style="font-size:24px" aria-hidden="true"></i>
-                  </button>
-                </div>
-
-                <div class="col-lg-5 col-xl-5">
-                  <button (click)="RejectFee(student,index)" class="confirm-btn">
-                    <i class="fa fa-times reject-availble" style="font-size:24px"></i>
-                  </button>
-                </div>
-              </ng-template>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row">
-      <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
-        <ng-select [items]="listPageSize" placeholder="Select page size" [(ngModel)]="pageSize"
-                   (change)="changePageSize()" [clearable]="false">
-        </ng-select>
-      </div>
-      <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">
-        <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}} items</p>
-      </div>
-      <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
-        <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"
-                   [(ngModel)]="currentPage" (change)="changePage()" [clearable]="false">
-        </ng-select>
-      </div>
-    </div>
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
+  <div *ngIf="!isLoading" class="container-fluid">
+    <ng-http-loader
+      [backgroundColor]="'#ff0000'"
+      [debounceDelay]="1000"
+      [extraDuration]="3003"
+      [minDuration]="3003"
+    >
+    </ng-http-loader>
     <div class="row">
       <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-        <button type="submit" name="_submit" (click)="ConfirmMultiple()" class="btn searchBtn">Confirm all</button>
+        <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
+                   (change)="ReLoadForm()"
+                   (clear)="ReLoadForm()" [(ngModel)]="selectedCourseId">
+        </ng-select>
       </div>
       <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-        <button type="submit" name="_submit" (click)="RejectMultiple()" class="btn searchBtn">Reject all</button>
+        <ng-select [items]="listForm" bindLabel="Name" bindValue="Id" [(ngModel)]="selectedFormId"
+                   placeholder="Student Name">
+        </ng-select>
+      </div>
+      <div class="col-lg-4 col-xl-4">
+        <div class="form-group">
+          <div class="form-line">
+            <input type="text" [(ngModel)]="studentName" class="form-control" placeholder="Student Name">
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xl-4">
+        <div class="form-group">
+          <div class="form-line">
+            <input type="text" [(ngModel)]="phoneNumber" class="form-control" placeholder="Phone Number" required
+                   (keypress)="isInputNumber($event)">
+          </div>
+        </div>
+      </div>
+      <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+        <button type="submit" name="_submit" (click)="searchStudent()" class="btn searchBtn">Search</button>
+      </div>
+    </div>
+    <div *ngIf="msg=='success'" class="alert success-bg alert-dismissible fade show" role="alert">
+      Data has been updated successfully
+      <button (click)="removeMessage()" type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="msg=='error'" class="alert alert-warning alert-dismissible fade show" role="alert">
+      Data has been updated unsuccessfully
+      <button (click)="removeMessage()" type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {{msg}}
+    <div class="row clearfix all-program-content">
+      <div *ngIf="empty"></div>
+      <div *ngIf="!empty" style="width: 100%">
+        <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
+          <table class="table studenttbl">
+            <thead>
+            <tr>
+
+              <th scope="col">#</th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Student Email</th>
+              <th scope="col">Date of birth</th>
+              <th scope="col">Student's Phone</th>
+              <th scope="col">Sex</th>
+              <th scope="col">Parent's Name</th>
+              <th scope="col">Parent's Phone</th>
+              <th scope="col">Parent's Gmail</th>
+              <th scope="col">Payment's Status</th>
+              <th scope="col">Action</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let student of listStudent;let index = index;">
+              <th scope="row" style="vertical-align: bottom">
+                <div class="checkbox">
+                  <input type="checkbox" name="rememberme{{index}}" id="rememberme{{index}}"
+                         class="filled-in chk-col-pink" [(ngModel)]="student.selected"/>
+                  <label for="rememberme{{index}}"></label>
+                </div>
+              </th>
+              <td>{{student.Name}}</td>
+              <td>{{student.Email}}</td>
+              <td>{{student.Dob}}</td>
+              <td>{{student.Phone}}</td>
+              <td>{{student.realSex}}</td>
+              <td>{{student.Parent_Name}}</td>
+              <td>{{student.Parent_Phone}}</td>
+              <td>{{student.Parent_Gmail}}</td>
+              <td [class.check-availble]="student.IsPayment"
+                  [class.reject-availble]="!student.IsPayment">{{student.IsPayment ? 'Paid' : 'Not Yet'}}</td>
+              <td>
+                <div class="row">
+                  <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>
+
+                  <ng-template #canCheck>
+                    <div class="col-lg-5 col-xl-5">
+                      <button (click)="ConfirmFee(student,index)" class="confirm-btn">
+                        <i class="fa fa-check check-availble" style="font-size:24px" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="col-lg-5 col-xl-5">
+                      <button class="confirm-btn">
+                        <i class="fa fa-times reject-unavailble" style="font-size:24px"></i>
+                      </button>
+                    </div>
+                  </ng-template>
+                  <ng-template #cannotCheck>
+                    <div class="col-lg-5 col-xl-5">
+                      <button class="confirm-btn">
+                        <i class="fa fa-check check-unavailble" style="font-size:24px" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <div class="col-lg-5 col-xl-5">
+                      <button (click)="RejectFee(student,index)" class="confirm-btn">
+                        <i class="fa fa-times reject-availble" style="font-size:24px"></i>
+                      </button>
+                    </div>
+                  </ng-template>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
+            <ng-select [items]="listPageSize" placeholder="Select page size" [(ngModel)]="pageSize"
+                       (change)="changePageSize()" [clearable]="false">
+            </ng-select>
+          </div>
+          <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">
+            <!--            <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}}-->
+            <!--              items</p>-->
+          </div>
+          <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
+            <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"
+                       [(ngModel)]="currentPage" (change)="changePage()" [clearable]="false">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+            <button type="submit" name="_submit" (click)="ConfirmMultiple()" class="btn searchBtn">Confirm all</button>
+          </div>
+          <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+            <button type="submit" name="_submit" (click)="RejectMultiple()" class="btn searchBtn">Reject all</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+    <app-loading-page *ngIf="isLoading"></app-loading-page>
+</section>

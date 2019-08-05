@@ -71,3 +71,8 @@ studenttbl{
 th,td{
     white-space: nowrap;
 }
+
+
+.grant-availble {
+  background-color: rgb(176, 219, 125);
+}

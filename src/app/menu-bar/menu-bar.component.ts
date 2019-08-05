@@ -19,10 +19,12 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
 
   urlName;
   programName = '';
-  receiveMsg($event){
+
+  receiveMsg($event) {
     this.urlName = this.className();
     console.log(this.urlName);
   }
+
   ngOnInit() {
     // this.urlName = this.className();
     // console.log(this.urlName);
@@ -83,11 +85,21 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     if (this._router.url.includes('/Training-staff/add-subject')) {
       return '/Training-staff/add-subject';
     }
-    if(this._router.url.includes('/Training-staff/GenerateClass')){
+    if (this._router.url.includes('/Training-staff/GenerateClass')) {
       return '/Training-staff/GenerateClass';
     }
-    if(this._router.url.includes('/Training-staff/GenerateTimetable')){
+    if (this._router.url.includes('/Training-staff/ListClasses')) {
+      return '/Training-staff/ListClasses';
+    }
+    if (this._router.url.includes('/Training-staff/GenerateTimetable')) {
       return '/Training-staff/GenerateTimetable';
+    }
+
+    if (this._router.url.includes('/Training-staff/view-teacher')) {
+      return '/Training-staff/view-teacher';
+    }
+    if (this._router.url.includes('/Training-staff/add-teacher')) {
+      return '/Training-staff/add-teacher';
     }
 
     return '';

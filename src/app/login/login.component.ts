@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterContentInit} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
@@ -18,7 +18,7 @@ declare var logInForm: any;
     , '../../assets/css/login.css',
   ]
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit, AfterContentInit {
   apiContext = new APIContext();
   loginFail = false;
   loginMessage: string;
@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   errorMsgUsername = '-';
   errorMsgPassword = '-';
+  isLoading = true;
 
 
   constructor(private _auth: AuthService,
@@ -62,11 +63,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+  ngAfterContentInit(): void {
+    this.isLoading = false;
   }
+
+  // ngAfterViewInit() {
+  //   this.isLoading = false;
+  //   // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+  //   // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+  //   // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+  // }
 
   public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;
@@ -83,6 +89,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   loginUser() {
+    this.isLoading = true;
     const body = new HttpParams()
       .set('username', this.loginUserData.username)
       .set('password', this.loginUserData.password)
@@ -109,11 +116,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (!!this._auth.StudentLoggedIn()) {
           this._router.navigate(['/Student/profile']);
         }
+        this.isLoading = false;
       },
       err => {
         console.log(err);
         this.loginMessage = err.error.error_description;
         this.loginFail = true;
+        this.isLoading = false;
       }
     );
 
@@ -150,6 +159,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.checkValidPassword();
     if (this.checkValidUsername() && this.checkValidPassword()) {
       this.loginUser();
+    } else {
     }
   }
 

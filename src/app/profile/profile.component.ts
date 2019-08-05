@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, AfterContentInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {AuthService} from '../auth.service';
@@ -15,7 +15,7 @@ declare var $: any;
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class ProfileComponent implements OnInit, AfterViewInit {
+export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   apiAdmission = new APIAdmission();
@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   isEditing = false;
   buttonLabel = '';
+  isLoading = true;
 
   constructor(private router: Router, private http: HttpClient, private auth: AuthService) {
   }
@@ -44,6 +45,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   getProfile() {
+    this.isLoading = true;
 
     let configUrl = this.apiContext.host;
 
@@ -71,6 +73,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         this.user.Sex = res.Sex;
         this.user.Id = res.Id;
         this.user.Avatar = res.Avatar;
+        this.isLoading = false;
       },
       error => {
         console.log(error);
@@ -79,6 +82,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
             console.log(error.status);
           }
         }
+        this.isLoading = false;
       });
 
   }
@@ -93,7 +97,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     body.appendChild(script);
   }
 
+  ngAfterContentInit(): void {
+    this.isLoading = false;
+  }
+
   ngAfterViewInit() {
+    this.isLoading = false;
     // this.loadScript('../../assets/bundles/libscripts.bundle.js');
     // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
@@ -102,6 +111,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
 
   updateProfile() {
+    this.isLoading = true;
 
 
     let configUrl = this.apiContext.host;
@@ -137,7 +147,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         this.user.Sex = res.Sex;
         this.user.Id = res.Id;
         console.log(res);
-
+        this.isLoading = false;
       },
       error => {
         if (error instanceof HttpErrorResponse) {
@@ -145,6 +155,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
           }
         }
+        this.isLoading = false;
       });
   }
 

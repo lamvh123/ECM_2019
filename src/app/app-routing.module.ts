@@ -1,62 +1,62 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { EventsComponent } from './events/events.component';
-import { SpecialEventsComponent } from './special-events/special-events.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { ProfileComponent } from './profile/profile.component';
-import { AuthGuard } from './auth.guard';
-import { MenuBarComponent } from './menu-bar/menu-bar.component';
-import { AdminGuardGuard } from './admin-guard.guard';
-import { ErrorPageComponent } from './error-page/error-page.component';
-import { TrainingStaffGuard } from './training-staff.guard';
-import { ViewProgramComponent } from './view-program/view-program.component';
-import { AddProgramComponent } from './add-program/add-program.component';
-import { ViewCourseComponent } from './view-course/view-course.component';
-import { AddCourseComponent } from './add-course/add-course.component';
-import { CourseDetailComponent } from './course-detail/course-detail.component';
-import { ProgramDetailComponent } from './program-detail/program-detail.component';
-import { ViewSyllabusComponent } from './view-syllabus/view-syllabus.component';
-import { AddBuildingComponent } from './add-building/add-building.component';
-import { ViewBuildingComponent } from './view-building/view-building.component';
-import { ViewRoomComponent } from './view-room/view-room.component';
-import { AddRoomComponent } from './add-room/add-room.component';
-import { AdmissionStaffMenubarComponent } from './admission-staff-menubar/admission-staff-menubar.component';
-import { AdmissionStaffGuard } from './admission-staff.guard';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {EventsComponent} from './events/events.component';
+import {SpecialEventsComponent} from './special-events/special-events.component';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
+import {ProfileComponent} from './profile/profile.component';
+import {AuthGuard} from './auth.guard';
+import {MenuBarComponent} from './menu-bar/menu-bar.component';
+import {AdminGuardGuard} from './admin-guard.guard';
+import {ErrorPageComponent} from './error-page/error-page.component';
+import {TrainingStaffGuard} from './training-staff.guard';
+import {ViewProgramComponent} from './view-program/view-program.component';
+import {AddProgramComponent} from './add-program/add-program.component';
+import {ViewCourseComponent} from './view-course/view-course.component';
+import {AddCourseComponent} from './add-course/add-course.component';
+import {CourseDetailComponent} from './course-detail/course-detail.component';
+import {ProgramDetailComponent} from './program-detail/program-detail.component';
+import {ViewSyllabusComponent} from './view-syllabus/view-syllabus.component';
+import {AddBuildingComponent} from './add-building/add-building.component';
+import {ViewBuildingComponent} from './view-building/view-building.component';
+import {ViewRoomComponent} from './view-room/view-room.component';
+import {AddRoomComponent} from './add-room/add-room.component';
+import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
+import {AdmissionStaffGuard} from './admission-staff.guard';
 
-import { ViewAdmissionFormComponent } from './view-admission-form/view-admission-form.component';
-import { ViewAdmissionFormDetailComponent } from './view-admission-form-detail/view-admission-form-detail.component';
-import { ViewSlotComponent } from './view-slot/view-slot.component';
-import { AddSlotComponent } from './add-slot/add-slot.component';
-import { AddNewFormComponent } from './add-new-form/add-new-form.component';
-import { RedirectComponent } from './redirect/redirect.component';
-import { ViewSubjectsComponent } from './view-subjects/view-subjects.component';
-import { AddSubjectComponent } from './add-subject/add-subject.component';
-import { LogoutComponent } from './logout/logout.component';
-import { AccountingMenuBarComponent } from './accounting-menu-bar/accounting-menu-bar.component';
-import { AccountStaffGuard } from './account-staff.guard';
-import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-student/account-staff-confirm-student.component';
-import { CenterAdminMenubarComponent } from './center-admin-menubar/center-admin-menubar.component';
-import { CenterAdminGrantAccountComponent } from './center-admin-grant-account/center-admin-grant-account.component';
-import { CenterAdminGuard } from './center-admin.guard';
-import { AutoGenerateClassComponent } from './auto-generate-class/auto-generate-class.component';
-import { AutoGenerateTimetableComponent } from './auto-generate-timetable/auto-generate-timetable.component';
-import { ListOfClassComponent } from './list-of-class/list-of-class.component';
-import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component';
-import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
-import { StudentGuard } from './student.guard';
-import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
-
+import {ViewAdmissionFormComponent} from './view-admission-form/view-admission-form.component';
+import {ViewAdmissionFormDetailComponent} from './view-admission-form-detail/view-admission-form-detail.component';
+import {ViewSlotComponent} from './view-slot/view-slot.component';
+import {AddSlotComponent} from './add-slot/add-slot.component';
+import {AddNewFormComponent} from './add-new-form/add-new-form.component';
+import {RedirectComponent} from './redirect/redirect.component';
+import {ViewSubjectsComponent} from './view-subjects/view-subjects.component';
+import {AddSubjectComponent} from './add-subject/add-subject.component';
+import {LogoutComponent} from './logout/logout.component';
+import {AccountingMenuBarComponent} from './accounting-menu-bar/accounting-menu-bar.component';
+import {AccountStaffGuard} from './account-staff.guard';
+import {AccountStaffConfirmStudentComponent} from './account-staff-confirm-student/account-staff-confirm-student.component';
+import {CenterAdminMenubarComponent} from './center-admin-menubar/center-admin-menubar.component';
+import {CenterAdminGrantAccountComponent} from './center-admin-grant-account/center-admin-grant-account.component';
+import {CenterAdminGuard} from './center-admin.guard';
+import {AutoGenerateClassComponent} from './auto-generate-class/auto-generate-class.component';
+import {AutoGenerateTimetableComponent} from './auto-generate-timetable/auto-generate-timetable.component';
+import {ListOfClassComponent} from './list-of-class/list-of-class.component';
+import {ListStudentOfClassComponent} from './list-student-of-class/list-student-of-class.component';
+import {OfficalStudentMenuBarComponent} from './offical-student-menu-bar/offical-student-menu-bar.component';
+import {StudentGuard} from './student.guard';
+import {ViewTimetableComponent} from './view-timetable/view-timetable.component';
+import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'events', component: EventsComponent },
-  { path: 'special', component: SpecialEventsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'redirect/:url/:param', component: RedirectComponent },
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: 'events', component: EventsComponent},
+  {path: 'special', component: SpecialEventsComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'logout', component: LogoutComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'redirect/:url/:param', component: RedirectComponent},
   {
     path: 'Admission-staff',
     component: AdmissionStaffMenubarComponent,
@@ -166,21 +166,29 @@ const routes: Routes = [
         component: AddSubjectComponent
       },
       {
-        path:'GenerateClass',
-        component : AutoGenerateClassComponent
+        path: 'GenerateClass',
+        component: AutoGenerateClassComponent
       },
       {
-        path:'GenerateTimetable',
+        path: 'GenerateTimetable',
         component: AutoGenerateTimetableComponent
       },
       {
-        path:'ListClasses',
-        component:ListOfClassComponent
+        path: 'ListClasses',
+        component: ListOfClassComponent
       },
       {
-        path:'ListStudentOfClass',
-        component:ListStudentOfClassComponent
+        path: 'ListStudentOfClass',
+        component: ListStudentOfClassComponent
+      },
+      {
+        path: 'view-teacher',
+        component: ViewTeacherComponent
       }
+      // {
+      //   path: 'add-room',
+      //   component: AddRoomComponent
+      // }
       // {
       //   path: 'course-detail/:id',
       //   component: CourseDetailComponent
@@ -217,7 +225,7 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '**', component: ErrorPageComponent }];
+  {path: '**', component: ErrorPageComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

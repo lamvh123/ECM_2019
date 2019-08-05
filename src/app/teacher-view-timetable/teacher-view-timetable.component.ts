@@ -2,21 +2,20 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {LearningSession} from '../entity/learning-session';
-import {APIContext, APIStudent} from '../APIContext';
+import {APIContext, APITeacher} from '../APIContext';
 import { Class } from '../entity/class';
-
 @Component({
-  selector: 'app-view-timetable',
-  templateUrl: './view-timetable.component.html',
-  styleUrls: ['./view-timetable.component.css']
+  selector: 'app-teacher-view-timetable',
+  templateUrl: './teacher-view-timetable.component.html',
+  styleUrls: ['./teacher-view-timetable.component.css']
 })
-export class ViewTimetableComponent implements OnInit {
+export class TeacherViewTimetableComponent implements OnInit {
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
 
   apiContext = new APIContext();
-  apiStudent = new APIStudent();
+  apiTeacher = new APITeacher();
   listSession: LearningSession[];
   centerId;
   listClass : Class[];
@@ -25,14 +24,14 @@ export class ViewTimetableComponent implements OnInit {
     this.loadInitData();
   }
   loadInitData(){
-    const getCenterUrl = this.apiContext.host+ this.apiStudent.getCenter;
+    const getCenterUrl = this.apiContext.host+ this.apiTeacher.getCenter;
     this.http.get(getCenterUrl).toPromise().then(data=>{
       this.centerId = data['Id'];
       this.loadClassList();
     });
   }
   loadClassList(){
-    const url = this.apiContext.host+ this.apiStudent.getClassList;
+    const url = this.apiContext.host+ this.apiTeacher.listOfClass;
     const param = new HttpParams().set("centerId",this.centerId);
     this.http.get<Class[]>(url,{params:param}).toPromise().then(data=>{
       this.listClass = data;
@@ -48,7 +47,7 @@ export class ViewTimetableComponent implements OnInit {
     })
   }
   loadTimetable() {
-    const url = this.apiContext.host + this.apiStudent.getTimeTableOfStudent;
+    const url = this.apiContext.host + this.apiTeacher.getTimeTableOfParticularClass;
     const param = new HttpParams().set('centerId', this.centerId + '').set("classId",this.selectedClass);
     this.http.get<LearningSession[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
@@ -59,5 +58,5 @@ export class ViewTimetableComponent implements OnInit {
         console.log(error);
       });
   }
-  
+
 }

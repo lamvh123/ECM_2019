@@ -1,12 +1,12 @@
 <div class="row">
   <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
     <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course" (change)="ReLoadForm()"
-               (clear)="ReLoadForm()" [(ngModel)]="selectedCourseId">
+      (clear)="ReLoadForm()" [(ngModel)]="selectedCourseId">
     </ng-select>
   </div>
   <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
     <ng-select [items]="listForm" bindLabel="Name" bindValue="Id" [(ngModel)]="selectedFormId"
-               placeholder="Select Form">
+      placeholder="Select Form">
     </ng-select>
   </div>
   <div class="col-lg-4 col-xl-4">
@@ -36,7 +36,7 @@
 <div class="row clearfix all-program-content">
   <div *ngIf="empty"></div>
   <div *ngIf="!empty" style="width: 100%">
-      <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
+    <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
       <table class="table studenttbl">
         <thead>
           <tr>
@@ -104,8 +104,7 @@
       <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
         <button type="submit" name="_submit" (click)="grantAccountForMany()" class="btn searchBtn">Confirm all</button>
       </div>
-     
+
     </div>
   </div>
 </div>
-

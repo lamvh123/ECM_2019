@@ -1,8 +1,8 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {AuthService} from '../auth.service';
-import {Router} from '@angular/router';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {APIContext} from '../APIContext';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { APIContext } from '../APIContext';
 
 declare var jquery: any;
 declare var $: any;
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
 
   constructor(private _auth: AuthService,
-              private _router: Router, private http: HttpClient) {
+    private _router: Router, private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -59,6 +59,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (!!this._auth.StudentLoggedIn()) {
       this._router.navigate(['/Student/profile']);
     }
+    if (!!this._auth.StudentLoggedIn()) {
+      this._router.navigate(['/Teacher/profile']);
+    }
 
   }
 
@@ -69,7 +72,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement> document.body;
+    const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -103,11 +106,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this._router.navigate(['/Account-staff/profile']);
         } else if (this._auth.centerAdminLoggedIn()) {
           this._router.navigate(['/CenterAdmin/profile']);
+        } else if (!!this._auth.StudentLoggedIn()) {
+          this._router.navigate(['/Student/profile']);
+        } else if (!!this._auth.TeacherLoggedIn()) {
+          this._router.navigate(['/Teacher/profile']);
         } else {
           console.log(res);
-        }
-        if (!!this._auth.StudentLoggedIn()) {
-          this._router.navigate(['/Student/profile']);
         }
       },
       err => {

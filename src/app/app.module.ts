@@ -65,7 +65,9 @@ import { ListStudentOfClassComponent } from './list-student-of-class/list-studen
 
 import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component';
 import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
-import { ViewTimetableComponent } from './view-timetable/view-timetable.component'; 
+import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
+import { TeacherMenuBarComponent } from './teacher-menu-bar/teacher-menu-bar.component';
+import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-view-timetable.component'; 
 
 @NgModule({
   declarations: [
@@ -111,7 +113,9 @@ import { ViewTimetableComponent } from './view-timetable/view-timetable.componen
     ListStudentOfClassComponent,
     CenterStaffViewClosedAdmissionFormComponent,
     OfficalStudentMenuBarComponent,
-    ViewTimetableComponent
+    ViewTimetableComponent,
+    TeacherMenuBarComponent,
+    TeacherViewTimetableComponent
   ],
   imports: [
     BrowserModule,

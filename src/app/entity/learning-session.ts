@@ -1,4 +1,6 @@
 import { Slot } from '../slot';
+import { Class } from './class';
+import { Room } from '../room';
 
 export class LearningSession {
     ClassName:string;
@@ -8,4 +10,6 @@ export class LearningSession {
     RoomId:number;
     SessionNumber:string;
     slot: Slot;
+    class:Class;
+    Room:Room = new Room();
 }

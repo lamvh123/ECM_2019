@@ -98,4 +98,13 @@ export class AuthService {
     }
     return false;
   }
+
+  TeacherLoggedIn() {
+    var role = localStorage.getItem('role');
+    console.log(role);
+    if (this.logedIn() && role == 'Teacher') {
+      return true;
+    }
+    return false;
+  }
 }

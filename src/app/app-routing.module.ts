@@ -46,6 +46,9 @@ import { ListStudentOfClassComponent } from './list-student-of-class/list-studen
 import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
 import { StudentGuard } from './student.guard';
 import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
+import { TeacherMenuBarComponent } from './teacher-menu-bar/teacher-menu-bar.component';
+import { TeacherGuard } from './teacher.guard';
+import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-view-timetable.component';
 
 
 
@@ -214,6 +217,21 @@ const routes: Routes = [
       {
         path: 'ViewTimetable',
         component: ViewTimetableComponent
+      }
+    ]
+  },
+  {
+    path: 'Teacher',
+    component: TeacherMenuBarComponent,
+    canActivate: [TeacherGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'ViewTimetable',
+        component: TeacherViewTimetableComponent
       }
     ]
   },

@@ -1,8 +1,8 @@
-import {Building} from './building';
-import {Course} from './course';
-import {Program} from './program';
-import {Center} from './center';
-import {Slot} from './slot';
+import { Building } from './building';
+import { Course } from './course';
+import { Program } from './program';
+import { Center } from './center';
+import { Slot } from './slot';
 
 export class APIContext {
   host = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/';
@@ -36,7 +36,8 @@ export class APIStudent {
   profile = 'api/Student/profile';
   updateProfile = 'api/Student/UpdateProfile';
   getCourseOfStudent = 'api/Student/GetCourseOfStudent';
-  getTimeTableOfStudent = 'api/Student/GetTimeTableOfStudent';
+  getTimeTableOfStudent = 'api/Student/GetTimeTableOfParticularClass';
+  getClassList = 'api/Student/GetClassListOfStudent';
 }
 
 export class APIAccounting {
@@ -123,6 +124,9 @@ export class APITeacher {
   getCenter = 'api/teacher/GetCenter';
   profile = 'api/teacher/profile';
   updateProfile = 'api/teacher/UpdateProfile';
+  listOfClass = 'api/teacher/GetListOfClassOfTeacher';
+  classDetail = 'GetDetailOfParticularClass';
+  getTimeTableOfParticularClass = 'api/teacher/GetTimeTableOfParticularClass';
 }
 
 export class APIRegistrationStudent {

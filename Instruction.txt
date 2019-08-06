@@ -1,0 +1,19 @@
+There are multiple roles in this education management system, including:Student, Accounting Staff,
+Training Staff, Teacher, Customer, Center Staff, Admission Staff
+*Student: (account:NguyenVanA@gmail.com  password:@Student2019)
+-View profile
+-View timetable
+*Accounting staff:(acc:CenterAdmin@gmail.com pass:@Centeradmin2019)
+-View profile
+-Confirm student's fee
+*Admission Staff:(acc:admissionstaff2019@gmail.com pass:@Staff2019)
+-View profile
+-Create form for customer's register
+*Center Staff:(acc:CenterAdmin@gmail.com pass:@Centeradmin2019)
+-View profile
+-grant account for staff,student
+*training staff:(acc:trainingstaff2019@gmail.com pass:@Staff2019)
+-Create form, course
+*teacher: (account: teacher2019@gmail.com password:@Staff2019)
+-view timetable
+-take attendance

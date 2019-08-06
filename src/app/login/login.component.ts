@@ -1,11 +1,10 @@
-import {Component, OnInit, AfterContentInit} from '@angular/core';
+import {Component, OnInit, AfterContentInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {APIContext} from '../APIContext';
+import * as $ from 'jquery';
 
-declare var jquery: any;
-declare var $: any;
 declare var logInForm: any;
 
 @Component({
@@ -15,10 +14,12 @@ declare var logInForm: any;
     , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css'
-    , '../../assets/css/login.css',
+    , '../../assets/css/login.css'
+    // , '../../assets/css/animate.css'
   ]
 })
-export class LoginComponent implements OnInit, AfterContentInit {
+export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
+
   apiContext = new APIContext();
   loginFail = false;
   loginMessage: string;
@@ -32,6 +33,23 @@ export class LoginComponent implements OnInit, AfterContentInit {
   errorMsgPassword = '-';
   isLoading = true;
 
+  btnSuccess: HTMLElement;
+  btnFailure: HTMLElement;
+
+
+  ngAfterViewInit() {
+    $.getScript('../../assets/bundles/libscripts.bundle.js');
+    $.getScript('../../assets/bundles/vendorscripts.bundle.js');
+    $.getScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
+    $.getScript('../../assets/js/pages/ui/notifications.js');
+    $.getScript('../../assets/bundles/mainscripts.bundle.js');
+    // $.getScript('../../assets/testScript.js');
+    this.btnSuccess = document.getElementById('sBtn') as HTMLElement;
+    this.btnFailure = document.getElementById('fBtn') as HTMLElement;
+    console.log('avi s ' + this.btnSuccess);
+    console.log('avi f ' + this.btnFailure);
+  }
 
   constructor(private _auth: AuthService,
               private _router: Router, private http: HttpClient) {
@@ -68,14 +86,11 @@ export class LoginComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit(): void {
     this.isLoading = false;
+    this.btnSuccess = document.getElementById('sBtn') as HTMLElement;
+    this.btnFailure = document.getElementById('fBtn') as HTMLElement;
+    console.log('aci s ' + this.btnSuccess);
+    console.log('aci f ' + this.btnFailure);
   }
-
-  // ngAfterViewInit() {
-  //   this.isLoading = false;
-  //   // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
-  // }
 
   public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;
@@ -103,34 +118,43 @@ export class LoginComponent implements OnInit, AfterContentInit {
         localStorage.setItem('token', res.access_token);
         localStorage.setItem('role', res.role);
         localStorage.setItem('expiretime', expireDate.getTime() + '');
+        let distUrl: string;
         if (this._auth.adminLogedIn()) {
-          this._router.navigate(['/Admin-menu/profile']);
+          distUrl = '/Admin-menu/profile';
         } else if (this._auth.trainingStaffLogedIn()) {
-          this._router.navigate(['/Training-staff/profile']);
+          distUrl = '/Training-staff/profile';
         } else if (this._auth.admissionStaffLogedIn()) {
-          this._router.navigate(['/Admission-staff/profile']);
+          distUrl = '/Admission-staff/profile';
         } else if (this._auth.accountingStaffLoggedin()) {
-          this._router.navigate(['/Account-staff/profile']);
+          distUrl = '/Account-staff/profile';
         } else if (this._auth.centerAdminLoggedIn()) {
-          this._router.navigate(['/CenterAdmin/profile']);
+          distUrl = '/CenterAdmin/profile';
         } else if (this._auth.StudentLoggedIn()) {
-          this._router.navigate(['/Student/profile']);
+          distUrl = '/Student/profile';
         } else if (this._auth.TeacherLoggedIn()) {
-          this._router.navigate(['/Teacher/profile']);
+          distUrl = '/Teacher/profile';
         } else {
           console.log(res);
         }
         this.isLoading = false;
+        if (distUrl == null || distUrl == 'undefined' || distUrl.length < 1) {
+          this.showNotification('fBtn');
+        } else {
+          this.showNotification('sBtn');
+          this._router.navigate([distUrl]);
+        }
       },
       err => {
         console.log(err);
         this.loginMessage = err.error.error_description;
         this.loginFail = true;
         this.isLoading = false;
+        this.showNotification('fBtn');
       }
     );
 
   }
+
 
   checkValidUsername() {
     if (this.loginUserData.username != null) {
@@ -163,11 +187,22 @@ export class LoginComponent implements OnInit, AfterContentInit {
     this.checkValidPassword();
     if (this.checkValidUsername() && this.checkValidPassword()) {
       this.loginUser();
-    } else {
     }
   }
 
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
+
+
+  showNotification(btnId: string) {
+    if (btnId == 'sBtn') {
+      this.btnSuccess.click();
+    } else {
+      this.btnFailure.click();
+    }
+  }
+
+
 }
+

@@ -5,16 +5,17 @@ $(function () {
         var animateEnter = $(this).data('animate-enter');
         var animateExit = $(this).data('animate-exit');
         var colorName = $(this).data('color-name');
+        var notiText = $(this).data('noti-text');
 
-        showNotification(colorName, null, placementFrom, placementAlign, animateEnter, animateExit);
+        showNotification(colorName, notiText, placementFrom, placementAlign, animateEnter, animateExit);
     });
 });
 
 function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
     if (colorName === null || colorName === '') { colorName = 'bg-black'; }
     if (text === null || text === '') { text = 'Turning standard Bootstrap alerts'; }
-    if (animateEnter === null || animateEnter === '') { animateEnter = 'animated fadeInDown'; }
-    if (animateExit === null || animateExit === '') { animateExit = 'animated fadeOutUp'; }
+    if (animateEnter === null || animateEnter === '') { animateEnter = 'animated fadeInRight'; }
+    if (animateExit === null || animateExit === '') { animateExit = 'animated fadeOutRight'; }
     var allowDismiss = true;
 
     $.notify({

@@ -70,6 +70,8 @@ import {LoadingPageComponent} from './loading-page/loading-page.component';
 import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
 import {TeacherMenuBarComponent} from './teacher-menu-bar/teacher-menu-bar.component';
 import {TeacherViewTimetableComponent} from './teacher-view-timetable/teacher-view-timetable.component';
+import { AssignTeacherForClassComponent } from './assign-teacher-for-class/assign-teacher-for-class.component';
+import { AddTeacherComponent } from './add-teacher/add-teacher.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +121,9 @@ import {TeacherViewTimetableComponent} from './teacher-view-timetable/teacher-vi
     LoadingPageComponent,
     ViewTeacherComponent,
     TeacherMenuBarComponent,
-    TeacherViewTimetableComponent
+    TeacherViewTimetableComponent,
+    AssignTeacherForClassComponent,
+    AddTeacherComponent
   ],
   imports: [
     BrowserModule,

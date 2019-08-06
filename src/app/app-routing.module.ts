@@ -50,6 +50,7 @@ import {TeacherMenuBarComponent} from './teacher-menu-bar/teacher-menu-bar.compo
 import {TeacherGuard} from './teacher.guard';
 import {TeacherViewTimetableComponent} from './teacher-view-timetable/teacher-view-timetable.component';
 import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
+import {AssignTeacherForClassComponent} from './assign-teacher-for-class/assign-teacher-for-class.component';
 
 
 const routes: Routes = [
@@ -187,11 +188,11 @@ const routes: Routes = [
       {
         path: 'view-teacher',
         component: ViewTeacherComponent
+      },
+      {
+        path: 'assign-teacher',
+        component: AssignTeacherForClassComponent
       }
-      // {
-      //   path: 'add-room',
-      //   component: AddRoomComponent
-      // }
       // {
       //   path: 'course-detail/:id',
       //   component: CourseDetailComponent

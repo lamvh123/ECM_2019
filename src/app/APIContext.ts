@@ -106,7 +106,8 @@ export class APITraining {
   generateClass = 'api/TrainingDept/GenerateClass';
   createClass = 'api/TrainingDept/CreateClass';
   searchClass = 'api/TrainingDept/SearchClass';
-  getClassById = 'api/TrainingDept/GetClassById';
+  getClassById = 'api/TrainingDept/GetStudentByClassId';
+  getDetailClassById = 'api/TrainingDept/GetDetailClassById';
 
   updateStudentInClass = 'api/TrainingDept/UpdateStudentInClass';
 

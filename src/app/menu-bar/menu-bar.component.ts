@@ -101,6 +101,9 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     if (this._router.url.includes('/Training-staff/add-teacher')) {
       return '/Training-staff/add-teacher';
     }
+    if (this._router.url.includes('/Training-staff/assign-teacher')) {
+      return '/Training-staff/assign-teacher';
+    }
 
     return '';
 

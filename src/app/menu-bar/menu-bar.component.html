@@ -217,15 +217,15 @@
                   <span class="class-hover">Add Program</span></a></li>
             </ul>
           </li>
-          <li [ngClass]="{'active open': urlName=='/Training-staff/GenerateClass'||urlName=='/Training-staff/ListClasses'}">
+          <li
+            [ngClass]="{'active open': urlName=='/Training-staff/GenerateClass'||urlName=='/Training-staff/ListClasses'}">
             <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
                 class="class-hover">Class</span> </a>
             <ul class="ml-menu">
               <li [ngClass]="{'active': urlName=='/Training-staff/GenerateClass'}"><a
                   href="/Training-staff/GenerateClass">
                   <span class="class-hover">Generate Class</span></a></li>
-              <li [ngClass]="{'active': urlName=='/Training-staff/ListClasses'}"><a
-                  href="/Training-staff/ListClasses">
+              <li [ngClass]="{'active': urlName=='/Training-staff/ListClasses'}"><a href="/Training-staff/ListClasses">
                   <span class="class-hover">List Classes</span></a></li>
             </ul>
           </li>
@@ -304,7 +304,8 @@
                   href="/Training-staff/add-subject"><span class="class-hover">Add Subject</span></a></li>
             </ul>
           </li>
-
+          <li [ngClass]="{'active open': urlName=='/Training-staff/Report'}"><a href="/Training-staff/Report"><i
+                class="zmdi zmdi-home"></i><span class="class-hover">Report</span></a></li>
           <li><a (click)="logout()"><i class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>
         </ul>
       </div>

@@ -89,6 +89,9 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     if(this._router.url.includes('/Training-staff/GenerateTimetable')){
       return '/Training-staff/GenerateTimetable';
     }
+    if(this._router.url.includes('/Training-staff/Report')){
+      return '/Training-staff/Report';
+    }
 
     return '';
 

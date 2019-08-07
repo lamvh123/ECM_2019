@@ -67,7 +67,10 @@ import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view
 import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
 import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
 import { TeacherMenuBarComponent } from './teacher-menu-bar/teacher-menu-bar.component';
-import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-view-timetable.component'; 
+import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-view-timetable.component';
+import { ReportComponent } from './report/report.component'; 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -115,7 +118,8 @@ import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-
     OfficalStudentMenuBarComponent,
     ViewTimetableComponent,
     TeacherMenuBarComponent,
-    TeacherViewTimetableComponent
+    TeacherViewTimetableComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -127,7 +131,9 @@ import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-
     NgSelect2Module,
     AmazingTimePickerModule,
     CKEditorModule,
-    NgHttpLoaderModule
+    NgHttpLoaderModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

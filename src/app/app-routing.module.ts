@@ -49,6 +49,7 @@ import { ViewTimetableComponent } from './view-timetable/view-timetable.componen
 import { TeacherMenuBarComponent } from './teacher-menu-bar/teacher-menu-bar.component';
 import { TeacherGuard } from './teacher.guard';
 import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-view-timetable.component';
+import { ReportComponent } from './report/report.component';
 
 
 
@@ -183,6 +184,10 @@ const routes: Routes = [
       {
         path:'ListStudentOfClass',
         component:ListStudentOfClassComponent
+      },
+      {
+        path:'Report',
+        component:ReportComponent
       }
       // {
       //   path: 'course-detail/:id',

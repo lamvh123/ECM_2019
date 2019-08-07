@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~7.2.0",
+    "@angular/animations": "^8.2.0",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
     "@angular/core": "~7.2.0",
@@ -23,6 +23,7 @@
     "@ckeditor/ckeditor5-build-classic": "^12.3.1",
     "@fortawesome/fontawesome-free": "^5.9.0",
     "@ng-select/ng-select": "^2.20.5",
+    "@swimlane/ngx-charts": "^12.0.1",
     "@types/bootstrap-select": "^1.11.1",
     "@types/chart.js": "^2.7.55",
     "amazing-time-picker": "^1.8.0",

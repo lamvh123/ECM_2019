@@ -137,10 +137,10 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
     // this.loadScript('/assets/plugins/momentjs/moment.js');
 
-    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
-    // this.loadScript('../../assets/plugins/momentjs/moment.js');
+    this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.loadScript('../../assets/plugins/momentjs/moment.js');
 
 
     //   $(document).ready(function() {

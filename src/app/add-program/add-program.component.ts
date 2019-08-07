@@ -63,12 +63,12 @@ export class AddProgramComponent implements OnInit, AfterContentInit, AfterViewI
   }
 
   ngAfterViewInit() {
-    this.loadScript('../../assets/bundles/libscripts.bundle.js');
-    this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
     this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
     this.loadScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
     this.loadScript('../../assets/js/pages/ui/notifications.js');
-    this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
     this.loadScript('../../assets/testJS.js');
 
   }

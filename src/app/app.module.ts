@@ -63,15 +63,18 @@ import {AutoGenerateTimetableComponent} from './auto-generate-timetable/auto-gen
 import {ListOfClassComponent} from './list-of-class/list-of-class.component';
 import {ListStudentOfClassComponent} from './list-student-of-class/list-student-of-class.component';
 
+import {LoadingPageComponent} from './loading-page/loading-page.component';
+import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
+import {AssignTeacherForClassComponent} from './assign-teacher-for-class/assign-teacher-for-class.component';
+import {AddTeacherComponent} from './add-teacher/add-teacher.component';
 import {CenterStaffViewClosedAdmissionFormComponent} from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component';
 import {OfficalStudentMenuBarComponent} from './offical-student-menu-bar/offical-student-menu-bar.component';
 import {ViewTimetableComponent} from './view-timetable/view-timetable.component';
-import {LoadingPageComponent} from './loading-page/loading-page.component';
-import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
 import {TeacherMenuBarComponent} from './teacher-menu-bar/teacher-menu-bar.component';
 import {TeacherViewTimetableComponent} from './teacher-view-timetable/teacher-view-timetable.component';
-import {AssignTeacherForClassComponent} from './assign-teacher-for-class/assign-teacher-for-class.component';
-import {AddTeacherComponent} from './add-teacher/add-teacher.component';
+import {ReportComponent} from './report/report.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -123,7 +126,8 @@ import {AddTeacherComponent} from './add-teacher/add-teacher.component';
     TeacherMenuBarComponent,
     TeacherViewTimetableComponent,
     AssignTeacherForClassComponent,
-    AddTeacherComponent
+    AddTeacherComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +139,9 @@ import {AddTeacherComponent} from './add-teacher/add-teacher.component';
     NgSelect2Module,
     AmazingTimePickerModule,
     CKEditorModule,
-    NgHttpLoaderModule
+    NgHttpLoaderModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

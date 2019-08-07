@@ -173,9 +173,10 @@
       <div class="admin-action-info"><span>Welcome</span>
         <h3>Prof. John Smith</h3>
         <ul>
-<!--          <li><a data-placement="bottom" title="Go to Inbox" href="mail-inbox.html"><i class="zmdi zmdi-email"></i></a>-->
-<!--          </li>-->
-          <li><a data-placement="bottom" title="Go to Profile" href="/Training-staff/profile"><i class="zmdi zmdi-account"></i></a>
+          <!--          <li><a data-placement="bottom" title="Go to Inbox" href="mail-inbox.html"><i class="zmdi zmdi-email"></i></a>-->
+          <!--          </li>-->
+          <li><a data-placement="bottom" title="Go to Profile" href="/Training-staff/profile"><i
+            class="zmdi zmdi-account"></i></a>
           </li>
           <li><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i
             class="zmdi zmdi-settings"></i></a></li>
@@ -326,6 +327,8 @@
           </ul>
         </li>
 
+        <li [ngClass]="{'active open': urlName=='/Training-staff/Report'}"><a href="/Training-staff/Report"><i
+          class="zmdi zmdi-home"></i><span class="class-hover">Report</span></a></li>
         <li><a (click)="logout()"><i class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>
       </ul>
     </div>

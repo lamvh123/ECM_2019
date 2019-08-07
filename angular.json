@@ -33,7 +33,10 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
-              "node_modules/select2/dist/js/select2.min.js"
+              "node_modules/select2/dist/js/select2.min.js",
+              "node_modules/@angular/animations/bundles/animations.umd.min.js",
+              "node_modules/@angular/animations/bundles/animations-browser.umd.js",
+              "node_modules/@angular/platform-browser/bundles/platform-browser-animations.umd.js"
             ],
             "es5BrowserSupport": true
           },

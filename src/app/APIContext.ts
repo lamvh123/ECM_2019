@@ -1,8 +1,8 @@
-import { Building } from './building';
-import { Course } from './course';
-import { Program } from './program';
-import { Center } from './center';
-import { Slot } from './slot';
+import {Building} from './building';
+import {Course} from './course';
+import {Program} from './program';
+import {Center} from './center';
+import {Slot} from './slot';
 
 export class APIContext {
   host = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/';
@@ -119,6 +119,11 @@ export class APITraining {
   generateTimeTable = 'api/TrainingDept/GenerateTimeTable';
   officialTimeTableOfClass = 'api/TrainingDept/OfficialTimeTableOfClass';
   getAllTimeTable = 'api/TrainingDept/GetAllTimeTable';
+
+  getStatisticByProgram = 'api/TrainingDept/statistic/GetStatisticByProgram';
+  getNumberOfProgram = 'api/TrainingDept/statistic/GetNumberOfProgram';
+  getNumberOfCourse = 'api/TrainingDept/statistic/GetNumberOfCourse';
+  getNumberOfClass = 'api/TrainingDept/statistic/GetNumberOfClass';
 }
 
 export class APITeacher {

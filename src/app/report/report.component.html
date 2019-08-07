@@ -1,0 +1,47 @@
+<div class="row clearfix top-report total-report">
+  <div class="col-lg-4 col-sm-6 col-md-6">
+    <div class="card">
+      <div class="body">
+        <h3>{{totalProgramReport}}</h3>
+        <p class="text-muted">Total Program</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-sm-6 col-md-6">
+    <div class="card">
+      <div class="body">
+        <h3>{{totalCourseReport}}</h3>
+        <p class="text-muted">Total Course</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-sm-6 col-md-6">
+    <div class="card">
+      <div class="body">
+        <h3>{{totalClassReport}}</h3>
+        <p class="text-muted">Total Class</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height: 500px;width: 100%">
+  <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="totalEarning" [gradient]="gradient" [xAxis]="showXAxis"
+    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabelMoney" [yAxisLabel]="yAxisLabelMoney" legendTitle="Program" maxXAxisTickLength="8"
+    rotateXAxisTicks="false">
+  </ngx-charts-bar-vertical>
+</div>
+<div style="height: 500px;width: 100%">
+  <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="totalCourse" [gradient]="gradient" [xAxis]="showXAxis"
+    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabelCourse" [yAxisLabel]="yAxisLabelCourse" legendTitle="Program" maxXAxisTickLength="8"
+    rotateXAxisTicks="false">
+  </ngx-charts-bar-vertical>
+</div>
+<div style="height: 500px;width: 100%">
+  <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="totalStudent" [gradient]="gradient" [xAxis]="showXAxis"
+    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabelStudent" [yAxisLabel]="yAxisLabelStudent" legendTitle="Program" maxXAxisTickLength="8"
+    rotateXAxisTicks="false">
+  </ngx-charts-bar-vertical>
+</div>

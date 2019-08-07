@@ -33,10 +33,6 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
   errorMsgPassword = '-';
   isLoading = true;
 
-  btnSuccess: HTMLElement;
-  btnFailure: HTMLElement;
-
-
   ngAfterViewInit() {
     $.getScript('../../assets/bundles/libscripts.bundle.js');
     $.getScript('../../assets/bundles/vendorscripts.bundle.js');
@@ -44,11 +40,6 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
     $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
     $.getScript('../../assets/js/pages/ui/notifications.js');
     $.getScript('../../assets/bundles/mainscripts.bundle.js');
-    // $.getScript('../../assets/testScript.js');
-    this.btnSuccess = document.getElementById('sBtn') as HTMLElement;
-    this.btnFailure = document.getElementById('fBtn') as HTMLElement;
-    console.log('avi s ' + this.btnSuccess);
-    console.log('avi f ' + this.btnFailure);
   }
 
   constructor(private _auth: AuthService,
@@ -86,10 +77,6 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   ngAfterContentInit(): void {
     this.isLoading = false;
-    this.btnSuccess = document.getElementById('sBtn') as HTMLElement;
-    this.btnFailure = document.getElementById('fBtn') as HTMLElement;
-    console.log('aci s ' + this.btnSuccess);
-    console.log('aci f ' + this.btnFailure);
   }
 
   public loadScript(url: string) {
@@ -138,9 +125,9 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
         }
         this.isLoading = false;
         if (distUrl == null || distUrl == 'undefined' || distUrl.length < 1) {
-          this.showNotification('fBtn');
+          this.showNoti('fBtn');
         } else {
-          this.showNotification('sBtn');
+          this.showNoti('sBtn');
           this._router.navigate([distUrl]);
         }
       },
@@ -149,7 +136,7 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
         this.loginMessage = err.error.error_description;
         this.loginFail = true;
         this.isLoading = false;
-        this.showNotification('fBtn');
+        this.showNoti('fBtn');
       }
     );
 
@@ -195,12 +182,9 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
   }
 
 
-  showNotification(btnId: string) {
-    if (btnId == 'sBtn') {
-      this.btnSuccess.click();
-    } else {
-      this.btnFailure.click();
-    }
+  showNoti(btnId: string) {
+    const btn: HTMLElement = document.getElementById(btnId) as HTMLElement;
+    btn.click();
   }
 
 

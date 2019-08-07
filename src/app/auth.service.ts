@@ -27,7 +27,6 @@ export class AuthService {
   }
 
   logedIn(): boolean {
-    var expired = false;
     if (new Date().getTime() > Number(localStorage.getItem('expiretime'))) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');

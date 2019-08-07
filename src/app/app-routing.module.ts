@@ -224,7 +224,7 @@ const routes: Routes = [
         component: ProfileComponent
       },
       {
-        path: 'ViewTimetable',
+        path: 'ViewTimetable/:id',
         component: ViewTimetableComponent
       }
     ]

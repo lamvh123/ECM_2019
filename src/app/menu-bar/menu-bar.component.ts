@@ -120,10 +120,24 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.loadScript('/assets/bundles/libscripts.bundle.js');
-    this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    this.loadScript('/assets/plugins/momentjs/moment.js');
+    // $.getScript('../../assets/bundles/libscripts.bundle.js');
+    // $.getScript('../../assets/bundles/vendorscripts.bundle.js');
+    // $.getScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    // $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
+    // $.getScript('../../assets/js/pages/ui/notifications.js');
+    // $.getScript('../../assets/bundles/mainscripts.bundle.js');
+    // $.getScript('../../assets/plugins/momentjs/moment.js');
+    // $.getScript('../../assets/testJS.js');
+
+    // this.loadScript('/assets/bundles/libscripts.bundle.js');
+    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+    // this.loadScript('/assets/plugins/momentjs/moment.js');
+
+    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    // this.loadScript('../../assets/plugins/momentjs/moment.js');
 
 
     //   $(document).ready(function() {

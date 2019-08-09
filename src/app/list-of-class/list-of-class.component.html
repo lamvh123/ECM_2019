@@ -29,15 +29,14 @@
         <th scope="col">#</th>
         <th scope="col">Class Name</th>
         <th scope="col">Number of student</th>
-        <th scope="col">Teacher</th>
+        <th scope="col">Assign teacher</th>
+        <th scope="col">View detail</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let class of listClass;index as i;">
-        <th scope="row" style="vertical-align: bottom">
-          {{i + 1}}
-        </th>
-        <td><a (click)="navigateToListStudent(class)">{{class.ClassName}}</a></td>
+        <td>{{i + 1}}</td>
+        <td>{{class.ClassName}}</td>
         <td>{{class.NumberOfStudent}}</td>
         <td>
           <select class="form-control show-tick" (change)="assignTeacher($event.target.value, class.ClassId+'')"
@@ -58,6 +57,11 @@
             </ng-template>
 
           </select>
+        </td>
+        <td>
+          <button type="button" class="btn  btn-raised bg-cyan waves-effect"
+                  (click)="navigateToListStudent(class)">View detail
+          </button>
         </td>
 
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Class} from '../entity/class';
@@ -10,7 +10,7 @@ import {APIContext, APITeacher} from '../APIContext';
   styleUrls: ['./teacher-menu-bar.component.css', '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class TeacherMenuBarComponent implements OnInit {
+export class TeacherMenuBarComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTeacher = new APITeacher();
   classList: Class[];
@@ -25,6 +25,7 @@ export class TeacherMenuBarComponent implements OnInit {
   }
 
   className(): String {
+    console.log(this._router.url);
     if (this._router.url == '/Teacher/profile') {
       return '/Teacher/profile';
     }
@@ -32,7 +33,8 @@ export class TeacherMenuBarComponent implements OnInit {
       return '/Teacher/ViewTimetable';
     }
     if (this._router.url.includes('/Teacher/take-attendance')) {
-      return '/Teacher/take-attendance';
+      console.log('okokokokok');
+      return this._router.url;
     }
     return '';
   }

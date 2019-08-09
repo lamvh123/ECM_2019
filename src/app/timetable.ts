@@ -14,4 +14,5 @@ export class Timetable {
   SessionNumber: string;
   slot: Slot;
   teacher: Teacher;
+  AttendBy: Teacher;
 }

@@ -76,6 +76,7 @@ import {ReportComponent} from './report/report.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TakeAttendanceComponent } from './take-attendance/take-attendance.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { TakeAttendanceComponent } from './take-attendance/take-attendance.compo
     NgHttpLoaderModule,
     NgxChartsModule,
     BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

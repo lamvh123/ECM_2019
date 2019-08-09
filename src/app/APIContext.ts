@@ -136,6 +136,7 @@ export class APITeacher {
   classDetail = 'GetDetailOfParticularClass';
   getTimeTableOfParticularClass = 'api/teacher/GetTimeTableOfParticularClass';
   getAttendanceStudentOfParticularClass = 'api/teacher/GetAttendanceStudentOfParticularClass';
+  updateAttendanceStudentOfParticularClass = 'api/teacher/UpdateAttendanceStudentOfParticularClass';
 }
 
 export class APIRegistrationStudent {

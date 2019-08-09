@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -11,9 +11,11 @@ import {Router, ActivatedRoute} from '@angular/router';
     '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class CenterAdminMenubarComponent implements OnInit {
+export class CenterAdminMenubarComponent implements OnInit, AfterViewInit {
 
   urlName;
+  userAvatar = '';
+  userName = '';
 
   constructor(private _router: Router, private route: ActivatedRoute) {
 
@@ -22,6 +24,11 @@ export class CenterAdminMenubarComponent implements OnInit {
   ngOnInit() {
     this.urlName = this.className();
     console.log(this.urlName);
+  }
+
+  ngAfterViewInit(): void {
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
   }
 
   className(): String {

@@ -194,7 +194,7 @@ export class ListOfClassComponent implements OnInit {
       .set('TeacherId', value == undefined ? '-1' : value + '')
       .set('ClassId', cId == undefined ? '-1' : cId + '')
       .set('centerId', this.apiContext.centerId + '');
-    this.http.get<any[]>(url, {params: param}).toPromise().then(data => {
+    this.http.post(url, param).toPromise().then(data => {
         console.log(data);
       },
       error => {

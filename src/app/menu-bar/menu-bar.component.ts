@@ -19,6 +19,8 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
 
   urlName;
   programName = '';
+  userAvatar = '';
+  userName = '';
 
   receiveMsg($event) {
     this.urlName = this.className();
@@ -94,7 +96,7 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     if (this._router.url.includes('/Training-staff/GenerateTimetable')) {
       return '/Training-staff/GenerateTimetable';
     }
-    if(this._router.url.includes('/Training-staff/Report')){
+    if (this._router.url.includes('/Training-staff/Report')) {
       return '/Training-staff/Report';
     }
 
@@ -123,6 +125,8 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
     // $.getScript('../../assets/bundles/libscripts.bundle.js');
     // $.getScript('../../assets/bundles/vendorscripts.bundle.js');
     // $.getScript('../../assets/bundles/morphingsearchscripts.bundle.js');

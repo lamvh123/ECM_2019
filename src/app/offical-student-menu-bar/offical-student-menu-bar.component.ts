@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Class} from '../entity/class';
@@ -10,7 +10,7 @@ import {APIContext, APIStudent} from '../APIContext';
   styleUrls: ['./offical-student-menu-bar.component.css', '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class OfficalStudentMenuBarComponent implements OnInit {
+export class OfficalStudentMenuBarComponent implements OnInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiStudent = new APIStudent();
@@ -20,6 +20,8 @@ export class OfficalStudentMenuBarComponent implements OnInit {
   }
 
   urlName;
+  userAvatar = '';
+  userName = '';
 
   ngOnInit() {
     this.loadClassList();
@@ -46,6 +48,8 @@ export class OfficalStudentMenuBarComponent implements OnInit {
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
   }
 
   public loadScript(url: string) {

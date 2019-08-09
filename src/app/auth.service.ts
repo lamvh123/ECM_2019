@@ -31,6 +31,8 @@ export class AuthService {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       localStorage.removeItem('expiretime');
+      localStorage.removeItem('userAvatar');
+      localStorage.removeItem('userName');
     }
     return !!localStorage.getItem('token');
   }
@@ -43,6 +45,8 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('expiretime');
+    localStorage.removeItem('userAvatar');
+    localStorage.removeItem('userName');
     this.route.navigate(['/login']);
   }
 

@@ -19,6 +19,8 @@ export class TeacherMenuBarComponent implements OnInit, AfterViewInit {
   }
 
   urlName;
+  userAvatar = '';
+  userName = '';
 
   ngOnInit() {
     this.getListClasses();
@@ -50,6 +52,8 @@ export class TeacherMenuBarComponent implements OnInit, AfterViewInit {
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
   }
 
   public loadScript(url: string) {

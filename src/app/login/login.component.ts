@@ -1,8 +1,8 @@
 import {Component, OnInit, AfterContentInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {APIContext} from '../APIContext';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITeacher, APITraining} from '../APIContext';
 import * as $ from 'jquery';
 
 declare var logInForm: any;
@@ -21,6 +21,14 @@ declare var logInForm: any;
 export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   apiContext = new APIContext();
+  apiTraining = new APITraining();
+  apiAdmission = new APIAdmission();
+  apiSystem = new APISystem();
+  apiAccounting = new APIAccounting();
+  apiCenter = new APICenter();
+  apiStudent = new APIStudent();
+  apiTeacher = new APITeacher();
+
   loginFail = false;
   loginMessage: string;
   loginUserData = {
@@ -106,20 +114,28 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
         localStorage.setItem('role', res.role);
         localStorage.setItem('expiretime', expireDate.getTime() + '');
         let distUrl: string;
+        let configUrl = this.apiContext.host;
         if (this._auth.adminLogedIn()) {
           distUrl = '/Admin-menu/profile';
+          configUrl += this.apiSystem.profile;
         } else if (this._auth.trainingStaffLogedIn()) {
           distUrl = '/Training-staff/profile';
+          configUrl += this.apiTraining.getProfile;
         } else if (this._auth.admissionStaffLogedIn()) {
           distUrl = '/Admission-staff/profile';
+          configUrl += this.apiAdmission.profile;
         } else if (this._auth.accountingStaffLoggedin()) {
           distUrl = '/Account-staff/profile';
+          configUrl += this.apiAccounting.profile;
         } else if (this._auth.centerAdminLoggedIn()) {
           distUrl = '/CenterAdmin/profile';
+          configUrl += this.apiCenter.profile;
         } else if (this._auth.StudentLoggedIn()) {
           distUrl = '/Student/profile';
+          configUrl += this.apiStudent.profile;
         } else if (this._auth.TeacherLoggedIn()) {
           distUrl = '/Teacher/profile';
+          configUrl += this.apiTeacher.profile;
         } else {
           console.log(res);
         }
@@ -127,6 +143,7 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
         if (distUrl == null || distUrl == 'undefined' || distUrl.length < 1) {
           this.showNoti('fBtn');
         } else {
+          this.getProfile(configUrl);
           this.showNoti('sBtn');
           this._router.navigate([distUrl]);
         }
@@ -139,6 +156,26 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
         this.showNoti('fBtn');
       }
     );
+
+  }
+
+  getProfile(configUrl: string) {
+    this.isLoading = true;
+    this.http.get<any>(configUrl).subscribe(res => {
+        console.log(res);
+        localStorage.setItem('userAvatar', res.Avatar);
+        localStorage.setItem('userName', res.FullName);
+        this.isLoading = false;
+      },
+      error => {
+        console.log(error);
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 401) {
+            console.log(error.status);
+          }
+        }
+        this.isLoading = false;
+      });
 
   }
 

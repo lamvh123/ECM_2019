@@ -188,7 +188,21 @@
                   class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>
             <li [ngClass]="{'active open': urlName=='/Teacher/ViewTimetable'}"><a href="/Teacher/ViewTimetable"><i
                   class="zmdi zmdi-home"></i><span class="class-hover">View Timetable</span></a></li>
-  
+            <li
+              [ngClass]="{'active open': urlName.includes('/Teacher/take-attendance')}">
+              <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
+                class="class-hover">Take Attendance</span> </a>
+              <ul class="ml-menu">
+                <li [ngClass]="{'active': urlName==('/Teacher/take-attendance/'+classModel.Id)}"
+                    *ngFor="let classModel of classList">
+                  <a href="/Teacher/take-attendance/{{classModel.Id}}">
+                    <span class="class-hover">{{classModel.Name}}</span>
+                  </a>
+                </li>
+                <!--              <li [ngClass]="{'active': urlName=='/Training-staff/add-teacher'}"><a href="/Training-staff/add-teacher">-->
+                <!--                  <span class="class-hover">Add Teacher</span></a></li>-->
+              </ul>
+            </li>
             <li><a (click)="logout()"><i class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>
             <!--          <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-city-alt"></i><span>Class</span> </a>-->
             <!--            <ul class="ml-menu">-->

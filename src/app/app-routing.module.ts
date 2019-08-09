@@ -53,6 +53,7 @@ import {ReportComponent} from './report/report.component';
 
 import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
 import {AssignTeacherForClassComponent} from './assign-teacher-for-class/assign-teacher-for-class.component';
+import {TakeAttendanceComponent} from './take-attendance/take-attendance.component';
 
 
 const routes: Routes = [
@@ -247,6 +248,10 @@ const routes: Routes = [
       {
         path: 'ViewTimetable',
         component: TeacherViewTimetableComponent
+      },
+      {
+        path: 'take-attendance/:cId',
+        component: TakeAttendanceComponent
       }
     ]
   },

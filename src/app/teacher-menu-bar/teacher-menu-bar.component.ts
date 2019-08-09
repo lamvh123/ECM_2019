@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Class} from '../entity/class';
+import {APIContext, APITeacher} from '../APIContext';
 
 @Component({
   selector: 'app-teacher-menu-bar',
@@ -8,10 +11,17 @@ import { Router, ActivatedRoute } from '@angular/router';
     '../../assets/css/themes/all-themes.css']
 })
 export class TeacherMenuBarComponent implements OnInit {
+  apiContext = new APIContext();
+  apiTeacher = new APITeacher();
+  classList: Class[];
 
-  constructor(private _router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private _router: Router, private route: ActivatedRoute) {
+  }
+
   urlName;
+
   ngOnInit() {
+    this.getListClasses();
   }
 
   className(): String {
@@ -20,6 +30,9 @@ export class TeacherMenuBarComponent implements OnInit {
     }
     if (this._router.url == '/Teacher/ViewTimetable') {
       return '/Teacher/ViewTimetable';
+    }
+    if (this._router.url.includes('/Teacher/take-attendance')) {
+      return '/Teacher/take-attendance';
     }
     return '';
   }
@@ -38,7 +51,7 @@ export class TeacherMenuBarComponent implements OnInit {
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -54,8 +67,24 @@ export class TeacherMenuBarComponent implements OnInit {
       this.redirectToLogin();
     }
   }
+
   redirectToLogin() {
     this._router.navigateByUrl('/login');
+  }
+
+  getListClasses() {
+    const body = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '');
+
+    const configUrl = this.apiContext.host + this.apiTeacher.getListOfClassOfTeacher;
+    this.http.get<Class[]>(configUrl, {params: body}).toPromise().then(res => {
+        console.log(res);
+        this.classList = res;
+        console.log(this.classList);
+      },
+      error => {
+        console.log(error);
+      });
   }
 
 }

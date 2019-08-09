@@ -1,0 +1,95 @@
+<p>
+  take-attendance works!
+</p>
+classId = {{currentClassId}}
+<div *ngFor="let ttb of timetableList; index as ttlIndex">
+  <button data-toggle="modal" data-target="#myModal"
+          (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendaanceForm(longContent)]">{{ttb.LearningDay + '-' + ttb.Id + '-' + ttb.SessionNumber}}</button>
+</div>
+<!--<div *ngFor="let atd of attendanceList; index as i">-->
+<!--  {{atd.StudentName}} - {{atd.IsPresent}}-->
+<!--  <ng-container *ngIf="atd.IsPresent; then isPresent; else isAbsent"></ng-container>-->
+<!--  <ng-template #isPresent>-->
+<!--    <div class="radio"><label>-->
+<!--      <input type="radio" name="{{'present'+atd.Id}}" value="true" (click)="setradio(i, true)" checked>Present-->
+<!--    </label></div>-->
+<!--    <div class="radio"><label>-->
+<!--      <input type="radio" name="{{'present'+atd.Id}}" value="false" (click)="setradio(i, false)">Not Present-->
+<!--    </label></div>-->
+<!--  </ng-template>-->
+<!--  <ng-template #isAbsent>-->
+<!--    <div class="radio"><label>-->
+<!--      <input type="radio" name="{{'present'+atd.Id}}" value="true" (click)="setradio(i, true)">Present-->
+<!--    </label></div>-->
+<!--    <div class="radio"><label>-->
+<!--      <input type="radio" name="{{'present'+atd.Id}}" value="false" (click)="setradio(i, false)" checked>Not Present-->
+<!--    </label></div>-->
+<!--  </ng-template>-->
+
+<!--  <br/>-->
+<!--</div>-->
+
+
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Take Attendance<br/>
+      {{selectedTimeTable.Class.Name}}<br/>
+      {{selectedTimeTable.LearningDay}}
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="body table-responsive">
+      <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+        <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Present</th>
+          <th>Absent</th>
+          <th>Avatar</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let atd of attendanceList; index as i">
+        <tr>
+          <td>{{i}}</td>
+          <td>{{atd.StudentName}}</td>
+          <ng-container *ngIf="atd.IsPresent; then isPresent; else isAbsent"></ng-container>
+          <ng-template #isPresent>
+            <td>
+              <div class="radio"><label>
+                <input type="radio" name="{{'present'+atd.Id}}" value="true" (click)="setradio(i, true)" checked>Present
+              </label></div>
+            </td>
+            <td>
+              <div class="radio"><label>
+                <input type="radio" name="{{'present'+atd.Id}}" value="false" (click)="setradio(i, false)">Not
+                Present
+              </label></div>
+            </td>
+          </ng-template>
+          <ng-template #isAbsent>
+            <td>
+              <div class="radio"><label>
+                <input type="radio" name="{{'present'+atd.Id}}" value="true" (click)="setradio(i, true)">Present
+              </label></div>
+            </td>
+            <td>
+              <div class="radio"><label>
+                <input type="radio" name="{{'present'+atd.Id}}" value="false" (click)="setradio(i, false)" checked>Not
+                Present
+              </label></div>
+            </td>
+          </ng-template>
+          <td>{{atd.Avatar}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

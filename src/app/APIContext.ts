@@ -124,15 +124,18 @@ export class APITraining {
   getNumberOfProgram = 'api/TrainingDept/statistic/GetNumberOfProgram';
   getNumberOfCourse = 'api/TrainingDept/statistic/GetNumberOfCourse';
   getNumberOfClass = 'api/TrainingDept/statistic/GetNumberOfClass';
+
+  getTeacherBySubject = 'api/TrainingDept/GetTeacherBySubject';
 }
 
 export class APITeacher {
   getCenter = 'api/teacher/GetCenter';
   profile = 'api/teacher/profile';
   updateProfile = 'api/teacher/UpdateProfile';
-  listOfClass = 'api/teacher/GetListOfClassOfTeacher';
+  getListOfClassOfTeacher = 'api/teacher/GetListOfClassOfTeacher';
   classDetail = 'GetDetailOfParticularClass';
   getTimeTableOfParticularClass = 'api/teacher/GetTimeTableOfParticularClass';
+  getAttendanceStudentOfParticularClass = 'api/teacher/GetAttendanceStudentOfParticularClass';
 }
 
 export class APIRegistrationStudent {

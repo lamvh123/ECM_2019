@@ -75,6 +75,7 @@ import {TeacherViewTimetableComponent} from './teacher-view-timetable/teacher-vi
 import {ReportComponent} from './report/report.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { TakeAttendanceComponent } from './take-attendance/take-attendance.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +128,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     TeacherViewTimetableComponent,
     AssignTeacherForClassComponent,
     AddTeacherComponent,
-    ReportComponent
+    ReportComponent,
+    TakeAttendanceComponent
   ],
   imports: [
     BrowserModule,

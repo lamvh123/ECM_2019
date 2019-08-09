@@ -160,9 +160,9 @@ export class AddNewFormComponent implements OnInit {
 
 
   checkValidCourse() {
-    if (this.courseId != null) {
-      this.courseId = this.formatText(this.courseId);
-    }
+    // if (this.courseId != null) {
+    //   this.courseId = this.formatText(this.courseId+'');
+    // }
     if (this.courseId == null || this.courseId === '') {
       this.errorMsgCourse = 'Course is required.';
       return false;
@@ -174,7 +174,7 @@ export class AddNewFormComponent implements OnInit {
 
   checkValidName() {
     if (this.form.Name != null) {
-      this.form.Name = this.formatText(this.form.Name);
+      this.form.Name = this.formatText(this.form.Name+'');
     }
     if (this.form.Name == null || this.form.Name === '') {
       this.errorMsgName = 'Name is required.';
@@ -187,7 +187,7 @@ export class AddNewFormComponent implements OnInit {
 
   checkValidDate() {
     if (this.form.StartDate != null) {
-      this.form.StartDate = this.formatText(this.form.StartDate);
+      this.form.StartDate = this.formatText(this.form.StartDate+'');
     }
     if (this.form.StartDate == null || this.form.StartDate === '') {
       this.errorMsgDate = 'Start date is required.';
@@ -199,9 +199,9 @@ export class AddNewFormComponent implements OnInit {
   }
 
   checkValidBuilding() {
-    if (this.selectedBuilding != null) {
-      this.selectedBuilding = this.formatText(this.selectedBuilding);
-    }
+    // if (this.selectedBuilding != null) {
+    //   this.selectedBuilding = this.formatText(this.selectedBuilding+'');
+    // }
     if (this.selectedBuilding == null || this.selectedBuilding === '') {
       this.errorMsgBuilding = 'Building is required.';
       return false;
@@ -212,9 +212,9 @@ export class AddNewFormComponent implements OnInit {
   }
 
   checkValidSlot() {
-    if (this.selectedSlot != null) {
-      this.selectedSlot = this.formatText(this.selectedSlot);
-    }
+    // if (this.selectedSlot != null) {
+    //   this.selectedSlot = this.formatText(this.selectedSlot+'');
+    // }
     if (this.selectedSlot == null || this.selectedSlot === '') {
       this.errorMsgSlot = 'Slot is required.';
       return false;
@@ -243,7 +243,7 @@ export class AddNewFormComponent implements OnInit {
     this.checkValidDate();
     this.checkValidBuilding();
     this.checkValidDay();
-    this.checkValidSlot();
+    this.checkValidSlot( );
     if (this.checkValidCourse() && this.checkValidName() && this.checkValidDate() && this.checkValidBuilding() && this.checkValidDay() && this.checkValidSlot()) {
       this.CreateForm();
     }

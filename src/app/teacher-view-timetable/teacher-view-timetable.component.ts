@@ -31,7 +31,7 @@ export class TeacherViewTimetableComponent implements OnInit {
     });
   }
   loadClassList(){
-    const url = this.apiContext.host+ this.apiTeacher.listOfClass;
+    const url = this.apiContext.host+ this.apiTeacher.getListOfClassOfTeacher;
     const param = new HttpParams().set("centerId",this.centerId);
     this.http.get<Class[]>(url,{params:param}).toPromise().then(data=>{
       this.listClass = data;

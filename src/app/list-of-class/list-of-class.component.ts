@@ -6,6 +6,8 @@ import {Course} from '../course';
 import {Class} from '../entity/class';
 import {APIContext, APITraining} from '../APIContext';
 import {TimetableStatus} from '../timetableStatus';
+import {Teacher} from '../teacher';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-list-of-class',
@@ -43,6 +45,7 @@ export class ListOfClassComponent implements OnInit {
     this.loadProgram();
     this.loadCourse();
     this.loadClass();
+    // this.getTeachersBySid(8);
   }
 
   loadProgram() {
@@ -101,6 +104,8 @@ export class ListOfClassComponent implements OnInit {
   unselectAll() {
     this.listClass.forEach(item => {
       item.selected = false;
+      console.log(item.SubjectId);
+      this.getTeachersBySid(item);
     });
   }
 
@@ -166,5 +171,34 @@ export class ListOfClassComponent implements OnInit {
 
   resetTimeTableStatus() {
     this.selectedTimeTable = undefined;
+  }
+
+  getTeachersBySid(param: Class) {
+    const body = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '')
+      .set('subjectId', param.SubjectId + '');
+
+    const configUrl = this.apiContext.host + this.apiTraining.getTeacherBySubject;
+    this.http.get<Teacher[]>(configUrl, {params: body}).toPromise().then(res => {
+        console.log('hic');
+        param.TeacherList = res;
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  assignTeacher(value: any, cId: string) {
+    const url = this.apiContext.host + this.apiTraining.assignTeacherToClass;
+    const param = new HttpParams()
+      .set('TeacherId', value == undefined ? '-1' : value + '')
+      .set('ClassId', cId == undefined ? '-1' : cId + '')
+      .set('centerId', this.apiContext.centerId + '');
+    this.http.get<any[]>(url, {params: param}).toPromise().then(data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      });
   }
 }

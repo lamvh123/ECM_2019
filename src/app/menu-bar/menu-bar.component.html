@@ -246,9 +246,9 @@
             <li [ngClass]="{'active': urlName=='/Training-staff/ListClasses'}"><a
               href="/Training-staff/ListClasses">
               <span class="class-hover">List Classes</span></a></li>
-            <li [ngClass]="{'active': urlName=='/Training-staff/assign-teacher'}"><a
-              href="/Training-staff/assign-teacher">
-              <span class="class-hover">Assign Teacher</span></a></li>
+<!--            <li [ngClass]="{'active': urlName=='/Training-staff/assign-teacher'}"><a-->
+<!--              href="/Training-staff/assign-teacher">-->
+<!--              <span class="class-hover">Assign Teacher</span></a></li>-->
           </ul>
         </li>
         <li [ngClass]="{'active open': urlName=='/Training-staff/GenerateTimetable'}">
@@ -301,19 +301,19 @@
               class="class-hover">Add Room</span></a></li>
           </ul>
         </li>
-        <!--        <li-->
-        <!--          [ngClass]="{'active open': urlName=='/Training-staff/view-slot'||urlName=='/Training-staff/add-slot'}">-->
-        <!--          <a-->
-        <!--            href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
-        <!--            class="class-hover">Slots</span>-->
-        <!--          </a>-->
-        <!--          <ul class="ml-menu">-->
-        <!--            <li [ngClass]="{'active': urlName=='/Training-staff/view-slot'}"><a-->
-        <!--              href="/Training-staff/view-slot"><span class="class-hover">All Slots</span></a></li>-->
-        <!--            <li [ngClass]="{'active': urlName=='/Training-staff/add-slot'}"><a-->
-        <!--              href="/Training-staff/add-slot"><span class="class-hover">Add Slot</span></a></li>-->
-        <!--          </ul>-->
-        <!--        </li>-->
+        <li
+          [ngClass]="{'active open': urlName=='/Training-staff/view-slot'||urlName=='/Training-staff/add-slot'}">
+          <a
+            href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
+            class="class-hover">Slots</span>
+          </a>
+          <ul class="ml-menu">
+            <li [ngClass]="{'active': urlName=='/Training-staff/view-slot'}"><a
+              href="/Training-staff/view-slot"><span class="class-hover">All Slots</span></a></li>
+            <li [ngClass]="{'active': urlName=='/Training-staff/add-slot'}"><a
+              href="/Training-staff/add-slot"><span class="class-hover">Add Slot</span></a></li>
+          </ul>
+        </li>
         <li
           [ngClass]="{'active open': urlName=='/Training-staff/view-subject'||urlName=='/Training-staff/add-subject'}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span

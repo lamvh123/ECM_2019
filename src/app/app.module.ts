@@ -77,6 +77,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { TakeAttendanceComponent } from './take-attendance/take-attendance.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +132,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AssignTeacherForClassComponent,
     AddTeacherComponent,
     ReportComponent,
-    TakeAttendanceComponent
+    TakeAttendanceComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

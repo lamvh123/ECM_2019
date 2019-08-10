@@ -15,7 +15,7 @@
             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
               <thead>
               <tr>
-                <th>no</th>
+                <th>No</th>
                 <th>Name</th>
                 <th>From</th>
                 <th>To</th>
@@ -23,7 +23,7 @@
               </thead>
               <tbody *ngFor="let slotModel of slotList; index as i">
               <tr>
-                <td>{{i}}</td>
+                <td>{{i + 1}}</td>
                 <td>{{slotModel.Name}}</td>
                 <td>{{slotModel.From}}</td>
                 <td>{{slotModel.To}}</td>

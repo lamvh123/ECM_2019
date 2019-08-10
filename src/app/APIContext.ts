@@ -31,6 +31,12 @@ export class APIAccount {
   registerExternal = 'api/Account/RegisterExternal';
 }
 
+export class APIPassword {
+  changePassword = 'api/PasswordManagement/ChangePassword';
+  forgotPassword = 'api/PasswordManagement/ForgotPassword';
+  updatePasswordAfterForgotPassword = 'api/PasswordManagement/UpdatePasswordAfterForgotPassword';
+}
+
 export class APIStudent {
   getCenter = 'api/Student/GetCenter';
   profile = 'api/Student/profile';

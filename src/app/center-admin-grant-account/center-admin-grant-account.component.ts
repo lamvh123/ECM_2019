@@ -157,7 +157,7 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
                 if (item.Dob != null && item.Dob != undefined && item.Dob.length >= 10) {
                   item.Dob = item.Dob.substr(0, 10);
                 }
-                if (item.sex) {
+                if (item.Sex) {
                   item.realSex = 'Male';
                 } else {
                   item.realSex = 'Female';

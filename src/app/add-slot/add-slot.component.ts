@@ -6,6 +6,7 @@ import * as $ from 'jquery';
 import {AmazingTimePickerService} from 'amazing-time-picker';
 import {Slot} from '../slot';
 import {Center} from '../center';
+import {APIContext, APITraining} from '../APIContext';
 
 @Component({
   selector: 'app-add-slot',
@@ -20,6 +21,9 @@ import {Center} from '../center';
     , '../../assets/css/themes/all-themes.css']
 })
 export class AddSlotComponent implements OnInit, AfterViewInit {
+
+  apiContext = new APIContext();
+  apiTraining = new APITraining();
 
   constructor(private atp: AmazingTimePickerService, private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -51,31 +55,25 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
   }
 
   addSlot() {
-    const configUrl = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/AddSlot';
-    const url = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/api/TrainingDept/GetCenter';
-    this.http.get(url).toPromise().then(data => {
-        const body = new HttpParams()
-          .set('Name', this.Name)
-          .set('From', this.From + ':00')
-          .set('To', this.To + ':00')
-          .set('CenterId', data['Id']);
-        console.log(body);
-        this.http.post<any>(configUrl, body).toPromise().then(
-          res => {
-            console.log(res);
-            // this.showMessage(true);
-            this.redirectToAllSlot();
-          },
-          err => {
-            console.log(err);
-            // this.showMessage(false);
-          }
-        );
+    const configUrl = this.apiContext.host + this.apiTraining.addOneSlot;
+    const body = new HttpParams()
+      .set('Name', this.Name)
+      .set('From', this.From + ':00')
+      .set('To', this.To + ':00')
+      .set('CenterId', this.apiContext.centerId + '');
+    console.log(body);
+    this.http.post<any>(configUrl, body).toPromise().then(
+      res => {
+        console.log(res);
+        // this.showMessage(true);
+        this.redirectToAllSlot();
       },
-      error => {
-        console.log(error);
+      err => {
+        console.log(err);
         // this.showMessage(false);
-      });
+      }
+    );
+
   }
 
 
@@ -94,7 +92,6 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
       this.To = time;
     });
   }
-
 
 
   redirectToAllSlot() {

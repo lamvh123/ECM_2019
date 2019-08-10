@@ -1,4 +1,5 @@
 import {Teacher} from '../teacher';
+import {Room} from '../room';
 
 export class Class {
   ClassId: number;
@@ -12,5 +13,7 @@ export class Class {
   Id: number;
   Name: string;
   TeacherList: Teacher[];
+  RoomList: Room[];
   Teachers: Teacher[];
+  RoomId: number;
 }

@@ -9,7 +9,7 @@ export class Student {
   Parent_Name: string;
   Parent_Phone: string;
   Phone: string;
-  sex: boolean;
+  Sex: boolean;
   realSex: string;
   selected: boolean = false;
 }

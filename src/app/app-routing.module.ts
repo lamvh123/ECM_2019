@@ -54,6 +54,8 @@ import {ReportComponent} from './report/report.component';
 import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
 import {AssignTeacherForClassComponent} from './assign-teacher-for-class/assign-teacher-for-class.component';
 import {TakeAttendanceComponent} from './take-attendance/take-attendance.component';
+import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
 
 
 const routes: Routes = [
@@ -62,6 +64,19 @@ const routes: Routes = [
   {path: 'special', component: SpecialEventsComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
+  {
+    path: 'forgot-password', children: [
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent
+      },
+      {
+        path: '',
+        component: ForgotPasswordComponent,
+        pathMatch: 'full'
+      }
+    ]
+  },
   {path: 'register', component: RegisterComponent},
   {path: 'redirect/:url/:param', component: RedirectComponent},
   {
@@ -185,7 +200,7 @@ const routes: Routes = [
         component: ListOfClassComponent
       },
       {
-        path: 'ListStudentOfClass',
+        path: 'ListStudentOfClass/:cId',
         component: ListStudentOfClassComponent
       },
       {

@@ -164,9 +164,6 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   checkValidDate() {
-    if (this.form.StartDate != null) {
-      this.form.StartDate = this.formatText(this.form.StartDate);
-    }
     if (this.form.StartDate == null || this.form.StartDate === '') {
       this.errorMsgDate = 'Start date is required.';
       return false;
@@ -177,9 +174,6 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   checkValidBuilding() {
-    if (this.selectedBuilding != null) {
-      this.selectedBuilding = this.formatText(this.selectedBuilding + '');
-    }
     if (this.selectedBuilding == null || this.selectedBuilding === '') {
       this.errorMsgBuilding = 'Building is required.';
       return false;
@@ -190,9 +184,6 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   checkValidSlot() {
-    if (this.selectedSlot != null) {
-      this.selectedSlot = this.formatText(this.selectedSlot + '');
-    }
     if (this.selectedSlot == null || this.selectedSlot === '') {
       this.errorMsgSlot = 'Slot is required.';
       return false;

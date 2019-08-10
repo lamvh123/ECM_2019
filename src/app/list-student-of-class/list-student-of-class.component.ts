@@ -22,9 +22,7 @@ export class ListStudentOfClassComponent implements OnInit {
   currentClass: Class;
 
   ngOnInit() {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.ClassId = params.get('id');
-    });
+    this.ClassId = this.route.snapshot.paramMap.get('cId');
     this.loadClassInfo();
     this.loadStudent();
   }

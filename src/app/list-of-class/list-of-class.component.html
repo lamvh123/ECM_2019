@@ -30,6 +30,7 @@
         <th scope="col">Class Name</th>
         <th scope="col">Number of student</th>
         <th scope="col">Assign teacher</th>
+        <th scope="col">Assign room</th>
         <th scope="col">View detail</th>
       </tr>
       </thead>
@@ -40,22 +41,41 @@
         <td>{{class.NumberOfStudent}}</td>
         <td>
           <select class="form-control show-tick" (change)="assignTeacher($event.target.value, class.ClassId+'')"
-                  id="selectBuidling"
+                  id="selectTeacher"
                   required>
             <ng-container
-              *ngIf="class.Teachers!=null && class.Teachers.length>0; then notNull; else isNull"></ng-container>
-            <ng-template #isNull>
+              *ngIf="class.Teachers!=null && class.Teachers.length>0; then teacherNotNull; else teacherIsNull"></ng-container>
+            <ng-template #teacherIsNull>
               <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id">
                 {{teacherModel.User.Full_Name}}
               </option>
             </ng-template>
-            <ng-template #notNull>
+            <ng-template #teacherNotNull>
               <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id"
                       [selected]="teacherModel.Id==class.Teachers[0].Id">
                 {{teacherModel.User.Full_Name}}
               </option>
             </ng-template>
 
+          </select>
+        </td>
+        <td>
+          <select class="form-control show-tick" (change)="assignRoom($event.target.value, class.ClassId+'')"
+                  id="selectRoom"
+                  required>
+            <ng-container
+              *ngIf="class.RoomList!=null && class.RoomList.length>0; then roomNotNull; else roomIsNull"></ng-container>
+            <ng-template #roomIsNull>
+              <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id">
+                {{roomModel.RoomNumber}}
+              </option>
+            </ng-template>
+            <ng-template #roomNotNull>
+              <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id"
+                      [selected]="roomModel.Id==class.RoomId">
+                {{roomModel.RoomNumber}}
+              </option>
+            </ng-template>
           </select>
         </td>
         <td>

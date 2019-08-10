@@ -139,6 +139,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
         console.log(data);
         if (this.totalData == 0) {
           this.empty = true;
+          this.isLoading = false;
         }
         if (this.totalData != 0) {
           this.pagination(this.totalData);
@@ -160,7 +161,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
                 if (item.Dob != null && item.Dob != undefined && item.Dob.length >= 10) {
                   item.Dob = item.Dob.substr(0, 10);
                 }
-                if (item.sex == true) {
+                if (item.Sex) {
                   item.realSex = 'Male';
                 } else {
                   item.realSex = 'Female';

@@ -8,6 +8,7 @@ import {APIContext, APITraining} from '../APIContext';
 import {TimetableStatus} from '../timetableStatus';
 import {Teacher} from '../teacher';
 import {forEach} from '@angular/router/src/utils/collection';
+import {Room} from '../room';
 
 @Component({
   selector: 'app-list-of-class',
@@ -106,6 +107,7 @@ export class ListOfClassComponent implements OnInit {
       item.selected = false;
       console.log(item.SubjectId);
       this.getTeachersBySid(item);
+      this.getRoomByCid(item);
     });
   }
 
@@ -162,7 +164,7 @@ export class ListOfClassComponent implements OnInit {
   }
 
   navigateToListStudent(item: Class) {
-    this.router.navigate(['/Training-staff/ListStudentOfClass', {id: item.ClassId}]);
+    this.router.navigateByUrl('/Training-staff/ListStudentOfClass/' + item.ClassId);
   }
 
   resetProgram() {
@@ -188,12 +190,41 @@ export class ListOfClassComponent implements OnInit {
       });
   }
 
+  getRoomByCid(classModel: Class) {
+    const body = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '')
+      .set('classId', classModel.ClassId + '');
+
+    const configUrl = this.apiContext.host + this.apiTraining.getAllRoomAvailbleForClass;
+    this.http.get<Room[]>(configUrl, {params: body}).toPromise().then(res => {
+        console.log('hic');
+        classModel.RoomList = res;
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
   assignTeacher(value: any, cId: string) {
     const url = this.apiContext.host + this.apiTraining.assignTeacherToClass;
     const param = new HttpParams()
       .set('TeacherId', value == undefined ? '-1' : value + '')
       .set('ClassId', cId == undefined ? '-1' : cId + '')
       .set('centerId', this.apiContext.centerId + '');
+    this.http.post(url, param).toPromise().then(data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  assignRoom(value: any, cId: string) {
+    const url = this.apiContext.host + this.apiTraining.addRoomToClass;
+    const param = new HttpParams()
+      .set('RoomId', value == undefined ? '-1' : value + '')
+      .set('ClassId', cId == undefined ? '-1' : cId + '')
+      .set('CenterId', this.apiContext.centerId + '');
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
       },

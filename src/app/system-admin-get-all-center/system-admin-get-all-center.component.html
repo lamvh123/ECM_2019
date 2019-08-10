@@ -1,0 +1,26 @@
+<div *ngIf="empty"></div>
+<div *ngIf="!empty" style="width: 100%">
+  <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
+    <table class="table studenttbl">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Center Name</th>
+          <th scope="col">Owner</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let center of listCenter;let index = index;">
+          <td>{{index}}</td>
+          <td><span style="cursor: pointer;color: #33DAFF" (click)="navigateToGrantAccount(center)">{{center.Name}}</span></td>
+          <td>{{center.ResponsiblePersonFullname}}</td>
+          <td>{{center.Email}}</td>
+          <td>{{center.PhoneNumber}}</td>
+          <td>{{center.Address}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

@@ -64,6 +64,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
       configUrl += this.apiStudent.profile;
     } else if (this.auth.TeacherLoggedIn()) {
       configUrl += this.apiTeacher.profile;
+    } else if (this.auth.adminLogedIn()) {
+      configUrl += this.apiSystem.profile;
     }
 
     this.http.get<any>(configUrl).subscribe(res => {
@@ -89,7 +91,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement> document.body;
+    const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -131,6 +133,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
       configUrl += this.apiStudent.updateProfile;
     } else if (this.auth.TeacherLoggedIn()) {
       configUrl += this.apiTeacher.updateProfile;
+    } else if (this.auth.adminLogedIn()) {
+      configUrl += this.apiSystem.updateProfile;
     } else {
 
     }

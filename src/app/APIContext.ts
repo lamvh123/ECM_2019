@@ -163,6 +163,8 @@ export class APISystem {
   grantAccountForCenter = 'api/Systemmanagement/GrantAccountForCenter';
   profile = 'api/Systemmanagement/Profile';
   updateProfile = 'api/Systemmanagement/updateProfile';
+  getAllCenter = 'api/Systemmanagement/GetAllCenter';
+  addCenter = 'api/Systemmanagement/AddNewCenter';
 }
 
 export class APICenter {

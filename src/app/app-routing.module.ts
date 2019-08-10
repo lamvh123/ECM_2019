@@ -24,32 +24,37 @@ import {AddRoomComponent} from './add-room/add-room.component';
 import {AdmissionStaffMenubarComponent} from './admission-staff-menubar/admission-staff-menubar.component';
 import {AdmissionStaffGuard} from './admission-staff.guard';
 
-import {ViewAdmissionFormComponent} from './view-admission-form/view-admission-form.component';
-import {ViewAdmissionFormDetailComponent} from './view-admission-form-detail/view-admission-form-detail.component';
-import {ViewSlotComponent} from './view-slot/view-slot.component';
-import {AddSlotComponent} from './add-slot/add-slot.component';
-import {AddNewFormComponent} from './add-new-form/add-new-form.component';
-import {RedirectComponent} from './redirect/redirect.component';
-import {ViewSubjectsComponent} from './view-subjects/view-subjects.component';
-import {AddSubjectComponent} from './add-subject/add-subject.component';
-import {LogoutComponent} from './logout/logout.component';
-import {AccountingMenuBarComponent} from './accounting-menu-bar/accounting-menu-bar.component';
-import {AccountStaffGuard} from './account-staff.guard';
-import {AccountStaffConfirmStudentComponent} from './account-staff-confirm-student/account-staff-confirm-student.component';
-import {CenterAdminMenubarComponent} from './center-admin-menubar/center-admin-menubar.component';
-import {CenterAdminGrantAccountComponent} from './center-admin-grant-account/center-admin-grant-account.component';
-import {CenterAdminGuard} from './center-admin.guard';
-import {AutoGenerateClassComponent} from './auto-generate-class/auto-generate-class.component';
-import {AutoGenerateTimetableComponent} from './auto-generate-timetable/auto-generate-timetable.component';
-import {ListOfClassComponent} from './list-of-class/list-of-class.component';
-import {ListStudentOfClassComponent} from './list-student-of-class/list-student-of-class.component';
-import {OfficalStudentMenuBarComponent} from './offical-student-menu-bar/offical-student-menu-bar.component';
-import {StudentGuard} from './student.guard';
-import {ViewTimetableComponent} from './view-timetable/view-timetable.component';
-import {TeacherMenuBarComponent} from './teacher-menu-bar/teacher-menu-bar.component';
-import {TeacherGuard} from './teacher.guard';
-import {TeacherViewTimetableComponent} from './teacher-view-timetable/teacher-view-timetable.component';
-import {ReportComponent} from './report/report.component';
+import { ViewAdmissionFormComponent } from './view-admission-form/view-admission-form.component';
+import { ViewAdmissionFormDetailComponent } from './view-admission-form-detail/view-admission-form-detail.component';
+import { ViewSlotComponent } from './view-slot/view-slot.component';
+import { AddSlotComponent } from './add-slot/add-slot.component';
+import { AddNewFormComponent } from './add-new-form/add-new-form.component';
+import { RedirectComponent } from './redirect/redirect.component';
+import { ViewSubjectsComponent } from './view-subjects/view-subjects.component';
+import { AddSubjectComponent } from './add-subject/add-subject.component';
+import { LogoutComponent } from './logout/logout.component';
+import { AccountingMenuBarComponent } from './accounting-menu-bar/accounting-menu-bar.component';
+import { AccountStaffGuard } from './account-staff.guard';
+import { AccountStaffConfirmStudentComponent } from './account-staff-confirm-student/account-staff-confirm-student.component';
+import { CenterAdminMenubarComponent } from './center-admin-menubar/center-admin-menubar.component';
+import { CenterAdminGrantAccountComponent } from './center-admin-grant-account/center-admin-grant-account.component';
+import { CenterAdminGuard } from './center-admin.guard';
+import { AutoGenerateClassComponent } from './auto-generate-class/auto-generate-class.component';
+import { AutoGenerateTimetableComponent } from './auto-generate-timetable/auto-generate-timetable.component';
+import { ListOfClassComponent } from './list-of-class/list-of-class.component';
+import { ListStudentOfClassComponent } from './list-student-of-class/list-student-of-class.component';
+import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
+import { StudentGuard } from './student.guard';
+import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
+import { TeacherMenuBarComponent } from './teacher-menu-bar/teacher-menu-bar.component';
+import { TeacherGuard } from './teacher.guard';
+import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-view-timetable.component';
+import { ReportComponent } from './report/report.component';
+import { SystemAdminMenuBarComponent } from './system-admin-menu-bar/system-admin-menu-bar.component';
+import { SystemAdminGuard } from './system-admin.guard';
+import { SystemAdminGetAllCenterComponent } from './system-admin-get-all-center/system-admin-get-all-center.component';
+import { SystemAdminAddNewCenterComponent } from './system-admin-add-new-center/system-admin-add-new-center.component';
+import { SystemAdminGrantAccountComponent } from './system-admin-grant-account/system-admin-grant-account.component';
 
 import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
 import {AssignTeacherForClassComponent} from './assign-teacher-for-class/assign-teacher-for-class.component';
@@ -270,7 +275,30 @@ const routes: Routes = [
       }
     ]
   },
-  {path: '**', component: ErrorPageComponent}];
+  {
+    path: 'SystemAdmin',
+    component: SystemAdminMenuBarComponent,
+    canActivate: [SystemAdminGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'AllCenter',
+        component: SystemAdminGetAllCenterComponent
+      },
+      {
+        path: 'AddCenter',
+        component: SystemAdminAddNewCenterComponent
+      },
+      {
+        path : 'GrantAccount',
+        component : SystemAdminGrantAccountComponent
+      }
+    ]
+  },
+  { path: '**', component: ErrorPageComponent }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

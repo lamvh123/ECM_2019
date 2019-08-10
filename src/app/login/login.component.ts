@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
 
     if (!!this._auth.adminLogedIn()) {
       console.log('1');
-      this._router.navigate(['/Admin-menu/profile']);
+      this._router.navigate(['/SystemAdmin/profile']);
     }
     if (!!this._auth.trainingStaffLogedIn()) {
       console.log('2');
@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
         let distUrl: string;
         let configUrl = this.apiContext.host;
         if (this._auth.adminLogedIn()) {
-          distUrl = '/Admin-menu/profile';
+          distUrl = '/SystemAdmin/profile';
           configUrl += this.apiSystem.profile;
         } else if (this._auth.trainingStaffLogedIn()) {
           distUrl = '/Training-staff/profile';

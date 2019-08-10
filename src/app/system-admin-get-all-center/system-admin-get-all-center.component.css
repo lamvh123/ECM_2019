@@ -1,0 +1,13 @@
+:host{
+    width: 100%;
+    padding-top: 2%;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+studenttbl{
+    max-width: 100%;
+    overflow: auto
+}
+th,td{
+    white-space: nowrap;
+}

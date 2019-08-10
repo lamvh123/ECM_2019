@@ -1,8 +1,8 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {AuthService} from '../auth.service';
-import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITraining, APITeacher} from '../APIContext';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { AuthService } from '../auth.service';
+import { APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITraining, APITeacher } from '../APIContext';
 
 declare var jquery: any;
 declare var $: any;
@@ -60,19 +60,21 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       configUrl += this.apiCenter.profile;
     } else if (this.auth.StudentLoggedIn()) {
       configUrl += this.apiStudent.profile;
-    } else if(this.auth.TeacherLoggedIn){
+    } else if (this.auth.TeacherLoggedIn()) {
       configUrl += this.apiTeacher.profile;
+    } else if (this.auth.adminLogedIn()) {
+      configUrl += this.apiSystem.profile;
     }
 
     this.http.get<any>(configUrl).subscribe(res => {
-        console.log(res);
-        this.user.name = res.FullName;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        this.user.Avatar = res.Avatar;
-      },
+      console.log(res);
+      this.user.name = res.FullName;
+      this.user.email = res.Email;
+      this.user.PhoneNumber = res.PhoneNumber;
+      this.user.Sex = res.Sex;
+      this.user.Id = res.Id;
+      this.user.Avatar = res.Avatar;
+    },
       error => {
         console.log(error);
         if (error instanceof HttpErrorResponse) {
@@ -85,7 +87,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement> document.body;
+    const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -119,6 +121,10 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       configUrl += this.apiCenter.updateProfile;
     } else if (this.auth.StudentLoggedIn()) {
       configUrl += this.apiStudent.updateProfile;
+    } else if (this.auth.TeacherLoggedIn()) {
+      configUrl += this.apiTeacher.updateProfile;
+    } else if (this.auth.adminLogedIn()) {
+      configUrl += this.apiSystem.updateProfile;
     } else {
 
     }
@@ -131,15 +137,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       .set('PhoneNumber', this.user.PhoneNumber);
 
     this.http.post<any>(configUrl, body).subscribe(res => {
-        console.log(res);
-        this.user.name = res.Full_Name;
-        this.user.email = res.Email;
-        this.user.PhoneNumber = res.PhoneNumber;
-        this.user.Sex = res.Sex;
-        this.user.Id = res.Id;
-        console.log(res);
+      console.log(res);
+      this.user.name = res.Full_Name;
+      this.user.email = res.Email;
+      this.user.PhoneNumber = res.PhoneNumber;
+      this.user.Sex = res.Sex;
+      this.user.Id = res.Id;
+      console.log(res);
 
-      },
+    },
       error => {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401) {

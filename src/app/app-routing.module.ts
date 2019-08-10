@@ -50,6 +50,11 @@ import { TeacherMenuBarComponent } from './teacher-menu-bar/teacher-menu-bar.com
 import { TeacherGuard } from './teacher.guard';
 import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-view-timetable.component';
 import { ReportComponent } from './report/report.component';
+import { SystemAdminMenuBarComponent } from './system-admin-menu-bar/system-admin-menu-bar.component';
+import { SystemAdminGuard } from './system-admin.guard';
+import { SystemAdminGetAllCenterComponent } from './system-admin-get-all-center/system-admin-get-all-center.component';
+import { SystemAdminAddNewCenterComponent } from './system-admin-add-new-center/system-admin-add-new-center.component';
+import { SystemAdminGrantAccountComponent } from './system-admin-grant-account/system-admin-grant-account.component';
 
 
 
@@ -237,6 +242,29 @@ const routes: Routes = [
       {
         path: 'ViewTimetable',
         component: TeacherViewTimetableComponent
+      }
+    ]
+  },
+  {
+    path: 'SystemAdmin',
+    component: SystemAdminMenuBarComponent,
+    canActivate: [SystemAdminGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'AllCenter',
+        component: SystemAdminGetAllCenterComponent
+      },
+      {
+        path: 'AddCenter',
+        component: SystemAdminAddNewCenterComponent
+      },
+      {
+        path : 'GrantAccount',
+        component : SystemAdminGrantAccountComponent
       }
     ]
   },

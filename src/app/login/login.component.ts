@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     if (!!this._auth.adminLogedIn()) {
       console.log('1');
-      this._router.navigate(['/Admin-menu/profile']);
+      this._router.navigate(['/SystemAdmin/profile']);
     }
     if (!!this._auth.trainingStaffLogedIn()) {
       console.log('2');
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         localStorage.setItem('role', res.role);
         localStorage.setItem('expiretime', expireDate.getTime() + '');
         if (this._auth.adminLogedIn()) {
-          this._router.navigate(['/Admin-menu/profile']);
+          this._router.navigate(['/SystemAdmin/profile']);
         } else if (this._auth.trainingStaffLogedIn()) {
           this._router.navigate(['/Training-staff/profile']);
         } else if (this._auth.admissionStaffLogedIn()) {

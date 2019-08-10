@@ -5,4 +5,8 @@ export class Center {
   Id: number;
   Location: string;
   Name: string;
+  Email: string;
+  ResponsiblePersonFullname : string;
+  PhoneNumber: string;
+  Address:string;
 }

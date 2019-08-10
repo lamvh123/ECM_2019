@@ -71,6 +71,10 @@ import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-
 import { ReportComponent } from './report/report.component'; 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SystemAdminMenuBarComponent } from './system-admin-menu-bar/system-admin-menu-bar.component';
+import { SystemAdminGetAllCenterComponent } from './system-admin-get-all-center/system-admin-get-all-center.component';
+import { SystemAdminAddNewCenterComponent } from './system-admin-add-new-center/system-admin-add-new-center.component';
+import { SystemAdminGrantAccountComponent } from './system-admin-grant-account/system-admin-grant-account.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +123,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ViewTimetableComponent,
     TeacherMenuBarComponent,
     TeacherViewTimetableComponent,
-    ReportComponent
+    ReportComponent,
+    SystemAdminMenuBarComponent,
+    SystemAdminGetAllCenterComponent,
+    SystemAdminAddNewCenterComponent,
+    SystemAdminGrantAccountComponent
   ],
   imports: [
     BrowserModule,

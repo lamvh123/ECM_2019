@@ -1,8 +1,10 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, AfterContentInit} from '@angular/core';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Router, ActivatedRoute} from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
+import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-add-program',
@@ -16,7 +18,7 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddProgramComponent implements OnInit, AfterViewInit {
+export class AddProgramComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
@@ -31,6 +33,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   errorMsgName = '-';
   errorMsgImage = '-';
   errorMsgDescription = '-';
+  isLoading = true;
 
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -55,15 +58,24 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     body.appendChild(script);
   }
 
+  ngAfterContentInit(): void {
+    this.isLoading = false;
+  }
+
   ngAfterViewInit() {
-    // this.loadScript('/assets/bundles/libscripts.bundle.js');
-    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    this.loadScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
+    this.loadScript('../../assets/js/pages/ui/notifications.js');
+    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.loadScript('../../assets/testJS.js');
 
   }
 
   //this is add program
   addProgram() {
+    this.isLoading = true;
     console.log(this.description);
     const configUrl = this.apiContext.host + this.apiTraining.addProgram;
     const body = new HttpParams()
@@ -75,13 +87,17 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
       res => {
         console.log(res);
         // this.showMessage(true);
+        this.showNoti('sBtn');
         this.redirectToAllProgram();
       },
       err => {
         console.log(err);
+        this.isLoading = false;
+        this.showNoti('fBtn');
         // this.showMessage(false);
       }
     );
+    // this.showNoti('sBtn');
   }
 
   onUploadCompleted($event: any) {
@@ -90,6 +106,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
 
   redirectToAllProgram() {
     this.router.navigateByUrl('/Training-staff/view-program');
+    // this.showNoti('fBtn');
   }
 
   redirectToAddProgram() {
@@ -153,6 +170,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
       return true;
     }
   }
+
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
@@ -164,5 +182,24 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     if (this.checkValidName() && this.checkValidImage() && this.checkValidDescription()) {
       this.addProgram();
     }
+  }
+
+  showNoti(btnId: string) {
+    const btn: HTMLElement = document.getElementById(btnId) as HTMLElement;
+    btn.click();
+
+
+
+    // $['notify']({
+    //   title: '<strong>Heads up!</strong>',
+    //   message: 'You can use any of bootstraps other alert styles as well by default.'
+    // }, {
+    //   type: 'success',
+    //   animate: {
+    //     enter: 'animated fadeInRight',
+    //     exit: 'animated fadeOutRight'
+    //   },
+    //   newest_on_top: true
+    // });
   }
 }

@@ -19,10 +19,14 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
 
   urlName;
   programName = '';
-  receiveMsg($event){
+  userAvatar = '';
+  userName = '';
+
+  receiveMsg($event) {
     this.urlName = this.className();
     console.log(this.urlName);
   }
+
   ngOnInit() {
     // this.urlName = this.className();
     // console.log(this.urlName);
@@ -83,14 +87,27 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     if (this._router.url.includes('/Training-staff/add-subject')) {
       return '/Training-staff/add-subject';
     }
-    if(this._router.url.includes('/Training-staff/GenerateClass')){
+    if (this._router.url.includes('/Training-staff/GenerateClass')) {
       return '/Training-staff/GenerateClass';
     }
-    if(this._router.url.includes('/Training-staff/GenerateTimetable')){
+    if (this._router.url.includes('/Training-staff/ListClasses')) {
+      return '/Training-staff/ListClasses';
+    }
+    if (this._router.url.includes('/Training-staff/GenerateTimetable')) {
       return '/Training-staff/GenerateTimetable';
     }
-    if(this._router.url.includes('/Training-staff/Report')){
+    if (this._router.url.includes('/Training-staff/Report')) {
       return '/Training-staff/Report';
+    }
+
+    if (this._router.url.includes('/Training-staff/view-teacher')) {
+      return '/Training-staff/view-teacher';
+    }
+    if (this._router.url.includes('/Training-staff/add-teacher')) {
+      return '/Training-staff/add-teacher';
+    }
+    if (this._router.url.includes('/Training-staff/assign-teacher')) {
+      return '/Training-staff/assign-teacher';
     }
 
     return '';
@@ -108,10 +125,26 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.loadScript('/assets/bundles/libscripts.bundle.js');
-    this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    this.loadScript('/assets/plugins/momentjs/moment.js');
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
+    // $.getScript('../../assets/bundles/libscripts.bundle.js');
+    // $.getScript('../../assets/bundles/vendorscripts.bundle.js');
+    // $.getScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    // $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
+    // $.getScript('../../assets/js/pages/ui/notifications.js');
+    // $.getScript('../../assets/bundles/mainscripts.bundle.js');
+    // $.getScript('../../assets/plugins/momentjs/moment.js');
+    // $.getScript('../../assets/testJS.js');
+
+    // this.loadScript('/assets/bundles/libscripts.bundle.js');
+    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+    // this.loadScript('/assets/plugins/momentjs/moment.js');
+
+    this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.loadScript('../../assets/plugins/momentjs/moment.js');
 
 
     //   $(document).ready(function() {

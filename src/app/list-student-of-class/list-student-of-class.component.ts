@@ -3,6 +3,7 @@ import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {OfficalStudent} from '../entity/offical-student';
 import {APIContext, APITraining} from '../APIContext';
+import {Class} from '../entity/class';
 
 @Component({
   selector: 'app-list-student-of-class',
@@ -18,11 +19,13 @@ export class ListStudentOfClassComponent implements OnInit {
   apiTraining = new APITraining();
   ClassId;
   ListStudent: OfficalStudent[];
+  currentClass: Class;
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.ClassId = params.get('id');
     });
+    this.loadClassInfo();
     this.loadStudent();
   }
 
@@ -41,6 +44,17 @@ export class ListStudentOfClassComponent implements OnInit {
           item.realSex = 'Female';
         }
       });
+    });
+  }
+
+  loadClassInfo() {
+    const url = this.apiContext.host + this.apiTraining.getDetailClassById;
+    const param = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '')
+      .set('classId', this.ClassId);
+    this.http.get<Class>(url, {params: param}).toPromise().then(data => {
+      console.log(data);
+      this.currentClass = data;
     });
   }
 

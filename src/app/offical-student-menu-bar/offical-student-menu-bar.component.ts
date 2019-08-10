@@ -1,30 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Class} from '../entity/class';
+import {APIContext, APIStudent} from '../APIContext';
 
 @Component({
   selector: 'app-offical-student-menu-bar',
   templateUrl: './offical-student-menu-bar.component.html',
   styleUrls: ['./offical-student-menu-bar.component.css', '../../assets/css/main.css',
-  '../../assets/css/themes/all-themes.css']
+    '../../assets/css/themes/all-themes.css']
 })
-export class OfficalStudentMenuBarComponent implements OnInit {
+export class OfficalStudentMenuBarComponent implements OnInit, AfterViewInit {
 
-  constructor(private _router: Router, private route: ActivatedRoute) { }
-  urlName
+  apiContext = new APIContext();
+  apiStudent = new APIStudent();
+  listClass: Class[];
+
+  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  }
+
+  urlName;
+  userAvatar = '';
+  userName = '';
+
   ngOnInit() {
+    this.loadClassList();
   }
 
   className(): String {
     if (this._router.url == '/Student/profile') {
       return '/Student/profile';
     }
-    if (this._router.url == '/Student/ViewTimetable') {
-      return '/Student/ViewTimetable';
+    if (this._router.url.includes('/Student/ViewTimetable')) {
+      return this._router.url;
     }
     return '';
   }
 
-  receiveMsg($event){
+  receiveMsg($event) {
     // this.urlName = $event;
     this.urlName = this.className();
     console.log(this.urlName);
@@ -35,6 +48,8 @@ export class OfficalStudentMenuBarComponent implements OnInit {
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
   }
 
   public loadScript(url: string) {
@@ -54,7 +69,22 @@ export class OfficalStudentMenuBarComponent implements OnInit {
       this.redirectToLogin();
     }
   }
+
   redirectToLogin() {
     this._router.navigateByUrl('/login');
+  }
+
+
+  loadClassList() {
+    const url = this.apiContext.host + this.apiStudent.getClassList;
+    const param = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '');
+    this.http.get<Class[]>(url, {params: param}).toPromise().then(data => {
+        this.listClass = data;
+        console.log(this.listClass);
+      },
+      error => {
+        console.log(error);
+      });
   }
 }

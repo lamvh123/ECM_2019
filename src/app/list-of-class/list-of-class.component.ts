@@ -5,11 +5,17 @@ import {Program} from '../program';
 import {Course} from '../course';
 import {Class} from '../entity/class';
 import {APIContext, APITraining} from '../APIContext';
+import {TimetableStatus} from '../timetableStatus';
+import {Teacher} from '../teacher';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-list-of-class',
   templateUrl: './list-of-class.component.html',
-  styleUrls: ['./list-of-class.component.css']
+  styleUrls: ['./list-of-class.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class ListOfClassComponent implements OnInit {
 
@@ -20,9 +26,11 @@ export class ListOfClassComponent implements OnInit {
   apiTraining = new APITraining();
   listProgram: Program[];
   listCourse: Course[];
+  listTimeTableStatus: TimetableStatus[] = [new TimetableStatus(0, 'False'), new TimetableStatus(1, 'True')];
   listClass: Class[];
-  selectedProgramId = -1;
-  selectedCourseId = -1;
+  selectedProgramId: number;
+  selectedCourseId: number;
+  selectedTimeTable: number;
   currentPage = 1;
   pageSize = 20;
   totalData = 0;
@@ -37,6 +45,7 @@ export class ListOfClassComponent implements OnInit {
     this.loadProgram();
     this.loadCourse();
     this.loadClass();
+    // this.getTeachersBySid(8);
   }
 
   loadProgram() {
@@ -68,17 +77,18 @@ export class ListOfClassComponent implements OnInit {
   }
 
   reloadCourse() {
-    this.selectedCourseId = -1;
+    this.selectedCourseId = undefined;
     this.loadCourse();
   }
 
   loadClass() {
     const url = this.apiContext.host + this.apiTraining.searchClass;
     const param = new HttpParams()
-      .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId + '')
+      .set('courseId', this.selectedCourseId == undefined ? '-1' : this.selectedCourseId + '')
       .set('centerId', this.apiContext.centerId + '')
-      .set('programId', this.selectedProgramId == null ? '-1' : this.selectedProgramId + '')
-      .set('IsCreatedTimeTable', '0').set('pageSize', this.pageSize + '')
+      .set('programId', this.selectedProgramId == undefined ? '-1' : this.selectedProgramId + '')
+      .set('IsCreatedTimeTable', this.selectedTimeTable == undefined ? '-1' : this.selectedTimeTable + '')
+      .set('pageSize', this.pageSize + '')
       .set('currentPage', this.currentPage + '');
     this.http.get<Class[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
@@ -94,16 +104,19 @@ export class ListOfClassComponent implements OnInit {
   unselectAll() {
     this.listClass.forEach(item => {
       item.selected = false;
+      console.log(item.SubjectId);
+      this.getTeachersBySid(item);
     });
   }
 
   getTotalClassAndPagi() {
     const url = this.apiContext.host + this.apiTraining.searchClass;
     const param = new HttpParams()
-      .set('programId', this.selectedProgramId == null ? '-1' : this.selectedProgramId + '')
-      .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId + '')
+      .set('programId', this.selectedProgramId == undefined ? '-1' : this.selectedProgramId + '')
+      .set('courseId', this.selectedCourseId == undefined ? '-1' : this.selectedCourseId + '')
       .set('centerId', this.apiContext.centerId + '')
-      .set('IsCreatedTimeTable', '0').set('pageSize', '1000')
+      .set('IsCreatedTimeTable', this.selectedTimeTable == undefined ? '-1' : this.selectedTimeTable + '')
+      .set('pageSize', '1000')
       .set('currentPage', '1');
     this.http.get<any[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
@@ -152,4 +165,40 @@ export class ListOfClassComponent implements OnInit {
     this.router.navigate(['/Training-staff/ListStudentOfClass', {id: item.ClassId}]);
   }
 
+  resetProgram() {
+    this.selectedProgramId = undefined;
+  }
+
+  resetTimeTableStatus() {
+    this.selectedTimeTable = undefined;
+  }
+
+  getTeachersBySid(param: Class) {
+    const body = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '')
+      .set('subjectId', param.SubjectId + '');
+
+    const configUrl = this.apiContext.host + this.apiTraining.getTeacherBySubject;
+    this.http.get<Teacher[]>(configUrl, {params: body}).toPromise().then(res => {
+        console.log('hic');
+        param.TeacherList = res;
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  assignTeacher(value: any, cId: string) {
+    const url = this.apiContext.host + this.apiTraining.assignTeacherToClass;
+    const param = new HttpParams()
+      .set('TeacherId', value == undefined ? '-1' : value + '')
+      .set('ClassId', cId == undefined ? '-1' : cId + '')
+      .set('centerId', this.apiContext.centerId + '');
+    this.http.post(url, param).toPromise().then(data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      });
+  }
 }

@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-accounting-menu-bar',
   templateUrl: './accounting-menu-bar.component.html',
-  styleUrls: ['./accounting-menu-bar.component.css','../../assets/plugins/bootstrap/css/bootstrap.min.css',
-  '../../assets/plugins/dropzone/dropzone.css', '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
-  '../../assets/plugins/waitme/waitMe.css',
-  '../../assets/plugins/bootstrap-select/css/bootstrap-select.css',
-  '../../assets/css/main.css',
-  '../../assets/css/themes/all-themes.css']
+  styleUrls: ['./accounting-menu-bar.component.css', '../../assets/plugins/bootstrap/css/bootstrap.min.css',
+    '../../assets/plugins/dropzone/dropzone.css', '../../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css',
+    '../../assets/plugins/waitme/waitMe.css',
+    '../../assets/plugins/bootstrap-select/css/bootstrap-select.css',
+    '../../assets/css/main.css',
+    '../../assets/css/themes/all-themes.css']
 })
-export class AccountingMenuBarComponent implements OnInit {
+export class AccountingMenuBarComponent implements OnInit, AfterViewInit {
 
   urlName;
+  userAvatar = '';
+  userName = '';
+
   constructor(private _router: Router, private route: ActivatedRoute) {
-  
+
   }
 
   ngOnInit() {
@@ -51,8 +54,9 @@ export class AccountingMenuBarComponent implements OnInit {
     return '';
 
   }
+
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -62,11 +66,14 @@ export class AccountingMenuBarComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
     this.loadScript('/assets/bundles/libscripts.bundle.js');
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
   }
+
   logout() {
     const r = confirm('Do you really want to logout?');
     if (r === true) {
@@ -74,6 +81,7 @@ export class AccountingMenuBarComponent implements OnInit {
       this.redirectToLogin();
     }
   }
+
   redirectToLogin() {
     this._router.navigateByUrl('/login');
   }

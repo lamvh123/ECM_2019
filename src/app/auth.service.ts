@@ -27,11 +27,12 @@ export class AuthService {
   }
 
   logedIn(): boolean {
-    var expired = false;
     if (new Date().getTime() > Number(localStorage.getItem('expiretime'))) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       localStorage.removeItem('expiretime');
+      localStorage.removeItem('userAvatar');
+      localStorage.removeItem('userName');
     }
     return !!localStorage.getItem('token');
   }
@@ -44,6 +45,8 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('expiretime');
+    localStorage.removeItem('userAvatar');
+    localStorage.removeItem('userName');
     this.route.navigate(['/login']);
   }
 
@@ -72,7 +75,7 @@ export class AuthService {
     return false;
   }
 
-  accountingStaffLoggedin() {
+  accountingStaffLoggedin(): boolean {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'AccountingStaff') {
@@ -81,7 +84,7 @@ export class AuthService {
     return false;
   }
 
-  centerAdminLoggedIn() {
+  centerAdminLoggedIn(): boolean {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'CenterAdmin') {
@@ -90,7 +93,7 @@ export class AuthService {
     return false;
   }
 
-  StudentLoggedIn() {
+  StudentLoggedIn(): boolean {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'Student') {
@@ -99,7 +102,7 @@ export class AuthService {
     return false;
   }
 
-  TeacherLoggedIn() {
+  TeacherLoggedIn(): boolean {
     var role = localStorage.getItem('role');
     console.log(role);
     if (this.logedIn() && role == 'Teacher') {

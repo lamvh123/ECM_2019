@@ -36,9 +36,10 @@
           </ng-template>
 
           <div class="caption  body">
-            <h3>{{form.Course.Name}}
+            <h3>{{form.Name}}
               <span *ngIf="form.IsClosed" class="closed-form">(Closed)</span>
             </h3>
+            Course: <strong class="col-green">{{form.Course.Name}}</strong><br/>
             Start date: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>
             <!--              Day(s) in week: <strong class="col-green">{{form.}}</strong><br/>-->
             Slot: <strong class="col-green">{{form.Slot.From}}-{{form.Slot.To}}</strong><br/>

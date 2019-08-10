@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Course} from '../course';
@@ -14,7 +14,7 @@ import {APIAccounting, APIContext} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css', '../../assets/css/login.css']
 })
-export class AccountStaffConfirmStudentComponent implements OnInit {
+export class AccountStaffConfirmStudentComponent implements OnInit, AfterContentInit {
 
   constructor(private router: Router, private http: HttpClient, private spinner: SpinnerVisibilityService) {
   }
@@ -37,12 +37,18 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   listPageSize = [5, 10, 20, 50];
   msg = '';
   loading: boolean;
+  isLoading = true;
 
   ngOnInit() {
     this.getInitData();
   }
 
+  ngAfterContentInit(): void {
+    this.isLoading = false;
+  }
+
   getInitData() {
+    this.isLoading = true;
     this.spinner.show();
     this.loading = true;
     const getCourseUrl = this.apiContext.host + this.apiAccounting.getAllCourse;
@@ -52,9 +58,11 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
         console.log(data);
         this.listCourse = data;
         this.getAllForm();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
     this.loadStudentData();
     this.loading = false;
@@ -64,15 +72,18 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   }
 
   getAllForm() {
+    this.isLoading = true;
     const param = new HttpParams()
       .set('centerId', this.apiContext.centerId + '');
     const url = this.apiContext.host + this.apiAccounting.getAllAdmissionForm;
     this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
         this.listForm = data;
         console.log(data);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
@@ -115,6 +126,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   }
 
   loadStudentData() {
+    this.isLoading = true;
     const paramToGetTotal = new HttpParams()
       .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
       .set('studentName', this.studentName)
@@ -154,14 +166,17 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
                   item.realSex = 'Female';
                 }
               });
+              this.isLoading = false;
             },
             error => {
               console.log(error);
+              this.isLoading = false;
             });
         }
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
 
   }
@@ -181,6 +196,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
   }
 
   ConfirmFee(item: Student, index) {
+    this.isLoading = true;
     if (item.IsPayment == false) {
       const param = new HttpParams()
         .set('StudentId', item.Id + '')
@@ -191,15 +207,18 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
           console.log(data);
           this.listStudent[index].IsPayment = true;
           this.msg = 'success';
+          this.isLoading = false;
         },
         error => {
           console.log(error);
           this.msg = 'error';
+          this.isLoading = false;
         });
     }
   }
 
   RejectFee(item: Student, index) {
+    this.isLoading = true;
     if (item.IsPayment == true) {
       const param = new HttpParams()
         .set('StudentId', item.Id + '')
@@ -210,15 +229,18 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
           console.log(data);
           this.listStudent[index].IsPayment = false;
           this.msg = 'success';
+          this.isLoading = false;
         },
         error => {
           console.log(error);
           this.msg = 'error';
+          this.isLoading = false;
         });
     }
   }
 
   ConfirmMultiple() {
+    this.isLoading = true;
     const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == false);
     const param = new Array();
     selectedItems.forEach(item => {
@@ -229,15 +251,18 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
         console.log(data);
         this.loadStudentData();
         this.msg = 'success';
+        this.isLoading = false;
       },
       error => {
         console.log(error);
         this.msg = 'error';
+        this.isLoading = false;
       });
 
   }
 
   RejectMultiple() {
+    this.isLoading = true;
     const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == true);
     const param = new Array();
     selectedItems.forEach(item => {
@@ -248,16 +273,25 @@ export class AccountStaffConfirmStudentComponent implements OnInit {
         console.log(data);
         this.loadStudentData();
         this.msg = 'success';
+        this.isLoading = false;
       },
       error => {
         console.log(error);
         this.msg = 'error';
+        this.isLoading = false;
       });
 
   }
 
   removeMessage() {
     this.msg = '';
+  }
+
+  isInputNumber(evt) {
+    const c = String.fromCharCode(evt.which);
+    if (!(/[0-9]/.test(c))) {
+      evt.preventDefault();
+    }
   }
 
 }

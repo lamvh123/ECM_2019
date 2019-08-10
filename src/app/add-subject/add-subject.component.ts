@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {Subject} from '../subject';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
@@ -16,11 +16,12 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddSubjectComponent implements OnInit, AfterViewInit {
+export class AddSubjectComponent implements OnInit, AfterContentInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   Name: string;
   errorMsgName = '-';
+  isLoading = true;
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -37,16 +38,19 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
     script.defer = true;
     body.appendChild(script);
   }
-
-  ngAfterViewInit() {
-    // this.loadScript('/assets/bundles/libscripts.bundle.js');
-    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    // this.loadScript('/assets/plugins/momentjs/moment.js');
-    // this.loadScript('/assets/js/TrainingDept/addcourse.js');
+  ngAfterContentInit(): void {
+    this.isLoading = false;
   }
+  // ngAfterViewInit() {
+  //   // this.loadScript('/assets/bundles/libscripts.bundle.js');
+  //   // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+  //   // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+  //   // this.loadScript('/assets/plugins/momentjs/moment.js');
+  //   // this.loadScript('/assets/js/TrainingDept/addcourse.js');
+  // }
 
   addSubject() {
+    this.isLoading = true;
     const configUrl = this.apiContext.host + this.apiTraining.addSubject;
     const body = new HttpParams()
       .set('Name', this.Name)
@@ -60,6 +64,7 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );

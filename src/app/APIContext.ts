@@ -1,8 +1,8 @@
-import { Building } from './building';
-import { Course } from './course';
-import { Program } from './program';
-import { Center } from './center';
-import { Slot } from './slot';
+import {Building} from './building';
+import {Course} from './course';
+import {Program} from './program';
+import {Center} from './center';
+import {Slot} from './slot';
 
 export class APIContext {
   host = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/';
@@ -106,7 +106,8 @@ export class APITraining {
   generateClass = 'api/TrainingDept/GenerateClass';
   createClass = 'api/TrainingDept/CreateClass';
   searchClass = 'api/TrainingDept/SearchClass';
-  getClassById = 'api/TrainingDept/GetClassById';
+  getClassById = 'api/TrainingDept/GetStudentByClassId';
+  getDetailClassById = 'api/TrainingDept/GetDetailClassById';
 
   updateStudentInClass = 'api/TrainingDept/UpdateStudentInClass';
 
@@ -120,18 +121,22 @@ export class APITraining {
   getAllTimeTable = 'api/TrainingDept/GetAllTimeTable';
 
   getStatisticByProgram = 'api/TrainingDept/statistic/GetStatisticByProgram';
-  getNumberOfProgram = "api/TrainingDept/statistic/GetNumberOfProgram";
-  getNumberOfCourse= "api/TrainingDept/statistic/GetNumberOfCourse";
-  getNumberOfClass= "api/TrainingDept/statistic/GetNumberOfClass";
+  getNumberOfProgram = 'api/TrainingDept/statistic/GetNumberOfProgram';
+  getNumberOfCourse = 'api/TrainingDept/statistic/GetNumberOfCourse';
+  getNumberOfClass = 'api/TrainingDept/statistic/GetNumberOfClass';
+
+  getTeacherBySubject = 'api/TrainingDept/GetTeacherBySubject';
 }
 
 export class APITeacher {
   getCenter = 'api/teacher/GetCenter';
   profile = 'api/teacher/profile';
   updateProfile = 'api/teacher/UpdateProfile';
-  listOfClass = 'api/teacher/GetListOfClassOfTeacher';
+  getListOfClassOfTeacher = 'api/teacher/GetListOfClassOfTeacher';
   classDetail = 'GetDetailOfParticularClass';
   getTimeTableOfParticularClass = 'api/teacher/GetTimeTableOfParticularClass';
+  getAttendanceStudentOfParticularClass = 'api/teacher/GetAttendanceStudentOfParticularClass';
+  updateAttendanceStudentOfParticularClass = 'api/teacher/UpdateAttendanceStudentOfParticularClass';
 }
 
 export class APIRegistrationStudent {

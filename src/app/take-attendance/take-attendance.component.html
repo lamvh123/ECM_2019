@@ -1,0 +1,131 @@
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
+  <div class="block-header">
+    <h2>ALL TIMETABLES</h2>
+    <!--      <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>-->
+  </div>
+  <!-- Basic Examples -->
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card">
+        <div class="header">
+          <h2 *ngIf="timetableList==null || timetableList.length<=0">There is no timetable in database.</h2>
+          <!--            <ul class="header-dropdown">-->
+          <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
+          <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
+          <!--                class="zmdi zmdi-more-vert"></i> </a>-->
+          <!--                <ul class="dropdown-menu pull-right">-->
+          <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
+          <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
+          <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
+          <!--                </ul>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+        </div>
+        <div class="body table-responsive">
+          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+            <thead>
+            <tr>
+              <th>No</th>
+              <th>Date</th>
+              <th>Slot</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let ttb of timetableList; index as ttlIndex">
+            <tr>
+              <td>{{ttlIndex + 1}}</td>
+              <td>{{ttb.LearningDay}}</td>
+              <td>{{ttb.slot.From + ' - ' + ttb.slot.To}}</td>
+              <ng-container *ngIf="ttb.AttendBy==null; then notYet; else didAttendance"></ng-container>
+              <ng-template #notYet>
+                <td><p class="col-blue-grey">Not yet</p></td>
+                <td>
+                  <button type="button" class="btn  btn-raised bg-cyan waves-effect"
+                          (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Take Attendance
+                  </button>
+                </td>
+              </ng-template>
+              <ng-template #didAttendance>
+                <td><p class="font-bold col-cyan">{{'Taken by ' + ttb.AttendBy.User.Full_Name}}</p>
+                  <!--                  <span style="color: #0f9d58"></span>-->
+                </td>
+                <td>
+                  <button type="button" class="btn  btn-raised bg-teal waves-effect"
+                          (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Update
+                    Attendance
+                  </button>
+                </td>
+              </ng-template>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Take Attendance<br/>
+      {{selectedTimeTable.Class.Name}}<br/>
+      {{selectedTimeTable.LearningDay}}
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="body table-responsive">
+      <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+        <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Present</th>
+          <th>Absent</th>
+          <th>Avatar</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let atd of attendanceList; index as i">
+        <tr>
+          <td>{{i + 1}}</td>
+          <td>{{atd.StudentName}}</td>
+          <ng-container *ngIf="atd.IsPresent; then isPresent; else isAbsent"></ng-container>
+          <ng-template #isPresent>
+            <td>
+              <div class="radio bg-light-green" (click)="setradio(i, true)" style="text-align: center">
+                <input type="radio" name="{{'present'+atd.Id}}" value="true" checked>Present
+              </div>
+            </td>
+            <td>
+              <div class="radio" (click)="setradio(i, false)" style="text-align: center">
+                <input type="radio" name="{{'present'+atd.Id}}" value="false">Absent
+              </div>
+            </td>
+          </ng-template>
+          <ng-template #isAbsent>
+            <td>
+              <div class="radio" (click)="setradio(i, true)" style="text-align: center">
+                <input type="radio" name="{{'present'+atd.Id}}" value="true">Present
+              </div>
+            </td>
+            <td>
+              <div class="radio bg-deep-orange" (click)="setradio(i, false)" style="text-align: center">
+                <input type="radio" name="{{'present'+atd.Id}}" value="false" checked>Absent
+              </div>
+            </td>
+          </ng-template>
+          <td>{{atd.Avatar}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="[modal.close('Close click'),saveAttendance()]">Save</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

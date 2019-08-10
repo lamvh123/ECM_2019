@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Building} from '../building';
@@ -16,7 +16,7 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddRoomComponent implements OnInit {
+export class AddRoomComponent implements OnInit, AfterContentInit {
 
   // tslint:disable-next-line:variable-name
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
@@ -36,11 +36,14 @@ export class AddRoomComponent implements OnInit {
   errorMsgName = '-';
   errorMsgCapacity = '-';
   errorMsgBuilding = '-';
+  isLoading = true;
 
   ngOnInit() {
     this.getAllBuildings();
   }
-
+  ngAfterContentInit(): void {
+    this.isLoading = false;
+  }
   public loadScript(url: string) {
     const body = document.body as HTMLDivElement;
     const script = document.createElement('script');
@@ -53,6 +56,7 @@ export class AddRoomComponent implements OnInit {
 
 
   addRoom() {
+    this.isLoading = true;
     const configUrl = this.apiContext.host + this.apiTraining.addRoom;
     const body = new HttpParams()
       .set('RoomNumber', this.roomNumber)
@@ -67,12 +71,14 @@ export class AddRoomComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );
   }
 
   getAllBuildings() {
+    this.isLoading = true;
     const body = new HttpParams()
       .set('centerId', this.apiContext.centerId + '')
       .set('name', '')
@@ -83,9 +89,11 @@ export class AddRoomComponent implements OnInit {
         console.log(res);
         this.buildings = res;
         console.log(this.buildings);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
         // this.showMessage(false);
       });
   }

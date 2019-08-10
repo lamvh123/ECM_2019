@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, AfterContentInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Building} from '../building';
@@ -19,7 +19,7 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddCourseComponent implements OnInit, AfterViewInit {
+export class AddCourseComponent implements OnInit, AfterContentInit {
   public Editor = ClassicEditor;
 
   apiContext = new APIContext();
@@ -40,6 +40,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
   errorMsgTotalSession = '-';
   errorMsgSubject = '-';
   errorMsgDescription = '-';
+  isLoading = true;
 
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -65,16 +66,19 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
     script.defer = true;
     body.appendChild(script);
   }
-
-  ngAfterViewInit() {
-    // this.loadScript('/assets/bundles/libscripts.bundle.js');
-    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
-    // this.loadScript('/assets/plugins/momentjs/moment.js');
-    // this.loadScript('/assets/js/TrainingDept/addcourse.js');
+  ngAfterContentInit(): void {
+    this.isLoading = false;
   }
+  // ngAfterViewInit() {
+  //   // this.loadScript('/assets/bundles/libscripts.bundle.js');
+  //   // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+  //   // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+  //   // this.loadScript('/assets/plugins/momentjs/moment.js');
+  //   // this.loadScript('/assets/js/TrainingDept/addcourse.js');
+  // }
 
   addCourse() {
+    this.isLoading = true;
     const configUrl = this.apiContext.host + this.apiTraining.addCourse;
     const body = new HttpParams()
       .set('CourseName', this.courseName)
@@ -94,6 +98,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );
@@ -110,6 +115,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
   }
 
   getAllSubjects() {
+    this.isLoading = true;
     const body = new HttpParams()
       .set('centerId', this.apiContext.centerId + '')
       .set('subjectName', '');
@@ -118,9 +124,11 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
         console.log(res);
         this.subjects = res;
         console.log(this.subjects);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
         // this.showMessage(false);
       });
   }

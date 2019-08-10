@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Class} from '../entity/class';
+import {APIContext, APITeacher} from '../APIContext';
 
 @Component({
   selector: 'app-teacher-menu-bar',
@@ -7,19 +10,33 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./teacher-menu-bar.component.css', '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class TeacherMenuBarComponent implements OnInit {
+export class TeacherMenuBarComponent implements OnInit, AfterViewInit {
+  apiContext = new APIContext();
+  apiTeacher = new APITeacher();
+  classList: Class[];
 
-  constructor(private _router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private _router: Router, private route: ActivatedRoute) {
+  }
+
   urlName;
+  userAvatar = '';
+  userName = '';
+
   ngOnInit() {
+    this.getListClasses();
   }
 
   className(): String {
+    console.log(this._router.url);
     if (this._router.url == '/Teacher/profile') {
       return '/Teacher/profile';
     }
     if (this._router.url == '/Teacher/ViewTimetable') {
       return '/Teacher/ViewTimetable';
+    }
+    if (this._router.url.includes('/Teacher/take-attendance')) {
+      console.log('okokokokok');
+      return this._router.url;
     }
     return '';
   }
@@ -35,10 +52,12 @@ export class TeacherMenuBarComponent implements OnInit {
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');
     this.loadScript('/assets/plugins/momentjs/moment.js');
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -54,8 +73,24 @@ export class TeacherMenuBarComponent implements OnInit {
       this.redirectToLogin();
     }
   }
+
   redirectToLogin() {
     this._router.navigateByUrl('/login');
+  }
+
+  getListClasses() {
+    const body = new HttpParams()
+      .set('centerId', this.apiContext.centerId + '');
+
+    const configUrl = this.apiContext.host + this.apiTeacher.getListOfClassOfTeacher;
+    this.http.get<Class[]>(configUrl, {params: body}).toPromise().then(res => {
+        console.log(res);
+        this.classList = res;
+        console.log(this.classList);
+      },
+      error => {
+        console.log(error);
+      });
   }
 
 }

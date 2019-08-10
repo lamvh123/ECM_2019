@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Course} from '../course';
@@ -14,7 +14,7 @@ import {APICenter, APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class CenterAdminGrantAccountComponent implements OnInit {
+export class CenterAdminGrantAccountComponent implements OnInit, AfterContentInit {
 
   constructor(private router: Router, private http: HttpClient) {
   }
@@ -35,13 +35,20 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   listPage: any[];
   listPageSize = [5, 10, 20, 50];
   msg = '';
+  isLoading = true;
+
 
   ngOnInit() {
     this.getInitData();
     console.log('complete');
   }
 
+  ngAfterContentInit(): void {
+    this.isLoading = false;
+  }
+
   getInitData() {
+    this.isLoading = true;
     const getCourseUrl = this.apiContext.host + this.apiCenter.getAllCourse;
     const param = new HttpParams()
       .set('centerId', this.apiContext.centerId + '');
@@ -52,25 +59,30 @@ export class CenterAdminGrantAccountComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
     this.loadStudentData();
 
   }
 
   getAllForm() {
+    this.isLoading = true;
     const param = new HttpParams()
       .set('centerId', this.apiContext.centerId + '');
     const url = this.apiContext.host + this.apiCenter.getAllAdmissionForm;
     this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
         this.listForm = data;
         console.log(data);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   ReLoadForm() {
+    this.isLoading = true;
     this.selectedFormId = null;
     if (this.selectedCourseId != null && this.selectedCourseId != undefined) {
       const param = new HttpParams()
@@ -80,9 +92,11 @@ export class CenterAdminGrantAccountComponent implements OnInit {
       this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
           this.listForm = data;
           console.log(data);
+          this.isLoading = false;
         },
         error => {
           console.log(error);
+          this.isLoading = false;
         });
     } else {
       this.getAllForm();
@@ -109,6 +123,7 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   loadStudentData() {
+    this.isLoading = true;
     const paramToGetTotal = new HttpParams()
       .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
       .set('studentName', this.studentName)
@@ -148,14 +163,17 @@ export class CenterAdminGrantAccountComponent implements OnInit {
                   item.realSex = 'Female';
                 }
               });
+              this.isLoading = false;
             },
             error => {
               console.log(error);
+              this.isLoading = false;
             });
         }
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
 
   }
@@ -175,22 +193,28 @@ export class CenterAdminGrantAccountComponent implements OnInit {
   }
 
   grantAccountForOne(student: Student) {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiCenter.grantAccountForStudent;
-    const param = new Array().push({RegisteredCandidateId: student.Id, CenterId: this.apiContext.centerId});
+    const param = new Array();
+    param.push({RegisteredCandidateId: student.Id, CenterId: this.apiContext.centerId});
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
         this.msg = 'success';
+        this.loadStudentData();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
         this.msg = 'error';
+        this.isLoading = false;
       });
   }
 
   grantAccountForMany() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiCenter.grantAccountForStudent;
     const param = new Array();
-    const listSelectedStudent = this.listStudent.filter(item => item.selected && item.IsPayment && item.IsGrantedAccount);
+    const listSelectedStudent = this.listStudent.filter(item => item.selected && item.IsPayment && !item.IsGrantedAccount);
     listSelectedStudent.forEach(item => {
       param.push({RegisteredCandidateId: item.Id, CenterId: this.apiContext.centerId});
     });
@@ -198,10 +222,12 @@ export class CenterAdminGrantAccountComponent implements OnInit {
         console.log(data);
         this.msg = 'success';
         this.loadStudentData();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
         this.msg = 'error';
+        this.isLoading = false;
       });
   }
 

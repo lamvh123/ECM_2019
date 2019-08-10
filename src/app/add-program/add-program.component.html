@@ -1,5 +1,5 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div class="container-fluid">
+  <div  [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
     <div class="block-header">
       <h2>Add Program</h2>
       <!--      <small class="text-muted">Welcome to Swift application</small>-->
@@ -125,6 +125,31 @@
     <!--        <h1 class="red">try again</h1>-->
     <!--      </button>-->
     <!--    </div>-->
+  </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
+  <div class="jsdemo-notification-button">
+    <button id="sBtn"
+            type="button"
+            class="btn btn-raised btn-success btn-block waves-effect"
+            data-placement-from="top"
+            data-placement-align="right"
+            data-noti-text="Add new program successfully"
+            data-animate-enter="animated fadeInRight"
+            data-animate-exit="animated fadeOutRight"
+            data-color-name="alert-success"
+            style="display: none"> SUCCESS
+    </button>
+    <button id="fBtn"
+            type="button"
+            class="btn btn-raised btn-danger btn-block waves-effect"
+            data-placement-from="top"
+            data-placement-align="right"
+            data-noti-text="Something goes wrong. Try again."
+            data-animate-enter="animated fadeInRight"
+            data-animate-exit="animated fadeOutRight"
+            data-color-name="alert-danger"
+            style="display: none"> Fail
+    </button>
   </div>
 </section>
 

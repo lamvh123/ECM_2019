@@ -1,5 +1,5 @@
 // import { Component, OnInit } from '@angular/core';
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, AfterContentInit} from '@angular/core';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Router, ActivatedRoute, Routes} from '@angular/router';
 import {APIContext, APITraining} from '../APIContext';
@@ -19,7 +19,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 
 
-export class AddBuildingComponent implements OnInit, AfterViewInit {
+export class AddBuildingComponent implements OnInit, AfterContentInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   errorMsgName = '-';
@@ -30,6 +30,7 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
 
   buildingName = '';
   buildingAddress = '';
+  isLoading = true;
 
   ngOnInit() {
 
@@ -45,14 +46,19 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
     body.appendChild(script);
   }
 
-  ngAfterViewInit() {
-    // this.loadScript('/assets/bundles/libscripts.bundle.js');
-    // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
-    // this.loadScript('/assets/bundles/mainscripts.bundle.js');
 
+  ngAfterContentInit(): void {
+    this.isLoading = false;
   }
+  // ngAfterViewInit() {
+  //   // this.loadScript('/assets/bundles/libscripts.bundle.js');
+  //   // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
+  //   // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+  //
+  // }
 
   addBuilding() {
+    this.isLoading = true;
     const configUrl = this.apiContext.host + this.apiTraining.addBuilding;
     const body = new HttpParams()
       .set('Name', this.buildingName)
@@ -63,9 +69,11 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
         console.log(res);
         // this.showMessage(true);
         this.redirectToViewBuilding();
+        this.isLoading = false;
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );
@@ -125,6 +133,8 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
   }
 
   checkValidFields() {
+    this.checkValidName();
+    this.checkValidAddress();
     if (this.checkValidName() && this.checkValidAddress()) {
       this.addBuilding();
     }

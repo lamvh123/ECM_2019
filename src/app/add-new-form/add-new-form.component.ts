@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, AfterViewInit} from '@angular/core';
 import {Course} from '../course';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -17,9 +17,11 @@ import {APIAdmission, APIContext} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddNewFormComponent implements OnInit {
+export class AddNewFormComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiAdmission = new APIAdmission();
+  centerId: number;
+
   listCourse: Course[];
   courseId: string;
   isClosed = -1;
@@ -42,6 +44,7 @@ export class AddNewFormComponent implements OnInit {
   errorMsgDay = '-';
   errorMsgSlot = '-';
   @Output() messageEvent = new EventEmitter<string>();
+  isLoading = true;
 
 
   constructor(private http: HttpClient, private router: Router, private datepipe: DatePipe, private route: ActivatedRoute) {
@@ -54,32 +57,46 @@ export class AddNewFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = new AdmissionForm();
-    this.getInitData();
+    const urlGetCenterId = this.apiContext.host + this.apiAdmission.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getInitData();
+    });
 
   }
 
+  ngAfterViewInit(): void {
+    this.isLoading = false;
+  }
+
   getAllBuilding() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiAdmission.getAllBuilding;
-    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
+    const para = new HttpParams().set('centerId', this.centerId + '');
     this.http.get<Observable<Building[]>>(url, {params: para}).toPromise().then(data => {
         this.listBuilding = data;
         console.log(this.listBuilding);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
         // this.showMessage(false);
       });
   }
 
   getInitData() {
+    this.isLoading = true;
     const getAllCourseUrl = this.apiContext.host + this.apiAdmission.getAllCourse;
-    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
+    const para = new HttpParams().set('centerId', this.centerId + '');
     this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
         this.listCourse = data;
         console.log(this.listCourse);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       }
     );
     this.getAllBuilding();
@@ -88,22 +105,26 @@ export class AddNewFormComponent implements OnInit {
   }
 
   getAllSlot() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiAdmission.getAllSlot;
-    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
+    const para = new HttpParams().set('centerId', this.centerId + '');
     this.http.get<Slot[]>(url, {params: para}).toPromise().then(data => {
         this.listOfSlot = data;
         this.listOfSlot.forEach(function(item) {
           item.displayText = item.Name + ': ' + item.From + '-' + item.To;
         });
         console.log(this.listOfSlot);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
         // this.showMessage(false);
       });
   }
 
   CreateForm() {
+    this.isLoading = true;
     const date = new Date(this.form.StartDate);
     const dateString = this.datepipe.transform(date, 'MM-dd-yyyy');
     let para = new HttpParams()
@@ -111,7 +132,7 @@ export class AddNewFormComponent implements OnInit {
       .set('StartDate', dateString)
       .set('Name', this.form.Name)
       .set('BuildingId', this.selectedBuilding + '')
-      .set('CenterId', this.apiContext.centerId + '')
+      .set('CenterId', this.centerId + '')
       .set('SlotId', this.selectedSlot);
     this.selectedDayArr.forEach(item => {
       para = para.append('DaysPerWeek', item + '');
@@ -124,10 +145,12 @@ export class AddNewFormComponent implements OnInit {
           // this.router.navigate(['/redirect', '/Admission-staff/form-detail', data['Id']]);
         }
         // this.showMessage(true);
+        this.isLoading = false;
         this.redirectToAllAdmissionForm();
       },
       error => {
         console.log(error);
+        this.isLoading = false;
         // this.showMessage(false);
       });
   }
@@ -174,7 +197,7 @@ export class AddNewFormComponent implements OnInit {
 
   checkValidName() {
     if (this.form.Name != null) {
-      this.form.Name = this.formatText(this.form.Name+'');
+      this.form.Name = this.formatText(this.form.Name + '');
     }
     if (this.form.Name == null || this.form.Name === '') {
       this.errorMsgName = 'Name is required.';
@@ -187,7 +210,7 @@ export class AddNewFormComponent implements OnInit {
 
   checkValidDate() {
     if (this.form.StartDate != null) {
-      this.form.StartDate = this.formatText(this.form.StartDate+'');
+      this.form.StartDate = this.formatText(this.form.StartDate + '');
     }
     if (this.form.StartDate == null || this.form.StartDate === '') {
       this.errorMsgDate = 'Start date is required.';
@@ -233,6 +256,7 @@ export class AddNewFormComponent implements OnInit {
       return true;
     }
   }
+
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
@@ -243,7 +267,7 @@ export class AddNewFormComponent implements OnInit {
     this.checkValidDate();
     this.checkValidBuilding();
     this.checkValidDay();
-    this.checkValidSlot( );
+    this.checkValidSlot();
     if (this.checkValidCourse() && this.checkValidName() && this.checkValidDate() && this.checkValidBuilding() && this.checkValidDay() && this.checkValidSlot()) {
       this.CreateForm();
     }

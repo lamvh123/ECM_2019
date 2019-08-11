@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Teacher} from '../teacher';
 import {APIContext, APITraining} from '../APIContext';
@@ -12,10 +12,12 @@ import {Router} from '@angular/router';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class ViewTeacherComponent implements OnInit, AfterContentInit {
+export class ViewTeacherComponent implements OnInit, AfterViewInit {
   isLoading = true;
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   teacherList: Teacher[];
 
   teacherName = '';
@@ -25,10 +27,14 @@ export class ViewTeacherComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit() {
-    this.getTeachers();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getTeachers();
+    });
   }
 
-  ngAfterContentInit(): void {
+  ngAfterViewInit(): void {
     this.isLoading = false;
   }
 
@@ -38,7 +44,7 @@ export class ViewTeacherComponent implements OnInit, AfterContentInit {
       .set('teacherName', this.teacherName)
       .set('teacherEmail', this.teacherEmail)
       .set('subjectId', '-1')
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('currentPage', '1')
       .set('pageSize', '1000');
 

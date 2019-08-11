@@ -15,26 +15,32 @@ import {APIContext, APITraining} from '../APIContext';
   // styleUrls: ['./view-program.component.css', '../css/assets/css/main.css',
   //   '../css/assets/css/themes/all-themes.css']
 })
-export class ViewProgramComponent implements OnInit, AfterContentInit {
+export class ViewProgramComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   programs: Program[];
 
   programName = '';
   isLoading = true;
 
   ngOnInit() {
-    this.getAllProgram();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getAllProgram();
+    });
   }
 
   getAllProgram() {
     this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('programName', '');
 
     const configUrl = this.apiContext.host + this.apiTraining.searchProgram;
@@ -50,16 +56,13 @@ export class ViewProgramComponent implements OnInit, AfterContentInit {
       });
   }
 
-  ngAfterContentInit(): void {
+  ngAfterViewInit() {
+    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
     this.isLoading = false;
   }
-
-  // ngAfterViewInit() {
-  //   // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
-  // }
 
   public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;
@@ -74,7 +77,7 @@ export class ViewProgramComponent implements OnInit, AfterContentInit {
   searchProgramByName() {
     this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('programName', this.programName.trim().toLowerCase());
 
     const configUrl = this.apiContext.host + this.apiTraining.searchProgram;

@@ -19,6 +19,8 @@ export class AutoGenerateTimetableComponent implements OnInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   listProgram: Program[];
   listCourse: Course[];
   listClass: Class[];
@@ -32,7 +34,11 @@ export class AutoGenerateTimetableComponent implements OnInit {
   msg = '';
 
   ngOnInit() {
-    this.loadInitData();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.loadInitData();
+    });
   }
 
   loadInitData() {
@@ -45,7 +51,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
     const url = this.apiContext.host + this.apiTraining.searchProgram;
     var param = new HttpParams()
       .set('programName', '')
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     this.http.get<Program[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listProgram = data;
@@ -58,7 +64,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
   loadCourse() {
     const url = this.apiContext.host + this.apiTraining.searchCourseByProgramId;
     var param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('programId', this.selectedProgramId == null ? '-1' : this.selectedProgramId + '');
     this.http.get<Course[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
@@ -78,7 +84,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
     const url = this.apiContext.host + this.apiTraining.searchClass;
     const param = new HttpParams()
       .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId + '')
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('programId', this.selectedProgramId == null ? '-1' : this.selectedProgramId + '')
       .set('IsCreatedTimeTable', '0')
       .set('pageSize', this.pageSize + '')
@@ -105,7 +111,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
     const param = new HttpParams()
       .set('programId', this.selectedProgramId == null ? '-1' : this.selectedProgramId + '')
       .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId + '')
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('IsCreatedTimeTable', '0').set('pageSize', '1000')
       .set('currentPage', '1');
     this.http.get<any[]>(url, {params: param}).toPromise().then(data => {
@@ -156,7 +162,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
     listSelectedClass = this.listClass.filter(item => item.selected);
     let param = new Array();
     listSelectedClass.forEach(item => {
-      param.push({ClassId: item.ClassId, CenterId: this.apiContext.centerId});
+      param.push({ClassId: item.ClassId, CenterId: this.centerId});
     });
     const url = this.apiContext.host + this.apiTraining.generateTimeTable;
     this.http.post(url, param).toPromise().then(data => {

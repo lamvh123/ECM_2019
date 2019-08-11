@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {APIContext, APIPassword} from '../APIContext';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-reset-password',
@@ -12,7 +13,7 @@ import {ActivatedRoute, Router} from '@angular/router';
     , '../../assets/css/themes/all-themes.css'
     , '../../assets/css/login.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, AfterViewInit {
   password: string;
   rePassword: string;
   code: string;
@@ -23,6 +24,7 @@ export class ResetPasswordComponent implements OnInit {
   resetMessage: string;
   apiContext = new APIContext();
   apiPassword = new APIPassword();
+  isLoading = true;
 
   constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -40,6 +42,16 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    $.getScript('../../assets/bundles/libscripts.bundle.js');
+    $.getScript('../../assets/bundles/vendorscripts.bundle.js');
+    $.getScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
+    $.getScript('../../assets/js/pages/ui/notifications.js');
+    $.getScript('../../assets/bundles/mainscripts.bundle.js');
+    this.isLoading = false;
   }
 
   hasNumber(myString) {
@@ -124,6 +136,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   private updatePassword() {
+    this.isLoading = true;
     const configUrl = this.apiContext.host + this.apiPassword.updatePasswordAfterForgotPassword;
     const body = new HttpParams()
       .set('Code', this.code)
@@ -136,11 +149,13 @@ export class ResetPasswordComponent implements OnInit {
         console.log(res);
         // this.showMessage(true);
         this.showNoti('sBtn');
+        this.isLoading = false;
         this.redirectToLogin();
       },
       err => {
         console.log(err);
         this.showNoti('fBtn');
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );

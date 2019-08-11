@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {LearningSession} from '../entity/learning-session';
@@ -10,20 +10,31 @@ import {Class} from '../entity/class';
   templateUrl: './view-timetable.component.html',
   styleUrls: ['./view-timetable.component.css']
 })
-export class ViewTimetableComponent implements OnInit {
+export class ViewTimetableComponent implements OnInit, AfterViewInit {
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
 
   apiContext = new APIContext();
   apiStudent = new APIStudent();
+  centerId: number;
   listSession: LearningSession[];
-  centerId;
   listClass: Class[];
   selectedClass;
+  isLoading = true;
 
   ngOnInit() {
-    this.loadInitData();
+    this.isLoading = true;
+    const urlGetCenterId = this.apiContext.host + this.apiStudent.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.loadInitData();
+      this.isLoading = false;
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.isLoading = false;
   }
 
   loadInitData() {
@@ -37,8 +48,9 @@ export class ViewTimetableComponent implements OnInit {
   }
 
   loadClassList() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiStudent.getClassList;
-    const param = new HttpParams().set('centerId', this.centerId);
+    const param = new HttpParams().set('centerId', this.centerId + '');
     this.http.get<Class[]>(url, {params: param}).toPromise().then(data => {
         this.listClass = data;
         console.log(this.listClass);
@@ -47,22 +59,27 @@ export class ViewTimetableComponent implements OnInit {
           console.log(this.selectedClass);
           this.loadTimetable();
         }
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   loadTimetable() {
-    const url = this.apiContext.host + this.apiStudent.getTimeTableOfStudent;
-    const param = new HttpParams().set('centerId', this.apiContext.centerId + '').set('classId', this.selectedClass);
+    this.isLoading = true;
+    const url = this.apiContext.host + this.apiStudent.getTimeTableOfParticularClass;
+    const param = new HttpParams().set('centerId', this.centerId + '').set('classId', this.selectedClass);
     this.http.get<LearningSession[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listSession = data;
         console.log(this.listSession);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 

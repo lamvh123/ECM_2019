@@ -1,49 +1,51 @@
-<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div *ngIf="!isLoading" class="container-fluid">
-    <div class="block-header">
-      <h2 *ngIf="ListOfCourse!=null && ListOfCourse.length>0">All Courses Of
-        <font color="#78b83e"><b>{{this.currentProgram.Name}}</b></font>
-      </h2>
-      <h2 *ngIf="ListOfCourse==null || ListOfCourse.length<=0">There is no course in
-        <font color="#78b83e"><b>{{this.currentProgram.Name}}</b></font> program.
-      </h2>
-    </div>
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+  <div class="block-header">
+    <h2>All Courses </h2><h2 *ngIf="!isLoading">Of <font color="#78b83e"><b>{{this.currentProgram.Name}}</b></font></h2>
+    <!--      <small class="text-muted">Welcome to Swift application</small>-->
+  </div>
 
-    <div class="row">
-      <div class="input-field col s12 required" id="id_email_container">
-        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="courseName" name="coursename"
-               type="text">
-        <button type="submit" name="_submit" class="btn searchBtn" (click)="getAllCourse()">Search</button>
-        <button type="Add course" name="addcourse" class="btn searchBtn" (click)="redirectToAddCourse()">Add Course
-        </button>
-      </div>
+  <div class="row clearfix search-area">
+    <div class="card" style="padding: 15px;">
+      <input style="border-top: none;border-left: none;border-right: none;" class="form-control"
+             placeholder="Program Name" id="coursename" maxlength="254"
+             [(ngModel)]="courseName"
+             name="coursename"
+             type="text">
+      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-gy"
+              (click)="getAllCourse()">Search Course
+      </button>
+      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-blush2"
+              (click)="redirectToAddCourse()">Create New Course
+      </button>
+      <br style="clear: right;"/>
     </div>
-    <div class="row clearfix">
-      <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
-        <div class="thumbnail card animated fadeIn" style="min-width: 20vh;border: #e6e6e6 1px solid">
-          <ng-container
-            *ngIf="course.Image!=null; then imgNotNull; else imgNull">
-          </ng-container>
-          <ng-template #imgNotNull>
-            <img src="{{course.Image}}" alt="" class="img-fluid"
-                 (click)="navigateToViewCourseDetail(course)"
-                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
-          </ng-template>
-          <ng-template #imgNull>
-            <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"
-                 (click)="navigateToViewCourseDetail(course)"
-                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
-          </ng-template>
+  </div>
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+    <h3 *ngIf="ListOfCourse==null || ListOfCourse.length<=0">There is no course in
+      <font color="#78b83e"><b>{{this.currentProgram.Name}}</b></font> program..</h3>
+    <div *ngFor="let course of ListOfCourse" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
+      <div class="thumbnail card animated fadeIn" style="min-width: 20vh;border: #e6e6e6 1px solid">
+        <ng-container
+          *ngIf="course.Image!=null; then imgNotNull; else imgNull">
+        </ng-container>
+        <ng-template #imgNotNull>
+          <img src="{{course.Image}}" alt="" class="img-fluid"
+               (click)="navigateToViewCourseDetail(course)"
+               [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+        </ng-template>
+        <ng-template #imgNull>
+          <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"
+               (click)="navigateToViewCourseDetail(course)"
+               [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+        </ng-template>
 
-          <div class="caption  body">
-            <h3>{{course.Name}}</h3>
-            <a class="btn  btn-raised btn-info waves-effect" role="button" (click)="navigateToViewCourseDetail(course)">View
-              Detail</a>
-          </div>
+        <div class="caption  body">
+          <h3>{{course.Name}}</h3>
+          <a class="btn  btn-raised btn-info g-bg-cgreen waves-effect" role="button" (click)="navigateToViewCourseDetail(course)">View
+            Detail</a>
         </div>
       </div>
     </div>
-
   </div>
   <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>

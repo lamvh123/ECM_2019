@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { APIContext, APISystem } from '../APIContext';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {APIContext, APISystem} from '../APIContext';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-system-admin-add-new-center',
@@ -9,9 +9,11 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./system-admin-add-new-center.component.css', '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class SystemAdminAddNewCenterComponent implements OnInit {
+export class SystemAdminAddNewCenterComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+  }
+
   Name: string;
   errorMsgName: string;
   Address: string;
@@ -24,25 +26,37 @@ export class SystemAdminAddNewCenterComponent implements OnInit {
   errorOwner: string;
   apiContext = new APIContext();
   apiSystem = new APISystem();
+  isLoading = true;
+
   ngOnInit() {
   }
+
+  ngAfterViewInit(): void {
+    this.isLoading = false;
+  }
+
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
+
   CreateCenter() {
+    this.isLoading = true;
     var url = this.apiContext.host + this.apiSystem.addCenter;
     var params = new HttpParams().set('Name', this.Name).set('Name', this.Name)
       .set('Address', this.Address)
       .set('PhoneNumber', this.PhoneNumber)
       .set('Email', this.Email)
-      .set('ResponsiblePersonFullname', this.ResponsiblePersonFullname)
+      .set('ResponsiblePersonFullname', this.ResponsiblePersonFullname);
     this.http.post(url, params).toPromise().then(data => {
-      console.log(data);
-    },
+        console.log(data);
+        this.isLoading = false;
+      },
       error => {
         console.log(error);
-      })
+        this.isLoading = false;
+      });
   }
+
   checkValidFields() {
     this.checkValidName();
     this.checkValidAddress();
@@ -53,6 +67,7 @@ export class SystemAdminAddNewCenterComponent implements OnInit {
       this.CreateCenter();
     }
   }
+
   checkValidName() {
     if (this.Name != null) {
       this.Name = this.formatText(this.Name);
@@ -65,6 +80,7 @@ export class SystemAdminAddNewCenterComponent implements OnInit {
       return true;
     }
   }
+
   checkValidOwner() {
     if (this.ResponsiblePersonFullname != null) {
       this.ResponsiblePersonFullname = this.formatText(this.ResponsiblePersonFullname);
@@ -77,6 +93,7 @@ export class SystemAdminAddNewCenterComponent implements OnInit {
       return true;
     }
   }
+
   checkValidEmail() {
     if (this.Email != null) {
       this.Email = this.formatText(this.Email);
@@ -85,22 +102,20 @@ export class SystemAdminAddNewCenterComponent implements OnInit {
     if (this.Email == null || this.Email === '') {
       this.errorEmail = 'Email is required.';
       return false;
-    }
-    else if (!EMAIL_REGEXP.test(this.Email)) {
+    } else if (!EMAIL_REGEXP.test(this.Email)) {
       this.errorEmail = 'Email is invalid.';
       return false;
-    }
-    else {
+    } else {
       this.errorEmail = '';
       return true;
     }
   }
+
   checkValidPhoneNumber() {
     if (this.PhoneNumber == null || this.PhoneNumber === '') {
       this.errorPhoneNumber = 'PhoneNumber is required.';
       return false;
-    }
-    else if ((this.PhoneNumber + "").length > 10) {
+    } else if ((this.PhoneNumber + '').length > 10) {
       this.errorPhoneNumber = 'Length of PhoneNumber must be less than 10.';
       return false;
     } else {
@@ -108,6 +123,7 @@ export class SystemAdminAddNewCenterComponent implements OnInit {
       return true;
     }
   }
+
   checkValidAddress() {
     if (this.Address != null) {
       this.Address = this.formatText(this.Address);

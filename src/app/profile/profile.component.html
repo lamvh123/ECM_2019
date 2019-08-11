@@ -1,5 +1,5 @@
 <section class="content profile-page" style="min-height: 850px;" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div *ngIf="!isLoading" class="container-fluid">
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
     <div class="block-header">
       <h2>Profile</h2>
     </div>
@@ -51,28 +51,41 @@
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 demo-radio-button"><b>Gender</b>
-                          <div class="input-group"><span class="input-group-addon"> </span>
-                            <input name="sex" type="radio" id="male" class="radio-col-cyan form-check-input"
-                                   [disabled]="!isEditing" [value]="true" [(ngModel)]="user.Sex"
-                                   (change)="changedGender()">
-                            <label for="male">Male</label>
-
-                            <input name="sex" type="radio" id="female" class="radio-col-cyan form-check-input"
-                                   [disabled]="!isEditing" [value]="false" [(ngModel)]="user.Sex">
-                            <label for="female">Female</label>
+                          <div class="input-group">
+                          <ng-container
+                            *ngIf="user.Sex; then isMale; else isFemale"></ng-container>
                           </div>
+                          <ng-template #isMale>
+                            <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="true" id="male1"
+                                   (click)="setradio(true)" checked>
+                            <label for="male1">Nam</label>
+
+                            <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="false" id="female1"
+                                   (click)="setradio(false)">
+                            <label for="female1">Nữ</label>
+                          </ng-template>
+                          <ng-template #isFemale>
+                            <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="true" id="male2"
+                                   (click)="setradio(true)">
+                            <label for="male2">Nam</label>
+
+                            <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="false" id="female2"
+                                   (click)="setradio(false)" checked>
+                            <label for="female2">Nữ</label>
+                          </ng-template>
+
                         </div>
                       </div>
                       <div class="row" style="display: flex">
-                        <button *ngIf="!isEditing" type="button" class="btn btn-raised bg-teal waves-effect"
+                        <button *ngIf="!isEditing" type="button" class="btn btn-raised g-bg-cgreen waves-effect"
                                 (click)="clickUpdate()">
                           Update Profile
                         </button>
-                        <button *ngIf="isEditing" type="button" class="btn btn-raised bg-teal waves-effect"
+                        <button *ngIf="isEditing" type="button" class="btn btn-raised g-bg-blush2 waves-effect"
                                 (click)="clickSubmit()">
                           Submit
                         </button>
-                        <button *ngIf="isEditing" type="button" class="btn btn-raised bg-teal waves-effect"
+                        <button *ngIf="isEditing" type="button" class="btn btn-raised btn-default waves-effect"
                                 (click)="clickCancel()">
                           Cancel
                         </button>

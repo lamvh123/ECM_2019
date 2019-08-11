@@ -14,6 +14,8 @@ export class OfficalStudentMenuBarComponent implements OnInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiStudent = new APIStudent();
+  centerId: number;
+
   listClass: Class[];
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
@@ -24,7 +26,11 @@ export class OfficalStudentMenuBarComponent implements OnInit, AfterViewInit {
   userName = '';
 
   ngOnInit() {
-    this.loadClassList();
+    const urlGetCenterId = this.apiContext.host + this.apiStudent.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.loadClassList();
+    });
   }
 
   className(): String {
@@ -78,7 +84,7 @@ export class OfficalStudentMenuBarComponent implements OnInit, AfterViewInit {
   loadClassList() {
     const url = this.apiContext.host + this.apiStudent.getClassList;
     const param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     this.http.get<Class[]>(url, {params: param}).toPromise().then(data => {
         this.listClass = data;
         console.log(this.listClass);

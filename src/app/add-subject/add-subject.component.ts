@@ -16,9 +16,11 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddSubjectComponent implements OnInit, AfterContentInit {
+export class AddSubjectComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   Name: string;
   errorMsgName = '-';
   isLoading = true;
@@ -27,6 +29,10 @@ export class AddSubjectComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit() {
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+    });
   }
 
   public loadScript(url: string) {
@@ -38,9 +44,12 @@ export class AddSubjectComponent implements OnInit, AfterContentInit {
     script.defer = true;
     body.appendChild(script);
   }
-  ngAfterContentInit(): void {
+
+  ngAfterViewInit(): void {
     this.isLoading = false;
   }
+
+
   // ngAfterViewInit() {
   //   // this.loadScript('/assets/bundles/libscripts.bundle.js');
   //   // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
@@ -54,12 +63,13 @@ export class AddSubjectComponent implements OnInit, AfterContentInit {
     const configUrl = this.apiContext.host + this.apiTraining.addSubject;
     const body = new HttpParams()
       .set('Name', this.Name)
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     console.log(body);
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
         // this.showMessage(true);
+        this.isLoading = false;
         this.redirectToAllSubject();
       },
       err => {
@@ -109,6 +119,7 @@ export class AddSubjectComponent implements OnInit, AfterContentInit {
       return true;
     }
   }
+
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }

@@ -28,6 +28,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
 
   Editor = ClassicEditor;
 
@@ -41,6 +42,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   errorMsgTotalSession = '';
   errorMsgSubject = '';
   errorMsgDescription = '';
+  isLoading = true;
 
 
   public onReady(editor) {
@@ -55,8 +57,12 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('id');
     console.log(this.courseId);
-    this.getAllSubjects();
-    this.loadCourseById();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getAllSubjects();
+      this.loadCourseById();
+    });
   }
 
   ngAfterViewInit() {
@@ -64,7 +70,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
     // this.loadScript('/assets/bundles/morphingsearchscripts.bundle.js');
-
+    this.isLoading = false;
   }
 
   public loadScript(url: string) {
@@ -78,6 +84,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   }
 
   loadCourseById() {
+    this.isLoading = true;
     const body = new HttpParams().set('courseId', this.courseId);
     // const body = new HttpParams().set('courseId', this.courseId)
     //   .set('CenterId', this.centerId.Id);
@@ -94,13 +101,16 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
         // this.StartDate = res.StartDate.substring(0, 10);
         // this.Description = res.Description;
 
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   updateCourse() {
+    this.isLoading = true;
     console.log(this.courseModel);
     const configUrl = this.apiContext.host + this.apiTraining.updateCourse;
     const body = new HttpParams()
@@ -111,16 +121,18 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
       .set('TotalSession', this.courseModel.TotalSession)
       .set('Description', this.courseModel.Description)
       .set('Fee', this.courseModel.Fee + '')
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     console.log(body);
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
         // this.showMessage(true);
+        this.isLoading = false;
         this.redirectToAllCourse();
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );
@@ -135,8 +147,9 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   }
 
   getAllSubjects() {
+    this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('subjectName', '');
     console.log(body);
     const configUrl = this.apiContext.host + this.apiTraining.searchSubject;
@@ -144,9 +157,11 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
         console.log(res);
         this.subjects = res;
         console.log(this.subjects);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
         // this.showMessage(false);
       });
   }

@@ -15,7 +15,7 @@ declare var $: any;
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit {
+export class ProfileComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   apiAdmission = new APIAdmission();
@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
     name: '',
     email: '',
     PhoneNumber: '',
-    Sex: '',
+    Sex: true,
     Id: '',
     Avatar: ''
   };
@@ -91,7 +91,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
   }
 
   public loadScript(url: string) {
-    const body = <HTMLDivElement>document.body;
+    const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
@@ -100,16 +100,12 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
     body.appendChild(script);
   }
 
-  ngAfterContentInit(): void {
-    this.isLoading = false;
-  }
-
   ngAfterViewInit() {
-    this.isLoading = false;
     // this.loadScript('../../assets/bundles/libscripts.bundle.js');
     // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.isLoading = false;
   }
 
 
@@ -143,7 +139,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
       .set('FullName', this.user.name)
       .set('Avatar', this.user.Avatar)
       .set('Email', this.user.email)
-      .set('Sex', this.user.Sex)
+      .set('Sex', this.user.Sex + '')
       .set('PhoneNumber', this.user.PhoneNumber);
 
     this.http.post<any>(configUrl, body).subscribe(res => {
@@ -192,12 +188,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterContentInit
     this.isEditing = false;
   }
 
-  changedGender() {
-    if (this.user.Sex == 'true') {
-      this.user.Sex = 'false';
-    } else {
-      this.user.Sex = 'true';
-    }
+  setradio(b: boolean) {
+    this.user.Sex = b;
   }
 }
 

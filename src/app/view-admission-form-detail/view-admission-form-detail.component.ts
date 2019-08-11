@@ -23,6 +23,8 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   @ViewChild('myselect') myselect;
   apiContext = new APIContext();
   apiAdmission = new APIAdmission();
+  centerId: number;
+
   formId;
   form: AdmissionForm;
   listBuilding: Observable<Building[]>;
@@ -43,15 +45,22 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   errorMsgBuilding = '';
   errorMsgDay = '';
   errorMsgSlot = '';
+  isLoading = true;
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private datepipe: DatePipe) {
   }
 
   ngOnInit() {
+    this.isLoading = true;
 
     this.formId = this.route.snapshot.paramMap.get('id');
     this.form = new AdmissionForm();
-    this.getInitData();
+    const urlGetCenterId = this.apiContext.host + this.apiAdmission.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getInitData();
+      this.isLoading = false;
+    });
   }
 
   addSelectedDay(item) {
@@ -60,9 +69,10 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   getInitData() {
+    this.isLoading = true;
     const getAllCourseUrl = this.apiContext.host + this.apiAdmission.getAdmissionFormById;
     const para = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('admissionFormId', this.formId);
     this.http.get<AdmissionForm>(getAllCourseUrl, {params: para}).toPromise().then(data => {
         this.form = data;
@@ -84,49 +94,58 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
         }
         console.log(this.form);
         this.getAllBuilding();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       }
     );
     this.getAllSlot();
   }
 
   getAllBuilding() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiAdmission.getAllBuilding;
-    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
+    const para = new HttpParams().set('centerId', this.centerId + '');
     this.http.get<Observable<Building[]>>(url, {params: para}).toPromise().then(data => {
         this.listBuilding = data;
         console.log(this.listBuilding);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   getAllSlot() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiAdmission.getAllSlot;
-    const para = new HttpParams().set('centerId', this.apiContext.centerId + '');
+    const para = new HttpParams().set('centerId', this.centerId + '');
     this.http.get<Slot[]>(url, {params: para}).toPromise().then(data => {
         this.listOfSlot = data;
         this.listOfSlot.forEach(function(item) {
           item.displayText = item.Name + ': ' + item.From + '-' + item.To;
         });
         console.log(this.listOfSlot);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   updateForm() {
+    this.isLoading = true;
     const date = new Date(this.form.StartDate);
     const dateString = this.datepipe.transform(date, 'MM-dd-yyyy');
     let para = new HttpParams().set('AdmissionFormId', this.formId)
       .set('CourseId', this.form.Course.Id + '').set('StartDate', dateString).set('Name', this.form.Name)
       .set('SlotId', this.selectedSlot + '')
       .set('BuildingId', this.selectedBuilding + '')
-      .set('IsClosed', false + '').set('CenterId', this.apiContext.centerId + '');
+      .set('IsClosed', false + '').set('CenterId', this.centerId + '');
     this.selectedDayArr.forEach(item => {
       para = para.append('DaysPerWeek', item + '');
     });
@@ -136,9 +155,11 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
 
         console.log(data);
         this.redirectToAllAdmissionForm();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
@@ -147,6 +168,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.isLoading = false;
   }
 
 

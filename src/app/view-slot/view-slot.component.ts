@@ -20,10 +20,20 @@ export class ViewSlotComponent implements OnInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   slotList: Slot[];
+  isLoading = true;
+;
 
   ngOnInit() {
-    this.getAllSlots();
+    this.isLoading = true;
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getAllSlots();
+      this.isLoading = false;
+    });
   }
 
   ngAfterViewInit() {
@@ -31,6 +41,7 @@ export class ViewSlotComponent implements OnInit, AfterViewInit {
     // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.isLoading = false;
   }
 
   public loadScript(url: string) {
@@ -44,17 +55,20 @@ export class ViewSlotComponent implements OnInit, AfterViewInit {
   }
 
   getAllSlots() {
+    this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
 
     const configUrl = this.apiContext.host + this.apiTraining.getAllSlot;
     this.http.get<Slot[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.slotList = res;
         console.log(this.slotList);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 

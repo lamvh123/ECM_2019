@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Building} from '../building';
@@ -16,7 +16,7 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddRoomComponent implements OnInit, AfterContentInit {
+export class AddRoomComponent implements OnInit, AfterViewInit {
 
   // tslint:disable-next-line:variable-name
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
@@ -24,6 +24,7 @@ export class AddRoomComponent implements OnInit, AfterContentInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
 
   roomNumber: string;
   capacity: string;
@@ -39,11 +40,17 @@ export class AddRoomComponent implements OnInit, AfterContentInit {
   isLoading = true;
 
   ngOnInit() {
-    this.getAllBuildings();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getAllBuildings();
+    });
   }
-  ngAfterContentInit(): void {
+
+  ngAfterViewInit(): void {
     this.isLoading = false;
   }
+
   public loadScript(url: string) {
     const body = document.body as HTMLDivElement;
     const script = document.createElement('script');
@@ -62,11 +69,12 @@ export class AddRoomComponent implements OnInit, AfterContentInit {
       .set('RoomNumber', this.roomNumber)
       .set('Capacity', this.capacity)
       .set('BuildingId', this.buildingId)
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
         // this.showMessage(true);
+        this.isLoading = false;
         this.redirectToAllRoom();
       },
       err => {
@@ -80,7 +88,7 @@ export class AddRoomComponent implements OnInit, AfterContentInit {
   getAllBuildings() {
     this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('name', '')
       .set('address', '');
 
@@ -183,6 +191,7 @@ export class AddRoomComponent implements OnInit, AfterContentInit {
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
+
   isInputNumber(evt) {
     const c = String.fromCharCode(evt.which);
     if (!(/[0-9]/.test(c))) {

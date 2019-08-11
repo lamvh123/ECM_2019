@@ -1,5 +1,5 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div class="container-fluid">
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
     <div class="block-header">
       <h2>Grant account for center {{centerName}}</h2>
       <!--      <small class="text-muted">Welcome to Swift application</small>-->
@@ -43,4 +43,5 @@
       </div>
     </div>
   </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>

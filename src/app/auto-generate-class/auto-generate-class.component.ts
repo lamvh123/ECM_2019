@@ -18,6 +18,7 @@ export class AutoGenerateClassComponent implements OnInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
 
   ListOfCourse: Course[];
   ListOfForm: AdmissionForm[];
@@ -26,7 +27,11 @@ export class AutoGenerateClassComponent implements OnInit {
   msg = '';
 
   ngOnInit() {
-    this.loadInitData();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.loadInitData();
+    });
   }
 
   loadInitData() {
@@ -37,7 +42,7 @@ export class AutoGenerateClassComponent implements OnInit {
   getAllCourse() {
 
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     const configUrl = this.apiContext.host + this.apiTraining.viewAllCourse;
     this.http.get<Course[]>(configUrl, {params: body}).toPromise().then(res => {
         this.ListOfCourse = res;
@@ -51,7 +56,7 @@ export class AutoGenerateClassComponent implements OnInit {
   loadForm() {
     const param = new HttpParams()
       .set('courseId', this.selectedCourseId + '')
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('isClosed', '1')
       .set('isCreatedClass', '0')
       .set('pageSize', '1000')
@@ -70,7 +75,7 @@ export class AutoGenerateClassComponent implements OnInit {
     const url = this.apiContext.host + this.apiTraining.generateClass;
     const param = new Array();
     this.listSelectedFormId.forEach(item => {
-      param.push({AdmissionFormId: item, CenterId: this.apiContext.centerId});
+      param.push({AdmissionFormId: item, CenterId: this.centerId});
     });
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);

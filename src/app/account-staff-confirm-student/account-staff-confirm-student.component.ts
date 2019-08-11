@@ -1,10 +1,9 @@
-import {AfterContentInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Course} from '../course';
 import {AdmissionForm} from '../admission-form';
 import {Student} from '../entity/student';
-import {SpinnerVisibilityService} from 'ng-http-loader';
 import {APIAccounting, APIContext} from '../APIContext';
 
 @Component({
@@ -14,13 +13,14 @@ import {APIAccounting, APIContext} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css', '../../assets/css/login.css']
 })
-export class AccountStaffConfirmStudentComponent implements OnInit, AfterContentInit {
+export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewInit {
 
-  constructor(private router: Router, private http: HttpClient, private spinner: SpinnerVisibilityService) {
+  constructor(private router: Router, private http: HttpClient) {
   }
 
   apiContext = new APIContext();
   apiAccounting = new APIAccounting();
+  centerId: number;
 
   listCourse: Course[];
   listForm: AdmissionForm[];
@@ -40,20 +40,23 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
   isLoading = true;
 
   ngOnInit() {
-    this.getInitData();
+    const urlGetCenterId = this.apiContext.host + this.apiAccounting.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getInitData();
+    });
   }
 
-  ngAfterContentInit(): void {
+  ngAfterViewInit(): void {
     this.isLoading = false;
   }
 
   getInitData() {
     this.isLoading = true;
-    this.spinner.show();
     this.loading = true;
     const getCourseUrl = this.apiContext.host + this.apiAccounting.getAllCourse;
     const param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     this.http.get<Course[]>(getCourseUrl, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listCourse = data;
@@ -66,7 +69,6 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
       });
     this.loadStudentData();
     this.loading = false;
-    this.spinner.hide();
 
 
   }
@@ -74,7 +76,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
   getAllForm() {
     this.isLoading = true;
     const param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     const url = this.apiContext.host + this.apiAccounting.getAllAdmissionForm;
     this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
         this.listForm = data;
@@ -88,18 +90,21 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
   }
 
   ReLoadForm() {
+    this.isLoading = true;
     this.selectedFormId = null;
     if (this.selectedCourseId != null && this.selectedCourseId != undefined) {
       const param = new HttpParams()
         .set('courseId', this.selectedCourseId)
-        .set('centerId', this.apiContext.centerId + '');
+        .set('centerId', this.centerId + '');
       const url = this.apiContext.host + this.apiAccounting.getAllAdmissionFormByCid;
       this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
           this.listForm = data;
           console.log(data);
+          this.isLoading = false;
         },
         error => {
           console.log(error);
+          this.isLoading = false;
         });
     } else {
       this.getAllForm();
@@ -132,7 +137,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
       .set('studentName', this.studentName)
       .set('phoneNumber', this.phoneNumber)
       .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     const getTotalurl = this.apiContext.host + this.apiAccounting.getTotalRegisteredStudent;
     this.http.get<number>(getTotalurl, {params: paramToGetTotal}).toPromise().then(data => {
         this.totalData = data;
@@ -149,7 +154,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
             .set('studentName', this.studentName)
             .set('phoneNumber', this.phoneNumber)
             .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
-            .set('centerId', this.apiContext.centerId + '')
+            .set('centerId', this.centerId + '')
             .set('pageSize', this.pageSize + '')
             .set('currentPage', this.currentPage + '');
           const url = this.apiContext.host + this.apiAccounting.searchRegisteredStudent;
@@ -201,7 +206,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
     if (item.IsPayment == false) {
       const param = new HttpParams()
         .set('StudentId', item.Id + '')
-        .set('CenterId', this.apiContext.centerId + '')
+        .set('CenterId', this.centerId + '')
         .set('IsPayment', 'true');
       const url = this.apiContext.host + this.apiAccounting.setPaymentForOneStudent;
       this.http.post(url, param).toPromise().then(data => {
@@ -223,7 +228,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
     if (item.IsPayment == true) {
       const param = new HttpParams()
         .set('StudentId', item.Id + '')
-        .set('CenterId', this.apiContext.centerId + '')
+        .set('CenterId', this.centerId + '')
         .set('IsPayment', 'false');
       const url = this.apiContext.host + this.apiAccounting.setPaymentForOneStudent;
       this.http.post(url, param).toPromise().then(data => {
@@ -245,7 +250,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
     const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == false);
     const param = new Array();
     selectedItems.forEach(item => {
-      param.push({StudentId: item.Id, CenterId: this.apiContext.centerId, IsPayment: true});
+      param.push({StudentId: item.Id, CenterId: this.centerId, IsPayment: true});
     });
     const url = this.apiContext.host + this.apiAccounting.setPaymentForManyStudent;
     this.http.post(url, param).toPromise().then(data => {
@@ -267,7 +272,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterContent
     const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == true);
     const param = new Array();
     selectedItems.forEach(item => {
-      param.push({StudentId: item.Id, CenterId: this.apiContext.centerId, IsPayment: false});
+      param.push({StudentId: item.Id, CenterId: this.centerId, IsPayment: false});
     });
     const url = this.apiContext.host + this.apiAccounting.setPaymentForManyStudent;
     this.http.post(url, param).toPromise().then(data => {

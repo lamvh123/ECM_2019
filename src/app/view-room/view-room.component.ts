@@ -13,25 +13,33 @@ import {APIContext, APITraining} from '../APIContext';
     '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class ViewRoomComponent implements OnInit, AfterContentInit {
+export class ViewRoomComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   buildings: Building[] = [];
   rooms: Room[] = [];
   isLoading = true;
 
   ngOnInit() {
-    this.getAllRooms();
+    this.isLoading = true;
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getAllRooms();
+      this.isLoading = false;
+    });
   }
 
   getAllRooms() {
     this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('roomNumber', '')
       .set('buildingId', '-1');
 
@@ -48,16 +56,13 @@ export class ViewRoomComponent implements OnInit, AfterContentInit {
       });
   }
 
-  ngAfterContentInit(): void {
+  ngAfterViewInit() {
+    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
     this.isLoading = false;
   }
-
-  // ngAfterViewInit() {
-  //   // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
-  // }
 
 
   public loadScript(url: string) {

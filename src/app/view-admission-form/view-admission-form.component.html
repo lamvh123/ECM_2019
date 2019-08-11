@@ -1,5 +1,5 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div class="container-fluid">
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
     <div class="block-header">
       <h2><font color="#78b83e"><b>All Forms</b></font></h2>
     </div>
@@ -57,6 +57,7 @@
     </div>
 
   </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>
 
 <div class="color-bg"></div>

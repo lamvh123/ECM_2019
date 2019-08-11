@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Center} from '../center';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
@@ -15,9 +15,10 @@ import {APIAdmission, APIContext} from '../APIContext';
   styleUrls: ['./view-admission-form.component.css', '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class ViewAdmissionFormComponent implements OnInit {
+export class ViewAdmissionFormComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiAdmission = new APIAdmission();
+  centerId: number;
 
   listCourse: Course[];
   courseId;
@@ -28,32 +29,45 @@ export class ViewAdmissionFormComponent implements OnInit {
   boolArr: string[] = ['true', 'false'];
   availbleCourses: Course[] = [];
   availbleSlots: Slot[] = [];
+  isLoading = false;
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
   ngOnInit() {
-    this.getInitData();
+    const urlGetCenterId = this.apiContext.host + this.apiAdmission.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getInitData();
+    });
     // this.getAvailbleCourses();
     // this.getAvailbleSlots();
   }
 
+  ngAfterViewInit(): void {
+    this.isLoading = false;
+  }
+
   getInitData() {
+    this.isLoading = true;
     const getAllCourseUrl = this.apiContext.host + this.apiAdmission.getAllCourse;
     const para = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     this.http.get<Course[]>(getAllCourseUrl, {params: para}).toPromise().then(data => {
         this.listCourse = data;
         console.log(this.listCourse);
         this.getAdmissionForm();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       }
     );
   }
 
   getAdmissionForm() {
+    this.isLoading = true;
     if (this.isClose == null) {
       this.isClosed = -1;
     } else {
@@ -65,15 +79,17 @@ export class ViewAdmissionFormComponent implements OnInit {
     }
     const parameters = new HttpParams()
       .set('courseId', this.courseId == null ? '-1' : this.courseId + '')
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('isClosed', this.isClosed + '');
     const url = this.apiContext.host + this.apiAdmission.searchAdmissionForm;
     this.http.get<AdmissionForm[]>(url, {params: parameters}).toPromise().then((data) => {
         console.log(data);
         this.listForm = data;
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       }
     );
   }
@@ -88,6 +104,7 @@ export class ViewAdmissionFormComponent implements OnInit {
   }
 
   closeForm(form: AdmissionForm) {
+    this.isLoading = true;
     const body = new HttpParams()
       .set('CenterId', '1')
       .set('AdmissionFormId', form.Id + '');
@@ -96,9 +113,11 @@ export class ViewAdmissionFormComponent implements OnInit {
     this.http.post(configUrl, body).toPromise().then(res => {
         console.log(res);
         form.IsClosed = true;
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 

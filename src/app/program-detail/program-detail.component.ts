@@ -23,6 +23,8 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   programId;
   programName = '';
   image = '';
@@ -36,10 +38,15 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   public Editor = ClassicEditor;
   // text editor
   description = '<p>Testing</p>';
+  isLoading = true;
 
   ngOnInit() {
     this.programId = this.route.snapshot.paramMap.get('id');
-    this.loadProgramById();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.loadProgramById();
+    });
   }
 
   public loadScript(url: string) {
@@ -56,10 +63,11 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/bundles/libscripts.bundle.js');
     // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
-
+    this.isLoading = false;
   }
 
   loadProgramById() {
+    this.isLoading = true;
     const body = new HttpParams()
       .set('programId', this.programId);
     this.http.get<any>(this.apiContext.host + this.apiTraining.getProgramByProgramId, {params: body}).toPromise().then(
@@ -68,30 +76,35 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
         this.programName = res.Name;
         this.image = res.Image;
         this.description = res.Description;
+        this.isLoading = false;
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );
   }
 
   updateProgram() {
+    this.isLoading = true;
     const configUrl = this.apiContext.host + this.apiTraining.updateProgram;
     const body = new HttpParams()
       .set('ProgramId', this.programId)
       .set('ProgramName', this.programName)
       .set('Description', this.description)
       .set('Image', this.image)
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
         // this.showMessage(true);
+        this.isLoading = false;
         this.redirectToAllProgram();
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );

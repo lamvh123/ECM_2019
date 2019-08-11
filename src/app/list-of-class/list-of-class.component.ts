@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Program} from '../program';
@@ -18,13 +18,15 @@ import {Room} from '../room';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class ListOfClassComponent implements OnInit {
+export class ListOfClassComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   listProgram: Program[];
   listCourse: Course[];
   listTimeTableStatus: TimetableStatus[] = [new TimetableStatus(0, 'False'), new TimetableStatus(1, 'True')];
@@ -37,9 +39,18 @@ export class ListOfClassComponent implements OnInit {
   totalData = 0;
   listPage;
   empty;
+  isLoading = true;
 
   ngOnInit() {
-    this.loadInitData();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.loadInitData();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.isLoading = false;
   }
 
   loadInitData() {
@@ -50,30 +61,36 @@ export class ListOfClassComponent implements OnInit {
   }
 
   loadProgram() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.searchProgram;
     const param = new HttpParams()
       .set('programName', '')
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     this.http.get<Program[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listProgram = data;
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   loadCourse() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.searchCourseByProgramId;
     const param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('programId', this.selectedProgramId == null ? '-1' : this.selectedProgramId + '');
     this.http.get<Course[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listCourse = data;
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
@@ -83,10 +100,11 @@ export class ListOfClassComponent implements OnInit {
   }
 
   loadClass() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.searchClass;
     const param = new HttpParams()
       .set('courseId', this.selectedCourseId == undefined ? '-1' : this.selectedCourseId + '')
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('programId', this.selectedProgramId == undefined ? '-1' : this.selectedProgramId + '')
       .set('IsCreatedTimeTable', this.selectedTimeTable == undefined ? '-1' : this.selectedTimeTable + '')
       .set('pageSize', this.pageSize + '')
@@ -95,9 +113,11 @@ export class ListOfClassComponent implements OnInit {
         console.log(data);
         this.listClass = data;
         this.unselectAll();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
     this.getTotalClassAndPagi();
   }
@@ -112,11 +132,12 @@ export class ListOfClassComponent implements OnInit {
   }
 
   getTotalClassAndPagi() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.searchClass;
     const param = new HttpParams()
       .set('programId', this.selectedProgramId == undefined ? '-1' : this.selectedProgramId + '')
       .set('courseId', this.selectedCourseId == undefined ? '-1' : this.selectedCourseId + '')
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('IsCreatedTimeTable', this.selectedTimeTable == undefined ? '-1' : this.selectedTimeTable + '')
       .set('pageSize', '1000')
       .set('currentPage', '1');
@@ -124,9 +145,11 @@ export class ListOfClassComponent implements OnInit {
         console.log(data);
         this.totalData = data.length;
         this.pagination(this.totalData);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
@@ -176,60 +199,72 @@ export class ListOfClassComponent implements OnInit {
   }
 
   getTeachersBySid(param: Class) {
+    this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('subjectId', param.SubjectId + '');
 
     const configUrl = this.apiContext.host + this.apiTraining.getTeacherBySubject;
     this.http.get<Teacher[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log('hic');
         param.TeacherList = res;
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   getRoomByCid(classModel: Class) {
+    this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('classId', classModel.ClassId + '');
 
     const configUrl = this.apiContext.host + this.apiTraining.getAllRoomAvailbleForClass;
     this.http.get<Room[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log('hic');
         classModel.RoomList = res;
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   assignTeacher(value: any, cId: string) {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.assignTeacherToClass;
     const param = new HttpParams()
       .set('TeacherId', value == undefined ? '-1' : value + '')
       .set('ClassId', cId == undefined ? '-1' : cId + '')
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 
   assignRoom(value: any, cId: string) {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.addRoomToClass;
     const param = new HttpParams()
       .set('RoomId', value == undefined ? '-1' : value + '')
       .set('ClassId', cId == undefined ? '-1' : cId + '')
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 }

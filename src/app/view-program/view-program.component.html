@@ -1,69 +1,73 @@
-<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div *ngIf="!isLoading" class="container-fluid">
-    <div class="block-header">
-      <h2 *ngIf="programs!=null && programs.length>0">All Programs</h2>
-      <h2 *ngIf="programs==null || programs.length<=0">There is no program in database.</h2>
-      <!--      <small class="text-muted">Welcome to Swift application</small>-->
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+  <div class="block-header">
+    <h2>All Programs</h2>
+    <!--      <small class="text-muted">Welcome to Swift application</small>-->
+  </div>
+  <div class="row clearfix search-area">
+    <div class="card" style="padding: 15px;">
+      <input style="border-top: none;border-left: none;border-right: none;" class="form-control"
+             placeholder="Program Name" id="coursename" maxlength="254"
+             [(ngModel)]="programName"
+             name="coursename"
+             type="text">
+      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-gy"
+              (click)="searchProgramByName()">Search
+      </button>
     </div>
+  </div>
+  <!--    <div class="row">-->
+  <!--      <div class="input-field col s12 required" id="id_email_container">-->
+  <!--        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="programName" name="coursename"-->
+  <!--               type="text">-->
+  <!--        <button type="submit" name="_submit" class="btn searchBtn" (click)="searchProgramByName()">Submit</button>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="row clearfix all-program-content">-->
 
-    <div class="row">
-      <div class="input-field col s12 required" id="id_email_container">
-        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="programName" name="coursename"
-               type="text">
-        <button type="submit" name="_submit" class="btn searchBtn" (click)="searchProgramByName()">Search</button>
-      </div>
-    </div>
-    <!--    <div class="row">-->
-    <!--      <div class="input-field col s12 required" id="id_email_container">-->
-    <!--        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="programName" name="coursename"-->
-    <!--               type="text">-->
-    <!--        <button type="submit" name="_submit" class="btn searchBtn" (click)="searchProgramByName()">Submit</button>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--    <div class="row clearfix all-program-content">-->
-
-    <div class="row clearfix">
-      <div *ngFor="let program of programs" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
-        <div class="thumbnail card animated fadeIn" style="min-width: 20vh;border: #e6e6e6 1px solid">
-          <ng-container
-            *ngIf="program.Image!=null; then imgNotNull; else imgNull">
-          </ng-container>
-          <ng-template #imgNotNull>
-            <img src="{{program.Image}}" alt="" class="img-fluid"
-                 (click)="navigateToProgramDetail(program)"
-                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
-          </ng-template>
-          <ng-template #imgNull>
-            <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"
-                 (click)="navigateToProgramDetail(program)"
-                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
-          </ng-template>
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+    <h3 *ngIf="programs==null || programs.length<=0">There is no program in database.</h3>
+    <div *ngFor="let program of programs" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
+      <div class="thumbnail card animated fadeIn" style="min-width: 20vh;border: #e6e6e6 1px solid">
+        <ng-container
+          *ngIf="program.Image!=null; then imgNotNull; else imgNull">
+        </ng-container>
+        <ng-template #imgNotNull>
+          <img src="{{program.Image}}" alt="" class="img-fluid"
+               (click)="navigateToProgramDetail(program)"
+               [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+        </ng-template>
+        <ng-template #imgNull>
+          <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"
+               (click)="navigateToProgramDetail(program)"
+               [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+        </ng-template>
 
 
-          <div class="caption  body">
-            <h3>{{program.Name}}</h3>
-            <!--            <p>Detail: {{program.Description}}</p>-->
-            <!--            <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>-->
-            <div class="btn-group-align">
-              <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"
-                      (click)="navigateToProgramDetail(program)">Detail</a></div>
-              <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"
-                      (click)="selectProgram(program)">Courses</a>
-              </div>
+        <div class="caption  body">
+          <h3>{{program.Name}}</h3>
+          <!--            <p>Detail: {{program.Description}}</p>-->
+          <!--            <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>-->
+          <div class="btn-group-align">
+            <div><a class="btn  btn-raised btn-info g-bg-cgreen waves-effect btn-fix-width" role="button"
+                    style="padding: 10px"
+                    (click)="navigateToProgramDetail(program)">Detail</a></div>
+            <div><a class="btn  btn-raised btn-info g-bg-blush2 waves-effect btn-fix-width" role="button"
+                    style="padding: 10px"
+                    (click)="selectProgram(program)">Courses</a>
             </div>
           </div>
-
         </div>
 
       </div>
 
-      <!--      <div class="col-sm-12 text-center">-->
-      <!--        <a href="#" class="btn btn-raised waves-effect g-bg-blush2" role="button">Load more</a>-->
-      <!--      </div>-->
     </div>
 
+    <!--      <div class="col-sm-12 text-center">-->
+    <!--        <a href="#" class="btn btn-raised waves-effect g-bg-blush2" role="button">Load more</a>-->
+    <!--      </div>-->
   </div>
   <app-loading-page *ngIf="isLoading"></app-loading-page>
+
 </section>
 
 <div class="color-bg"></div>

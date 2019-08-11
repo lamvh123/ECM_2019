@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {OfficalStudent} from '../entity/offical-student';
@@ -10,27 +10,39 @@ import {Class} from '../entity/class';
   templateUrl: './list-student-of-class.component.html',
   styleUrls: ['./list-student-of-class.component.css']
 })
-export class ListStudentOfClassComponent implements OnInit {
+export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   ClassId;
   ListStudent: OfficalStudent[];
   currentClass: Class;
+  isLoading = true;
 
   ngOnInit() {
     this.ClassId = this.route.snapshot.paramMap.get('cId');
-    this.loadClassInfo();
-    this.loadStudent();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.loadClassInfo();
+      this.loadStudent();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.isLoading = false;
   }
 
   loadStudent() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.getClassById;
     const param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('classId', this.ClassId);
     this.http.get<OfficalStudent[]>(url, {params: param}).toPromise().then(data => {
       console.log(data);
@@ -42,18 +54,31 @@ export class ListStudentOfClassComponent implements OnInit {
           item.realSex = 'Female';
         }
       });
-    });
+      this.isLoading = false;
+    },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+        // this.showMessage(false);
+      });
   }
 
   loadClassInfo() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.getDetailClassById;
     const param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('classId', this.ClassId);
     this.http.get<Class>(url, {params: param}).toPromise().then(data => {
       console.log(data);
       this.currentClass = data;
-    });
+      this.isLoading = false;
+    },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+        // this.showMessage(false);
+      });
   }
 
 }

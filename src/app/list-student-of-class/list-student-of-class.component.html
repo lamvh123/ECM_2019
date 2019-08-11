@@ -1,5 +1,5 @@
 <div style="width: 100%">
-  <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
     <table class="table studenttbl">
       <thead>
       <tr>
@@ -56,4 +56,5 @@
       </tbody>
     </table>
   </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
 </div>

@@ -24,6 +24,7 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
 
   constructor(private atp: AmazingTimePickerService, private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -31,8 +32,15 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
   Name: string;
   From = '00:00';
   To = '00:00';
+  isLoading = true;
+
+  errorMsgName = '-';
 
   ngOnInit() {
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+    });
   }
 
   public loadScript(url: string) {
@@ -52,24 +60,28 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
     // this.loadScript('/assets/plugins/momentjs/moment.js');
     // this.loadScript('/assets/js/TrainingDept/addcourse.js');
+    this.isLoading = false;
   }
 
   addSlot() {
+    this.isLoading = true;
     const configUrl = this.apiContext.host + this.apiTraining.addOneSlot;
     const body = new HttpParams()
       .set('Name', this.Name)
       .set('From', this.From + ':00')
       .set('To', this.To + ':00')
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     console.log(body);
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
         // this.showMessage(true);
+        this.isLoading = false;
         this.redirectToAllSlot();
       },
       err => {
         console.log(err);
+        this.isLoading = false;
         // this.showMessage(false);
       }
     );
@@ -118,4 +130,27 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
   //     this.redirectToAllSlot();
   //   }
   // }
+  checkValidName() {
+    if (this.Name != null) {
+      this.Name = this.formatText(this.Name);
+    }
+    if (this.Name == null || this.Name === '') {
+      this.errorMsgName = 'Name is required.';
+      return false;
+    } else {
+      this.errorMsgName = '';
+      return true;
+    }
+  }
+
+  checkValidFields() {
+    this.checkValidName();
+    if (this.checkValidName()) {
+      this.addSlot();
+    }
+  }
+
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
+  }
 }

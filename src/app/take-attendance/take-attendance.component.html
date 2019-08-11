@@ -1,69 +1,73 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div class="block-header">
-    <h2>ALL TIMETABLES</h2>
-    <!--      <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>-->
-  </div>
-  <!-- Basic Examples -->
-  <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="card">
-        <div class="header">
-          <h2 *ngIf="timetableList==null || timetableList.length<=0">There is no timetable in database.</h2>
-          <!--            <ul class="header-dropdown">-->
-          <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
-          <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
-          <!--                class="zmdi zmdi-more-vert"></i> </a>-->
-          <!--                <ul class="dropdown-menu pull-right">-->
-          <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
-          <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
-          <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
-          <!--                </ul>-->
-          <!--              </li>-->
-          <!--            </ul>-->
-        </div>
-        <div class="body table-responsive">
-          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-            <thead>
-            <tr>
-              <th>No</th>
-              <th>Date</th>
-              <th>Slot</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-            </thead>
-            <tbody *ngFor="let ttb of timetableList; index as ttlIndex">
-            <tr>
-              <td>{{ttlIndex + 1}}</td>
-              <td>{{ttb.LearningDay}}</td>
-              <td>{{ttb.slot.From + ' - ' + ttb.slot.To}}</td>
-              <ng-container *ngIf="ttb.AttendBy==null; then notYet; else didAttendance"></ng-container>
-              <ng-template #notYet>
-                <td><p class="col-blue-grey">Not yet</p></td>
-                <td>
-                  <button type="button" class="btn  btn-raised bg-cyan waves-effect"
-                          (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Take Attendance
-                  </button>
-                </td>
-              </ng-template>
-              <ng-template #didAttendance>
-                <td><p class="font-bold col-cyan">{{'Taken by ' + ttb.AttendBy.User.Full_Name}}</p>
-                  <!--                  <span style="color: #0f9d58"></span>-->
-                </td>
-                <td>
-                  <button type="button" class="btn  btn-raised bg-teal waves-effect"
-                          (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Update
-                    Attendance
-                  </button>
-                </td>
-              </ng-template>
-            </tr>
-            </tbody>
-          </table>
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
+    <div class="block-header">
+      <h2>ALL TIMETABLES</h2>
+      <!--      <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>-->
+    </div>
+    <!-- Basic Examples -->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="timetableList==null || timetableList.length<=0">There is no timetable in database.</h2>
+            <!--            <ul class="header-dropdown">-->
+            <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
+            <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
+            <!--                class="zmdi zmdi-more-vert"></i> </a>-->
+            <!--                <ul class="dropdown-menu pull-right">-->
+            <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
+            <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
+            <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
+            <!--                </ul>-->
+            <!--              </li>-->
+            <!--            </ul>-->
+          </div>
+          <div class="body table-responsive">
+            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+              <thead>
+              <tr>
+                <th>No</th>
+                <th>Date</th>
+                <th>Slot</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody *ngFor="let ttb of timetableList; index as ttlIndex">
+              <tr>
+                <td>{{ttlIndex + 1}}</td>
+                <td>{{ttb.LearningDay}}</td>
+                <td>{{ttb.slot.From + ' - ' + ttb.slot.To}}</td>
+                <ng-container *ngIf="ttb.AttendBy==null; then notYet; else didAttendance"></ng-container>
+                <ng-template #notYet>
+                  <td><p class="col-blue-grey">Not yet</p></td>
+                  <td>
+                    <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
+                            (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Take
+                      Attendance
+                    </button>
+                  </td>
+                </ng-template>
+                <ng-template #didAttendance>
+                  <td><p class="font-bold col-cyan">{{'Taken by ' + ttb.AttendBy.User.Full_Name}}</p>
+                    <!--                  <span style="color: #0f9d58"></span>-->
+                  </td>
+                  <td>
+                    <button type="button" class="btn  btn-raised bg-amber waves-effect"
+                            (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Update
+                      Attendance
+                    </button>
+                  </td>
+                </ng-template>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>
 
 

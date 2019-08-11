@@ -12,24 +12,30 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class ViewBuildingComponent implements OnInit, AfterContentInit {
+export class ViewBuildingComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   buildings: Building[];
   isLoading = true;
 
   ngOnInit() {
-    this.getAllBuildings();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getAllBuildings();
+    });
   }
 
   getAllBuildings() {
     this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('name', '')
       .set('address', '');
 
@@ -46,7 +52,7 @@ export class ViewBuildingComponent implements OnInit, AfterContentInit {
       });
   }
 
-  ngAfterContentInit(): void {
+  ngAfterViewInit(): void {
     this.isLoading = false;
   }
 

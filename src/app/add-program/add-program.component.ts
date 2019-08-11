@@ -18,10 +18,11 @@ import * as $ from 'jquery';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddProgramComponent implements OnInit, AfterContentInit, AfterViewInit {
+export class AddProgramComponent implements OnInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
 
   public Editor = ClassicEditor;
 
@@ -46,6 +47,10 @@ export class AddProgramComponent implements OnInit, AfterContentInit, AfterViewI
   }
 
   ngOnInit() {
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+    });
   }
 
   public loadScript(url: string) {
@@ -58,10 +63,6 @@ export class AddProgramComponent implements OnInit, AfterContentInit, AfterViewI
     body.appendChild(script);
   }
 
-  ngAfterContentInit(): void {
-    this.isLoading = false;
-  }
-
   ngAfterViewInit() {
     // this.loadScript('../../assets/bundles/libscripts.bundle.js');
     // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
@@ -70,6 +71,7 @@ export class AddProgramComponent implements OnInit, AfterContentInit, AfterViewI
     this.loadScript('../../assets/js/pages/ui/notifications.js');
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
     this.loadScript('../../assets/testJS.js');
+    this.isLoading = false;
 
   }
 
@@ -82,12 +84,13 @@ export class AddProgramComponent implements OnInit, AfterContentInit, AfterViewI
       .set('ProgramName', this.programName)
       .set('Image', this.image)
       .set('Description', this.description)
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
         // this.showMessage(true);
         this.showNoti('sBtn');
+        this.isLoading = false;
         this.redirectToAllProgram();
       },
       err => {
@@ -187,7 +190,6 @@ export class AddProgramComponent implements OnInit, AfterContentInit, AfterViewI
   showNoti(btnId: string) {
     const btn: HTMLElement = document.getElementById(btnId) as HTMLElement;
     btn.click();
-
 
 
     // $['notify']({

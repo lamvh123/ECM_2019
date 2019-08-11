@@ -13,6 +13,8 @@ import {APIContext, APITeacher} from '../APIContext';
 export class TeacherMenuBarComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTeacher = new APITeacher();
+  centerId: number;
+
   classList: Class[];
 
   constructor(private http: HttpClient, private _router: Router, private route: ActivatedRoute) {
@@ -23,7 +25,11 @@ export class TeacherMenuBarComponent implements OnInit, AfterViewInit {
   userName = '';
 
   ngOnInit() {
-    this.getListClasses();
+    const urlGetCenterId = this.apiContext.host + this.apiTeacher.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getListClasses();
+    });
   }
 
   className(): String {
@@ -80,7 +86,7 @@ export class TeacherMenuBarComponent implements OnInit, AfterViewInit {
 
   getListClasses() {
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
 
     const configUrl = this.apiContext.host + this.apiTeacher.getListOfClassOfTeacher;
     this.http.get<Class[]>(configUrl, {params: body}).toPromise().then(res => {

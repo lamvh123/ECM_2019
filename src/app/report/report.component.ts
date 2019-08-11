@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {APIContext, APITraining} from '../APIContext';
@@ -10,7 +10,7 @@ import {element} from '@angular/core/src/render3';
   styleUrls: ['./report.component.css', '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router,
   ) {
@@ -41,12 +41,18 @@ export class ReportComponent implements OnInit {
   totalProgramReport = 0;
   totalCourseReport = 0;
   totalClassReport = 0;
+  isLoading = true;
 
   ngOnInit() {
     this.getInitData();
   }
 
+  ngAfterViewInit(): void {
+    this.isLoading = false;
+  }
+
   getInitData() {
+    this.isLoading = true;
     var urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
     this.http.get(urlGetCenterId).toPromise().then(data => {
       this.centerId = data['Id'];
@@ -54,37 +60,45 @@ export class ReportComponent implements OnInit {
       this.getNumberOfClass();
       this.getNumberOfCourse();
       this.getNumberOfProgram();
+      this.isLoading = false;
     });
   }
 
   getNumberOfProgram() {
+    this.isLoading = true;
     var url = this.apiContext.host + this.apiTraining.getNumberOfProgram;
     var param = new HttpParams().set('centerId', this.centerId);
     this.http.get<number>(url, {params: param}).toPromise().then(data => {
       console.log(data);
       this.totalProgramReport = data;
+      this.isLoading = false;
     });
   }
 
   getNumberOfCourse() {
+    this.isLoading = true;
     var url = this.apiContext.host + this.apiTraining.getNumberOfCourse;
     var param = new HttpParams().set('centerId', this.centerId);
     this.http.get<number>(url, {params: param}).toPromise().then(data => {
       console.log(data);
       this.totalCourseReport = data;
+      this.isLoading = false;
     });
   }
 
   getNumberOfClass() {
+    this.isLoading = true;
     var url = this.apiContext.host + this.apiTraining.getNumberOfClass;
     var param = new HttpParams().set('centerId', this.centerId);
     this.http.get<number>(url, {params: param}).toPromise().then(data => {
       console.log(data);
       this.totalClassReport = data;
+      this.isLoading = false;
     });
   }
 
   getStatisticProgram() {
+    this.isLoading = true;
     var url = this.apiContext.host + this.apiTraining.getStatisticByProgram;
     var param = new HttpParams().set('centerId', this.centerId);
     this.http.get<any[]>(url, {params: param}).toPromise().then(data => {
@@ -99,9 +113,11 @@ export class ReportComponent implements OnInit {
         this.totalCourse = [...this.totalCourse];
         this.totalEarning = [...this.totalEarning];
         console.log(this.totalCourse);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
+        this.isLoading = false;
       });
   }
 

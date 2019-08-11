@@ -19,9 +19,10 @@ import {APIContext, APITraining} from '../APIContext';
 })
 
 
-export class AddBuildingComponent implements OnInit, AfterContentInit {
+export class AddBuildingComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
   errorMsgName = '-';
   errorMsgAddress = '-';
 
@@ -33,6 +34,10 @@ export class AddBuildingComponent implements OnInit, AfterContentInit {
   isLoading = true;
 
   ngOnInit() {
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+    });
 
   }
 
@@ -46,10 +51,11 @@ export class AddBuildingComponent implements OnInit, AfterContentInit {
     body.appendChild(script);
   }
 
-
-  ngAfterContentInit(): void {
+  ngAfterViewInit(): void {
     this.isLoading = false;
   }
+
+
   // ngAfterViewInit() {
   //   // this.loadScript('/assets/bundles/libscripts.bundle.js');
   //   // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
@@ -63,7 +69,7 @@ export class AddBuildingComponent implements OnInit, AfterContentInit {
     const body = new HttpParams()
       .set('Name', this.buildingName)
       .set('Address', this.buildingAddress)
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
@@ -87,24 +93,6 @@ export class AddBuildingComponent implements OnInit, AfterContentInit {
   redirectToAddBuilding() {
     this._router.navigateByUrl('/Training-staff/add-building');
   }
-
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A building was added successfully.' +
-  //       '\nDo you want to add more buildings?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToAddBuilding();
-  //   } else {
-  //     this.redirectToViewBuilding();
-  //   }
-  // }
-
 
   checkValidName() {
     if (this.buildingName != null) {

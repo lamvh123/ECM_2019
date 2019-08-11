@@ -1,5 +1,5 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div class="container-fluid">
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
     <div class="block-header">
       <h2>Add New Center</h2>
       <!--      <small class="text-muted">Welcome to Swift application</small>-->
@@ -40,7 +40,8 @@
                 <div class="form-group">
                   <label for="PhoneNumber">Phone Number:</label>
                   <div class="form-line">
-                    <input type="number" [(ngModel)]="PhoneNumber" class="form-control" placeholder="Phone Number" id="PhoneNumber"
+                    <input type="number" [(ngModel)]="PhoneNumber" class="form-control" placeholder="Phone Number"
+                           id="PhoneNumber"
                            required (change)="checkValidPhoneNumber()" (focusout)="checkValidPhoneNumber()">
                   </div>
                   <div class="error-msg" *ngIf="errorPhoneNumber!=null && errorPhoneNumber.length>1">
@@ -66,7 +67,8 @@
                 <div class="form-group">
                   <label for="Owner">Owner:</label>
                   <div class="form-line">
-                    <input type="text" [(ngModel)]="ResponsiblePersonFullname" class="form-control" placeholder="Owner" id="Owner"
+                    <input type="text" [(ngModel)]="ResponsiblePersonFullname" class="form-control" placeholder="Owner"
+                           id="Owner"
                            required (change)="checkValidOwner()" (focusout)="checkValidOwner()">
                   </div>
                   <div class="error-msg" *ngIf="errorOwner!=null && errorOwner.length>1">
@@ -88,4 +90,5 @@
       </div>
     </div>
   </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>

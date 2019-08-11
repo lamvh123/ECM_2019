@@ -42,7 +42,7 @@ export class APIStudent {
   profile = 'api/Student/profile';
   updateProfile = 'api/Student/UpdateProfile';
   getCourseOfStudent = 'api/Student/GetCourseOfStudent';
-  getTimeTableOfStudent = 'api/Student/GetTimeTableOfParticularClass';
+  getTimeTableOfParticularClass = 'api/Student/GetTimeTableOfParticularClass';
   getClassList = 'api/Student/GetClassListOfStudent';
 }
 

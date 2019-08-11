@@ -1,5 +1,5 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div *ngIf="!isLoading" class="container-fluid">
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
     <ng-http-loader
       [backgroundColor]="'#ff0000'"
       [debounceDelay]="1000"

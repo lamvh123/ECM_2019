@@ -64,13 +64,18 @@
   margin-left: auto;
 }
 
-.card:hover{
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
-}
-.searchBtn:hover{
+.card:hover {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
 }
 
-.btn-fix-width{
+.searchBtn:hover {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+}
+
+.btn-fix-width {
   max-width: 10vw;
+}
+
+.search-area .card:hover {
+  box-shadow: none !important;
 }

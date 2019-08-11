@@ -1,58 +1,55 @@
-<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div *ngIf="!isLoading" class="container-fluid">
-    <div class="block-header">
-      <h2>Add Subject</h2>
-      <!--      <small class="text-muted">Welcome to Swift application</small>-->
-    </div>
-    <div class="row clearfix">
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="card">
-          <div class="header">
-            <h2>Subject Basic Information
-              <!--              <small>Description text here...</small>-->
-            </h2>
-            <ul class="header-dropdown">
-              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                      role="button" aria-haspopup="true" aria-expanded="false"><i
-                class="zmdi zmdi-more-vert"></i></a>
-                <ul class="dropdown-menu pull-right">
-                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-                  <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="body">
-            <div class="row clearfix">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="subjectName">Subject Name:</label>
-                  <div class="form-line">
-                    <input type="text" [(ngModel)]="Name" class="form-control" placeholder="Name"
-                           id="subjectName" required (change)="checkValidName()" (focusout)="checkValidName()">
-                  </div>
-                  <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
-                    {{errorMsgName}}
-                  </div>
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+  <div class="block-header">
+    <h2>Add Subject</h2>
+    <!--      <small class="text-muted">Welcome to Swift application</small>-->
+  </div>
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card">
+        <div class="header">
+          <h2>Subject Basic Information
+            <!--              <small>Description text here...</small>-->
+          </h2>
+          <ul class="header-dropdown">
+            <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                    role="button" aria-haspopup="true" aria-expanded="false"><i
+              class="zmdi zmdi-more-vert"></i></a>
+              <ul class="dropdown-menu pull-right">
+                <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="body">
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="subjectName">Subject Name:</label>
+                <div class="form-line">
+                  <input type="text" [(ngModel)]="Name" class="form-control" placeholder="Name"
+                         id="subjectName" required (change)="checkValidName()" (focusout)="checkValidName()">
+                </div>
+                <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
+                  {{errorMsgName}}
                 </div>
               </div>
             </div>
-            <div class="row clearfix">
-              <div class="col-sm-12">
-                <button (click)="checkValidFields()" type="submit"
-                        class="btn btn-raised waves-effect g-bg-blush2">Add Subject
-                </button>
-                <button (click)="redirectToAllSubject()" type="submit" class="btn btn-raised btn-default waves-effect">
-                  Cancel
-                </button>
-              </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <button (click)="checkValidFields()" type="submit"
+                      class="btn btn-raised waves-effect g-bg-blush2">Add Subject
+              </button>
+              <button (click)="redirectToAllSubject()" type="submit" class="btn btn-raised btn-default waves-effect">
+                Cancel
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
   <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>

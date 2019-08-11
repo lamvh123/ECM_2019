@@ -18,7 +18,7 @@ declare var logInForm: any;
     // , '../../assets/css/animate.css'
   ]
 })
-export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
     $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
     $.getScript('../../assets/js/pages/ui/notifications.js');
     $.getScript('../../assets/bundles/mainscripts.bundle.js');
+    this.isLoading = false;
   }
 
   constructor(private _auth: AuthService,
@@ -81,10 +82,6 @@ export class LoginComponent implements OnInit, AfterContentInit, AfterViewInit {
       this._router.navigate(['/Teacher/profile']);
     }
 
-  }
-
-  ngAfterContentInit(): void {
-    this.isLoading = false;
   }
 
   public loadScript(url: string) {

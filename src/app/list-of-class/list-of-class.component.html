@@ -1,140 +1,123 @@
-<div class="row">
-  <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 20px">
-    <ng-select [items]="listProgram" bindLabel="Name" bindValue="Id" placeholder="Select Program"
-               (change)="reloadCourse()"
-               (clear)="reloadCourse()" [(ngModel)]="selectedProgramId">
-    </ng-select>
-  </div>
-  <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 20px">
-    <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
-               [(ngModel)]="selectedCourseId">
-    </ng-select>
-  </div>
-  <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 20px">
-    <ng-select [items]="listTimeTableStatus" bindLabel="Name" bindValue="Id" placeholder="TimeTable Is Created"
-               (clear)="resetTimeTableStatus()"
-               [(ngModel)]="selectedTimeTable">
-    </ng-select>
-  </div>
-  <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 20px">
-    <button type="submit" name="_submit" (click)="searchClass()" class="btn searchBtn">Search</button>
-  </div>
-</div>
-<div *ngIf="empty"></div>
-<div *ngIf="!empty" style="width: 100%">
-  <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
-    <table class="table studenttbl table-hover">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Class Name</th>
-        <th scope="col">Number of student</th>
-        <th scope="col">Assign teacher</th>
-        <th scope="col">Assign room</th>
-        <th scope="col">View detail</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let class of listClass;index as i;">
-        <td>{{i + 1}}</td>
-        <td>{{class.ClassName}}</td>
-        <td>{{class.NumberOfStudent}}</td>
-        <td>
-          <select class="form-control show-tick" (change)="assignTeacher($event.target.value, class.ClassId+'')"
-                  id="selectTeacher"
-                  required>
-            <ng-container
-              *ngIf="class.Teachers!=null && class.Teachers.length>0; then teacherNotNull; else teacherIsNull"></ng-container>
-            <ng-template #teacherIsNull>
-              <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id">
-                {{teacherModel.User.Full_Name}}
-              </option>
-            </ng-template>
-            <ng-template #teacherNotNull>
-              <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id"
-                      [selected]="teacherModel.Id==class.Teachers[0].Id">
-                {{teacherModel.User.Full_Name}}
-              </option>
-            </ng-template>
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
 
-          </select>
-        </td>
-        <td>
-          <select class="form-control show-tick" (change)="assignRoom($event.target.value, class.ClassId+'')"
-                  id="selectRoom"
-                  required>
-            <ng-container
-              *ngIf="class.RoomList!=null && class.RoomList.length>0; then roomNotNull; else roomIsNull"></ng-container>
-            <ng-template #roomIsNull>
-              <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id">
-                {{roomModel.RoomNumber}}
-              </option>
-            </ng-template>
-            <ng-template #roomNotNull>
-              <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id"
-                      [selected]="roomModel.Id==class.RoomId">
-                {{roomModel.RoomNumber}}
-              </option>
-            </ng-template>
-          </select>
-        </td>
-        <td>
-          <button type="button" class="btn  btn-raised bg-cyan waves-effect"
-                  (click)="navigateToListStudent(class)">View detail
-          </button>
-        </td>
-
-
-        <!-- <td [class.check-availble]="student.IsPayment"
-          [class.reject-availble]="!student.IsPayment">{{student.IsPayment}}</td>
-      <td>
-        <div class="row">
-          <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>
-
-          <ng-template #canCheck>
-            <div class="col-lg-5 col-xl-5">
-              <button (click)="ConfirmFee(student,index)" class="confirm-btn">
-                <i class="fa fa-check check-availble" style="font-size:24px" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="col-lg-5 col-xl-5">
-              <button class="confirm-btn">
-                <i class="fa fa-times reject-unavailble" style="font-size:24px"></i>
-              </button>
-            </div>
-          </ng-template>
-          <ng-template #cannotCheck>
-            <div class="col-lg-5 col-xl-5">
-              <button class="confirm-btn">
-                <i class="fa fa-check check-unavailble" style="font-size:24px" aria-hidden="true"></i>
-              </button>
-            </div>
-
-            <div class="col-lg-5 col-xl-5">
-              <button (click)="RejectFee(student,index)" class="confirm-btn">
-                <i class="fa fa-times reject-availble" style="font-size:24px"></i>
-              </button>
-            </div>
-          </ng-template>
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card">
+        <div style="float: left;width: 32%;margin-left: 1%">
+          <ng-select [items]="listProgram" bindLabel="Name" bindValue="Id" placeholder="Select Program"
+                     (change)="reloadCourse()"
+                     (clear)="reloadCourse()" [(ngModel)]="selectedProgramId">
+          </ng-select>
         </div>
-      </td> -->
-      </tr>
-      </tbody>
-    </table>
+        <div style="float: left;width: 32%;margin-left: 1%">
+          <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
+                     [(ngModel)]="selectedCourseId">
+          </ng-select>
+        </div>
+        <div style="float: left;width: 32%;margin-left: 1%">
+          <ng-select [items]="listTimeTableStatus" bindLabel="Name" bindValue="Id" placeholder="TimeTable Is Created"
+                     (clear)="resetTimeTableStatus()"
+                     [(ngModel)]="selectedTimeTable">
+          </ng-select>
+        </div>
+        <br style="clear: left;"/>
+        <button style="float: right;margin-right: 1%" type="submit" name="_submit" (click)="searchClass()"
+                class="btn g-bg-gy searchBtn">
+          Search Class
+        </button>
+
+      </div>
+    </div>
   </div>
-  <!--  <div class="row">-->
-  <!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">-->
-  <!--      <ng-select [items]="listPageSize" placeholder="Select page size" [(ngModel)]="pageSize"-->
-  <!--                 (change)="changePageSize()" [clearable]="false">-->
-  <!--      </ng-select>-->
-  <!--    </div>-->
-  <!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">-->
-  <!--      <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}} items</p>-->
-  <!--    </div>-->
-  <!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">-->
-  <!--      <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"-->
-  <!--                 [(ngModel)]="currentPage" (change)="changePage()" [clearable]="false">-->
-  <!--      </ng-select>-->
-  <!--    </div>-->
-  <!--  </div>-->
-</div>
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card">
+        <div class="header">
+          <h3 *ngIf="empty">There is no class in database.</h3>
+          <!--            <ul class="header-dropdown">-->
+          <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
+          <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
+          <!--                class="zmdi zmdi-more-vert"></i> </a>-->
+          <!--                <ul class="dropdown-menu pull-right">-->
+          <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
+          <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
+          <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
+          <!--                </ul>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+        </div>
+        <div class="body table-responsive">
+          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+            <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Class Name</th>
+              <th scope="col">Number of student</th>
+              <th scope="col">Assign teacher</th>
+              <th scope="col">Assign room</th>
+              <th scope="col">View detail</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let class of listClass;index as i;">
+              <td>{{i + 1}}</td>
+              <td>{{class.ClassName}}</td>
+              <td>{{class.NumberOfStudent}}</td>
+              <td>
+                <select class="form-control show-tick hoverSelect"
+                        (change)="assignTeacher($event.target.value, class.ClassId+'')"
+                        id="selectTeacher"
+                        required>
+                  <ng-container
+                    *ngIf="class.Teachers!=null && class.Teachers.length>0; then teacherNotNull; else teacherIsNull"></ng-container>
+                  <ng-template #teacherIsNull>
+                    <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id">
+                      {{teacherModel.User.Full_Name}}
+                    </option>
+                  </ng-template>
+                  <ng-template #teacherNotNull>
+                    <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id"
+                            [selected]="teacherModel.Id==class.Teachers[0].Id">
+                      {{teacherModel.User.Full_Name}}
+                    </option>
+                  </ng-template>
+
+                </select>
+              </td>
+              <td>
+                <select class="form-control show-tick hoverSelect"
+                        (change)="assignRoom($event.target.value, class.ClassId+'')"
+                        id="selectRoom"
+                        required>
+                  <ng-container
+                    *ngIf="class.RoomList!=null && class.RoomList.length>0; then roomNotNull; else roomIsNull"></ng-container>
+                  <ng-template #roomIsNull>
+                    <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id">
+                      {{roomModel.RoomNumber}}
+                    </option>
+                  </ng-template>
+                  <ng-template #roomNotNull>
+                    <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id"
+                            [selected]="roomModel.Id==class.RoomId">
+                      {{roomModel.RoomNumber}}
+                    </option>
+                  </ng-template>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
+                        (click)="navigateToListStudent(class)">View detail
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
+</section>
+
+<div class="color-bg"></div>

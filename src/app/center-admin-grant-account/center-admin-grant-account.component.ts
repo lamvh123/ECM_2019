@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Course} from '../course';
@@ -14,13 +14,15 @@ import {APICenter, APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class CenterAdminGrantAccountComponent implements OnInit, AfterContentInit {
+export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, private http: HttpClient) {
   }
 
   apiContext = new APIContext();
   apiCenter = new APICenter();
+  centerId: number;
+
   listCourse: Course[];
   listForm: AdmissionForm[];
   selectedCourseId;
@@ -39,11 +41,15 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
 
 
   ngOnInit() {
-    this.getInitData();
+    const urlGetCenterId = this.apiContext.host + this.apiCenter.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getInitData();
+    });
     console.log('complete');
   }
 
-  ngAfterContentInit(): void {
+  ngAfterViewInit(): void {
     this.isLoading = false;
   }
 
@@ -51,11 +57,12 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
     this.isLoading = true;
     const getCourseUrl = this.apiContext.host + this.apiCenter.getAllCourse;
     const param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     this.http.get<Course[]>(getCourseUrl, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listCourse = data;
         this.getAllForm();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
@@ -68,7 +75,7 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
   getAllForm() {
     this.isLoading = true;
     const param = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     const url = this.apiContext.host + this.apiCenter.getAllAdmissionForm;
     this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
         this.listForm = data;
@@ -87,7 +94,7 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
     if (this.selectedCourseId != null && this.selectedCourseId != undefined) {
       const param = new HttpParams()
         .set('courseId', this.selectedCourseId)
-        .set('centerId', this.apiContext.centerId + '');
+        .set('centerId', this.centerId + '');
       const url = this.apiContext.host + this.apiCenter.getAllAdmissionFormByCid;
       this.http.get<AdmissionForm[]>(url, {params: param}).toPromise().then(data => {
           this.listForm = data;
@@ -129,13 +136,14 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
       .set('studentName', this.studentName)
       .set('phoneNumber', this.phoneNumber)
       .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
     const getTotalurl = this.apiContext.host + this.apiCenter.getTotalRegisteredStudent;
     this.http.get<number>(getTotalurl, {params: paramToGetTotal}).toPromise().then(data => {
         this.totalData = data;
         console.log(data);
         if (this.totalData == 0) {
           this.empty = true;
+          this.isLoading = false;
         }
         if (this.totalData != 0) {
           this.pagination(this.totalData);
@@ -145,7 +153,7 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
             .set('studentName', this.studentName)
             .set('phoneNumber', this.phoneNumber)
             .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId)
-            .set('centerId', this.apiContext.centerId + '')
+            .set('centerId', this.centerId + '')
             .set('pageSize', this.pageSize + '')
             .set('currentPage', this.currentPage + '');
           const url = this.apiContext.host + this.apiCenter.searchRegisteredStudent;
@@ -196,7 +204,7 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
     this.isLoading = true;
     const url = this.apiContext.host + this.apiCenter.grantAccountForStudent;
     const param = new Array();
-    param.push({RegisteredCandidateId: student.Id, CenterId: this.apiContext.centerId});
+    param.push({RegisteredCandidateId: student.Id, CenterId: this.centerId});
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
         this.msg = 'success';
@@ -216,7 +224,7 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterContentIni
     const param = new Array();
     const listSelectedStudent = this.listStudent.filter(item => item.selected && item.IsPayment && !item.IsGrantedAccount);
     listSelectedStudent.forEach(item => {
-      param.push({RegisteredCandidateId: item.Id, CenterId: this.apiContext.centerId});
+      param.push({RegisteredCandidateId: item.Id, CenterId: this.centerId});
     });
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);

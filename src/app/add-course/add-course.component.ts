@@ -19,11 +19,12 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class AddCourseComponent implements OnInit, AfterContentInit {
+export class AddCourseComponent implements OnInit, AfterViewInit {
   public Editor = ClassicEditor;
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
 
   programId;
   courseName = '';
@@ -54,7 +55,11 @@ export class AddCourseComponent implements OnInit, AfterContentInit {
 
   ngOnInit() {
     this.programId = this.route.snapshot.paramMap.get('id');
-    this.getAllSubjects();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getAllSubjects();
+    });
   }
 
   public loadScript(url: string) {
@@ -66,9 +71,11 @@ export class AddCourseComponent implements OnInit, AfterContentInit {
     script.defer = true;
     body.appendChild(script);
   }
-  ngAfterContentInit(): void {
+
+  ngAfterViewInit(): void {
     this.isLoading = false;
   }
+
   // ngAfterViewInit() {
   //   // this.loadScript('/assets/bundles/libscripts.bundle.js');
   //   // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
@@ -88,12 +95,13 @@ export class AddCourseComponent implements OnInit, AfterContentInit {
       .set('Description', this.Description)
       .set('ProgramId', this.programId)
       .set('SubjectId', this.subjectId)
-      .set('CenterId', this.apiContext.centerId + '');
+      .set('CenterId', this.centerId + '');
     console.log(body);
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
         // this.showMessage(true);
+        this.isLoading = false;
         this.redirectToViewCourse();
       },
       err => {
@@ -117,7 +125,7 @@ export class AddCourseComponent implements OnInit, AfterContentInit {
   getAllSubjects() {
     this.isLoading = true;
     const body = new HttpParams()
-      .set('centerId', this.apiContext.centerId + '')
+      .set('centerId', this.centerId + '')
       .set('subjectName', '');
     const configUrl = this.apiContext.host + this.apiTraining.searchSubject;
     this.http.get<Subject[]>(configUrl, {params: body}).toPromise().then(res => {

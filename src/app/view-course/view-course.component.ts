@@ -13,13 +13,15 @@ import {APIContext, APITraining} from '../APIContext';
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css']
 })
-export class ViewCourseComponent implements OnInit, AfterContentInit {
+export class ViewCourseComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
   apiContext = new APIContext();
   apiTraining = new APITraining();
+  centerId: number;
+
   programId;
   courseName = '';
   ListOfCourse: Course[];
@@ -27,22 +29,26 @@ export class ViewCourseComponent implements OnInit, AfterContentInit {
   isLoading = true;
 
   ngOnInit() {
+    this.isLoading = true;
     this.programId = this.route.snapshot.paramMap.get('id');
-    this.loadProgramById(this.programId);
-    this.getAllCourse();
+    const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.loadProgramById(this.programId);
+      this.getAllCourse();
+      this.isLoading = false;
+    });
     console.log(this.programId);
-  }
-
-  ngAfterContentInit(): void {
     this.isLoading = false;
   }
 
-  // ngAfterViewInit() {
-  //   // this.loadScript('../../assets/bundles/libscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
-  //   // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
-  // }
+  ngAfterViewInit() {
+    // this.loadScript('../../assets/bundles/libscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
+    // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.isLoading = false;
+  }
 
   public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;
@@ -76,7 +82,7 @@ export class ViewCourseComponent implements OnInit, AfterContentInit {
     const body = new HttpParams()
       .set('courseName', this.courseName.trim().toLowerCase())
       .set('programId', this.programId)
-      .set('centerId', this.apiContext.centerId + '');
+      .set('centerId', this.centerId + '');
 
     const configUrl = this.apiContext.host + this.apiTraining.searchCourse;
     this.http.get<Course[]>(configUrl, {params: body}).toPromise().then(res => {

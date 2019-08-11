@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {LearningSession} from '../entity/learning-session';
 import {APIContext, APIStudent} from '../APIContext';
 import {Class} from '../entity/class';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-timetable',
@@ -12,7 +13,7 @@ import {Class} from '../entity/class';
 })
 export class ViewTimetableComponent implements OnInit, AfterViewInit {
 
-  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -64,6 +65,7 @@ export class ViewTimetableComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -80,6 +82,7 @@ export class ViewTimetableComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 

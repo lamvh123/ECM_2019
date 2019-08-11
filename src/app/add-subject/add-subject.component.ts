@@ -3,6 +3,7 @@ import {Subject} from '../subject';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-subject',
@@ -25,7 +26,7 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
   errorMsgName = '-';
   isLoading = true;
 
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -70,6 +71,7 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
         console.log(res);
         // this.showMessage(true);
         this.isLoading = false;
+        this.toastr.success('Subject ' + this.Name + ' was added successfully.', 'Success!');
         this.redirectToAllSubject();
       },
       err => {

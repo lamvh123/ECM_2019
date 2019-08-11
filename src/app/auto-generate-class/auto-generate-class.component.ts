@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Course} from '../course';
 import {AdmissionForm} from '../admission-form';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-auto-generate-class',
@@ -13,7 +14,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 export class AutoGenerateClassComponent implements OnInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -24,7 +25,6 @@ export class AutoGenerateClassComponent implements OnInit {
   ListOfForm: AdmissionForm[];
   selectedCourseId = -1;
   listSelectedFormId: any[];
-  msg = '';
 
   ngOnInit() {
     const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
@@ -50,6 +50,7 @@ export class AutoGenerateClassComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -68,6 +69,7 @@ export class AutoGenerateClassComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -79,18 +81,14 @@ export class AutoGenerateClassComponent implements OnInit {
     });
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
-        this.msg = 'success';
         this.loadForm();
         this.listSelectedFormId = [];
+        this.toastr.success(this.listSelectedFormId.length + ' class(es) was generated successfully.', 'Success!');
       },
       error => {
         console.log(error);
-        this.msg = 'error';
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
-  }
-
-  removeMessage() {
-    this.msg = '';
   }
 
 }

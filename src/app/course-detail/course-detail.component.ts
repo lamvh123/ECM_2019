@@ -7,6 +7,7 @@ import {Building} from '../building';
 import {Router} from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -23,7 +24,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 export class CourseDetailComponent implements OnInit, AfterViewInit {
 
-  constructor(private routers: Router, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private routers: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -128,11 +129,13 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
         console.log(res);
         // this.showMessage(true);
         this.isLoading = false;
+        this.toastr.success('Course ' + this.courseModel.Name + ' was updated successfully.', 'Success!');
         this.redirectToAllCourse();
       },
       err => {
         console.log(err);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         // this.showMessage(false);
       }
     );
@@ -162,40 +165,15 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
         // this.showMessage(false);
       });
   }
 
 
-  // redirectToProgram(programId: number) {
-  //   this.routers.navigate(['/Training-staff/view-course', programId]);
-  // }
-
-
   redirectToAllCourse() {
     this.routers.navigateByUrl('/Training-staff/view-course/' + this.courseModel.Program.Id);
   }
-
-  redirectToUpdateCourse() {
-    this.routers.navigateByUrl('/Training-staff/course-detail/' + this.courseModel.Id);
-  }
-
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A course was updated successfully.' +
-  //       '\nDo you want to update anything else?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToUpdateCourse();
-  //   } else {
-  //     this.redirectToAllCourse();
-  //   }
-  // }
 
 
   checkValidName() {
@@ -291,6 +269,8 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
     this.checkValidDescription();
     if (this.checkValidName() && this.checkValidTotalSession() && this.checkValidFee() && this.checkValidSubject() && this.checkValidImage() && this.checkValidDescription()) {
       this.updateCourse();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 

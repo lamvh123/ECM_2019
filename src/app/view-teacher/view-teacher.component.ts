@@ -2,7 +2,8 @@ import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core'
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Teacher} from '../teacher';
 import {APIContext, APITraining} from '../APIContext';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-teacher',
@@ -23,7 +24,7 @@ export class ViewTeacherComponent implements OnInit, AfterViewInit {
   teacherName = '';
   teacherEmail = '';
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -58,6 +59,7 @@ export class ViewTeacherComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 

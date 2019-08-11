@@ -3,6 +3,7 @@ import {APIContext, APIPassword} from '../APIContext';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import * as $ from 'jquery';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,7 +23,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit {
   errorMsgEmail = '-';
   isLoading = true;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -55,17 +56,13 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit {
     this.checkValidEmail();
     if (this.checkValidEmail()) {
       this.sendRequestReset();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
-  }
-
-
-  showNoti(btnId: string) {
-    const btn: HTMLElement = document.getElementById(btnId) as HTMLElement;
-    btn.click();
   }
 
   private sendRequestReset() {
@@ -80,13 +77,13 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit {
         console.log(res);
         // this.showMessage(true);
         this.isLoading = false;
-        this.showNoti('sBtn');
+        this.toastr.success('Reset password link is sent. Check your email.', 'Success!');
         this.redirectToLogin();
       },
       err => {
         console.log(err);
         this.isLoading = false;
-        this.showNoti('fBtn');
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         // this.showMessage(false);
       }
     );

@@ -2,8 +2,9 @@ import {Component, OnInit, AfterViewInit, Inject, AfterContentInit} from '@angul
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Program} from '../program';
 import {MenuBarComponent} from '../menu-bar/menu-bar.component';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-program',
@@ -17,7 +18,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 export class ViewProgramComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -53,6 +54,7 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -90,6 +92,7 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 

@@ -1,9 +1,10 @@
 import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Building} from '../building';
 import {Subject} from '../subject';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-subjects',
@@ -15,7 +16,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 export class ViewSubjectsComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -51,6 +52,7 @@ export class ViewSubjectsComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 

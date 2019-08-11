@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Course} from '../course';
 import {Program} from '../program';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-course',
@@ -15,7 +16,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 export class ViewCourseComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -73,6 +74,7 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
       err => {
         console.log(err);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       }
     );
   }
@@ -93,6 +95,7 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 

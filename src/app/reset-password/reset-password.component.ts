@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {APIContext, APIPassword} from '../APIContext';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as $ from 'jquery';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-reset-password',
@@ -26,7 +27,7 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit {
   apiPassword = new APIPassword();
   isLoading = true;
 
-  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService) {
     this.activatedRoute.queryParams.subscribe(params => {
       const token: string = params['token'];
       const code: string = params['code'];
@@ -122,17 +123,13 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit {
     this.checkValidRePassword();
     if (this.checkValidPassword() && this.checkValidRePassword()) {
       this.updatePassword();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
-  }
-
-
-  showNoti(btnId: string) {
-    const btn: HTMLElement = document.getElementById(btnId) as HTMLElement;
-    btn.click();
   }
 
   private updatePassword() {
@@ -148,13 +145,13 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit {
       res => {
         console.log(res);
         // this.showMessage(true);
-        this.showNoti('sBtn');
+        this.toastr.success('Reset password successfully.', 'Success!');
         this.isLoading = false;
         this.redirectToLogin();
       },
       err => {
         console.log(err);
-        this.showNoti('fBtn');
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         this.isLoading = false;
         // this.showMessage(false);
       }

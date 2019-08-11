@@ -5,6 +5,7 @@ import {Program} from '../program';
 import {Course} from '../course';
 import {Class} from '../entity/class';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-auto-generate-timetable',
@@ -14,7 +15,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 export class AutoGenerateTimetableComponent implements OnInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -58,6 +59,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -72,6 +74,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -96,6 +99,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
     this.getTotalClassAndPagi();
   }
@@ -121,6 +125,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -167,17 +172,13 @@ export class AutoGenerateTimetableComponent implements OnInit {
     const url = this.apiContext.host + this.apiTraining.generateTimeTable;
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
-        this.msg = 'success';
+        this.toastr.success('Time table of ' + listSelectedClass.length + ' class(es) was generated successfully.', 'Success!');
         this.loadClass();
       },
       error => {
         console.log(error);
-        this.msg = 'error';
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
-  }
-
-  removeMessage() {
-    this.msg = '';
   }
 
 }

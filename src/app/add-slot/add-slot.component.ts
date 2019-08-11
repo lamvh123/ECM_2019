@@ -7,6 +7,7 @@ import {AmazingTimePickerService} from 'amazing-time-picker';
 import {Slot} from '../slot';
 import {Center} from '../center';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-slot',
@@ -26,7 +27,7 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
   apiTraining = new APITraining();
   centerId: number;
 
-  constructor(private atp: AmazingTimePickerService, private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private atp: AmazingTimePickerService, private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   Name: string;
@@ -77,11 +78,13 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
         console.log(res);
         // this.showMessage(true);
         this.isLoading = false;
+        this.toastr.success('Slot ' + this.Name + ' was added successfully.', 'Success!');
         this.redirectToAllSlot();
       },
       err => {
         console.log(err);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         // this.showMessage(false);
       }
     );
@@ -147,6 +150,8 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
     this.checkValidName();
     if (this.checkValidName()) {
       this.addSlot();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 

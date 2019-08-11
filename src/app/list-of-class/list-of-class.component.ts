@@ -9,6 +9,7 @@ import {TimetableStatus} from '../timetableStatus';
 import {Teacher} from '../teacher';
 import {forEach} from '@angular/router/src/utils/collection';
 import {Room} from '../room';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-of-class',
@@ -20,7 +21,7 @@ import {Room} from '../room';
 })
 export class ListOfClassComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -74,6 +75,7 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -91,6 +93,7 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -118,6 +121,7 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
     this.getTotalClassAndPagi();
   }
@@ -150,6 +154,7 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -213,6 +218,7 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -231,10 +237,11 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
-  assignTeacher(value: any, cId: string) {
+  assignTeacher(value: any, cId: string, cName: string) {
     this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.assignTeacherToClass;
     const param = new HttpParams()
@@ -244,14 +251,16 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
         this.isLoading = false;
+        this.toastr.success('Assign new teacher for class ' + cName + ' successfully.', 'Success!');
       },
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
   }
 
-  assignRoom(value: any, cId: string) {
+  assignRoom(value: any, cId: string, cName: string) {
     this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.addRoomToClass;
     const param = new HttpParams()
@@ -261,10 +270,12 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
         this.isLoading = false;
+        this.toastr.success('Assign new room for class ' + cName + ' successfully.', 'Success!');
       },
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
   }
 }

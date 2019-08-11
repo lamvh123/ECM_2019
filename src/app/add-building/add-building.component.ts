@@ -3,6 +3,7 @@ import {Component, OnInit, AfterViewInit, AfterContentInit} from '@angular/core'
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {Router, ActivatedRoute, Routes} from '@angular/router';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-building',
@@ -26,7 +27,7 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
   errorMsgName = '-';
   errorMsgAddress = '-';
 
-  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   buildingName = '';
@@ -74,11 +75,13 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
       res => {
         console.log(res);
         // this.showMessage(true);
-        this.redirectToViewBuilding();
+        this.toastr.success('Building ' + this.buildingName + ' was added successfully.', 'Success!');
         this.isLoading = false;
+        this.redirectToViewBuilding();
       },
       err => {
         console.log(err);
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         this.isLoading = false;
         // this.showMessage(false);
       }
@@ -88,10 +91,6 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
 
   redirectToViewBuilding() {
     this._router.navigateByUrl('/Training-staff/view-building');
-  }
-
-  redirectToAddBuilding() {
-    this._router.navigateByUrl('/Training-staff/add-building');
   }
 
   checkValidName() {
@@ -125,6 +124,8 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
     this.checkValidAddress();
     if (this.checkValidName() && this.checkValidAddress()) {
       this.addBuilding();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 

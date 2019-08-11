@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {APIContext, APITraining} from '../APIContext';
 import {element} from '@angular/core/src/render3';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-report',
@@ -12,8 +13,7 @@ import {element} from '@angular/core/src/render3';
 })
 export class ReportComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router,
-  ) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -118,6 +118,7 @@ export class ReportComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.warning('Something is missing.', 'Alert!');
       });
   }
 

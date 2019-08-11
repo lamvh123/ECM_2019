@@ -63,26 +63,29 @@ import {AutoGenerateTimetableComponent} from './auto-generate-timetable/auto-gen
 import {ListOfClassComponent} from './list-of-class/list-of-class.component';
 import {ListStudentOfClassComponent} from './list-student-of-class/list-student-of-class.component';
 
-import { CenterStaffViewClosedAdmissionFormComponent } from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component';
-import { OfficalStudentMenuBarComponent } from './offical-student-menu-bar/offical-student-menu-bar.component';
-import { ViewTimetableComponent } from './view-timetable/view-timetable.component';
-import { TeacherMenuBarComponent } from './teacher-menu-bar/teacher-menu-bar.component';
-import { TeacherViewTimetableComponent } from './teacher-view-timetable/teacher-view-timetable.component';
-import { ReportComponent } from './report/report.component'; 
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SystemAdminMenuBarComponent } from './system-admin-menu-bar/system-admin-menu-bar.component';
-import { SystemAdminGetAllCenterComponent } from './system-admin-get-all-center/system-admin-get-all-center.component';
-import { SystemAdminAddNewCenterComponent } from './system-admin-add-new-center/system-admin-add-new-center.component';
-import { SystemAdminGrantAccountComponent } from './system-admin-grant-account/system-admin-grant-account.component';
+import {CenterStaffViewClosedAdmissionFormComponent}
+  from './center-staff-view-closed-admission-form/center-staff-view-closed-admission-form.component';
+import {OfficalStudentMenuBarComponent} from './offical-student-menu-bar/offical-student-menu-bar.component';
+import {ViewTimetableComponent} from './view-timetable/view-timetable.component';
+import {TeacherMenuBarComponent} from './teacher-menu-bar/teacher-menu-bar.component';
+import {TeacherViewTimetableComponent} from './teacher-view-timetable/teacher-view-timetable.component';
+import {ReportComponent} from './report/report.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {SystemAdminMenuBarComponent} from './system-admin-menu-bar/system-admin-menu-bar.component';
+import {SystemAdminGetAllCenterComponent} from './system-admin-get-all-center/system-admin-get-all-center.component';
+import {SystemAdminAddNewCenterComponent} from './system-admin-add-new-center/system-admin-add-new-center.component';
+import {SystemAdminGrantAccountComponent} from './system-admin-grant-account/system-admin-grant-account.component';
 import {LoadingPageComponent} from './loading-page/loading-page.component';
 import {ViewTeacherComponent} from './view-teacher/view-teacher.component';
 import {AssignTeacherForClassComponent} from './assign-teacher-for-class/assign-teacher-for-class.component';
 import {AddTeacherComponent} from './add-teacher/add-teacher.component';
-import { TakeAttendanceComponent } from './take-attendance/take-attendance.component';
+import {TakeAttendanceComponent} from './take-attendance/take-attendance.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
+import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
+
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -157,8 +160,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     CKEditorModule,
     NgHttpLoaderModule,
     NgxChartsModule,
+    NgbModule,
     BrowserAnimationsModule,
-    NgbModule
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right'
+    })
   ],
   providers: [AuthService, AuthGuard, AdminGuardGuard, TrainingStaffGuard, {
     provide: HTTP_INTERCEPTORS,

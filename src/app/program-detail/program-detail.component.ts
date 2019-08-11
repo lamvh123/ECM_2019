@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-program-detail',
@@ -18,7 +19,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 export class ProgramDetailComponent implements OnInit, AfterViewInit {
 
-  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -81,6 +82,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
       err => {
         console.log(err);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
         // this.showMessage(false);
       }
     );
@@ -100,11 +102,13 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
         console.log(res);
         // this.showMessage(true);
         this.isLoading = false;
+        this.toastr.success('Program ' + this.programName + ' was updated successfully.', 'Success!');
         this.redirectToAllProgram();
       },
       err => {
         console.log(err);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         // this.showMessage(false);
       }
     );
@@ -131,27 +135,6 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   redirectToAllProgram() {
     this._router.navigateByUrl('/Training-staff/view-program');
   }
-
-  redirectToUpdateProgram() {
-    this._router.navigateByUrl('/Training-staff/program-detail/' + this.programId);
-  }
-
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A program was updated successfully.' +
-  //       '\nDo you want to update anything else?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToUpdateProgram();
-  //   } else {
-  //     this.redirectToAllProgram();
-  //   }
-  // }
 
 
   checkValidName() {
@@ -200,6 +183,8 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
     this.checkValidDescription();
     if (this.checkValidName() && this.checkValidImage() && this.checkValidDescription()) {
       this.updateProgram();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 

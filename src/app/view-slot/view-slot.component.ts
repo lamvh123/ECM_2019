@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Slot} from '../slot';
 import {Program} from '../program';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-slot',
@@ -15,7 +16,7 @@ import {APIContext, APITraining} from '../APIContext';
 })
 export class ViewSlotComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -69,6 +70,7 @@ export class ViewSlotComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 

@@ -4,6 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
 import * as $ from 'jquery';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -43,7 +44,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     );
   }
 
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -75,7 +76,6 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
 
   }
 
-  //this is add program
   addProgram() {
     this.isLoading = true;
     console.log(this.description);
@@ -88,19 +88,16 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {
         console.log(res);
-        // this.showMessage(true);
-        this.showNoti('sBtn');
         this.isLoading = false;
+        this.toastr.success('Program ' + this.programName + ' was added successfully.', 'Success!');
         this.redirectToAllProgram();
       },
       err => {
         console.log(err);
         this.isLoading = false;
-        this.showNoti('fBtn');
-        // this.showMessage(false);
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       }
     );
-    // this.showNoti('sBtn');
   }
 
   onUploadCompleted($event: any) {
@@ -111,27 +108,6 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/Training-staff/view-program');
     // this.showNoti('fBtn');
   }
-
-  redirectToAddProgram() {
-    this.router.navigateByUrl('/Training-staff/add-program');
-  }
-
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A program was added successfully.' +
-  //       '\nDo you want to add more programs?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToAddProgram();
-  //   } else {
-  //     this.redirectToAllProgram();
-  //   }
-  // }
 
 
   checkValidName() {
@@ -184,24 +160,9 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     this.checkValidDescription();
     if (this.checkValidName() && this.checkValidImage() && this.checkValidDescription()) {
       this.addProgram();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 
-  showNoti(btnId: string) {
-    const btn: HTMLElement = document.getElementById(btnId) as HTMLElement;
-    btn.click();
-
-
-    // $['notify']({
-    //   title: '<strong>Heads up!</strong>',
-    //   message: 'You can use any of bootstraps other alert styles as well by default.'
-    // }, {
-    //   type: 'success',
-    //   animate: {
-    //     enter: 'animated fadeInRight',
-    //     exit: 'animated fadeOutRight'
-    //   },
-    //   newest_on_top: true
-    // });
-  }
 }

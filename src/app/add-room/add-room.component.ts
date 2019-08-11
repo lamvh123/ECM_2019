@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Building} from '../building';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-room',
@@ -19,7 +20,7 @@ import {APIContext, APITraining} from '../APIContext';
 export class AddRoomComponent implements OnInit, AfterViewInit {
 
   // tslint:disable-next-line:variable-name
-  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -75,11 +76,13 @@ export class AddRoomComponent implements OnInit, AfterViewInit {
         console.log(res);
         // this.showMessage(true);
         this.isLoading = false;
+        this.toastr.success('Room ' + this.roomNumber + ' was added successfully.', 'Success!');
         this.redirectToAllRoom();
       },
       err => {
         console.log(err);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         // this.showMessage(false);
       }
     );
@@ -102,6 +105,7 @@ export class AddRoomComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
         // this.showMessage(false);
       });
   }
@@ -185,6 +189,8 @@ export class AddRoomComponent implements OnInit, AfterViewInit {
     this.checkValidBuilding();
     if (this.checkValidName() && this.checkValidCapacity() && this.checkValidBuilding()) {
       this.addRoom();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 

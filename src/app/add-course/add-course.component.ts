@@ -5,6 +5,7 @@ import {Building} from '../building';
 import {Subject} from '../subject';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
     );
   }
 
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -102,11 +103,13 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
         console.log(res);
         // this.showMessage(true);
         this.isLoading = false;
+        this.toastr.success('Course ' + this.courseName + ' was added successfully.', 'Success!');
         this.redirectToViewCourse();
       },
       err => {
         console.log(err);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         // this.showMessage(false);
       }
     );
@@ -137,40 +140,14 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
         // this.showMessage(false);
       });
-  }
-
-  // redirectToViewCourse() {
-  //   this.router.navigate(['/Training-staff/view-course', this.programId]);
-  // }
-
-
-  redirectToAddCourse() {
-    this.router.navigateByUrl('/Training-staff/add-course/' + this.programId);
   }
 
   redirectToViewCourse() {
     this.router.navigateByUrl('/Training-staff/view-course/' + this.programId);
   }
-
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A course was added successfully.' +
-  //       '\nDo you want to add more courses?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToAddCourse();
-  //   } else {
-  //     this.redirectToViewCourse();
-  //   }
-  // }
-
 
   checkValidName() {
     if (this.courseName != null) {
@@ -265,6 +242,8 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
     this.checkValidDescription();
     if (this.checkValidName() && this.checkValidTotalSession() && this.checkValidFee() && this.checkValidSubject() && this.checkValidImage() && this.checkValidDescription()) {
       this.addCourse();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 

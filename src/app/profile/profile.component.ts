@@ -1,8 +1,9 @@
 import {Component, OnInit, AfterViewInit, AfterContentInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {AuthService} from '../auth.service';
 import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITraining, APITeacher} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 declare var jquery: any;
 declare var $: any;
@@ -37,7 +38,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   buttonLabel = '';
   isLoading = true;
 
-  constructor(private router: Router, private http: HttpClient, private auth: AuthService) {
+  constructor(private router: Router, private http: HttpClient, private auth: AuthService, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -86,6 +87,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           }
         }
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
 
   }
@@ -151,6 +153,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         this.user.Id = res.Id;
         console.log(res);
         this.isLoading = false;
+        this.toastr.success('Profile was updated successfully.', 'Success!');
       },
       error => {
         if (error instanceof HttpErrorResponse) {
@@ -159,6 +162,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           }
         }
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
   }
 

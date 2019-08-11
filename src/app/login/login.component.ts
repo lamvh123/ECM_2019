@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITeacher, APITraining} from '../APIContext';
 import * as $ from 'jquery';
+import {ToastrService} from 'ngx-toastr';
 
 declare var logInForm: any;
 
@@ -15,7 +16,6 @@ declare var logInForm: any;
     , '../../assets/css/main.css'
     , '../../assets/css/themes/all-themes.css'
     , '../../assets/css/login.css'
-    // , '../../assets/css/animate.css'
   ]
 })
 export class LoginComponent implements OnInit, AfterViewInit {
@@ -52,8 +52,25 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private _auth: AuthService,
-              private _router: Router, private http: HttpClient) {
+              private _router: Router, private http: HttpClient, private toastr: ToastrService) {
   }
+
+  showSuccess() {
+    this.toastr.success('Login successfully.', 'Success!');
+  }
+
+  showError() {
+    this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+  }
+
+  showWarning() {
+    this.toastr.warning('Something is missing.', 'Alert!');
+  }
+
+  //
+  // showInfo() {
+  //   this.toastr.info('Just some information for you.');
+  // }
 
   ngOnInit() {
 
@@ -138,10 +155,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         this.isLoading = false;
         if (distUrl == null || distUrl == 'undefined' || distUrl.length < 1) {
-          this.showNoti('fBtn');
+          this.showError();
         } else {
           this.getProfile(configUrl);
-          this.showNoti('sBtn');
+          this.showSuccess();
           this._router.navigate([distUrl]);
         }
       },
@@ -150,7 +167,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.loginMessage = err.error.error_description;
         this.loginFail = true;
         this.isLoading = false;
-        this.showNoti('fBtn');
+        this.showError();
       }
     );
 
@@ -208,19 +225,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.checkValidPassword();
     if (this.checkValidUsername() && this.checkValidPassword()) {
       this.loginUser();
+    } else {
+      this.showWarning();
     }
   }
 
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
-
-
-  showNoti(btnId: string) {
-    const btn: HTMLElement = document.getElementById(btnId) as HTMLElement;
-    btn.click();
-  }
-
 
 }
 

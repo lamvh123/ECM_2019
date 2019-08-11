@@ -65,7 +65,7 @@
               <td>{{class.NumberOfStudent}}</td>
               <td>
                 <select class="form-control show-tick hoverSelect"
-                        (change)="assignTeacher($event.target.value, class.ClassId+'')"
+                        (change)="assignTeacher($event.target.value, class.ClassId+'', class.ClassName)"
                         id="selectTeacher"
                         required>
                   <ng-container
@@ -86,7 +86,7 @@
               </td>
               <td>
                 <select class="form-control show-tick hoverSelect"
-                        (change)="assignRoom($event.target.value, class.ClassId+'')"
+                        (change)="assignRoom($event.target.value, class.ClassId+'', class.ClassName)"
                         id="selectRoom"
                         required>
                   <ng-container

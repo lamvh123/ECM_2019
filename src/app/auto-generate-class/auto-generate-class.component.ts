@@ -54,6 +54,11 @@ export class AutoGenerateClassComponent implements OnInit {
       });
   }
 
+  clearCourseAndLoadForm() {
+    this.selectedCourseId = -1;
+    this.loadForm();
+  }
+
   loadForm() {
     const param = new HttpParams()
       .set('courseId', this.selectedCourseId + '')

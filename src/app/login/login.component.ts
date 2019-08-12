@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   apiStudent = new APIStudent();
   apiTeacher = new APITeacher();
 
-  loginFail = false;
   loginMessage: string;
   loginUserData = {
     username: '',
@@ -55,19 +54,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
               private _router: Router, private http: HttpClient, private toastr: ToastrService) {
   }
 
-  showSuccess() {
-    this.toastr.success('Login successfully.', 'Success!');
-  }
-
-  showError() {
-    this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
-  }
-
-  showWarning() {
-    this.toastr.warning('Something is missing.', 'Alert!');
-  }
-
-  //
+  // showSuccess() {
+  //   this.toastr.success('Login successfully.', 'Success!');
+  // }
+  // showError() {
+  //   this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+  // }
+  // showWarning() {
+  //   this.toastr.warning('Something is missing.', 'Alert!');
+  // }
   // showInfo() {
   //   this.toastr.info('Just some information for you.');
   // }
@@ -155,31 +150,30 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         this.isLoading = false;
         if (distUrl == null || distUrl == 'undefined' || distUrl.length < 1) {
-          this.showError();
+          this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         } else {
-          this.getProfile(configUrl);
-          this.showSuccess();
-          this._router.navigate([distUrl]);
+          this.getProfile(configUrl, distUrl);
         }
       },
       err => {
         console.log(err);
         this.loginMessage = err.error.error_description;
-        this.loginFail = true;
         this.isLoading = false;
-        this.showError();
+        this.toastr.error(this.loginMessage, 'Oops!');
       }
     );
 
   }
 
-  getProfile(configUrl: string) {
+  getProfile(configUrl: string, distUrl: string) {
     this.isLoading = true;
     this.http.get<any>(configUrl).subscribe(res => {
         console.log(res);
         localStorage.setItem('userAvatar', res.Avatar);
         localStorage.setItem('userName', res.FullName);
         this.isLoading = false;
+        this.toastr.success('Login successfully. Welcome ' + res.FullName, 'Success!');
+        this._router.navigateByUrl(distUrl);
       },
       error => {
         console.log(error);
@@ -226,7 +220,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.checkValidUsername() && this.checkValidPassword()) {
       this.loginUser();
     } else {
-      this.showWarning();
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 

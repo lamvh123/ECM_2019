@@ -80,7 +80,6 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   }
 
   loadCourse() {
-    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.searchCourseByProgramId;
     const param = new HttpParams()
       .set('centerId', this.centerId + '')
@@ -88,11 +87,9 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
     this.http.get<Course[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listCourse = data;
-        this.isLoading = false;
       },
       error => {
         console.log(error);
-        this.isLoading = false;
         this.toastr.info('Something is not working right. Please try again soon.');
       });
   }

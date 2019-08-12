@@ -5,17 +5,21 @@ import {Course} from '../course';
 import {AdmissionForm} from '../admission-form';
 import {Student} from '../entity/student';
 import {APIAccounting, APIContext} from '../APIContext';
+import * as $ from 'jquery';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-account-staff-confirm-student',
   templateUrl: './account-staff-confirm-student.component.html',
   styleUrls: ['./account-staff-confirm-student.component.css'
     , '../../assets/css/main.css'
-    , '../../assets/css/themes/all-themes.css', '../../assets/css/login.css']
+    , '../../assets/css/themes/all-themes.css'
+    , '../../assets/css/login.css'
+    , '../../assets/plugins/sweetalert/sweetalert.css']
 })
 export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewInit {
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -28,16 +32,18 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
   selectedFormId;
   studentName = '';
   phoneNumber = '';
-  pageSize = 20;
+  pageSize = 15;
   currentPage = 1;
   listStudent: Student[];
   totalData = 0;
   empty = true;
   listPage: any[];
   listPageSize = [5, 10, 20, 50];
-  msg = '';
   loading: boolean;
   isLoading = true;
+  listPageDisplay: number[];
+  isSelectedAll = false;
+
 
   ngOnInit() {
     const urlGetCenterId = this.apiContext.host + this.apiAccounting.getCenter;
@@ -66,6 +72,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
     this.loadStudentData();
     this.loading = false;
@@ -86,6 +93,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -105,6 +113,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
         error => {
           console.log(error);
           this.isLoading = false;
+          this.toastr.info('Something is not working right. Please try again soon.');
         });
     } else {
       this.getAllForm();
@@ -115,11 +124,11 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
     this.listPage = new Array();
     if (totalData % this.pageSize == 0) {
       for (let i = 1; i <= totalData / this.pageSize; i++) {
-        this.listPage.push({value: i, text: 'Page ' + i});
+        this.listPage.push(i);
       }
     } else {
       for (let i = 1; i <= Math.floor(totalData / this.pageSize) + 1; i++) {
-        this.listPage.push({value: i, text: 'Page ' + i});
+        this.listPage.push(i);
       }
     }
   }
@@ -131,6 +140,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
   }
 
   loadStudentData() {
+    this.isSelectedAll = false;
     this.isLoading = true;
     const paramToGetTotal = new HttpParams()
       .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
@@ -148,6 +158,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
         }
         if (this.totalData != 0) {
           this.pagination(this.totalData);
+          this.updateListPageDisplay();
           this.empty = false;
           const param = new HttpParams()
             .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
@@ -177,14 +188,60 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
             error => {
               console.log(error);
               this.isLoading = false;
+              this.toastr.info('Something is not working right. Please try again soon.');
             });
         }
       },
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
 
+  }
+
+  updateListPageDisplay() {
+    this.listPageDisplay = [];
+    if (this.listPage != null && this.listPage.length > 0) {
+      switch (this.listPage.length) {
+        case 1: {
+          this.listPageDisplay.push(1);
+          break;
+        }
+        case 2: {
+          this.listPageDisplay.push(1);
+          this.listPageDisplay.push(2);
+          break;
+        }
+        default: {
+          switch (this.currentPage) {
+            case 1: {
+              this.listPageDisplay.push(1);
+              this.listPageDisplay.push(2);
+              this.listPageDisplay.push(3);
+              break;
+            }
+            case this.listPage.length: {
+              this.listPageDisplay.push(this.listPage.length - 2);
+              this.listPageDisplay.push(this.listPage.length - 1);
+              this.listPageDisplay.push(this.listPage.length);
+              break;
+            }
+            default: {
+              this.listPageDisplay.push(this.currentPage - 1);
+              this.listPageDisplay.push(this.currentPage);
+              this.listPageDisplay.push(this.currentPage + 1);
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+    console.log('this.listPage = ');
+    console.log(this.listPage);
+    console.log('this.listPageDisplay = ');
+    console.log(this.listPageDisplay);
   }
 
   changePageSize() {
@@ -197,7 +254,10 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
     this.loadStudentData();
   }
 
-  changePage() {
+  changePage(cPage: number) {
+    this.currentPage = cPage;
+    console.log('current page = ' + this.currentPage);
+    // this.updateListPageDisplay();
     this.loadStudentData();
   }
 
@@ -212,13 +272,14 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
       this.http.post(url, param).toPromise().then(data => {
           console.log(data);
           this.listStudent[index].IsPayment = true;
-          this.msg = 'success';
           this.isLoading = false;
+          this.toastr.success('Confirm fee of student ' + item.Name + ' successfully.', 'Success!');
+          this.updateStatus();
         },
         error => {
           console.log(error);
-          this.msg = 'error';
           this.isLoading = false;
+          this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         });
     }
   }
@@ -234,13 +295,14 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
       this.http.post(url, param).toPromise().then(data => {
           console.log(data);
           this.listStudent[index].IsPayment = false;
-          this.msg = 'success';
           this.isLoading = false;
+          this.toastr.success('Reject fee of student ' + item.Name + ' successfully.', 'Success!');
+          this.updateStatus();
         },
         error => {
           console.log(error);
-          this.msg = 'error';
           this.isLoading = false;
+          this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
         });
     }
   }
@@ -248,49 +310,51 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
   ConfirmMultiple() {
     this.isLoading = true;
     const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == false);
-    const param = new Array();
-    selectedItems.forEach(item => {
-      param.push({StudentId: item.Id, CenterId: this.centerId, IsPayment: true});
-    });
-    const url = this.apiContext.host + this.apiAccounting.setPaymentForManyStudent;
-    this.http.post(url, param).toPromise().then(data => {
-        console.log(data);
-        this.loadStudentData();
-        this.msg = 'success';
-        this.isLoading = false;
-      },
-      error => {
-        console.log(error);
-        this.msg = 'error';
-        this.isLoading = false;
+    if (selectedItems.length == 0) {
+      this.toastr.info('All selected student(s) have been confirmed payment.');
+    } else {
+      const param = new Array();
+      selectedItems.forEach(item => {
+        param.push({StudentId: item.Id, CenterId: this.centerId, IsPayment: true});
       });
-
+      const url = this.apiContext.host + this.apiAccounting.setPaymentForManyStudent;
+      this.http.post(url, param).toPromise().then(data => {
+          console.log(data);
+          this.loadStudentData();
+          this.isLoading = false;
+          this.toastr.success('Confirm fee of ' + selectedItems.length + ' student(s) successfully.', 'Success!');
+        },
+        error => {
+          console.log(error);
+          this.isLoading = false;
+          this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+        });
+    }
   }
 
   RejectMultiple() {
     this.isLoading = true;
     const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == true);
-    const param = new Array();
-    selectedItems.forEach(item => {
-      param.push({StudentId: item.Id, CenterId: this.centerId, IsPayment: false});
-    });
-    const url = this.apiContext.host + this.apiAccounting.setPaymentForManyStudent;
-    this.http.post(url, param).toPromise().then(data => {
-        console.log(data);
-        this.loadStudentData();
-        this.msg = 'success';
-        this.isLoading = false;
-      },
-      error => {
-        console.log(error);
-        this.msg = 'error';
-        this.isLoading = false;
+    if (selectedItems.length == 0) {
+      this.toastr.info('All selected student(s) have been rejected payment.');
+    } else {
+      const param = new Array();
+      selectedItems.forEach(item => {
+        param.push({StudentId: item.Id, CenterId: this.centerId, IsPayment: false});
       });
-
-  }
-
-  removeMessage() {
-    this.msg = '';
+      const url = this.apiContext.host + this.apiAccounting.setPaymentForManyStudent;
+      this.http.post(url, param).toPromise().then(data => {
+          console.log(data);
+          this.loadStudentData();
+          this.isLoading = false;
+          this.toastr.success('Reject fee of ' + selectedItems.length + ' student(s) successfully.', 'Success!');
+        },
+        error => {
+          console.log(error);
+          this.isLoading = false;
+          this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+        });
+    }
   }
 
   isInputNumber(evt) {
@@ -300,4 +364,32 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
     }
   }
 
+  selectAllFun() {
+    this.isSelectedAll = !this.isSelectedAll;
+    const checked = this.isSelectedAll;
+    this.listStudent.forEach(function(item) {
+      item.selected = checked;
+    });
+  }
+
+  updateSelectAllStatus(student: Student) {
+    student.selected = !student.selected;
+    let selectAll = false;
+    this.listStudent.forEach(function(item) {
+      if (item.selected) {
+        selectAll = true;
+      }
+    });
+    this.isSelectedAll = selectAll;
+  }
+
+  updateStatus() {
+    let selectAll = false;
+    this.listStudent.forEach(function(item) {
+      if (item.selected) {
+        selectAll = true;
+      }
+    });
+    this.isSelectedAll = selectAll;
+  }
 }

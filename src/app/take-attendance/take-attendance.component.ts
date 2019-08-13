@@ -113,6 +113,7 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
     const url = this.apiContext.host + this.apiTeacher.updateAttendanceStudentOfParticularClass;
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
+        this.getTimeTable();
         this.isLoading = false;
       },
       error => {

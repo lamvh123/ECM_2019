@@ -194,6 +194,12 @@
         <li [ngClass]="{'active open': urlName=='/CenterAdmin/GrantAccount'}"><a href="/CenterAdmin/GrantAccount"><i
           class="zmdi zmdi-account-outline"></i><span
           class="class-hover">Student</span> </a></li>
+        <li [ngClass]="{'active open': urlName=='/CenterAdmin/view-staff'}">
+          <a href="/CenterAdmin/view-staff">
+            <i class="zmdi zmdi-account-outline"></i>
+            <span class="class-hover">Staff</span>
+          </a>
+        </li>
 
         <li><a (click)="logout()"><i
           class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>

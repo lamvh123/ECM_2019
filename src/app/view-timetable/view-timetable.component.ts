@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {LearningSession} from '../entity/learning-session';
+import {LearningSession, TotalTimetable} from '../entity/learning-session';
 import {APIContext, APIStudent} from '../APIContext';
 import {Class} from '../entity/class';
 import {ToastrService} from 'ngx-toastr';
@@ -20,6 +20,7 @@ export class ViewTimetableComponent implements OnInit, AfterViewInit {
   apiStudent = new APIStudent();
   centerId: number;
   listSession: LearningSession[];
+  totalTimetable: TotalTimetable;
   listClass: Class[];
   selectedClass;
   isLoading = true;
@@ -41,6 +42,7 @@ export class ViewTimetableComponent implements OnInit, AfterViewInit {
   loadInitData() {
     this.selectedClass = this.route.snapshot.paramMap.get('id');
     this.loadTimetable();
+    this.getTimeTableAndAttendanceOfParticularClass();
     // const getCenterUrl = this.apiContext.host+ this.apiStudent.getCenter;
     // this.http.get(getCenterUrl).toPromise().then(data=>{
     //   this.centerId = data['Id'];
@@ -77,6 +79,22 @@ export class ViewTimetableComponent implements OnInit, AfterViewInit {
         console.log(data);
         this.listSession = data;
         console.log(this.listSession);
+        this.isLoading = false;
+      },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
+      });
+  }
+
+  getTimeTableAndAttendanceOfParticularClass() {
+    this.isLoading = true;
+    const url = this.apiContext.host + this.apiStudent.getTimeTableAndAttendanceOfParticularClass;
+    const param = new HttpParams().set('centerId', this.centerId + '').set('classId', this.selectedClass);
+    this.http.get<TotalTimetable>(url, {params: param}).toPromise().then(data => {
+        console.log(data);
+        this.totalTimetable = data;
         this.isLoading = false;
       },
       error => {

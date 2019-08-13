@@ -6,37 +6,142 @@
     <!--    </ng-select>-->
     <!--  </div>-->
     <!--</div>-->
-    <div class="row clearfix all-program-content">
-      <div style="width: 100%">
-        <div style="overflow-x: auto;width: 100%;height: auto;max-height: 100vh">
-          <table class="table studenttbl">
-            <thead>
-            <tr>
-              <th scope="col">SessionNumber</th>
-              <th scope="col">ClassName</th>
-              <th scope="col">LearningDay(yyyy-mm-dd)</th>
-              <th scope="col">RoomId</th>
-              <th scope="col">Slot</th>
-              <th scope="col">Start Time</th>
-              <th scope="col">End Time</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of listSession;let index = index;">
-              <td>{{item.SessionNumber}}</td>
-              <td>{{item.Class.Name}}</td>
-              <td>{{item.LearningDay.substr(0, 10)}}</td>
-              <td *ngIf="item.Room!=null">{{item.Room.RoomNumber}}</td>
-              <td *ngIf="item.Room==null"></td>
-              <td>{{item.slot.Name}}</td>
-              <td>{{item.slot.From}}</td>
-              <td>{{item.slot.To}}</td>
-            </tr>
-            </tbody>
-          </table>
+
+    <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card" style="max-height: 400px; padding: 15px; margin: 15px">
+          <b><h3 style="text-align: center">Next Session</h3></b>
+          <div *ngIf="totalTimetable.NextTimetable==null" class="header">
+            <h4>Next session is empty.</h4>
+          </div>
+          <div *ngIf="totalTimetable.NextTimetable!=null" class="body table-responsive">
+            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+              <thead>
+              <tr>
+                <th scope="col">SessionNumber</th>
+                <th scope="col">ClassName</th>
+                <th scope="col">LearningDay(yyyy-mm-dd)</th>
+                <th scope="col">RoomId</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Attendance</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{totalTimetable.NextTimetable.SessionNumber}}</td>
+                <td>{{totalTimetable.NextTimetable.ClassName}}</td>
+                <td>{{totalTimetable.NextTimetable.LearningDay.substr(0, 10)}}</td>
+                <td
+                  *ngIf="totalTimetable.NextTimetable.Room!=null">{{totalTimetable.NextTimetable.Room.RoomNumber}}</td>
+                <td *ngIf="totalTimetable.NextTimetable.Room==null"></td>
+                <td>{{totalTimetable.NextTimetable.slot.Name + ' (' + totalTimetable.NextTimetable.slot.From + '-' + totalTimetable.NextTimetable.slot.To + ')'}}</td>
+                <td *ngIf="totalTimetable.NextTimetable.AttendanceState==-1" style="color: #FFC107">Pending</td>
+                <td *ngIf="totalTimetable.NextTimetable.AttendanceState==0" style="color: #f44336">Absent</td>
+                <td *ngIf="totalTimetable.NextTimetable.AttendanceState==1" style="color: #8BC34A">Present</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="card" style="max-height: 500px; padding: 15px; margin: 15px">
+          <b><h3 style="text-align: center">Learnt Sessions</h3></b>
+          <div *ngIf="totalTimetable.LearntTimetableList==null || totalTimetable.LearntTimetableList.length<1"
+               class="header">
+            <h4>Learnt sessions is empty.</h4>
+          </div>
+          <div *ngIf="totalTimetable.LearntTimetableList!=null && totalTimetable.LearntTimetableList.length>0"
+               class="body table-responsive">
+            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+              <thead>
+              <tr>
+                <th scope="col">SessionNumber</th>
+                <th scope="col">LearningDay</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Attendance</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of totalTimetable.LearntTimetableList;let index = index;">
+                <td>{{item.SessionNumber}}</td>
+                <td>{{item.LearningDay.substr(0, 10)}}</td>
+                <td>{{item.slot.Name + ' (' + item.slot.From + '-' + item.slot.To + ')'}}</td>
+                <td *ngIf="item.AttendanceState==-1" style="color: #FFC107">Pending</td>
+                <td *ngIf="item.AttendanceState==0" style="color: #f44336">Absent</td>
+                <td *ngIf="item.AttendanceState==1" style="color: #8BC34A">Present</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="card" style="max-height: 500px; padding: 15px; margin: 15px">
+          <b><h3 style="text-align: center">Pending Sessions</h3></b>
+          <div *ngIf="totalTimetable.PendingTimetableList==null || totalTimetable.PendingTimetableList.length<1"
+               class="header">
+            <h4>Pending sessions is empty.</h4>
+          </div>
+          <div *ngIf="totalTimetable.PendingTimetableList!=null && totalTimetable.PendingTimetableList.length>0"
+               class="body table-responsive">
+            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+              <thead>
+              <tr>
+                <th scope="col">SessionNumber</th>
+                <th scope="col">LearningDay</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Attendance</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of totalTimetable.PendingTimetableList;let index = index;">
+                <td>{{item.SessionNumber}}</td>
+                <td>{{item.LearningDay.substr(0, 10)}}</td>
+                <td>{{item.slot.Name + ' (' + item.slot.From + '-' + item.slot.To + ')'}}</td>
+                <td *ngIf="item.AttendanceState==-1" style="color: #FFC107">Pending</td>
+                <td *ngIf="item.AttendanceState==0" style="color: #f44336">Absent</td>
+                <td *ngIf="item.AttendanceState==1" style="color: #8BC34A">Present</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+
+
+    <!--        <div class="row clearfix all-program-content">-->
+    <!--          <div style="width: 100%">-->
+    <!--            <div style="overflow-x: auto;width: 100%;height: auto;max-height: 100vh">-->
+    <!--              <table class="table studenttbl">-->
+    <!--                <thead>-->
+    <!--                <tr>-->
+    <!--                  <th scope="col">SessionNumber</th>-->
+    <!--                  <th scope="col">ClassName</th>-->
+    <!--                  <th scope="col">LearningDay(yyyy-mm-dd)</th>-->
+    <!--                  <th scope="col">RoomId</th>-->
+    <!--                  <th scope="col">Slot</th>-->
+    <!--                  <th scope="col">Start Time</th>-->
+    <!--                  <th scope="col">End Time</th>-->
+    <!--                </tr>-->
+    <!--                </thead>-->
+    <!--                <tbody>-->
+    <!--                <tr *ngFor="let item of listSession;let index = index;">-->
+    <!--                  <td>{{item.SessionNumber}}</td>-->
+    <!--                  <td>{{item.Class.Name}}</td>-->
+    <!--                  <td>{{item.LearningDay.substr(0, 10)}}</td>-->
+    <!--                  <td *ngIf="item.Room!=null">{{item.Room.RoomNumber}}</td>-->
+    <!--                  <td *ngIf="item.Room==null"></td>-->
+    <!--                  <td>{{item.slot.Name}}</td>-->
+    <!--                  <td>{{item.slot.From}}</td>-->
+    <!--                  <td>{{item.slot.To}}</td>-->
+    <!--                </tr>-->
+    <!--                </tbody>-->
+    <!--              </table>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </div>-->
   </div>
   <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>

@@ -44,6 +44,7 @@ export class APIStudent {
   getCourseOfStudent = 'api/Student/GetCourseOfStudent';
   getTimeTableOfParticularClass = 'api/Student/GetTimeTableOfParticularClass';
   getClassList = 'api/Student/GetClassListOfStudent';
+  getTimeTableAndAttendanceOfParticularClass = 'api/Student/GetTimeTableAndAttendanceOfParticularClass';
 }
 
 export class APIAccounting {
@@ -59,6 +60,7 @@ export class APIAccounting {
   searchRegisteredStudent = 'api/AccoungtingDept/SearchRegisteredStudent';
   setPaymentForOneStudent = 'api/AccoungtingDept/SetPaymentForOneStudent';
   setPaymentForManyStudent = 'api/AccoungtingDept/SetPaymentForManyStudent';
+  deleteStudent = 'api/AccoungtingDept/DeleteStudent';
 }
 
 export class APITraining {

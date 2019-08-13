@@ -61,6 +61,7 @@ import {AssignTeacherForClassComponent} from './assign-teacher-for-class/assign-
 import {TakeAttendanceComponent} from './take-attendance/take-attendance.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
+import {CenterViewStaffComponent} from './center-view-staff/center-view-staff.component';
 
 
 const routes: Routes = [
@@ -238,6 +239,10 @@ const routes: Routes = [
       {
         path: 'GrantAccount',
         component: CenterAdminGrantAccountComponent
+      },
+      {
+        path: 'view-staff',
+        component: CenterViewStaffComponent
       }
     ]
   },

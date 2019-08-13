@@ -7,6 +7,7 @@ import {Student} from '../entity/student';
 import {APIAccounting, APIContext} from '../APIContext';
 import * as $ from 'jquery';
 import {ToastrService} from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-account-staff-confirm-student',
@@ -19,7 +20,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewInit {
 
-  constructor(private router: Router, private http: HttpClient, private toastr: ToastrService) {
+  constructor(private router: Router, private http: HttpClient, private toastr: ToastrService, private modalService: NgbModal) {
   }
 
   apiContext = new APIContext();
@@ -43,6 +44,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
   isLoading = true;
   listPageDisplay: number[];
   isSelectedAll = false;
+  deletingStudent: Student;
 
 
   ngOnInit() {
@@ -54,7 +56,25 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
   }
 
   ngAfterViewInit(): void {
+    // this.loadScript('../../assets/plugins/sweetalert/sweetalert.min.js');
+    // this.loadScript('../../assets/js/pages/ui/dialogs.js');
+    // this.loadScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
+
+    $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
+    $.getScript('../../assets/plugins/sweetalert/sweetalert.min.js');
+    $.getScript('../../assets/js/pages/ui/dialogs.js');
     this.isLoading = false;
+  }
+
+
+  public loadScript(url: string) {
+    const body = <HTMLDivElement> document.body;
+    const script = document.createElement('script');
+    script.innerHTML = '';
+    script.src = url;
+    script.async = false;
+    script.defer = true;
+    body.appendChild(script);
   }
 
   getInitData() {
@@ -391,5 +411,31 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
       }
     });
     this.isSelectedAll = selectAll;
+  }
+
+  deleteStudent(deletingStudent: Student) {
+    this.isLoading = true;
+    const param = new HttpParams()
+      .set('StudentId', deletingStudent.Id + '')
+      .set('CenterId', this.centerId + '');
+    const url = this.apiContext.host + this.apiAccounting.deleteStudent;
+    this.http.post(url, param).toPromise().then(data => {
+        console.log(data);
+        this.isLoading = false;
+        this.toastr.success('Delete student ' + deletingStudent.Name + ' successfully.', 'Success!');
+        this.listStudent.splice(this.listStudent.indexOf(deletingStudent, 1));
+        this.updateStatus();
+      },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+      });
+  }
+
+  openAttendanceForm(longContent, student: Student) {
+    this.deletingStudent = student;
+    console.log(this.modalService);
+    this.modalService.open(longContent, {size: 'lg'});
   }
 }

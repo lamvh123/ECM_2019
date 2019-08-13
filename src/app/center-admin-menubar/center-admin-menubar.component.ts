@@ -38,6 +38,9 @@ export class CenterAdminMenubarComponent implements OnInit, AfterViewInit {
     if (this._router.url == '/CenterAdmin/GrantAccount') {
       return '/CenterAdmin/GrantAccount';
     }
+    if (this._router.url == '/CenterAdmin/view-staff') {
+      return '/CenterAdmin/view-staff';
+    }
     return '';
   }
 

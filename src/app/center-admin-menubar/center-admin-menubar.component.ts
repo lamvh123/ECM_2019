@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {UrlCenter} from '../SiteUrlContext';
 
 @Component({
   selector: 'app-center-admin-menubar',
@@ -16,6 +17,8 @@ export class CenterAdminMenubarComponent implements OnInit, AfterViewInit {
   urlName;
   userAvatar = '';
   userName = '';
+  urlCenter = new UrlCenter();
+  currentUrl = this._router.url;
 
   constructor(private _router: Router, private route: ActivatedRoute) {
 
@@ -54,5 +57,9 @@ export class CenterAdminMenubarComponent implements OnInit, AfterViewInit {
 
   redirectToLogin() {
     this._router.navigateByUrl('/login');
+  }
+  redirectToUrl(url: string) {
+    this.currentUrl = url;
+    this._router.navigateByUrl(url);
   }
 }

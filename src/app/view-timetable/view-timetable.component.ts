@@ -41,13 +41,8 @@ export class ViewTimetableComponent implements OnInit, AfterViewInit {
 
   loadInitData() {
     this.selectedClass = this.route.snapshot.paramMap.get('id');
-    this.loadTimetable();
+    // this.loadTimetable();
     this.getTimeTableAndAttendanceOfParticularClass();
-    // const getCenterUrl = this.apiContext.host+ this.apiStudent.getCenter;
-    // this.http.get(getCenterUrl).toPromise().then(data=>{
-    //   this.centerId = data['Id'];
-    //   this.loadClassList();
-    // });
   }
 
   loadClassList() {

@@ -11,13 +11,16 @@
              [(ngModel)]="courseName"
              name="coursename"
              type="text">
-      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-gy"
-              (click)="getAllCourse()">Search Course
-      </button>
-      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-blush2"
-              (click)="redirectToAddCourse()">Create New Course
-      </button>
-      <br style="clear: right;"/>
+
+      <button type="button" class="btn  btn-raised g-bg-blush2 waves-effect" (click)="getAllCourse()">Search Course</button>
+      <button type="button" class="btn  btn-raised g-bg-blue waves-effect" (click)="redirectToAddCourse()">Create New Course</button>
+<!--      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-blush2"-->
+<!--              (click)="getAllCourse()">Search Course-->
+<!--      </button>-->
+<!--      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-blue"-->
+<!--              (click)="redirectToAddCourse()">Create New Course-->
+<!--      </button>-->
+<!--      <br style="clear: right;"/>-->
     </div>
   </div>
   <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">

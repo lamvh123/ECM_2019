@@ -6,7 +6,7 @@
 }
 .searchBtn{
     margin-left: 20px!important;
-    
+
     height: 30px;
     font-size: 13px!important;
     padding-top: 7px!important;
@@ -54,4 +54,7 @@
 
 .searchBtn:hover{
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+}
+.form-control:focus {
+  background: #000;
 }

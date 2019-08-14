@@ -104,10 +104,6 @@ studenttbl {
   transition: .2s;
 }
 
-th, td {
-  white-space: nowrap;
-}
-
 .check-availble {
   color: #8BC34A;
 }
@@ -118,4 +114,12 @@ th, td {
 
 .success-bg{
   background-color: rgb(176, 219, 125);
+}
+
+td, th {
+  vertical-align: middle;
+}
+
+th{
+  text-align: center;
 }

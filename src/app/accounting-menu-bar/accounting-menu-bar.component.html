@@ -191,7 +191,7 @@
         <li class="header">MAIN NAVIGATION</li>
         <li [ngClass]="{'active open': urlName=='/Account-staff/profile'}"><a href="/Account-staff/profile"><i
           class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>
-        <li><a href="/Account-staff/student"><i class="zmdi zmdi-account-outline"></i><span
+        <li [ngClass]="{'active open': urlName=='/Account-staff/student'}"><a href="/Account-staff/student"><i class="zmdi zmdi-account-outline"></i><span
           class="class-hover">Student</span> </a></li>
 
         <li><a (click)="logout()"><i

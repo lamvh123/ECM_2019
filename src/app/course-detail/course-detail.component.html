@@ -41,7 +41,7 @@
                 <div class="form-group">
                   <label for="courseTotalSession">Total Session(s):</label>
                   <div class="form-line">
-                    <input type="number" [(ngModel)]="courseModel.TotalSession" class="form-control"
+                    <input type="text" [(ngModel)]="courseModel.TotalSession" class="form-control"
                            placeholder="Total Session" id="courseTotalSession" required
                            (keypress)="isInputNumber($event)"
                            (keypress)="checkValidTotalSession()" (focusout)="checkValidTotalSession()">

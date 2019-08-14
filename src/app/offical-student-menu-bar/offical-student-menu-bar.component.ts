@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Class} from '../entity/class';
 import {APIContext, APIStudent} from '../APIContext';
+import {UrlStudent} from '../SiteUrlContext';
 
 @Component({
   selector: 'app-offical-student-menu-bar',
@@ -15,6 +16,8 @@ export class OfficalStudentMenuBarComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiStudent = new APIStudent();
   centerId: number;
+  urlStudent = new UrlStudent();
+  currentUrl = this._router.url;
 
   listClass: Class[];
 
@@ -92,5 +95,10 @@ export class OfficalStudentMenuBarComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       });
+  }
+
+  redirectToUrl(url: string) {
+    this.currentUrl = url;
+    this._router.navigateByUrl(url);
   }
 }

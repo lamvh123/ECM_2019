@@ -27,8 +27,11 @@ export class AccountingMenuBarComponent implements OnInit, AfterViewInit {
   }
 
   className(): String {
-    if (this._router.url == 'Account-staff/profile') {
-      return 'Account-staff/profile';
+    if (this._router.url.includes('/Account-staff/profile')) {
+      return '/Account-staff/profile';
+    }
+    if (this._router.url.includes('/Account-staff/student')) {
+      return '/Account-staff/student';
     }
     if (this._router.url == '/Admission-staff/admissionform') {
       return '/Admission-staff/admissionform';

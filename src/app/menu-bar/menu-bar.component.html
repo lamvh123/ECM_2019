@@ -187,128 +187,234 @@
     </div>
     <!-- #User Info -->
     <!-- Menu -->
+    <!--    <div class="menu">-->
+    <!--      <ul class="list">-->
+    <!--        <li class="header">MAIN NAVIGATION</li>-->
+    <!--        <li [ngClass]="{'active open': urlName=='/Training-staff/Report'}"><a href="/Training-staff/Report"><i-->
+    <!--          class="zmdi zmdi-home"></i><span class="class-hover">Report</span></a></li>-->
+    <!--        <li-->
+    <!--          [ngClass]="{'active open': urlName=='/Training-staff/view-teacher'||urlName=='/Training-staff/add-teacher'}">-->
+    <!--          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
+    <!--            class="class-hover">Teacher</span> </a>-->
+    <!--          <ul class="ml-menu">-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/view-teacher'}"><a-->
+    <!--              href="/Training-staff/view-teacher">-->
+    <!--              <span class="class-hover">All Teachers</span></a></li>-->
+    <!--            &lt;!&ndash;              <li [ngClass]="{'active': urlName=='/Training-staff/add-teacher'}"><a href="/Training-staff/add-teacher">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                  <span class="class-hover">Add Teacher</span></a></li>&ndash;&gt;-->
+    <!--          </ul>-->
+    <!--        </li>-->
+    <!--        <li-->
+    <!--          [ngClass]="{'active open': urlName=='/Training-staff/view-program'||urlName=='/Training-staff/add-program'}">-->
+    <!--          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
+    <!--            class="class-hover">Programs</span> </a>-->
+    <!--          <ul class="ml-menu">-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/view-program'}"><a-->
+    <!--              href="/Training-staff/view-program">-->
+    <!--              <span class="class-hover">All Programs</span></a></li>-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/add-program'}"><a href="/Training-staff/add-program">-->
+    <!--              <span class="class-hover">Add Program</span></a></li>-->
+    <!--          </ul>-->
+    <!--        </li>-->
+    <!--        <li-->
+    <!--          [ngClass]="{'active open': urlName=='/Training-staff/GenerateClass'||urlName=='/Training-staff/ListClasses'}">-->
+    <!--          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
+    <!--            class="class-hover">Class</span> </a>-->
+    <!--          <ul class="ml-menu">-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/GenerateClass'}"><a-->
+    <!--              href="/Training-staff/GenerateClass">-->
+    <!--              <span class="class-hover">Generate Class</span></a></li>-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/ListClasses'}"><a-->
+    <!--              href="/Training-staff/ListClasses">-->
+    <!--              <span class="class-hover">List Classes</span></a></li>-->
+    <!--            &lt;!&ndash;            <li [ngClass]="{'active': urlName=='/Training-staff/assign-teacher'}"><a&ndash;&gt;-->
+    <!--            &lt;!&ndash;              href="/Training-staff/assign-teacher">&ndash;&gt;-->
+    <!--            &lt;!&ndash;              <span class="class-hover">Assign Teacher</span></a></li>&ndash;&gt;-->
+    <!--          </ul>-->
+    <!--        </li>-->
+    <!--        <li [ngClass]="{'active open': urlName=='/Training-staff/GenerateTimetable'}">-->
+    <!--          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
+    <!--            class="class-hover">Timetable</span> </a>-->
+    <!--          <ul class="ml-menu">-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/GenerateTimetable'}"><a-->
+    <!--              href="/Training-staff/GenerateTimetable">-->
+    <!--              <span class="class-hover">Generate timetable</span></a></li>-->
+    <!--          </ul>-->
+    <!--        </li>-->
+
+    <!--        &lt;!&ndash;        <li [ngClass]="{'active open': urlName=='/Training-staff/view-course'||urlName=='/Training-staff/add-course'}">&ndash;&gt;-->
+    <!--        &lt;!&ndash;          <a&ndash;&gt;-->
+    <!--        &lt;!&ndash;            href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span&ndash;&gt;-->
+    <!--        &lt;!&ndash;            class="class-hover">Courses</span> </a>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          <ul class="ml-menu">&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <li [ngClass]="{'active': urlName=='/Training-staff/view-course'}">&ndash;&gt;-->
+    <!--        &lt;!&ndash;              <a href="/Training-staff/view-course">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                <span class="class-hover">All Courses</span>&ndash;&gt;-->
+    <!--        &lt;!&ndash;              </a>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            </li>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <li [ngClass]="{'active': urlName=='/Training-staff/add-course'}">&ndash;&gt;-->
+    <!--        &lt;!&ndash;              <a href="/Training-staff/add-course">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                <span class="class-hover">Add Course</span>&ndash;&gt;-->
+    <!--        &lt;!&ndash;              </a>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            </li>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          </ul>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </li>&ndash;&gt;-->
+    <!--        <li-->
+    <!--          [ngClass]="{'active open': urlName=='/Training-staff/view-building'||urlName=='/Training-staff/add-building'}">-->
+    <!--          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
+    <!--            class="class-hover">Buildings</span>-->
+    <!--          </a>-->
+    <!--          <ul class="ml-menu">-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/view-building'}"><a-->
+    <!--              href="/Training-staff/view-building">-->
+    <!--              <span class="class-hover">All Buildings</span></a></li>-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/add-building'}"><a-->
+    <!--              href="/Training-staff/add-building"><span class="class-hover">Add Building</span></a></li>-->
+    <!--          </ul>-->
+    <!--        </li>-->
+    <!--        <li [ngClass]="{'active open': urlName=='/Training-staff/view-room'||urlName=='/Training-staff/add-room'}"><a-->
+    <!--          href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
+    <!--          class="class-hover">Rooms</span> </a>-->
+    <!--          <ul class="ml-menu">-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/view-room'}"><a href="/Training-staff/view-room"><span-->
+    <!--              class="class-hover">All Rooms</span></a></li>-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/add-room'}"><a href="/Training-staff/add-room"><span-->
+    <!--              class="class-hover">Add Room</span></a></li>-->
+    <!--          </ul>-->
+    <!--        </li>-->
+    <!--        <li-->
+    <!--          [ngClass]="{'active open': urlName=='/Training-staff/view-slot'||urlName=='/Training-staff/add-slot'}">-->
+    <!--          <a-->
+    <!--            href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
+    <!--            class="class-hover">Slots</span>-->
+    <!--          </a>-->
+    <!--          <ul class="ml-menu">-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/view-slot'}"><a-->
+    <!--              href="/Training-staff/view-slot"><span class="class-hover">All Slots</span></a></li>-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/add-slot'}"><a-->
+    <!--              href="/Training-staff/add-slot"><span class="class-hover">Add Slot</span></a></li>-->
+    <!--          </ul>-->
+    <!--        </li>-->
+    <!--        <li-->
+    <!--          [ngClass]="{'active open': urlName=='/Training-staff/view-subject'||urlName=='/Training-staff/add-subject'}">-->
+    <!--          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
+    <!--            class="class-hover">Subjects</span>-->
+    <!--          </a>-->
+    <!--          <ul class="ml-menu">-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/view-subject'}"><a-->
+    <!--              href="/Training-staff/view-subject"><span class="class-hover">All Subjects</span></a></li>-->
+    <!--            <li [ngClass]="{'active': urlName=='/Training-staff/add-subject'}"><a-->
+    <!--              href="/Training-staff/add-subject"><span class="class-hover">Add Subject</span></a></li>-->
+    <!--          </ul>-->
+    <!--        </li>-->
+    <!--        <li [ngClass]="{'active open': urlName=='/Training-staff/profile'}"><a href="/Training-staff/profile"><i-->
+    <!--          class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>-->
+    <!--        <li><a (click)="logout()"><i class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>-->
+    <!--      </ul>-->
+    <!--    </div>-->
     <div class="menu">
       <ul class="list">
         <li class="header">MAIN NAVIGATION</li>
-        <li [ngClass]="{'active open': urlName=='/Training-staff/Report'}"><a href="/Training-staff/Report"><i
-          class="zmdi zmdi-home"></i><span class="class-hover">Report</span></a></li>
-        <li
-          [ngClass]="{'active open': urlName=='/Training-staff/view-teacher'||urlName=='/Training-staff/add-teacher'}">
+        <li [ngClass]="{'active open': currentUrl==urlTraining.viewReport}">
+          <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewReport)">
+            <i class="zmdi zmdi-home"></i><span class="class-hover">Report</span></a></li>
+        <li [ngClass]="{'active open': currentUrl==urlTraining.viewTeacher||currentUrl==urlTraining.addTeacher}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
             class="class-hover">Teacher</span> </a>
           <ul class="ml-menu">
-            <li [ngClass]="{'active': urlName=='/Training-staff/view-teacher'}"><a
-              href="/Training-staff/view-teacher">
-              <span class="class-hover">All Teachers</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.viewTeacher}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewTeacher)">
+                <span class="class-hover">All Teachers</span></a></li>
             <!--              <li [ngClass]="{'active': urlName=='/Training-staff/add-teacher'}"><a href="/Training-staff/add-teacher">-->
             <!--                  <span class="class-hover">Add Teacher</span></a></li>-->
           </ul>
         </li>
-        <li
-          [ngClass]="{'active open': urlName=='/Training-staff/view-program'||urlName=='/Training-staff/add-program'}">
+        <li [ngClass]="{'active open': currentUrl==urlTraining.viewProgram||currentUrl==urlTraining.addProgram}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
             class="class-hover">Programs</span> </a>
           <ul class="ml-menu">
-            <li [ngClass]="{'active': urlName=='/Training-staff/view-program'}"><a
-              href="/Training-staff/view-program">
-              <span class="class-hover">All Programs</span></a></li>
-            <li [ngClass]="{'active': urlName=='/Training-staff/add-program'}"><a href="/Training-staff/add-program">
-              <span class="class-hover">Add Program</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.viewProgram}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewProgram)">
+                <span class="class-hover">All Programs</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.addProgram}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.addProgram)">
+                <span class="class-hover">Add Program</span></a></li>
           </ul>
         </li>
         <li
-          [ngClass]="{'active open': urlName=='/Training-staff/GenerateClass'||urlName=='/Training-staff/ListClasses'}">
+          [ngClass]="{'active open': currentUrl==urlTraining.listClass||currentUrl==urlTraining.generateClass||currentUrl==urlTraining.generateTimetable}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
             class="class-hover">Class</span> </a>
           <ul class="ml-menu">
-            <li [ngClass]="{'active': urlName=='/Training-staff/GenerateClass'}"><a
-              href="/Training-staff/GenerateClass">
-              <span class="class-hover">Generate Class</span></a></li>
-            <li [ngClass]="{'active': urlName=='/Training-staff/ListClasses'}"><a
-              href="/Training-staff/ListClasses">
-              <span class="class-hover">List Classes</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.generateClass}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.generateClass)">
+                <span class="class-hover">Generate Class</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.listClass}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.listClass)">
+                <span class="class-hover">List Classes</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.generateTimetable}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.generateTimetable)">
+                <span class="class-hover">Generate timetable</span></a></li>
             <!--            <li [ngClass]="{'active': urlName=='/Training-staff/assign-teacher'}"><a-->
             <!--              href="/Training-staff/assign-teacher">-->
             <!--              <span class="class-hover">Assign Teacher</span></a></li>-->
           </ul>
         </li>
-        <li [ngClass]="{'active open': urlName=='/Training-staff/GenerateTimetable'}">
-          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
-            class="class-hover">Timetable</span> </a>
-          <ul class="ml-menu">
-            <li [ngClass]="{'active': urlName=='/Training-staff/GenerateTimetable'}"><a
-              href="/Training-staff/GenerateTimetable">
-              <span class="class-hover">Generate timetable</span></a></li>
-          </ul>
-        </li>
-
-        <!--        <li [ngClass]="{'active open': urlName=='/Training-staff/view-course'||urlName=='/Training-staff/add-course'}">-->
-        <!--          <a-->
-        <!--            href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span-->
-        <!--            class="class-hover">Courses</span> </a>-->
-        <!--          <ul class="ml-menu">-->
-        <!--            <li [ngClass]="{'active': urlName=='/Training-staff/view-course'}">-->
-        <!--              <a href="/Training-staff/view-course">-->
-        <!--                <span class="class-hover">All Courses</span>-->
-        <!--              </a>-->
-        <!--            </li>-->
-        <!--            <li [ngClass]="{'active': urlName=='/Training-staff/add-course'}">-->
-        <!--              <a href="/Training-staff/add-course">-->
-        <!--                <span class="class-hover">Add Course</span>-->
-        <!--              </a>-->
-        <!--            </li>-->
-        <!--          </ul>-->
-        <!--        </li>-->
-        <li
-          [ngClass]="{'active open': urlName=='/Training-staff/view-building'||urlName=='/Training-staff/add-building'}">
+        <li [ngClass]="{'active open': currentUrl==urlTraining.viewBuilding||currentUrl==urlTraining.addBuilding}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
             class="class-hover">Buildings</span>
           </a>
           <ul class="ml-menu">
-            <li [ngClass]="{'active': urlName=='/Training-staff/view-building'}"><a
-              href="/Training-staff/view-building">
-              <span class="class-hover">All Buildings</span></a></li>
-            <li [ngClass]="{'active': urlName=='/Training-staff/add-building'}"><a
-              href="/Training-staff/add-building"><span class="class-hover">Add Building</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.viewBuilding}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewBuilding)">
+                <span class="class-hover">All Buildings</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.addBuilding}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.addBuilding)">
+                <span class="class-hover">Add Building</span></a></li>
           </ul>
         </li>
-        <li [ngClass]="{'active open': urlName=='/Training-staff/view-room'||urlName=='/Training-staff/add-room'}"><a
-          href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
-          class="class-hover">Rooms</span> </a>
+        <li [ngClass]="{'active open': currentUrl==urlTraining.viewRoom||currentUrl==urlTraining.addRoom}">
+          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
+            class="class-hover">Rooms</span> </a>
           <ul class="ml-menu">
-            <li [ngClass]="{'active': urlName=='/Training-staff/view-room'}"><a href="/Training-staff/view-room"><span
-              class="class-hover">All Rooms</span></a></li>
-            <li [ngClass]="{'active': urlName=='/Training-staff/add-room'}"><a href="/Training-staff/add-room"><span
-              class="class-hover">Add Room</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.viewRoom}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewRoom)">
+                <span class="class-hover">All Rooms</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.addRoom}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.addRoom)">
+                <span class="class-hover">Add Room</span></a></li>
           </ul>
         </li>
-        <li
-          [ngClass]="{'active open': urlName=='/Training-staff/view-slot'||urlName=='/Training-staff/add-slot'}">
+        <li [ngClass]="{'active open': currentUrl==urlTraining.viewSlot||currentUrl==urlTraining.addSlot}">
           <a
             href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
             class="class-hover">Slots</span>
           </a>
           <ul class="ml-menu">
-            <li [ngClass]="{'active': urlName=='/Training-staff/view-slot'}"><a
-              href="/Training-staff/view-slot"><span class="class-hover">All Slots</span></a></li>
-            <li [ngClass]="{'active': urlName=='/Training-staff/add-slot'}"><a
-              href="/Training-staff/add-slot"><span class="class-hover">Add Slot</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.viewSlot}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewSlot)">
+                <span class="class-hover">All Slots</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.addSlot}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.addSlot)">
+                <span class="class-hover">Add Slot</span></a></li>
           </ul>
         </li>
-        <li
-          [ngClass]="{'active open': urlName=='/Training-staff/view-subject'||urlName=='/Training-staff/add-subject'}">
+        <li [ngClass]="{'active open': currentUrl==urlTraining.viewSubject||currentUrl==urlTraining.addSubject}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
             class="class-hover">Subjects</span>
           </a>
           <ul class="ml-menu">
-            <li [ngClass]="{'active': urlName=='/Training-staff/view-subject'}"><a
-              href="/Training-staff/view-subject"><span class="class-hover">All Subjects</span></a></li>
-            <li [ngClass]="{'active': urlName=='/Training-staff/add-subject'}"><a
-              href="/Training-staff/add-subject"><span class="class-hover">Add Subject</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.viewSubject}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewSubject)">
+                <span class="class-hover">All Subjects</span></a></li>
+            <li [ngClass]="{'active': currentUrl==urlTraining.addSubject}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.addSubject)">
+                <span class="class-hover">Add Subject</span></a></li>
           </ul>
         </li>
-        <li [ngClass]="{'active open': urlName=='/Training-staff/profile'}"><a href="/Training-staff/profile"><i
-          class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>
+        <li [ngClass]="{'active open': currentUrl==urlTraining.profile}">
+          <a href="javascript:;" (click)="redirectToUrl(urlTraining.profile)">
+            <i class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>
         <li><a (click)="logout()"><i class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>
       </ul>
     </div>

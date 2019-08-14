@@ -189,15 +189,19 @@
     <div class="menu">
       <ul class="list">
         <li class="header">MAIN NAVIGATION</li>
-        <li [ngClass]="{'active open': urlName=='/CenterAdmin/profile'}"><a href="/CenterAdmin/profile"><i
-          class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>
-        <li [ngClass]="{'active open': urlName=='/CenterAdmin/GrantAccount'}"><a href="/CenterAdmin/GrantAccount"><i
-          class="zmdi zmdi-account-outline"></i><span
-          class="class-hover">Student</span> </a></li>
-        <li [ngClass]="{'active open': urlName=='/CenterAdmin/view-staff'}">
-          <a href="/CenterAdmin/view-staff">
-            <i class="zmdi zmdi-account-outline"></i>
-            <span class="class-hover">Staff</span>
+        <li [ngClass]="{'active open': currentUrl==urlCenter.profile}">
+          <a href="javascript:;" (click)="redirectToUrl(urlCenter.profile)">
+            <i class="zmdi zmdi-home"></i><span class="class-hover">Profile</span>
+          </a>
+        </li>
+        <li [ngClass]="{'active open': currentUrl==urlCenter.grantAccount}">
+          <a href="javascript:;" (click)="redirectToUrl(urlCenter.grantAccount)">
+            <i class="zmdi zmdi-account-outline"></i><span class="class-hover">Student</span>
+          </a>
+        </li>
+        <li [ngClass]="{'active open': currentUrl==urlCenter.viewStaff}">
+          <a href="javascript:;" (click)="redirectToUrl(urlCenter.viewStaff)">
+            <i class="zmdi zmdi-account-outline"></i><span class="class-hover">Staff</span>
           </a>
         </li>
 

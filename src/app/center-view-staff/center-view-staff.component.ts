@@ -110,7 +110,7 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
-        if (error instanceof HttpErrorResponse && error.status === 401) {
+        if (error instanceof HttpErrorResponse && error.status === 406) {
           console.log(error.status);
           this.toastr.error(error.error, 'Oops!');
         } else {
@@ -179,6 +179,8 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
     this.checkValidRole();
     if (this.checkValidName() && this.checkValidEmail() && this.checkValidRole()) {
       this.addStaff();
+      const btnClose: HTMLElement = document.getElementById('btnClose') as HTMLElement;
+      btnClose.click();
     } else {
       this.toastr.warning('Something is missing.', 'Alert!');
     }

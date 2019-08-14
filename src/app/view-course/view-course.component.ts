@@ -48,6 +48,7 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
     // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.loadScript('../../assets/plugins/bootstrap/js/bootstrap.js');
     this.isLoading = false;
   }
 

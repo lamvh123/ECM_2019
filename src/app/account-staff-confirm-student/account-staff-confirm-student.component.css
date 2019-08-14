@@ -30,7 +30,6 @@
 }
 
 
-
 studenttbl {
   max-width: 100%;
   overflow: auto
@@ -116,6 +115,14 @@ th, td {
   color: #FFC107;
 }
 
-.success-bg{
+.success-bg {
   background-color: rgb(176, 219, 125);
+}
+
+td, th {
+  vertical-align: middle;
+}
+
+th{
+  text-align: center;
 }

@@ -38,7 +38,7 @@
         </div>
         <br style="clear: left;"/>
         <button style="float: right;margin-right: 1%" type="submit" name="_submit" (click)="searchStudent()"
-                class="btn g-bg-gy searchBtn">
+                class="btn g-bg-blush2 searchBtn">
           Search Student
         </button>
       </div>
@@ -113,41 +113,41 @@
                 </th>
 
 
-                <th scope="col">Student Name</th>
-                <th scope="col">Student Email</th>
-                <th scope="col">Date of birth</th>
-                <th scope="col">Student's Phone</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Parent's Name</th>
-                <th scope="col">Parent's Phone</th>
-                <th scope="col">Parent's Gmail</th>
-                <th scope="col">Payment's Status</th>
-                <th scope="col">Check payment</th>
-                <th scope="col">Delete student</th>
+                <th scope="col" style="vertical-align: middle">Student Name</th>
+                <!--                <th scope="col" style="vertical-align: middle">Student Email</th>-->
+                <th scope="col" style="vertical-align: middle">Date of birth</th>
+                <th scope="col" style="vertical-align: middle">Student's Phone</th>
+                <!--                <th scope="col" style="vertical-align: middle">Gender</th>-->
+                <th scope="col" style="vertical-align: middle">Parent's Name</th>
+                <th scope="col" style="vertical-align: middle">Parent's Phone</th>
+                <!--                <th scope="col" style="vertical-align: middle">Parent's Gmail</th>-->
+                <th scope="col" style="vertical-align: middle">Payment's Status</th>
+                <th scope="col" style="vertical-align: middle">Check payment</th>
+                <th scope="col" style="vertical-align: middle">Delete student</th>
 
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let student of listStudent;let index = index;">
-                <th scope="row" style="vertical-align: bottom">
+                <td style="vertical-align: bottom;text-align: center">
                   <div class="checkbox">
                     <input type="checkbox" name="rememberme{{index}}" id="rememberme{{index}}"
                            class="filled-in chk-col-pink" [checked]="student.selected"
                            (change)="updateSelectAllStatus(student)"/>
                     <label for="rememberme{{index}}"></label>
                   </div>
-                </th>
+                </td>
                 <td>{{student.Name}}</td>
-                <td>{{student.Email}}</td>
-                <td>{{student.Dob}}</td>
+                <!--                <td>{{student.Email}}</td>-->
+                <td style="text-align: center">{{student.Dob}}</td>
                 <td>{{student.Phone}}</td>
-                <td>{{student.realSex}}</td>
+                <!--                <td style="text-align: center">{{student.realSex}}</td>-->
                 <td>{{student.Parent_Name}}</td>
                 <td>{{student.Parent_Phone}}</td>
-                <td>{{student.Parent_Gmail}}</td>
-                <td [class.check-availble]="student.IsPayment"
+                <!--                <td>{{student.Parent_Gmail}}</td>-->
+                <td style="text-align: center" [class.check-availble]="student.IsPayment"
                     [class.reject-availble]="!student.IsPayment">{{student.IsPayment ? 'Paid' : 'Not Yet'}}</td>
-                <td>
+                <td style="text-align: center">
                   <div class="row">
                     <div class="button-demo">
                       <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>
@@ -166,11 +166,16 @@
                     </ng-template>
                   </div>
                 </td>
-                <td>
-                  <div class="demo-google-material-icon" (click)="openAttendanceForm(longContent, student)"><a
-                    href="javascript:;"><i style="display: block;margin: auto; color:#f44336" class="material-icons">delete_forever</i></a></div>
+                <td style="text-align: center">
+                  <!--                  <button type="button" class="btn btn-raised btn-default waves-effect"-->
+                  <!--                          (click)="openAttendanceForm(longContent, student)"><i-->
+                  <!--                    style="color:#f44336" class="material-icons">delete_forever</i>-->
+                  <!--                  </button>-->
+
+                  <button type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float" (click)="openAttendanceForm(longContent, student)"><i
+                    style="color:#f44336" class="material-icons">delete_forever</i></button>
                   <!--                  <button style="display: block;margin: auto;" type="button" class="btn  btn-raised btn-danger waves-effect"-->
-                  <!--                          (click)="openAttendanceForm(longContent, student)">Delete-->
+                  <!--                          >Delete-->
                   <!--                  </button>-->
                 </td>
               </tr>

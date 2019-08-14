@@ -134,10 +134,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
           distUrl = '/Admission-staff/profile';
           configUrl += this.apiAdmission.profile;
         } else if (this._auth.accountingStaffLoggedin()) {
-          distUrl = '/Account-staff/profile';
+          distUrl = '/Account-staff/student';
           configUrl += this.apiAccounting.profile;
         } else if (this._auth.centerAdminLoggedIn()) {
-          distUrl = '/CenterAdmin/profile';
+          distUrl = '/CenterAdmin/view-staff';
           configUrl += this.apiCenter.profile;
         } else if (this._auth.StudentLoggedIn()) {
           distUrl = '/Student/profile';

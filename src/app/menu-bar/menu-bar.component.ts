@@ -2,6 +2,7 @@ import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {ProfileComponent} from '../profile/profile.component';
 import * as $ from 'jquery';
+import {UrlTraining} from '../SiteUrlContext';
 
 @Component({
   selector: 'app-menu-bar',
@@ -17,6 +18,8 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   constructor(private _router: Router, private route: ActivatedRoute) {
   }
 
+  urlTraining = new UrlTraining();
+  currentUrl = this._router.url;
   urlName;
   programName = '';
   userAvatar = '';
@@ -178,5 +181,10 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
 
   redirectToLogin() {
     this._router.navigateByUrl('/login');
+  }
+
+  redirectToUrl(url: string) {
+    this.currentUrl = url;
+    this._router.navigateByUrl(url);
   }
 }

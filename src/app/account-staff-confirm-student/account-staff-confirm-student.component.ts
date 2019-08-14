@@ -33,7 +33,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
   selectedFormId;
   studentName = '';
   phoneNumber = '';
-  pageSize = 15;
+  pageSize = 10;
   currentPage = 1;
   listStudent: Student[];
   totalData = 0;
@@ -331,6 +331,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
     this.isLoading = true;
     const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == false);
     if (selectedItems.length == 0) {
+      this.isLoading = false;
       this.toastr.info('All selected student(s) have been confirmed payment.');
     } else {
       const param = new Array();
@@ -356,6 +357,7 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
     this.isLoading = true;
     const selectedItems = this.listStudent.filter(item => item.selected == true && item.IsPayment == true);
     if (selectedItems.length == 0) {
+      this.isLoading = false;
       this.toastr.info('All selected student(s) have been rejected payment.');
     } else {
       const param = new Array();

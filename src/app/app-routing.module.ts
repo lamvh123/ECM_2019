@@ -62,6 +62,7 @@ import {TakeAttendanceComponent} from './take-attendance/take-attendance.compone
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {CenterViewStaffComponent} from './center-view-staff/center-view-staff.component';
+import {AddTeacherComponent} from './add-teacher/add-teacher.component';
 
 
 const routes: Routes = [
@@ -208,6 +209,10 @@ const routes: Routes = [
       {
         path: 'ListStudentOfClass/:cId',
         component: ListStudentOfClassComponent
+      },
+      {
+        path: 'add-teacher',
+        component: AddTeacherComponent
       },
       {
         path: 'view-teacher',

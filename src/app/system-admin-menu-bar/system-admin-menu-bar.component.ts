@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {UrlSystem} from '../SiteUrlContext';
 
 @Component({
   selector: 'app-system-admin-menu-bar',
@@ -10,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SystemAdminMenuBarComponent implements OnInit,AfterViewInit{
 
   urlName;
+  urlSystem = new UrlSystem();
+  currentUrl = this._router.url;
 
   constructor(private _router: Router, private route: ActivatedRoute) {
 
@@ -65,4 +68,8 @@ export class SystemAdminMenuBarComponent implements OnInit,AfterViewInit{
     this.loadScript('/assets/plugins/momentjs/moment.js');
   }
 
+  redirectToUrl(url: string) {
+    this.currentUrl = url;
+    this._router.navigateByUrl(url);
+  }
 }

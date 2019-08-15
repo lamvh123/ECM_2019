@@ -1,6 +1,7 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
   <div class="block-header">
-    <h2>All Courses </h2><h2 *ngIf="!isLoading">Of <font color="#78b83e"><b>{{this.currentProgram.Name}}</b></font></h2>
+    <h2 *ngIf="isLoading">All Courses</h2>
+    <h2 *ngIf="!isLoading">All Courses Of <font color="#78b83e"><b>{{this.currentProgram.Name}}</b></font></h2>
     <!--      <small class="text-muted">Welcome to Swift application</small>-->
   </div>
 

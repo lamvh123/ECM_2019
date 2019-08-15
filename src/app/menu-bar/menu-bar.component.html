@@ -317,16 +317,17 @@
         <li class="header">MAIN NAVIGATION</li>
         <li [ngClass]="{'active open': currentUrl==urlTraining.viewReport}">
           <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewReport)">
-            <i class="zmdi zmdi-home"></i><span class="class-hover">Report</span></a></li>
+            <i class="zmdi zmdi-home"></i><span class="class-hover">Dashboard</span></a></li>
         <li [ngClass]="{'active open': currentUrl==urlTraining.viewTeacher||currentUrl==urlTraining.addTeacher}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
-            class="class-hover">Teacher</span> </a>
+            class="class-hover">Teachers</span> </a>
           <ul class="ml-menu">
             <li [ngClass]="{'active': currentUrl==urlTraining.viewTeacher}">
               <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewTeacher)">
                 <span class="class-hover">All Teachers</span></a></li>
-            <!--              <li [ngClass]="{'active': urlName=='/Training-staff/add-teacher'}"><a href="/Training-staff/add-teacher">-->
-            <!--                  <span class="class-hover">Add Teacher</span></a></li>-->
+            <li [ngClass]="{'active': currentUrl==urlTraining.addTeacher}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.addTeacher)">
+                <span class="class-hover">Add Teacher</span></a></li>
           </ul>
         </li>
         <li [ngClass]="{'active open': currentUrl==urlTraining.viewProgram||currentUrl==urlTraining.addProgram}">
@@ -341,10 +342,9 @@
                 <span class="class-hover">Add Program</span></a></li>
           </ul>
         </li>
-        <li
-          [ngClass]="{'active open': currentUrl==urlTraining.listClass||currentUrl==urlTraining.generateClass||currentUrl==urlTraining.generateTimetable}">
+        <li [ngClass]="{'active open': currentUrl==urlTraining.listClass||currentUrl==urlTraining.generateClass||currentUrl==urlTraining.generateTimetable}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
-            class="class-hover">Class</span> </a>
+            class="class-hover">Classes</span> </a>
           <ul class="ml-menu">
             <li [ngClass]="{'active': currentUrl==urlTraining.generateClass}">
               <a href="javascript:;" (click)="redirectToUrl(urlTraining.generateClass)">
@@ -474,7 +474,7 @@
           <div class="search">
             <div class="input-group">
               <div class="form-line">
-                <input type="text" class="form-control" placeholder="Search..." required autofocus>
+                <input type="text" class="form-control" placeholder="Search..." required>
               </div>
             </div>
           </div>

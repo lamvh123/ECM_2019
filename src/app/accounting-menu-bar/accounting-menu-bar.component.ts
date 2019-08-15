@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {UrlAccounting} from '../SiteUrlContext';
 
 @Component({
   selector: 'app-accounting-menu-bar',
@@ -13,6 +14,8 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class AccountingMenuBarComponent implements OnInit, AfterViewInit {
 
+  urlAccounting = new UrlAccounting();
+  currentUrl = this._router.url;
   urlName;
   userAvatar = '';
   userName = '';
@@ -87,6 +90,11 @@ export class AccountingMenuBarComponent implements OnInit, AfterViewInit {
 
   redirectToLogin() {
     this._router.navigateByUrl('/login');
+  }
+
+  redirectToUrl(url: string) {
+    this.currentUrl = url;
+    this._router.navigateByUrl(url);
   }
 }
 

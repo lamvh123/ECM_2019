@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/c
 import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITeacher, APITraining} from '../APIContext';
 import * as $ from 'jquery';
 import {ToastrService} from 'ngx-toastr';
+import {UrlNotLogin} from '../SiteUrlContext';
 
 declare var logInForm: any;
 
@@ -19,7 +20,7 @@ declare var logInForm: any;
   ]
 })
 export class LoginComponent implements OnInit, AfterViewInit {
-
+  urlNotLogin = new UrlNotLogin();
   apiContext = new APIContext();
   apiTraining = new APITraining();
   apiAdmission = new APIAdmission();
@@ -226,6 +227,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
+  }
+  redirectToUrl(url: string) {
+    this._router.navigateByUrl(url);
   }
 
 }

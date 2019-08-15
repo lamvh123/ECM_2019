@@ -1,5 +1,6 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {UrlAdmission} from '../SiteUrlContext';
 
 @Component({
   selector: 'app-admission-staff-menubar',
@@ -14,6 +15,9 @@ import {Router, ActivatedRoute} from '@angular/router';
     '../../assets/css/themes/all-themes.css']
 })
 export class AdmissionStaffMenubarComponent implements OnInit, AfterViewInit {
+  urlAdmission = new UrlAdmission();
+  currentUrl = this._router.url;
+
   urlName;
   userAvatar = '';
   userName = '';
@@ -105,5 +109,10 @@ export class AdmissionStaffMenubarComponent implements OnInit, AfterViewInit {
 
   redirectToLogin() {
     this._router.navigateByUrl('/login');
+  }
+
+  redirectToUrl(url: string) {
+    this.currentUrl = url;
+    this._router.navigateByUrl(url);
   }
 }

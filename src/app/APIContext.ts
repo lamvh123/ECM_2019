@@ -134,6 +134,7 @@ export class APITraining {
   getNumberOfClass = 'api/TrainingDept/statistic/GetNumberOfClass';
 
   getTeacherBySubject = 'api/TrainingDept/GetTeacherBySubject';
+  grantAccountForTeacher = 'api/TrainingDept/GrantAccountForTeacher';
 }
 
 export class APITeacher {

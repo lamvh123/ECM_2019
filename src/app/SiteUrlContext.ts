@@ -1,3 +1,13 @@
+export class UrlStudent {
+  profile = '/Student/profile';
+  viewTimetable = '/Student/ViewTimetable';
+}
+
+export class UrlAccounting {
+  profile = '/Account-staff/profile';
+  student = '/Account-staff/student';
+}
+
 export class UrlTraining {
   viewReport = '/Training-staff/Report';
   viewTeacher = '/Training-staff/view-teacher';
@@ -18,13 +28,34 @@ export class UrlTraining {
   profile = '/Training-staff/profile';
 }
 
-export class UrlStudent {
-  profile = '/Student/profile';
-  viewTimetable = '/Student/ViewTimetable';
+export class UrlTeacher {
+  profile = '/Teacher/profile';
+  viewTimetable = '/Teacher/ViewTimetable';
+  takeAttendance = '/Teacher/take-attendance';
+}
+
+export class UrlSystem {
+  profile = '/SystemAdmin/profile';
+  allCenter = '/SystemAdmin/AllCenter';
+  addCenter = '/SystemAdmin/AddCenter';
 }
 
 export class UrlCenter {
   profile = '/CenterAdmin/profile';
   grantAccount = '/CenterAdmin/GrantAccount';
   viewStaff = '/CenterAdmin/view-staff';
+}
+
+export class UrlAdmission {
+  profile = '/Admission-staff/profile';
+  admissionForm = '/Admission-staff/admissionform';
+  addForm = '/Admission-staff/addForm';
+  formDetail = '/Admission-staff/form-detail';
+}
+
+export class UrlNotLogin {
+  login = '/login';
+  logout = '/logout';
+  forgotPassword = '/forgot-password';
+  resetPassword = '/forgot-password/reset-password';
 }

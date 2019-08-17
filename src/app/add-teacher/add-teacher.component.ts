@@ -121,11 +121,13 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
   private addTeacher() {
     this.isLoading = true;
     const configUrl = this.apiContext.host + this.apiTraining.grantAccountForTeacher;
-    const body = new HttpParams()
+    let body = new HttpParams()
       .set('Email', this.teacherEmail)
       .set('FullName', this.fullName)
-      .set('Subjects', JSON.stringify(this.selectedSubject))
       .set('CenterId', this.centerId + '');
+    this.selectedSubject.forEach(item => {
+      body = body.append('Subjects', item + '');
+    });
     console.log(body);
     this.http.post<any>(configUrl, body).toPromise().then(
       res => {

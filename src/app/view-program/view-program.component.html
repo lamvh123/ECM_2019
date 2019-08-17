@@ -47,14 +47,18 @@
           <h3>{{program.Name}}</h3>
           <!--            <p>Detail: {{program.Description}}</p>-->
           <!--            <p>Price: <strong class="col-blush">$315.60</strong> Time: <strong class="col-green">9 months</strong></p>-->
-          <div class="btn-group-align">
-            <div><a class="btn  btn-raised btn-info g-bg-cgreen waves-effect btn-fix-width" role="button"
-                    style="padding: 10px"
-                    (click)="navigateToProgramDetail(program)">Update Program</a></div>
-            <div><a class="btn  btn-raised btn-info g-bg-blue waves-effect btn-fix-width" role="button"
-                    style="padding: 10px"
-                    (click)="selectProgram(program)">View Courses</a>
-            </div>
+          <div class="module">
+            <a class="btnWow btnGBgGreen"
+               (click)="navigateToProgramDetail(program)">Update Program</a>
+            <a class="btnWow btnGBgBlue"
+               (click)="selectProgram(program)">View Courses</a>
+<!--            <div class="btnGBgGreen"><a class="btn  btn-raised btn-info g-bg-cgreen waves-effect btn-fix-width" role="button"-->
+<!--                    style="padding: 10px"-->
+<!--                    (click)="navigateToProgramDetail(program)">Update Program</a></div>-->
+<!--            <div><a class="btn  btn-raised btn-info g-bg-blue waves-effect btn-fix-width" role="button"-->
+<!--                    style="padding: 10px"-->
+<!--                    (click)="selectProgram(program)">View Courses</a>-->
+<!--            </div>-->
           </div>
         </div>
 

@@ -56,7 +56,6 @@
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-group">
                 <label for="listSubject">Subject <span class="error-msg">(*)</span>:</label>
-                <div class="form-line">
                   <!--                  <input type="text" [(ngModel)]="subject" class="form-control" placeholder="Subject" id="subject"-->
                   <!--                         required-->
                   <!--                         (change)="checkValidName()"-->
@@ -66,7 +65,6 @@
                              [(ngModel)]="selectedSubject" id="listSubject"
                              required (change)="checkValidSubject()" (focusout)="checkValidSubject()">
                   </ng-select>
-                </div>
                 <div class="error-msg" *ngIf="errorMsgSubject!=null && errorMsgSubject.length>1">
                   {{errorMsgSubject}}
                 </div>

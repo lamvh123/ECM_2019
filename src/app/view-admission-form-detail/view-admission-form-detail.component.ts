@@ -11,6 +11,7 @@ import {Observable} from 'rxjs';
 import {Slot} from '../slot';
 import {forEach} from '@angular/router/src/utils/collection';
 import {APIAdmission, APIContext} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-admission-form-detail',
@@ -31,13 +32,13 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   listOfSlot: Slot[];
   isClose = 'true';
   startDate;
-  selectedSlot = '';
+  selectedSlot = -1;
   boolArr: string[] = ['true', 'false'];
   selectedDayArr;
   dayArr: any[] = [{dayNumber: 1, dayString: 'Monday'}, {dayNumber: 2, dayString: 'Tuesday'},
     {dayNumber: 3, dayString: 'Wednesday'}, {dayNumber: 4, dayString: 'Thursday'},
     {dayNumber: 5, dayString: 'Friday'}, {dayNumber: 6, dayString: 'Saturday'}, {dayNumber: 0, dayString: 'Sunday'}];
-  selectedBuilding = '';
+  selectedBuilding = -1;
 
 
   errorMsgName = '';
@@ -47,7 +48,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   errorMsgSlot = '';
   isLoading = true;
 
-  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private datepipe: DatePipe) {
+  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private datepipe: DatePipe, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -77,10 +78,14 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
     this.http.get<AdmissionForm>(getAllCourseUrl, {params: para}).toPromise().then(data => {
         this.form = data;
         this.form.StartDate = this.form.StartDate.substr(0, 10);
-        this.selectedBuilding = this.form.Building.Id + '';
+        this.selectedBuilding = this.form.Building.Id;
         this.isClose = this.form.IsClosed + '';
         if (data['Slot'] != null && data['Slot'] != undefined) {
-          this.selectedSlot = data['Slot'].ID + '';
+          this.selectedSlot = data['Slot'].ID;
+          console.log('this.selectedSlot');
+          console.log(this.selectedSlot);
+          console.log('data[Slot].ID');
+          console.log(data['Slot'].ID);
         }
 
         if (data['Weeks'] != null && data['Weeks'] != undefined) {
@@ -94,14 +99,15 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
         }
         console.log(this.form);
         this.getAllBuilding();
+        this.getAllSlot();
         this.isLoading = false;
       },
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       }
     );
-    this.getAllSlot();
   }
 
   getAllBuilding() {
@@ -116,6 +122,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -134,6 +141,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 
@@ -156,10 +164,12 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
         console.log(data);
         this.redirectToAllAdmissionForm();
         this.isLoading = false;
+        this.toastr.success('Admission form ' + this.form.Name + ' was updated successfully.', 'Success!');
       },
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
   }
 
@@ -196,7 +206,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   checkValidBuilding() {
-    if (this.selectedBuilding == null || this.selectedBuilding === '') {
+    if (this.selectedBuilding == null || this.selectedBuilding<0) {
       this.errorMsgBuilding = 'Building is required.';
       return false;
     } else {
@@ -206,7 +216,7 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
   }
 
   checkValidSlot() {
-    if (this.selectedSlot == null || this.selectedSlot === '') {
+    if (this.selectedSlot == null || this.selectedSlot<0) {
       this.errorMsgSlot = 'Slot is required.';
       return false;
     } else {
@@ -234,6 +244,8 @@ export class ViewAdmissionFormDetailComponent implements OnInit, AfterViewInit {
     this.checkValidSlot();
     if (this.checkValidName() && this.checkValidDate() && this.checkValidBuilding() && this.checkValidDay() && this.checkValidSlot()) {
       this.updateForm();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
     }
   }
 

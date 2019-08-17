@@ -36,6 +36,8 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
   isLoading = true;
 
   errorMsgName = '-';
+  errorMsgFrom = '-';
+  errorMsgTo = '-';
 
   ngOnInit() {
     const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
@@ -92,47 +94,10 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
   }
 
 
-  chooseTimeFrom() {
-    const amazingTimePicker = this.atp.open();
-    amazingTimePicker.afterClose().subscribe(time => {
-      console.log(time);
-      this.From = time;
-    });
-  }
-
-  chooseTimeTo() {
-    const amazingTimePicker = this.atp.open();
-    amazingTimePicker.afterClose().subscribe(time => {
-      console.log(time);
-      this.To = time;
-    });
-  }
-
-
   redirectToAllSlot() {
     this._router.navigateByUrl('/Training-staff/view-slot');
   }
 
-  redirectToAddSlot() {
-    this._router.navigateByUrl('/Training-staff/add-slot');
-  }
-
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A slot was added successfully.' +
-  //       '\nDo you want to add more slots?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToAddSlot();
-  //   } else {
-  //     this.redirectToAllSlot();
-  //   }
-  // }
   checkValidName() {
     if (this.Name != null) {
       this.Name = this.formatText(this.Name);
@@ -146,9 +111,53 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
     }
   }
 
+  checkValidFrom() {
+    if (!this.checkValidTime(this.From)) {
+      this.errorMsgFrom = 'Start time is required.';
+      return false;
+    } else {
+      this.errorMsgFrom = '';
+      return true;
+    }
+  }
+
+  checkValidTo() {
+    if (!this.checkValidTime(this.To)) {
+      this.errorMsgTo = 'End time is required.';
+      return false;
+    } else {
+      const arrFrom = this.From.split(':');
+      const arrTo = this.To.split(':');
+      if ((+arrFrom[0] < +arrTo[0]) || ((+arrFrom[0] === +arrTo[0]) && (+arrFrom[1] < +arrTo[1]))) {
+        this.errorMsgTo = '';
+        return true;
+      } else {
+        this.errorMsgTo = 'End time must be greater than start time.';
+        return false;
+      }
+    }
+  }
+
+  checkValidTime(timeCheck: string) {
+    if (timeCheck == null || timeCheck === '') {
+      return false;
+    } else {
+      timeCheck = this.formatText(timeCheck);
+      const arr = timeCheck.split(':');
+      arr.forEach(function(item) {
+        if (item == null || item === '') {
+          return false;
+        }
+      });
+      return true;
+    }
+  }
+
   checkValidFields() {
     this.checkValidName();
-    if (this.checkValidName()) {
+    this.checkValidFrom();
+    this.checkValidTo();
+    if (this.checkValidName() && this.checkValidFrom() && this.checkValidTo()) {
       this.addSlot();
     } else {
       this.toastr.warning('Something is missing.', 'Alert!');

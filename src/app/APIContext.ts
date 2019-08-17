@@ -5,7 +5,8 @@ import {Center} from './center';
 import {Slot} from './slot';
 
 export class APIContext {
-  host = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/';
+  // host = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/';
+  host = 'https://ecm-api.azurewebsites.net/';
   centerId = 1;
 
   // constructor() {

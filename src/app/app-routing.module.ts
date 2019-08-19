@@ -63,6 +63,7 @@ import {ForgotPasswordComponent} from './forgot-password/forgot-password.compone
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {CenterViewStaffComponent} from './center-view-staff/center-view-staff.component';
 import {AddTeacherComponent} from './add-teacher/add-teacher.component';
+import { WeeklyReportComponent } from './weekly-report/weekly-report.component';
 
 
 const routes: Routes = [
@@ -225,6 +226,10 @@ const routes: Routes = [
       {
         path: 'Report',
         component: ReportComponent
+      },
+      {
+        path: 'WeeklyReport',
+        component : WeeklyReportComponent
       }
       // {
       //   path: 'course-detail/:id',

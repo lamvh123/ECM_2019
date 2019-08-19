@@ -1,0 +1,46 @@
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="body">
+        <div class="row clearfix">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="col-sm-2">Year:</label>
+              <div class="col-sm-9">
+                <ng-select [items]="years" bindLabel="Name" bindValue="Id"  placeholder="Select year" [clearable]="false"
+                  [(ngModel)]="selectedYear" required>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="col-sm-2">Month:</label>
+              <div class="col-sm-9">
+                <ng-select [items]="months" bindLabel="Name" bindValue="Id" placeholder="Select month" [clearable]="false"
+                  [(ngModel)]="selectedMonth" required>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="col-sm-12" style="padding-bottom: 1%;padding-left: 3%;">
+            <button type="button" (click)="loadData()" class="btn btn-primary">View</button>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height: 500px;width: 100%">
+  <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="graphArr" [gradient]="gradient" [xAxis]="showXAxis"
+                           [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+                           [showYAxisLabel]="showYAxisLabel"
+                           [xAxisLabel]="xAxisLabelMoney" [yAxisLabel]="yAxisLabelMoney" legendTitle="Program"
+                           maxXAxisTickLength="10"
+                           rotateXAxisTicks="false">
+  </ngx-charts-bar-vertical>
+</div>

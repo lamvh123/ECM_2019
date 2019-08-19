@@ -26,6 +26,7 @@ export class UrlTraining {
   viewSubject = '/Training-staff/view-subject';
   addSubject = '/Training-staff/add-subject';
   profile = '/Training-staff/profile';
+  viewWeeklyReport = '/Training-staff/WeeklyReport';
 }
 
 export class UrlTeacher {

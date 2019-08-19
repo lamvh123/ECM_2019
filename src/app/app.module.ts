@@ -87,6 +87,7 @@ import {ForgotPasswordComponent} from './forgot-password/forgot-password.compone
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import { CenterViewStaffComponent } from './center-view-staff/center-view-staff.component';
+import { WeeklyReportComponent } from './weekly-report/weekly-report.component';
 
 @NgModule({
   declarations: [
@@ -148,7 +149,8 @@ import { CenterViewStaffComponent } from './center-view-staff/center-view-staff.
     TakeAttendanceComponent,
     ResetPasswordComponent,
     ForgotPasswordComponent,
-    CenterViewStaffComponent
+    CenterViewStaffComponent,
+    WeeklyReportComponent
   ],
   imports: [
     BrowserModule,

@@ -154,8 +154,12 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
     if (this.addingStaff.Email != null) {
       this.addingStaff.Email = this.formatText(this.addingStaff.Email);
     }
+    const regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/gm;
     if (this.addingStaff.Email == null || this.addingStaff.Email === '') {
       this.errorMsgEmail = 'Email is required.';
+      return false;
+    } else if (!regex.test(this.addingStaff.Email)) {
+      this.errorMsgEmail = 'Invalid email format.';
       return false;
     } else {
       this.errorMsgEmail = '';

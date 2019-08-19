@@ -27,7 +27,7 @@
           <div class="row clearfix">
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="roomName">Room name:</label>
+                <label for="roomName">Room Name <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <input type="text" class="form-control" placeholder="Room Number " [(ngModel)]="roomNumber"
                          id="roomName"
@@ -40,7 +40,7 @@
             </div>
             <div class="col-lg-6 col-md-6">
               <div class="form-group">
-                <label for="capacity">Capacity:</label>
+                <label for="capacity">Capacity <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <input type="text" class="form-control" placeholder="Capacity" [(ngModel)]="capacity" id="capacity"
                          required
@@ -55,7 +55,7 @@
             </div>
             <div class="col-lg-6 col-md-6">
               <div class="form-group">
-                <label for="selectBuidling">Select Buidling:</label>
+                <label for="selectBuidling">Select Buidling <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <select [(ngModel)]="selectedName" class="form-control show-tick"
                           (change)="[selectedValueChanged($event.target.value),checkValidBuilding()]"

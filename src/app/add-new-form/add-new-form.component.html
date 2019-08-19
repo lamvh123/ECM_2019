@@ -12,7 +12,7 @@
             <div class="row clearfix">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label>Course:</label>
+                  <label>Course <span class="error-msg">(*)</span>:</label>
                   <div>
                     <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
                                [(ngModel)]="courseId" required (change)="checkValidCourse()"
@@ -26,7 +26,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="formName">Form Name:</label>
+                  <label for="formName">Form Name <span class="error-msg">(*)</span>:</label>
                   <div class="form-line">
                     <input type="text" [(ngModel)]="form.Name" class="form-control" placeholder="Name" id="formName"
                            required (change)="checkValidName()" (focusout)="checkValidName()">
@@ -47,7 +47,7 @@
             <!--              </div>-->
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="form-group">
-                <label for="startdate"> Start Date</label>
+                <label for="startdate">Start Date <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"
                          id="startdate"
@@ -61,7 +61,7 @@
 
             <div class="col-lg-4 col-md-6 col-md-12">
               <div style="padding-top: 19px;">
-                <label for="building">Building:</label>
+                <label for="building">Building <span class="error-msg">(*)</span>:</label>
                 <ng-select [items]="listBuilding" bindLabel="Name" bindValue="Id" placeholder="Select building"
                            [(ngModel)]="selectedBuilding" id="building"
                            required (change)="checkValidBuilding()" (focusout)="checkValidBuilding()">
@@ -84,7 +84,7 @@
 
             <div class="col-lg-6 col-md-6 col-md-12">
               <div style="padding-top: 19px;">
-                <label for="listDay">Selected days:</label>
+                <label for="listDay">Selected days <span class="error-msg">(*)</span>:</label>
                 <ng-select [items]="dayArr" bindLabel="dayString" bindValue="dayNumber"
                            placeholder="Select day of week" multiple="true"
                            [(ngModel)]="selectedDayArr" id="listDay"
@@ -99,7 +99,7 @@
 
             <div class="col-lg-6 col-md-6 col-md-12">
               <div style="padding-top: 19px;">
-                <label for="selectedSlot">Selected slot:</label>
+                <label for="selectedSlot">Selected slot <span class="error-msg">(*)</span>:</label>
                 <ng-select [items]="listOfSlot" bindLabel="displayText" bindValue="ID" placeholder="Select time "
                            [(ngModel)]="selectedSlot" id="selectedSlot"
                            required (change)="checkValidSlot()" (focusout)="checkValidSlot()">

@@ -55,6 +55,21 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-group">
+                <label for="teacherPhone">Phone number <span class="error-msg">(*)</span>:</label>
+                <div class="form-line">
+                  <input type="text" [(ngModel)]="teacherPhone" class="form-control" placeholder="Phone number"
+                         id="teacherPhone"
+                         required
+                         (change)="checkValidPhone()"
+                         (focusout)="checkValidPhone()">
+                </div>
+                <div class="error-msg" *ngIf="errorMsgPhone!=null && errorMsgPhone.length>1">
+                  {{errorMsgPhone}}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="form-group">
                 <label for="listSubject">Subject <span class="error-msg">(*)</span>:</label>
                   <!--                  <input type="text" [(ngModel)]="subject" class="form-control" placeholder="Subject" id="subject"-->
                   <!--                         required-->

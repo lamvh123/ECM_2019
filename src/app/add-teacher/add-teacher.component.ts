@@ -24,8 +24,10 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
   selectedSubject: Subject[] = [];
   errorMsgName = '-';
   errorMsgMail = '-';
+  errorMsgPhone = '-';
   errorMsgSubject = '-';
   isLoading = true;
+  teacherPhone = '';
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
@@ -80,11 +82,32 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
     if (this.teacherEmail != null) {
       this.teacherEmail = this.formatText(this.teacherEmail);
     }
+    const regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/gm;
     if (this.teacherEmail == null || this.teacherEmail === '') {
       this.errorMsgMail = 'Email is required.';
       return false;
+    } else if (!regex.test(this.teacherEmail)) {
+      this.errorMsgMail = 'Invalid email format.';
+      return false;
     } else {
       this.errorMsgMail = '';
+      return true;
+    }
+  }
+
+  checkValidPhone() {
+    if (this.teacherPhone != null) {
+      this.teacherPhone = this.formatText(this.teacherPhone);
+    }
+    const regex = /(09|03)+([0-9]{8})\b/g;
+    if (this.teacherPhone == null || this.teacherPhone === '') {
+      this.errorMsgPhone = 'Phone is required.';
+      return false;
+    } else if (!regex.test(this.teacherPhone)) {
+      this.errorMsgPhone = 'Invalid phone number format.';
+      return false;
+    } else {
+      this.errorMsgPhone = '';
       return true;
     }
   }
@@ -103,7 +126,8 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
     this.checkValidName();
     this.checkValidEmail();
     this.checkValidSubject();
-    if (this.checkValidName() && this.checkValidEmail() && this.checkValidSubject()) {
+    this.checkValidPhone();
+    if (this.checkValidName() && this.checkValidEmail() && this.checkValidSubject() && this.checkValidPhone()) {
       this.addTeacher();
     } else {
       this.toastr.warning('Something is missing.', 'Alert!');
@@ -124,6 +148,7 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
     let body = new HttpParams()
       .set('Email', this.teacherEmail)
       .set('FullName', this.fullName)
+      .set('PhoneNumber', this.teacherPhone)
       .set('CenterId', this.centerId + '');
     this.selectedSubject.forEach(item => {
       body = body.append('Subjects', item + '');

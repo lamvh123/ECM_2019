@@ -26,7 +26,7 @@
           <div class="row clearfix">
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="subjectName">Subject Name:</label>
+                <label for="subjectName">Subject Name <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <input type="text" [(ngModel)]="Name" class="form-control" placeholder="Name"
                          id="subjectName" required (change)="checkValidName()" (focusout)="checkValidName()">

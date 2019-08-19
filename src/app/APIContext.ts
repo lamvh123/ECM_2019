@@ -128,6 +128,7 @@ export class APITraining {
   generateTimeTable = 'api/TrainingDept/GenerateTimeTable';
   officialTimeTableOfClass = 'api/TrainingDept/OfficialTimeTableOfClass';
   getAllTimeTable = 'api/TrainingDept/GetAllTimeTable';
+  getTotalTeacher = 'api/TrainingDept/GetTotalTeacher';
 
   getStatisticByProgram = 'api/TrainingDept/statistic/GetStatisticByProgram';
   getNumberOfProgram = 'api/TrainingDept/statistic/GetNumberOfProgram';

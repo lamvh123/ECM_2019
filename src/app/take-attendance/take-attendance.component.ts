@@ -29,6 +29,7 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
   attendanceList: Attendance[] = [];
   selectedTimeTable: Timetable;
   isLoading = true;
+  todayStr: string;
 
   constructor(private modalService: NgbModal, private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -40,6 +41,12 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
       this.centerId = data['Id'];
       this.getTimeTable();
     });
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+
+    this.todayStr = yyyy + '-' + mm + '-' + dd;
   }
 
   ngAfterViewInit(): void {
@@ -121,5 +128,15 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
         this.isLoading = false;
       });
 
+  }
+
+  isPending(dateSession: string): boolean {
+    const today = Date.parse(this.todayStr);
+    const sessionDay = Date.parse(dateSession.substring(0, 10));
+    console.log('today: ' + this.todayStr + ' - sess: ' + dateSession.substring(0, 10) + ' - ' + (today < sessionDay));
+    if (today < sessionDay) {
+      return false;
+    }
+    return true;
   }
 }

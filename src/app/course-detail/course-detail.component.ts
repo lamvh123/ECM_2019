@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {HttpParams, HttpClient} from '@angular/common/http';
+import {HttpParams, HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Subject} from '../subject';
 import {Course} from '../course';
 import {Building} from '../building';
@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -24,7 +25,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class CourseDetailComponent implements OnInit, AfterViewInit {
 
-  constructor(private routers: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: ToastrService) {
+  constructor(private routers: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: ToastrService, private modalService: NgbModal) {
   }
 
   apiContext = new APIContext();
@@ -283,5 +284,33 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
 
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
+  }
+  openAttendanceForm(deleteModal) {
+    console.log(this.modalService);
+    this.modalService.open(deleteModal, {size: 'lg'});
+  }
+
+  deleteCourse() {
+    this.isLoading = true;
+    const param = new HttpParams()
+      .set('CourseId', this.courseId + '')
+      .set('CenterId', this.centerId + '');
+    const url = this.apiContext.host + this.apiTraining.deleteCourse;
+    this.http.post(url, param).toPromise().then(data => {
+        console.log(data);
+        this.isLoading = false;
+        this.toastr.success('Delete course ' + this.courseModel.Name + ' successfully.', 'Success!');
+        this.redirectToAllCourse();
+      },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse && error.status === 406) {
+          console.log(error.status);
+          this.toastr.error(error.error, 'Oops!');
+        } else {
+          this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+        }
+      });
   }
 }

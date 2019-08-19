@@ -1,9 +1,10 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-program-detail',
@@ -19,7 +20,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class ProgramDetailComponent implements OnInit, AfterViewInit {
 
-  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
+  constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService, private modalService: NgbModal) {
   }
 
   apiContext = new APIContext();
@@ -120,10 +121,6 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
     // this.updateProgram();
   }
 
-  redirectToAllPrograms() {
-    this._router.navigate(['/Training-staff/view-program']);
-  }
-
   onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -192,4 +189,32 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
     return s.trim().replace(/\s\s+/g, ' ');
   }
 
+  openAttendanceForm(deleteModal) {
+    console.log(this.modalService);
+    this.modalService.open(deleteModal, {size: 'lg'});
+  }
+
+  deleteProgram() {
+    this.isLoading = true;
+    const param = new HttpParams()
+      .set('ProgramId', this.programId + '')
+      .set('CenterId', this.centerId + '');
+    const url = this.apiContext.host + this.apiTraining.deleteProgram;
+    this.http.post(url, param).toPromise().then(data => {
+        console.log(data);
+        this.isLoading = false;
+        this.toastr.success('Delete program ' + this.programName + ' successfully.', 'Success!');
+        this.redirectToAllProgram();
+      },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse && error.status === 406) {
+          console.log(error.status);
+          this.toastr.error(error.error, 'Oops!');
+        } else {
+          this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+        }
+      });
+  }
 }

@@ -26,7 +26,7 @@
           <div class="row clearfix">
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="courseName">Slot Name:</label>
+                <label for="courseName">Slot Name <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <input type="text" class="form-control" placeholder="Room Number " [(ngModel)]="Name"
                          id="courseName"
@@ -39,7 +39,7 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="form-group">
-                <label for="slotFrom">From</label>
+                <label for="slotFrom">Start time <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <input style="outline: none;" type="time" id="slotFrom" name="appt" min="00:00" max="23:00" [(ngModel)]="From" required
                          (change)="checkValidFrom()" (focusout)="checkValidFrom()">
@@ -55,7 +55,7 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="form-group">
-                <label for="slotTo">To:</label>
+                <label for="slotTo">End time <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <input style="outline: none;" type="time" id="slotTo" name="appt" min="{{From}}" max="23:59" [(ngModel)]="To" required
                          (change)="checkValidTo()" (focusout)="checkValidTo()">

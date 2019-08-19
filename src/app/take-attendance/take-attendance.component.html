@@ -36,14 +36,17 @@
               <tbody *ngFor="let ttb of timetableList; index as ttlIndex">
               <tr>
                 <td>{{ttlIndex + 1}}</td>
-                <td>{{ttb.LearningDay}}</td>
+                <td>{{ttb.LearningDay.substring(0, 10)}}</td>
                 <td>{{ttb.slot.From + ' - ' + ttb.slot.To}}</td>
                 <ng-container *ngIf="ttb.AttendBy==null; then notYet; else didAttendance"></ng-container>
                 <ng-template #notYet>
                   <td><p class="col-blue-grey">Not yet</p></td>
                   <td>
-                    <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
+                    <button *ngIf="!isPending(ttb.LearningDay)" type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
                             (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Take
+                      Attendance
+                    </button>
+                    <button *ngIf="isPending(ttb.LearningDay)" type="button" class="btn  btn-raised g-bg-cgreen waves-effect" disabled="disabled">Take
                       Attendance
                     </button>
                   </td>

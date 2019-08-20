@@ -18,8 +18,8 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   constructor(private _router: Router, private route: ActivatedRoute) {
   }
 
+  static currentUrl = '';
   urlTraining = new UrlTraining();
-  currentUrl = this._router.url;
   urlName;
   programName = '';
   userAvatar = '';
@@ -31,8 +31,13 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    MenuBarComponent.currentUrl = this._router.url;
     // this.urlName = this.className();
     // console.log(this.urlName);
+  }
+
+  getCurrentUrl(): string {
+    return MenuBarComponent.currentUrl;
   }
 
   className(): string {
@@ -186,7 +191,7 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
   }
 
   redirectToUrl(url: string) {
-    this.currentUrl = url;
+    MenuBarComponent.currentUrl = url;
     this._router.navigateByUrl(url);
   }
 }

@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-add-subject',
@@ -21,6 +23,7 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   Name: string;
   errorMsgName = '-';
@@ -84,29 +87,9 @@ export class AddSubjectComponent implements OnInit, AfterViewInit {
 
 
   redirectToAllSubject() {
-    this.router.navigateByUrl('/Training-staff/view-subject');
+    MenuBarComponent.currentUrl = this.urlTraining.viewSubject;
+    this.router.navigateByUrl(this.urlTraining.viewSubject);
   }
-
-  redirectToAddSubject() {
-    this.router.navigateByUrl('/Training-staff/add-subject');
-  }
-
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A subject was added successfully.' +
-  //       '\nDo you want to add more subjects?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToAddSubject();
-  //   } else {
-  //     this.redirectToAllSubject();
-  //   }
-  // }
 
 
   checkValidName() {

@@ -5,6 +5,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-program-detail',
@@ -26,6 +28,7 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   programId;
   programName = '';
@@ -130,7 +133,8 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
 
 
   redirectToAllProgram() {
-    this._router.navigateByUrl('/Training-staff/view-program');
+    MenuBarComponent.currentUrl = this.urlTraining.viewProgram;
+    this._router.navigateByUrl(this.urlTraining.viewProgram);
   }
 
 

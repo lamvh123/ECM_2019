@@ -5,6 +5,8 @@ import {Course} from '../course';
 import {Program} from '../program';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-view-course',
@@ -22,6 +24,7 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   programId;
   courseName = '';
@@ -101,14 +104,12 @@ export class ViewCourseComponent implements OnInit, AfterViewInit {
   }
 
   redirectToAddCourse() {
-    this.router.navigate(['/Training-staff/add-course', this.programId]);
+    MenuBarComponent.currentUrl = this.urlTraining.viewProgram;
+    this.router.navigateByUrl(this.urlTraining.addCourse + '/' + this.programId);
   }
 
   navigateToViewCourseDetail(course) {
-    this.router.navigate(['/Training-staff/course-detail', course.Id]);
-  }
-
-  navigateToSyllabus(course) {
-    this.router.navigate(['/Training-staff/syllabus', course.Id]);
+    MenuBarComponent.currentUrl = this.urlTraining.viewProgram;
+    this.router.navigateByUrl(this.urlTraining.courseDetail + '/' + course.Id);
   }
 }

@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {APIContext, APITraining} from '../APIContext';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-add-teacher',
@@ -17,6 +19,7 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   fullName = '';
   teacherEmail = '';
@@ -139,7 +142,8 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
   }
 
   redirectToViewTeacher() {
-    this.router.navigateByUrl('/Training-staff/view-teacher');
+    MenuBarComponent.currentUrl = this.urlTraining.viewTeacher;
+    this.router.navigateByUrl(this.urlTraining.viewTeacher);
   }
 
   private addTeacher() {

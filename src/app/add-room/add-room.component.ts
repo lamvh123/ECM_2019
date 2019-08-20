@@ -4,6 +4,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Building} from '../building';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-add-room',
@@ -26,6 +28,7 @@ export class AddRoomComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   roomNumber: string;
   capacity: string;
@@ -117,29 +120,10 @@ export class AddRoomComponent implements OnInit, AfterViewInit {
 
 
   redirectToAllRoom() {
-    this._router.navigateByUrl('/Training-staff/view-room');
+    MenuBarComponent.currentUrl = this.urlTraining.viewRoom;
+    this._router.navigateByUrl(this.urlTraining.viewRoom);
   }
 
-  redirectToAddRoom() {
-    this._router.navigateByUrl('/Training-staff/add-room');
-  }
-
-  // private showMessage(status: boolean) {
-  //   let messageConfirm;
-  //   if (status) {
-  //     messageConfirm = 'A room was added successfully.' +
-  //       '\nDo you want to add more rooms?';
-  //   } else {
-  //     messageConfirm = 'Something go wrong.' +
-  //       '\nDo you want to try again?';
-  //   }
-  //   const r = confirm(messageConfirm);
-  //   if (r === true) {
-  //     this.redirectToAddRoom();
-  //   } else {
-  //     this.redirectToAllRoom();
-  //   }
-  // }
   checkValidName() {
     if (this.roomNumber != null) {
       this.roomNumber = this.formatText(this.roomNumber);

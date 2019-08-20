@@ -10,6 +10,8 @@ import {Teacher} from '../teacher';
 import {forEach} from '@angular/router/src/utils/collection';
 import {Room} from '../room';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-list-of-class',
@@ -27,6 +29,7 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   listProgram: Program[];
   listCourse: Course[];
@@ -189,7 +192,8 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   }
 
   navigateToListStudent(item: Class) {
-    this.router.navigateByUrl('/Training-staff/ListStudentOfClass/' + item.ClassId);
+    MenuBarComponent.currentUrl = this.urlTraining.listClass;
+    this.router.navigateByUrl(this.urlTraining.listStudentOfClass + '/' + item.ClassId);
   }
 
   resetProgram() {

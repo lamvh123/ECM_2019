@@ -6,6 +6,8 @@ import {Subject} from '../subject';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 
 @Component({
@@ -26,6 +28,7 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraning = new UrlTraining();
 
   programId;
   courseName = '';
@@ -146,7 +149,8 @@ export class AddCourseComponent implements OnInit, AfterViewInit {
   }
 
   redirectToViewCourse() {
-    this.router.navigateByUrl('/Training-staff/view-course/' + this.programId);
+    MenuBarComponent.currentUrl = this.urlTraning.viewCourse;
+    this.router.navigateByUrl(this.urlTraning.viewCourse + '/' + this.programId);
   }
 
   checkValidName() {

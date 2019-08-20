@@ -9,6 +9,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 
 @Component({
@@ -31,6 +33,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   Editor = ClassicEditor;
 
@@ -173,7 +176,8 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
 
 
   redirectToAllCourse() {
-    this.routers.navigateByUrl('/Training-staff/view-course/' + this.courseModel.Program.Id);
+    MenuBarComponent.currentUrl = this.urlTraining.viewCourse;
+    this.routers.navigateByUrl(this.urlTraining.viewCourse + '/' + this.courseModel.Program.Id);
   }
 
 
@@ -285,6 +289,7 @@ export class CourseDetailComponent implements OnInit, AfterViewInit {
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
+
   openAttendanceForm(deleteModal) {
     console.log(this.modalService);
     this.modalService.open(deleteModal, {size: 'lg'});

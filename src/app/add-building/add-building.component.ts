@@ -4,6 +4,8 @@ import {HttpParams, HttpClient} from '@angular/common/http';
 import {Router, ActivatedRoute, Routes} from '@angular/router';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-add-building',
@@ -24,6 +26,7 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
   errorMsgName = '-';
   errorMsgAddress = '-';
 
@@ -90,7 +93,8 @@ export class AddBuildingComponent implements OnInit, AfterViewInit {
 
 
   redirectToViewBuilding() {
-    this._router.navigateByUrl('/Training-staff/view-building');
+    MenuBarComponent.currentUrl = this.urlTraining.viewBuilding;
+    this._router.navigateByUrl(this.urlTraining.viewBuilding);
   }
 
   checkValidName() {

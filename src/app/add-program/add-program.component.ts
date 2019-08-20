@@ -5,6 +5,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
 import * as $ from 'jquery';
 import {ToastrService} from 'ngx-toastr';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
+import {UrlTraining} from '../SiteUrlContext';
 
 
 @Component({
@@ -24,6 +26,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   public Editor = ClassicEditor;
 
@@ -105,7 +108,8 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   }
 
   redirectToAllProgram() {
-    this.router.navigateByUrl('/Training-staff/view-program');
+    MenuBarComponent.currentUrl = this.urlTraining.viewProgram;
+    this.router.navigateByUrl(this.urlTraining.viewProgram);
     // this.showNoti('fBtn');
   }
 

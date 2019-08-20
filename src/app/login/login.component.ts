@@ -5,7 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/c
 import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITeacher, APITraining} from '../APIContext';
 import * as $ from 'jquery';
 import {ToastrService} from 'ngx-toastr';
-import {UrlNotLogin} from '../SiteUrlContext';
+import {UrlNotLogin, UrlTraining} from '../SiteUrlContext';
 
 declare var logInForm: any;
 
@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   apiCenter = new APICenter();
   apiStudent = new APIStudent();
   apiTeacher = new APITeacher();
+  urlTraining = new UrlTraining();
 
   loginMessage: string;
   loginUserData = {
@@ -76,7 +77,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
     if (!!this._auth.trainingStaffLogedIn()) {
       console.log('2');
-      this._router.navigate(['/Training-staff/profile']);
+      this._router.navigateByUrl(this.urlTraining.profile);
     }
     if (!!this._auth.admissionStaffLogedIn()) {
       console.log('1');
@@ -129,7 +130,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           distUrl = '/SystemAdmin/profile';
           configUrl += this.apiSystem.profile;
         } else if (this._auth.trainingStaffLogedIn()) {
-          distUrl = '/Training-staff/profile';
+          distUrl = this.urlTraining.profile;
           configUrl += this.apiTraining.getProfile;
         } else if (this._auth.admissionStaffLogedIn()) {
           distUrl = '/Admission-staff/profile';

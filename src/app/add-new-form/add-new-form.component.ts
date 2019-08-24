@@ -252,8 +252,22 @@ export class AddNewFormComponent implements OnInit, AfterViewInit {
       this.errorMsgDay = 'Day of week is required.';
       return false;
     } else {
-      this.errorMsgDay = '';
-      return true;
+      const date = new Date(this.form.StartDate);
+      const weekday = new Array(7);
+      weekday[0] = 'Sunday';
+      weekday[1] = 'Monday';
+      weekday[2] = 'Tuesday';
+      weekday[3] = 'Wednesday';
+      weekday[4] = 'Thursday';
+      weekday[5] = 'Friday';
+      weekday[6] = 'Saturday';
+      if (this.selectedDayArr.indexOf(date.getDay()) < 0) {
+        this.errorMsgDay = 'Day-of-week list must contains day-of-week of start date (' + weekday[date.getDay()] + ')';
+        return false;
+      } else {
+        this.errorMsgDay = '';
+        return true;
+      }
     }
   }
 

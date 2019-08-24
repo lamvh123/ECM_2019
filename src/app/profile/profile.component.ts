@@ -146,7 +146,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
     this.http.post<any>(configUrl, body).subscribe(res => {
         console.log(res);
-        this.user.name = res.Full_Name;
+        this.user.name = res.FullName;
         this.user.email = res.Email;
         this.user.PhoneNumber = res.PhoneNumber;
         this.user.Sex = res.Sex;

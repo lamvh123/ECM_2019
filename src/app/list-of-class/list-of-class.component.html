@@ -56,6 +56,7 @@
               <th scope="col">Assign teacher</th>
               <th scope="col">Assign room</th>
               <th scope="col">View detail</th>
+              <th scope="col">Status</th>
             </tr>
             </thead>
             <tbody>
@@ -106,6 +107,13 @@
               <td>
                 <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
                         (click)="navigateToListStudent(class)">View list students
+                </button>
+              </td>
+              <td>
+                <span *ngIf="!class.IsFinished">Opening</span>
+                <span *ngIf="class.IsFinished && class.IsClosed">Closed</span>
+                <button *ngIf="class.IsFinished && !class.IsClosed" type="button" class="btn  btn-raised g-bg-blue waves-effect"
+                        (click)="closeClass(class)">Close class
                 </button>
               </td>
             </tr>

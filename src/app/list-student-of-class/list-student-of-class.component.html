@@ -1,60 +1,49 @@
-<div style="width: 100%">
-  <div [ngStyle]="isLoading?{'display':'none'}:{}" style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
-    <table class="table studenttbl">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Full Name</th>
-        <th scope="col">Phone number</th>
-        <th scope="col">Email</th>
-        <th scope="col">Sex</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let student of ListStudent;let index = index;">
-        <th scope="row" style="vertical-align: bottom">
-          {{index + 1}}
-        </th>
-        <td>{{student.Full_Name}}</td>
-        <td>{{student.PhoneNumber}}</td>
-        <td>{{student.Email}}</td>
-        <td>{{student.realSex}}</td>
-        <!-- <td [class.check-availble]="student.IsPayment"
-          [class.reject-availble]="!student.IsPayment">{{student.IsPayment}}</td>
-      <td>
-        <div class="row">
-          <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>
-
-          <ng-template #canCheck>
-            <div class="col-lg-5 col-xl-5">
-              <button (click)="ConfirmFee(student,index)" class="confirm-btn">
-                <i class="fa fa-check check-availble" style="font-size:24px" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="col-lg-5 col-xl-5">
-              <button class="confirm-btn">
-                <i class="fa fa-times reject-unavailble" style="font-size:24px"></i>
-              </button>
-            </div>
-          </ng-template>
-          <ng-template #cannotCheck>
-            <div class="col-lg-5 col-xl-5">
-              <button class="confirm-btn">
-                <i class="fa fa-check check-unavailble" style="font-size:24px" aria-hidden="true"></i>
-              </button>
-            </div>
-
-            <div class="col-lg-5 col-xl-5">
-              <button (click)="RejectFee(student,index)" class="confirm-btn">
-                <i class="fa fa-times reject-availble" style="font-size:24px"></i>
-              </button>
-            </div>
-          </ng-template>
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+  <div class="block-header">
+    <h2>All student of class {{currentClass.ClassName}}</h2>
+    <!--      <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>-->
+  </div>
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card">
+        <div class="header">
+          <h3 *ngIf="ListStudent==null || ListStudent.length<=0">There is no center in database.</h3>
+          <!--            <ul class="header-dropdown">-->
+          <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
+          <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
+          <!--                class="zmdi zmdi-more-vert"></i> </a>-->
+          <!--                <ul class="dropdown-menu pull-right">-->
+          <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
+          <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
+          <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
+          <!--                </ul>-->
+          <!--              </li>-->
+          <!--            </ul>-->
         </div>
-      </td> -->
-      </tr>
-      </tbody>
-    </table>
+        <div *ngIf="ListStudent!=null && ListStudent.length>0" class="body table-responsive">
+          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+            <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Phone number</th>
+              <th scope="col">Email</th>
+              <th scope="col">Sex</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let student of ListStudent; index as i">
+              <td>{{i + 1}}</td>
+              <td>{{student.Full_Name}}</td>
+              <td>{{student.PhoneNumber}}</td>
+              <td>{{student.Email}}</td>
+              <td>{{student.realSex}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
   <app-loading-page *ngIf="isLoading"></app-loading-page>
-</div>
+</section>

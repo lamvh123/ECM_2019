@@ -7,6 +7,7 @@ import {Slot} from './slot';
 export class APIContext {
   // host = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/';
   host = 'https://ecm-api.azurewebsites.net/';
+  // host = 'https://ecm-api-fptuniversity.azurewebsites.net/';
   centerId = 1;
 
   // constructor() {
@@ -137,6 +138,9 @@ export class APITraining {
 
   getTeacherBySubject = 'api/TrainingDept/GetTeacherBySubject';
   grantAccountForTeacher = 'api/TrainingDept/GrantAccountForTeacher';
+
+  getNotJoinClassStudentList = 'api/TrainingDept/GetNotJoinClassStudentList';
+  closeClass = 'api/TrainingDept/CloseClass';
 }
 
 export class APITeacher {

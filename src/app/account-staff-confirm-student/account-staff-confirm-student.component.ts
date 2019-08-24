@@ -63,7 +63,18 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
     $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
     $.getScript('../../assets/plugins/sweetalert/sweetalert.min.js');
     $.getScript('../../assets/js/pages/ui/dialogs.js');
+    this.triggerEnterForm('searchForm', 'btnSearch');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
 
@@ -189,8 +200,8 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
             .set('pageSize', this.pageSize + '')
             .set('currentPage', this.currentPage + '');
           const url = this.apiContext.host + this.apiAccounting.searchRegisteredStudent;
-          this.http.get<Student[]>(url, {params: param}).toPromise().then(data => {
-              this.listStudent = data;
+          this.http.get<Student[]>(url, {params: param}).toPromise().then(data2 => {
+              this.listStudent = data2;
               console.log(this.listStudent);
               this.UnselectAllItem();
               this.listStudent.forEach(item => {
@@ -380,6 +391,9 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
   }
 
   isInputNumber(evt) {
+    console.log('this.studentName');
+    console.log(this.studentName);
+    console.log(this.phoneNumber);
     const c = String.fromCharCode(evt.which);
     if (!(/[0-9]/.test(c))) {
       evt.preventDefault();

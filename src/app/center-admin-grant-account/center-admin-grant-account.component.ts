@@ -6,6 +6,7 @@ import {AdmissionForm} from '../admission-form';
 import {Student} from '../entity/student';
 import {ItemsList} from '@ng-select/ng-select/ng-select/items-list';
 import {APICenter, APIContext, APITraining} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-center-admin-grant-account',
@@ -16,7 +17,7 @@ import {APICenter, APIContext, APITraining} from '../APIContext';
 })
 export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private toastr: ToastrService) {
   }
 
   apiContext = new APIContext();
@@ -29,15 +30,16 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
   selectedFormId;
   studentName = '';
   phoneNumber = '';
-  pageSize = 20;
+  pageSize = 10;
   currentPage = 1;
   listStudent: Student[];
   totalData = 0;
   empty = true;
   listPage: any[];
+  listPageDisplay: number[];
   listPageSize = [5, 10, 20, 50];
-  msg = '';
   isLoading = true;
+  isSelectedAll = false;
 
 
   ngOnInit() {
@@ -114,11 +116,11 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
     this.listPage = new Array();
     if (totalData % this.pageSize == 0) {
       for (let i = 1; i <= totalData / this.pageSize; i++) {
-        this.listPage.push({value: i, text: 'Page ' + i});
+        this.listPage.push(i);
       }
     } else {
       for (let i = 1; i <= Math.floor(totalData / this.pageSize) + 1; i++) {
-        this.listPage.push({value: i, text: 'Page ' + i});
+        this.listPage.push(i);
       }
     }
   }
@@ -130,6 +132,7 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
   }
 
   loadStudentData() {
+    this.isSelectedAll = false;
     this.isLoading = true;
     const paramToGetTotal = new HttpParams()
       .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
@@ -147,6 +150,7 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
         }
         if (this.totalData != 0) {
           this.pagination(this.totalData);
+          this.updateListPageDisplay();
           this.empty = false;
           const param = new HttpParams()
             .set('admissionFormId', this.selectedFormId == null ? '-1' : this.selectedFormId)
@@ -176,14 +180,45 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
             error => {
               console.log(error);
               this.isLoading = false;
+              this.toastr.info('Something is not working right. Please try again soon.');
             });
         }
       },
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
 
+  }
+
+  selectAllFun() {
+    this.isSelectedAll = !this.isSelectedAll;
+    const checked = this.isSelectedAll;
+    this.listStudent.forEach(function(item) {
+      item.selected = checked;
+    });
+  }
+
+  updateSelectAllStatus(student: Student) {
+    student.selected = !student.selected;
+    let selectAll = false;
+    this.listStudent.forEach(function(item) {
+      if (item.selected) {
+        selectAll = true;
+      }
+    });
+    this.isSelectedAll = selectAll;
+  }
+
+  updateStatus() {
+    let selectAll = false;
+    this.listStudent.forEach(function(item) {
+      if (item.selected) {
+        selectAll = true;
+      }
+    });
+    this.isSelectedAll = selectAll;
   }
 
   changePageSize() {
@@ -196,25 +231,30 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
     this.loadStudentData();
   }
 
-  changePage() {
+  changePage(cPage: number) {
+    this.currentPage = cPage;
+    console.log('current page = ' + this.currentPage);
+    // this.updateListPageDisplay();
     this.loadStudentData();
   }
 
-  grantAccountForOne(student: Student) {
+  grantAccountForOne(student: Student, index: number) {
     this.isLoading = true;
     const url = this.apiContext.host + this.apiCenter.grantAccountForStudent;
     const param = new Array();
     param.push({RegisteredCandidateId: student.Id, CenterId: this.centerId});
     this.http.post(url, param).toPromise().then(data => {
         console.log(data);
-        this.msg = 'success';
-        this.loadStudentData();
+        // this.loadStudentData();
         this.isLoading = false;
+        this.updateStatus();
+        this.listStudent[index].IsGrantedAccount = true;
+        this.toastr.success('Grant account for student ' + student.Name + ' successfully.', 'Success!');
       },
       error => {
         console.log(error);
-        this.msg = 'error';
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
   }
 
@@ -223,23 +263,75 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
     const url = this.apiContext.host + this.apiCenter.grantAccountForStudent;
     const param = new Array();
     const listSelectedStudent = this.listStudent.filter(item => item.selected && item.IsPayment && !item.IsGrantedAccount);
-    listSelectedStudent.forEach(item => {
-      param.push({RegisteredCandidateId: item.Id, CenterId: this.centerId});
-    });
-    this.http.post(url, param).toPromise().then(data => {
-        console.log(data);
-        this.msg = 'success';
-        this.loadStudentData();
-        this.isLoading = false;
-      },
-      error => {
-        console.log(error);
-        this.msg = 'error';
-        this.isLoading = false;
+    if (listSelectedStudent.length == 0) {
+      this.isLoading = false;
+      this.toastr.info('All selected student(s) have been granted account.');
+    } else {
+      listSelectedStudent.forEach(item => {
+        param.push({RegisteredCandidateId: item.Id, CenterId: this.centerId});
       });
+      this.http.post(url, param).toPromise().then(data => {
+          console.log(data);
+          this.loadStudentData();
+          this.isLoading = false;
+          this.toastr.success('Grant account for ' + listSelectedStudent.length + ' student(s) successfully.', 'Success!');
+        },
+        error => {
+          console.log(error);
+          this.isLoading = false;
+          this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+        });
+    }
   }
 
-  removeMessage() {
-    this.msg = '';
+  isInputNumber(evt) {
+    const c = String.fromCharCode(evt.which);
+    if (!(/[0-9]/.test(c))) {
+      evt.preventDefault();
+    }
+  }
+
+  updateListPageDisplay() {
+    this.listPageDisplay = [];
+    if (this.listPage != null && this.listPage.length > 0) {
+      switch (this.listPage.length) {
+        case 1: {
+          this.listPageDisplay.push(1);
+          break;
+        }
+        case 2: {
+          this.listPageDisplay.push(1);
+          this.listPageDisplay.push(2);
+          break;
+        }
+        default: {
+          switch (this.currentPage) {
+            case 1: {
+              this.listPageDisplay.push(1);
+              this.listPageDisplay.push(2);
+              this.listPageDisplay.push(3);
+              break;
+            }
+            case this.listPage.length: {
+              this.listPageDisplay.push(this.listPage.length - 2);
+              this.listPageDisplay.push(this.listPage.length - 1);
+              this.listPageDisplay.push(this.listPage.length);
+              break;
+            }
+            default: {
+              this.listPageDisplay.push(this.currentPage - 1);
+              this.listPageDisplay.push(this.currentPage);
+              this.listPageDisplay.push(this.currentPage + 1);
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+    console.log('this.listPage = ');
+    console.log(this.listPage);
+    console.log('this.listPageDisplay = ');
+    console.log(this.listPageDisplay);
   }
 }

@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
     $.getScript('../../assets/js/pages/ui/notifications.js');
     $.getScript('../../assets/bundles/mainscripts.bundle.js');
+    this.triggerSignInForm('sign_in', 'signInBtn');
     this.isLoading = false;
   }
 
@@ -96,6 +97,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/Teacher/profile']);
     }
 
+  }
+
+  triggerSignInForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   public loadScript(url: string) {
@@ -229,6 +240,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
+
   redirectToUrl(url: string) {
     this._router.navigateByUrl(url);
   }

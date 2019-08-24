@@ -60,6 +60,7 @@
                   <input type="text" [(ngModel)]="teacherPhone" class="form-control" placeholder="Phone number"
                          id="teacherPhone"
                          required
+                         (keypress)="isInputNumber($event)"
                          (change)="checkValidPhone()"
                          (focusout)="checkValidPhone()">
                 </div>

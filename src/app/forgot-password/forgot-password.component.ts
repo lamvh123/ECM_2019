@@ -43,7 +43,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit {
     if (this.email != null) {
       this.email = this.formatText(this.email);
     }
-    const regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/gm;
+    const regex = /^[a-zA-Z][a-zA-Z0-9_\.]{5,32}@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/gm;
     if (this.email == null || this.email === '') {
       this.errorMsgEmail = 'Email is required.';
       return false;

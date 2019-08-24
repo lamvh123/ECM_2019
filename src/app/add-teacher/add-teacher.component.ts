@@ -85,7 +85,7 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
     if (this.teacherEmail != null) {
       this.teacherEmail = this.formatText(this.teacherEmail);
     }
-    const regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/gm;
+    const regex = /^[a-zA-Z][a-zA-Z0-9_\.]{5,32}@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/gm;
     if (this.teacherEmail == null || this.teacherEmail === '') {
       this.errorMsgMail = 'Email is required.';
       return false;
@@ -134,6 +134,13 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
       this.addTeacher();
     } else {
       this.toastr.warning('Something is missing.', 'Alert!');
+    }
+  }
+
+  isInputNumber(evt) {
+    const c = String.fromCharCode(evt.which);
+    if (!(/[0-9]/.test(c))) {
+      evt.preventDefault();
     }
   }
 

@@ -279,4 +279,23 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
         this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
   }
+
+  closeClass(currentClass: Class) {
+    this.isLoading = true;
+    const url = this.apiContext.host + this.apiTraining.closeClass;
+    const param = new HttpParams()
+      .set('ClassId', currentClass.ClassId + '')
+      .set('CenterId', this.centerId + '');
+    this.http.post(url, param).toPromise().then(data => {
+        console.log(data);
+        this.isLoading = false;
+        this.toastr.success('Class ' + currentClass.ClassName + ' was closed successfully.', 'Success!');
+        currentClass.IsClosed = true;
+      },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+      });
+  }
 }

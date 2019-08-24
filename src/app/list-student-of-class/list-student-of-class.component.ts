@@ -9,7 +9,10 @@ import {ToastrService} from 'ngx-toastr';
 @Component({
   selector: 'app-list-student-of-class',
   templateUrl: './list-student-of-class.component.html',
-  styleUrls: ['./list-student-of-class.component.css']
+  styleUrls: ['./list-student-of-class.component.css'
+    , '../../assets/plugins/bootstrap/css/bootstrap.min.css'
+    , '../../assets/css/main.css'
+    , '../../assets/css/themes/all-themes.css']
 })
 export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
 
@@ -46,17 +49,17 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
       .set('centerId', this.centerId + '')
       .set('classId', this.ClassId);
     this.http.get<OfficalStudent[]>(url, {params: param}).toPromise().then(data => {
-      console.log(data);
-      this.ListStudent = data;
-      this.ListStudent.forEach(item => {
-        if (item.Sex) {
-          item.realSex = 'Male';
-        } else {
-          item.realSex = 'Female';
-        }
-      });
-      this.isLoading = false;
-    },
+        console.log(data);
+        this.ListStudent = data;
+        this.ListStudent.forEach(item => {
+          if (item.Sex) {
+            item.realSex = 'Male';
+          } else {
+            item.realSex = 'Female';
+          }
+        });
+        this.isLoading = false;
+      },
       error => {
         console.log(error);
         this.isLoading = false;
@@ -72,10 +75,10 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
       .set('centerId', this.centerId + '')
       .set('classId', this.ClassId);
     this.http.get<Class>(url, {params: param}).toPromise().then(data => {
-      console.log(data);
-      this.currentClass = data;
-      this.isLoading = false;
-    },
+        console.log(data);
+        this.currentClass = data;
+        this.isLoading = false;
+      },
       error => {
         console.log(error);
         this.isLoading = false;

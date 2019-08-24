@@ -16,4 +16,6 @@ export class Class {
   RoomList: Room[];
   Teachers: Teacher[];
   RoomId: number;
+  IsFinished: boolean = false;
+  IsClosed: boolean = false;
 }

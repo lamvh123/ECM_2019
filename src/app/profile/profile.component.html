@@ -21,75 +21,100 @@
                 <div class="card">
                   <div class="body">
                     <div class="demo-masked-input">
-                      <div class="row clearfix">
-                        <div class="col-lg-12 col-md-12"><b>Full Name</b>
-                          <div class="input-group">
-                            <div class="form-line" style="display: flex">
-                              <span class="input-group-addon"> <i class="material-icons">person</i> </span>
-                              <input type="text" class="form-control text" [disabled]="!isEditing"
-                                     [(ngModel)]="user.name" placeholder="">
+                      <form id="formAdd">
+                        <div class="row clearfix">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                              <label for="fullName">Full name <span *ngIf="isEditing"
+                                                                    class="error-msg">(*)</span>:</label>
+                              <div class="form-line" style="display: flex">
+                                <!--                                <span class="input-group-addon"> <i class="material-icons">person</i> </span>-->
+                                <input type="text" class="form-control text" [disabled]="!isEditing"
+                                       [(ngModel)]="user.name" placeholder="" id="fullName" name="fullName" required
+                                       (change)="checkValidName()"
+                                       (focusout)="checkValidName()">
+                              </div>
+                              <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
+                                {{errorMsgName}}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                              <label for="fullName">Email <span *ngIf="isEditing" class="error-msg">(*)</span>:</label>
+                              <div class="form-line" style="display: flex">
+                                <!--                                <span class="input-group-addon"> <i class="material-icons">email</i> </span>-->
+                                <input type="text" class="form-control text" disabled [(ngModel)]="user.email"
+                                       placeholder="" id="email" name="email" required>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-12 col-md-12">
+                            <div class="form-group">
+                              <label for="fullName">Phone Number <span *ngIf="isEditing"
+                                                                       class="error-msg">(*)</span>:</label>
+                              <div class="form-line" style="display: flex">
+                                <!--                                <span class="input-group-addon"> <i class="material-icons">phone</i> </span>-->
+                                <input type="text" class="form-control text" [disabled]="!isEditing"
+                                       [(ngModel)]="user.PhoneNumber"
+                                       placeholder="" id="phoneNumber" name="phoneNumber" required
+                                       (change)="checkValidPhone()"
+                                       (focusout)="checkValidPhone()">
+                              </div>
+                              <div class="error-msg" *ngIf="errorMsgPhone!=null && errorMsgPhone.length>1">
+                                {{errorMsgPhone}}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-12 col-md-12 demo-radio-button">
+                            <div class="form-group">
+                              <label for="fullName">Gender <span *ngIf="isEditing" class="error-msg">(*)</span>:</label>
+                              <div class="input-group">
+                                <ng-container
+                                  *ngIf="user.Sex; then isMale; else isFemale"></ng-container>
+                              </div>
+                              <ng-template #isMale>
+                                <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="true"
+                                       id="male1"
+                                       (click)="setradio(true)" checked>
+                                <label for="male1">Male</label>
+
+                                <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex"
+                                       value="false"
+                                       id="female1"
+                                       (click)="setradio(false)">
+                                <label for="female1">Female</label>
+                              </ng-template>
+                              <ng-template #isFemale>
+                                <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="true"
+                                       id="male2"
+                                       (click)="setradio(true)">
+                                <label for="male2">Male</label>
+
+                                <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex"
+                                       value="false"
+                                       id="female2"
+                                       (click)="setradio(false)" checked>
+                                <label for="female2">Female</label>
+                              </ng-template>
                             </div>
                           </div>
                         </div>
-                        <div class="col-lg-12 col-md-12"><b>Email</b>
-                          <div class="input-group">
-                            <div class="form-line" style="display: flex">
-                              <span class="input-group-addon"> <i class="material-icons">email</i> </span>
-                              <input type="text" class="form-control text" disabled [(ngModel)]="user.email"
-                                     placeholder="">
-                            </div>
-                          </div>
+                        <div class="row" style="display: flex">
+                          <button *ngIf="!isEditing" type="button" class="btn btn-raised g-bg-cgreen waves-effect"
+                                  (click)="clickUpdate()">
+                            Update Profile
+                          </button>
+                          <button *ngIf="isEditing" type="button" class="btn btn-raised g-bg-blush2 waves-effect"
+                                  (click)="checkValidFields()" id="btnAdd" name="btnAdd">
+                            Save
+                          </button>
+                          <button *ngIf="isEditing" type="button" class="btn btn-raised btn-default waves-effect"
+                                  (click)="clickCancel()">
+                            Cancel
+                          </button>
                         </div>
-                        <div class="col-lg-12 col-md-12"><b>Phone Number</b>
-                          <div class="input-group">
-                            <div class="form-line" style="display: flex">
-                              <span class="input-group-addon"> <i class="material-icons">phone</i> </span>
-                              <input type="text" class="form-control text" [disabled]="!isEditing"
-                                     [(ngModel)]="user.PhoneNumber"
-                                     placeholder="">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 demo-radio-button"><b>Gender</b>
-                          <div class="input-group">
-                          <ng-container
-                            *ngIf="user.Sex; then isMale; else isFemale"></ng-container>
-                          </div>
-                          <ng-template #isMale>
-                            <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="true" id="male1"
-                                   (click)="setradio(true)" checked>
-                            <label for="male1">Male</label>
-
-                            <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="false" id="female1"
-                                   (click)="setradio(false)">
-                            <label for="female1">Female</label>
-                          </ng-template>
-                          <ng-template #isFemale>
-                            <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="true" id="male2"
-                                   (click)="setradio(true)">
-                            <label for="male2">Male</label>
-
-                            <input [disabled]="!isEditing" class="radio-inline" type="radio" name="sex" value="false" id="female2"
-                                   (click)="setradio(false)" checked>
-                            <label for="female2">Female</label>
-                          </ng-template>
-
-                        </div>
-                      </div>
-                      <div class="row" style="display: flex">
-                        <button *ngIf="!isEditing" type="button" class="btn btn-raised g-bg-cgreen waves-effect"
-                                (click)="clickUpdate()">
-                          Update Profile
-                        </button>
-                        <button *ngIf="isEditing" type="button" class="btn btn-raised g-bg-blush2 waves-effect"
-                                (click)="clickSubmit()">
-                          Submit
-                        </button>
-                        <button *ngIf="isEditing" type="button" class="btn btn-raised btn-default waves-effect"
-                                (click)="clickCancel()">
-                          Cancel
-                        </button>
-                      </div>
+                      </form>
                     </div>
                   </div>
                 </div>

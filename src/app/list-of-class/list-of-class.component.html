@@ -30,23 +30,108 @@
     </div>
   </div>
   <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix animated fadeIn">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="card">
-        <div *ngIf="empty" class="header animated fadeIn">
-          <h3>There is no class in database.</h3>
-          <!--            <ul class="header-dropdown">-->
-          <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
-          <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
-          <!--                class="zmdi zmdi-more-vert"></i> </a>-->
-          <!--                <ul class="dropdown-menu pull-right">-->
-          <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
-          <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
-          <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
-          <!--                </ul>-->
-          <!--              </li>-->
-          <!--            </ul>-->
+    <!--    <div class="col-lg-12 col-md-12 col-sm-12">-->
+    <!--      <div class="card">-->
+    <!--        <div *ngIf="empty" class="header animated fadeIn">-->
+    <!--          <h3>There is no class in database.</h3>-->
+    <!--          &lt;!&ndash;            <ul class="header-dropdown">&ndash;&gt;-->
+    <!--          &lt;!&ndash;              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"&ndash;&gt;-->
+    <!--          &lt;!&ndash;                                      role="button" aria-haspopup="true" aria-expanded="false"> <i&ndash;&gt;-->
+    <!--          &lt;!&ndash;                class="zmdi zmdi-more-vert"></i> </a>&ndash;&gt;-->
+    <!--          &lt;!&ndash;                <ul class="dropdown-menu pull-right">&ndash;&gt;-->
+    <!--          &lt;!&ndash;                  <li><a href="javascript:void(0);">Action</a></li>&ndash;&gt;-->
+    <!--          &lt;!&ndash;                  <li><a href="javascript:void(0);">Another action</a></li>&ndash;&gt;-->
+    <!--          &lt;!&ndash;                  <li><a href="javascript:void(0);">Something else here</a></li>&ndash;&gt;-->
+    <!--          &lt;!&ndash;                </ul>&ndash;&gt;-->
+    <!--          &lt;!&ndash;              </li>&ndash;&gt;-->
+    <!--          &lt;!&ndash;            </ul>&ndash;&gt;-->
+    <!--        </div>-->
+    <!--        <div *ngIf="!empty" class="body table-responsive animated fadeIn">-->
+    <!--          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">-->
+    <!--            <thead>-->
+    <!--            <tr>-->
+    <!--              <th scope="col">No</th>-->
+    <!--              <th scope="col">Class Name</th>-->
+    <!--              <th scope="col">Number of student</th>-->
+    <!--              <th scope="col">Assign teacher</th>-->
+    <!--              <th scope="col">Assign room</th>-->
+    <!--              <th scope="col">View detail</th>-->
+    <!--              <th scope="col">Status</th>-->
+    <!--            </tr>-->
+    <!--            </thead>-->
+    <!--            <tbody>-->
+    <!--            <tr class="animated fadeIn" *ngFor="let class of listClass;index as i;">-->
+    <!--              <td>{{i + 1}}</td>-->
+    <!--              <td>{{class.ClassName}}</td>-->
+    <!--              <td>{{class.NumberOfStudent}}</td>-->
+    <!--              <td>-->
+    <!--                <select class="form-control show-tick hoverSelect"-->
+    <!--                        (change)="assignTeacher($event.target.value, class.ClassId+'', class.ClassName)"-->
+    <!--                        id="selectTeacher"-->
+    <!--                        required>-->
+    <!--                  <ng-container-->
+    <!--                    *ngIf="class.Teachers!=null && class.Teachers.length>0; then teacherNotNull; else teacherIsNull"></ng-container>-->
+    <!--                  <ng-template #teacherIsNull>-->
+    <!--                    <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id">-->
+    <!--                      {{teacherModel.User.Full_Name}}-->
+    <!--                    </option>-->
+    <!--                  </ng-template>-->
+    <!--                  <ng-template #teacherNotNull>-->
+    <!--                    <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id"-->
+    <!--                            [selected]="teacherModel.Id==class.Teachers[0].Id">-->
+    <!--                      {{teacherModel.User.Full_Name}}-->
+    <!--                    </option>-->
+    <!--                  </ng-template>-->
+    <!--                </select>-->
+    <!--              </td>-->
+    <!--              <td>-->
+    <!--                <select class="form-control show-tick hoverSelect"-->
+    <!--                        (change)="assignRoom($event.target.value, class.ClassId+'', class.ClassName)"-->
+    <!--                        id="selectRoom"-->
+    <!--                        required>-->
+    <!--                  <ng-container-->
+    <!--                    *ngIf="class.RoomList!=null && class.RoomList.length>0; then roomNotNull; else roomIsNull"></ng-container>-->
+    <!--                  <ng-template #roomIsNull>-->
+    <!--                    <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id">-->
+    <!--                      {{roomModel.RoomNumber}}-->
+    <!--                    </option>-->
+    <!--                  </ng-template>-->
+    <!--                  <ng-template #roomNotNull>-->
+    <!--                    <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id"-->
+    <!--                            [selected]="roomModel.Id==class.RoomId">-->
+    <!--                      {{roomModel.RoomNumber}}-->
+    <!--                    </option>-->
+    <!--                  </ng-template>-->
+    <!--                </select>-->
+    <!--              </td>-->
+    <!--              <td>-->
+    <!--                <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"-->
+    <!--                        (click)="navigateToListStudent(class)">View list students-->
+    <!--                </button>-->
+    <!--              </td>-->
+    <!--              <td>-->
+    <!--                <span *ngIf="!class.IsFinished">Opening</span>-->
+    <!--                <span *ngIf="class.IsFinished && class.IsClosed">Closed</span>-->
+    <!--                <button *ngIf="class.IsFinished && !class.IsClosed" type="button"-->
+    <!--                        class="btn  btn-raised g-bg-blue waves-effect"-->
+    <!--                        (click)="closeClass(class)">Close class-->
+    <!--                </button>-->
+    <!--              </td>-->
+    <!--            </tr>-->
+    <!--            </tbody>-->
+    <!--          </table>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <div class="col-lg-6 col-md-12">
+      <div class="card" style="max-height: 90vh; border: 1px solid #8BC34A">
+        <b><h3 style="text-align: center">Opening Classes</h3></b>
+        <div *ngIf="openClassList==null || openClassList.length<1"
+             class="header">
+          <h4>There is no class in opening status.</h4>
         </div>
-        <div *ngIf="!empty" class="body table-responsive animated fadeIn">
+        <div *ngIf="openClassList!=null && openClassList.length>0"
+             class="body table-responsive">
           <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
             <thead>
             <tr>
@@ -56,11 +141,10 @@
               <th scope="col">Assign teacher</th>
               <th scope="col">Assign room</th>
               <th scope="col">View detail</th>
-              <th scope="col">Status</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="animated fadeIn" *ngFor="let class of listClass;index as i;">
+            <tr *ngFor="let class of openClassList;index as i;">
               <td>{{i + 1}}</td>
               <td>{{class.ClassName}}</td>
               <td>{{class.NumberOfStudent}}</td>
@@ -70,7 +154,7 @@
                         id="selectTeacher"
                         required>
                   <ng-container
-                    *ngIf="class.Teachers!=null && class.Teachers.length>0; then teacherNotNull; else teacherIsNull"></ng-container>
+                    *ngIf="class.Teachers==null || class.Teachers.length<=0; then teacherIsNull ; else teacherNotNull"></ng-container>
                   <ng-template #teacherIsNull>
                     <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id">
                       {{teacherModel.User.Full_Name}}
@@ -109,10 +193,64 @@
                         (click)="navigateToListStudent(class)">View list students
                 </button>
               </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+      <div class="card" style="max-height: 500px; border: 1px solid #FF9800">
+        <b><h3 style="text-align: center">Finished Classes</h3></b>
+        <!--        <div *ngIf="finishedClassList==null || finishedClassList.length<1"-->
+        <!--             class="header">-->
+        <!--          <h4>Pending sessions is empty.</h4>-->
+        <!--        </div>-->
+        <div class="body table-responsive">
+          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+            <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Class Name</th>
+              <th scope="col">Number of student</th>
+              <th scope="col">Teacher</th>
+              <th scope="col">View detail</th>
+              <th scope="col">Update status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let class of finishedClassList;index as i">
+              <td>{{i + 1}}</td>
+              <td>{{class.ClassName}}</td>
+              <td>{{class.NumberOfStudent}}</td>
+              <td>{{class.Teachers[0].User.Full_Name}}</td>
               <td>
-                <span *ngIf="!class.IsFinished">Opening</span>
-                <span *ngIf="class.IsFinished && class.IsClosed">Closed</span>
-                <button *ngIf="class.IsFinished && !class.IsClosed" type="button" class="btn  btn-raised g-bg-blue waves-effect"
+                <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
+                        (click)="navigateToListStudent(class)">View list students
+                </button>
+              </td>
+              <td>
+                <span *ngIf="class.IsClosed">Closed</span>
+                <button *ngIf="!class.IsClosed" type="button"
+                        class="btn  btn-raised g-bg-blue waves-effect"
+                        (click)="closeClass(class)">Close class
+                </button>
+              </td>
+            </tr>
+            <tr *ngFor="let class of closedClassList;index as i">
+              <td>{{i + 1}}</td>
+              <td>{{class.ClassName}}</td>
+              <td>{{class.NumberOfStudent}}</td>
+              <td>{{class.Teachers[0].User.Full_Name}}</td>
+              <td>
+                <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
+                        (click)="navigateToListStudent(class)">View list students
+                </button>
+              </td>
+              <td>
+                <span *ngIf="class.IsClosed">Closed</span>
+                <button *ngIf="!class.IsClosed" type="button"
+                        class="btn  btn-raised g-bg-blue waves-effect"
                         (click)="closeClass(class)">Close class
                 </button>
               </td>

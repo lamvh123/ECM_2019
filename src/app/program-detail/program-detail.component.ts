@@ -68,7 +68,18 @@ export class ProgramDetailComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/bundles/libscripts.bundle.js');
     // this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   loadProgramById() {

@@ -5,11 +5,12 @@
   </div>
   <div class="row clearfix search-area">
     <div class="card" style="padding: 15px;">
+      <form id="formAdd">
       <input class="form-control" placeholder="Program Name" id="coursename" maxlength="254"
              [(ngModel)]="programName" name="coursename" type="text">
-      <button type="button" class="btn  btn-raised g-bg-blush2 waves-effect" (click)="searchProgramByName()">Search
+      <button type="button" class="btn  btn-raised g-bg-blush2 waves-effect" (click)="searchProgramByName()" id="btnAdd" name="btnAdd">Search
         Program
-      </button>
+      </button></form>
       <!--      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-blush2"-->
       <!--              (click)="searchProgramByName()">Search-->
       <!--      </button>-->

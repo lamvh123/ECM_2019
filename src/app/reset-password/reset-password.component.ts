@@ -52,7 +52,18 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit {
     $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
     $.getScript('../../assets/js/pages/ui/notifications.js');
     $.getScript('../../assets/bundles/mainscripts.bundle.js');
+    this.triggerEnterForm('sign_in', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   hasNumber(myString) {

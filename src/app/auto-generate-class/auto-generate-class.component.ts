@@ -120,6 +120,7 @@ export class AutoGenerateClassComponent implements OnInit, AfterViewInit {
         this.loadForm();
         this.toastr.success('1 class was generated from ' + Name + ' successfully.', 'Success!');
         this.getNotJoinClassStudentListByFormId(Id);
+        this.getAvailbleClasses(Id);
       },
       error => {
         console.log(error);
@@ -168,6 +169,21 @@ export class AutoGenerateClassComponent implements OnInit, AfterViewInit {
         console.log(error);
         this.isLoading = false;
         this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+      });
+  }
+
+  private getAvailbleClasses(Id: number) {
+    const param = new HttpParams()
+      .set('admissionFormId', Id + '')
+      .set('centerId', this.centerId + '');
+    const url = this.apiContext.host + this.apiTraining.getClassListByAdmissionForm;
+    this.http.get<Class[]>(url, {params: param}).toPromise().then(data => {
+        this.availableClassList = data;
+        console.log(this.availableClassList);
+      },
+      error => {
+        console.log(error);
+        this.toastr.info('Something is not working right. Please try again soon.');
       });
   }
 }

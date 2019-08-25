@@ -45,6 +45,11 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   empty;
   isLoading = true;
 
+  openClassList: Class[];
+  finishedClassList: Class[];
+  closedClassList: Class[];
+
+
   ngOnInit() {
     const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
     this.http.get(urlGetCenterId).toPromise().then(data => {
@@ -127,11 +132,21 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   }
 
   unselectAll() {
+    this.openClassList = [];
+    this.finishedClassList = [];
+    this.closedClassList = [];
     this.listClass.forEach(item => {
       item.selected = false;
       console.log(item.SubjectId);
       this.getTeachersBySid(item);
       this.getRoomByCid(item);
+      if (!item.IsFinished) {
+        this.openClassList.push(item);
+      } else if (!item.IsClosed) {
+        this.finishedClassList.push(item);
+      } else {
+        this.closedClassList.push(item);
+      }
     });
   }
 

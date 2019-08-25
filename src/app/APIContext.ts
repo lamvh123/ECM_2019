@@ -141,6 +141,8 @@ export class APITraining {
 
   getNotJoinClassStudentList = 'api/TrainingDept/GetNotJoinClassStudentList';
   closeClass = 'api/TrainingDept/CloseClass';
+  updateTimeTable = 'api/TrainingDept/UpdateTimeTable';
+  getClassListByAdmissionForm = 'api/TrainingDept/GetClassListByAdmissionForm';
 }
 
 export class APITeacher {

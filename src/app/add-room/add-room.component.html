@@ -24,13 +24,14 @@
           </ul>
         </div>
         <div class="body">
+          <form id="formAdd">
           <div class="row clearfix">
             <div class="col-sm-12">
               <div class="form-group">
                 <label for="roomName">Room Name <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
                   <input type="text" class="form-control" placeholder="Room Number " [(ngModel)]="roomNumber"
-                         id="roomName"
+                         id="roomName" name="roomName"
                          required (change)="checkValidName()" (focusout)="checkValidName()">
                 </div>
                 <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
@@ -42,7 +43,7 @@
               <div class="form-group">
                 <label for="capacity">Capacity <span class="error-msg">(*)</span>:</label>
                 <div class="form-line">
-                  <input type="text" class="form-control" placeholder="Capacity" [(ngModel)]="capacity" id="capacity"
+                  <input type="text" class="form-control" placeholder="Capacity" [(ngModel)]="capacity" id="capacity" name="capacity"
                          required
                          (keypress)="isInputNumber($event)"
                          (change)="checkValidCapacity()"
@@ -59,7 +60,7 @@
                 <div class="form-line">
                   <select [(ngModel)]="selectedName" class="form-control show-tick"
                           (change)="[selectedValueChanged($event.target.value),checkValidBuilding()]"
-                          id="selectBuidling"
+                          id="selectBuidling" name="selectBuidling"
                           (focusout)="checkValidBuilding()"
                           required>
                     <option *ngFor="let building of buildings" [value]="building.Id">
@@ -83,22 +84,15 @@
           <!--              </div>-->
           <!--            </div>-->
           <div class="row clearfix">
-            <!--              <div class="col-sm-12">-->
-            <!--                <div class="form-group">-->
-            <!--                  <div class="form-line">-->
-            <!--                    <textarea rows="4" class="form-control no-resize" placeholder="Brief"></textarea>-->
-            <!--                  </div>-->
-            <!--                </div>-->
-            <!--              </div>-->
             <div class="col-sm-12">
               <div class="form-group">
-                <button type="submit" (click)="checkValidFields()" class="btn btn-raised g-bg-blush2">
+                <button type="submit" (click)="checkValidFields()" class="btn btn-raised g-bg-blush2" id="btnAdd" name="btnAdd">
                   Add Room
                 </button>
                 <button type="submit" (click)="redirectToAllRoom()" class="btn btn-raised btn-default">Cancel</button>
               </div>
             </div>
-          </div>
+          </div></form>
         </div>
       </div>
     </div>

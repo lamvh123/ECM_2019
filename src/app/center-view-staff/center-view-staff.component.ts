@@ -47,7 +47,18 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   getInitData() {
@@ -122,6 +133,9 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
   }
 
   openAddForm(addModal) {
+    this.errorMsgName = '-';
+    this.errorMsgEmail = '-';
+    this.errorMsgRole = '-';
     this.addingStaff = new Staff();
     this.addingStaff.RoleName = this.listRole[0].Name;
     console.log(this.modalService);

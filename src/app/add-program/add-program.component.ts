@@ -75,8 +75,18 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     this.loadScript('../../assets/js/pages/ui/notifications.js');
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
     this.loadScript('../../assets/testJS.js');
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
 
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   addProgram() {

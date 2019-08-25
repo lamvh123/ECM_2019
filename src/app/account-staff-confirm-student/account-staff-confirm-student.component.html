@@ -11,13 +11,13 @@
       <div class="card">
         <form id="searchForm">
           <div style="float: left;width: 48%;margin-left: 1%">
-            <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
+            <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course" name="listCourse"
                        (change)="ReLoadForm()"
                        (clear)="ReLoadForm()" [(ngModel)]="selectedCourseId">
             </ng-select>
           </div>
           <div style="float: left;width: 47%;margin-left: 1%">
-            <ng-select [items]="listForm" bindLabel="Name" bindValue="Id" [(ngModel)]="selectedFormId"
+            <ng-select [items]="listForm" bindLabel="Name" bindValue="Id" [(ngModel)]="selectedFormId" name="listForm"
                        placeholder="Select Form">
             </ng-select>
           </div>
@@ -25,14 +25,14 @@
           <div style="float: left;width: 48%;margin-left: 1%">
             <div class="form-group">
               <div class="form-line">
-                <input type="text" [(ngModel)]="studentName" class="form-control" placeholder="Student Name">
+                <input type="text" [(ngModel)]="studentName" class="form-control" placeholder="Student Name" name="studentName">
               </div>
             </div>
           </div>
           <div style="float: left;width: 47%;margin-left: 1%">
             <div class="form-group">
               <div class="form-line">
-                <input type="text" [(ngModel)]="phoneNumber" class="form-control" placeholder="Phone Number" required
+                <input type="text" [(ngModel)]="phoneNumber" class="form-control" placeholder="Phone Number" required name="phoneNumber"
                        (keypress)="isInputNumber($event)">
               </div>
             </div>

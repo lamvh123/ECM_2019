@@ -57,7 +57,8 @@
                 <td>{{staffModel.Email}}</td>
                 <td>{{staffModel.RoleName}}</td>
                 <td style="text-align:center">
-                  <button type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float" (click)="openDeleteForm(deleteModal, staffModel)"><i
+                  <button type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float"
+                          (click)="openDeleteForm(deleteModal, staffModel)"><i
                     style="color:#f44336" class="material-icons">delete_forever</i></button>
                 </td>
               </tr>
@@ -105,12 +106,12 @@
   </div>
   <div class="modal-body">
     <div class="body">
-      <form class="form-horizontal" (ngSubmit)="addStaff()">
+      <form class="form-horizontal" id="formAdd" name="formAdd">
         <div class="form-group">
           <label for="addingName">Name <span class="error-msg">(*)</span>:</label>
           <div class="form-line">
             <input type="text" [(ngModel)]="addingStaff.FullName" class="form-control" placeholder="Enter staff's name"
-                   id="addingName"
+                   id="addingName" name="addingName"
                    [ngModelOptions]="{standalone: true}"
                    required
                    (change)="checkValidName()"
@@ -124,7 +125,7 @@
           <label for="addingEmail">Email <span class="error-msg">(*)</span>:</label>
           <div class="form-line">
             <input type="text" [(ngModel)]="addingStaff.Email" class="form-control" placeholder="Enter staff's email"
-                   id="addingEmail"
+                   id="addingEmail" name="addingEmail"
                    [ngModelOptions]="{standalone: true}"
                    required
                    (change)="checkValidEmail()"
@@ -140,7 +141,7 @@
           <div class="form-line">
             <select class="form-control show-tick hoverSelect"
                     (change)="[roleSelectedChange($event.target.value),checkValidRole()]"
-                    (focusout)="checkValidRole()"
+                    (focusout)="checkValidRole()" name="addingRole"
                     id="addingRole" required>
               <option *ngFor="let roleModel of listRole" [value]="roleModel.Name">
                 {{roleModel.Name}}
@@ -155,7 +156,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn  btn-raised g-bg-blush2 waves-effect"
+    <button type="button" class="btn  btn-raised g-bg-blush2 waves-effect" id="btnAdd" name="btnAdd"
             (click)="checkValidFields()">Add Staff
     </button>
     <button id="btnClose" type="button" class="btn btn-raised btn-default waves-effect"

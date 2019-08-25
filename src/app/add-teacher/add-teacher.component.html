@@ -23,80 +23,82 @@
           </ul>
         </div>
         <div class="body">
-          <div class="row clearfix">
-            <div class="col-sm-12">
-              <div class="form-group">
-                <label for="fullName">Full name <span class="error-msg">(*)</span>:</label>
-                <div class="form-line">
-                  <input type="text" [(ngModel)]="fullName" class="form-control" placeholder="Name" id="fullName"
-                         required
-                         (change)="checkValidName()"
-                         (focusout)="checkValidName()">
-                </div>
-                <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
-                  {{errorMsgName}}
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="form-group">
-                <label for="teacherEmail">Email <span class="error-msg">(*)</span>:</label>
-                <div class="form-line">
-                  <input type="text" [(ngModel)]="teacherEmail" class="form-control" placeholder="Email"
-                         id="teacherEmail"
-                         required
-                         (change)="checkValidEmail()"
-                         (focusout)="checkValidEmail()">
-                </div>
-                <div class="error-msg" *ngIf="errorMsgMail!=null && errorMsgMail.length>1">
-                  {{errorMsgMail}}
+          <form id="formAdd">
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="fullName">Full name <span class="error-msg">(*)</span>:</label>
+                  <div class="form-line">
+                    <input type="text" [(ngModel)]="fullName" class="form-control" placeholder="Name" id="fullName" name="fullName"
+                           required
+                           (change)="checkValidName()"
+                           (focusout)="checkValidName()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
+                    {{errorMsgName}}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="form-group">
-                <label for="teacherPhone">Phone number <span class="error-msg">(*)</span>:</label>
-                <div class="form-line">
-                  <input type="text" [(ngModel)]="teacherPhone" class="form-control" placeholder="Phone number"
-                         id="teacherPhone"
-                         required
-                         (keypress)="isInputNumber($event)"
-                         (change)="checkValidPhone()"
-                         (focusout)="checkValidPhone()">
-                </div>
-                <div class="error-msg" *ngIf="errorMsgPhone!=null && errorMsgPhone.length>1">
-                  {{errorMsgPhone}}
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="teacherEmail">Email <span class="error-msg">(*)</span>:</label>
+                  <div class="form-line">
+                    <input type="text" [(ngModel)]="teacherEmail" class="form-control" placeholder="Email"
+                           id="teacherEmail" name="teacherEmail"
+                           required
+                           (change)="checkValidEmail()"
+                           (focusout)="checkValidEmail()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgMail!=null && errorMsgMail.length>1">
+                    {{errorMsgMail}}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="form-group">
-                <label for="listSubject">Subject <span class="error-msg">(*)</span>:</label>
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="teacherPhone">Phone number <span class="error-msg">(*)</span>:</label>
+                  <div class="form-line">
+                    <input type="text" [(ngModel)]="teacherPhone" class="form-control" placeholder="Phone number"
+                           id="teacherPhone" name="teacherPhone"
+                           required
+                           (keypress)="isInputNumber($event)"
+                           (change)="checkValidPhone()"
+                           (focusout)="checkValidPhone()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgPhone!=null && errorMsgPhone.length>1">
+                    {{errorMsgPhone}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="listSubject">Subject <span class="error-msg">(*)</span>:</label>
                   <!--                  <input type="text" [(ngModel)]="subject" class="form-control" placeholder="Subject" id="subject"-->
                   <!--                         required-->
                   <!--                         (change)="checkValidName()"-->
                   <!--                         (focusout)="checkValidName()">-->
                   <ng-select [items]="subjectList" bindLabel="Name" bindValue="Id"
                              placeholder="Select subject(s)" multiple="true"
-                             [(ngModel)]="selectedSubject" id="listSubject"
+                             [(ngModel)]="selectedSubject" id="listSubject" name="listSubject"
                              required (change)="checkValidSubject()" (focusout)="checkValidSubject()">
                   </ng-select>
-                <div class="error-msg" *ngIf="errorMsgSubject!=null && errorMsgSubject.length>1">
-                  {{errorMsgSubject}}
+                  <div class="error-msg" *ngIf="errorMsgSubject!=null && errorMsgSubject.length>1">
+                    {{errorMsgSubject}}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row clearfix">
-            <div class="col-sm-12">
-              <button (click)="checkValidFields()" type="submit"
-                      class="btn btn-raised waves-effect g-bg-blush2">Add Teacher
-              </button>
-              <button (click)="redirectToViewTeacher()" type="submit" class="btn btn-raised btn-default waves-effect">
-                Cancel
-              </button>
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <button (click)="checkValidFields()" type="submit" id="btnAdd" name="btnAdd"
+                        class="btn btn-raised waves-effect g-bg-blush2">Add Teacher
+                </button>
+                <button (click)="redirectToViewTeacher()" type="submit" class="btn btn-raised btn-default waves-effect">
+                  Cancel
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

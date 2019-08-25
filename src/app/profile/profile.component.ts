@@ -37,6 +37,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   isEditing = false;
   buttonLabel = '';
   isLoading = true;
+  errorMsgName = '-';
+  errorMsgPhone = '-';
 
   constructor(private router: Router, private http: HttpClient, private auth: AuthService, private toastr: ToastrService) {
   }
@@ -107,7 +109,18 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
 
@@ -181,19 +194,76 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   clickUpdate() {
     this.isEditing = true;
+    this.errorMsgName = '-';
+    this.errorMsgPhone = '-';
   }
 
   clickSubmit() {
     this.updateProfile();
     this.isEditing = false;
+    this.errorMsgName = '-';
+    this.errorMsgPhone = '-';
   }
 
   clickCancel() {
     this.isEditing = false;
+    this.errorMsgName = '-';
+    this.errorMsgPhone = '-';
   }
 
   setradio(b: boolean) {
     this.user.Sex = b;
+  }
+
+  checkValidName() {
+    if (this.user.name != null) {
+      this.user.name = this.formatText(this.user.name);
+    }
+    if (this.user.name == null || this.user.name === '') {
+      this.errorMsgName = 'Name is required.';
+      return false;
+    } else {
+      this.errorMsgName = '';
+      return true;
+    }
+  }
+
+  checkValidPhone() {
+    if (this.user.PhoneNumber != null) {
+      this.user.PhoneNumber = this.formatText(this.user.PhoneNumber);
+    }
+    const regex = /(09|03)+([0-9]{8})\b/g;
+    if (this.user.PhoneNumber == null || this.user.PhoneNumber === '') {
+      this.errorMsgPhone = 'Phone is required.';
+      return false;
+    } else if (!regex.test(this.user.PhoneNumber)) {
+      this.errorMsgPhone = 'Invalid phone number format.';
+      return false;
+    } else {
+      this.errorMsgPhone = '';
+      return true;
+    }
+  }
+
+  checkValidFields() {
+    this.checkValidName();
+    this.checkValidPhone();
+    if (this.checkValidName() && this.checkValidPhone()) {
+      this.clickSubmit();
+    } else {
+      this.toastr.warning('Something is missing.', 'Alert!');
+    }
+  }
+
+  isInputNumber(evt) {
+    const c = String.fromCharCode(evt.which);
+    if (!(/[0-9]/.test(c))) {
+      evt.preventDefault();
+    }
+  }
+
+  formatText(s: string) {
+    return s.trim().replace(/\s\s+/g, ' ');
   }
 }
 

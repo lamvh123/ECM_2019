@@ -1,5 +1,12 @@
-:host{
-    width: 100%;
-    padding-left: 2%;
-    padding-right: 2%;
+:host {
+  width: 100%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.nav-link.active.bold-all {
+  color: #464a4c;
+  background-color: #fff;
+  font-weight: bold;
+  border-color: #ddd #ddd #fff
 }

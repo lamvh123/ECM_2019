@@ -1,49 +1,299 @@
 <section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
   <div class="block-header">
-    <h2>All student of class {{currentClass.ClassName}}</h2>
+    <h2>Class {{currentClass.ClassName}}</h2>
     <!--      <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>-->
   </div>
   <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+    <!--    <div class="col-lg-12 col-md-12 col-sm-12">-->
+    <!--      <div class="card">-->
+    <!--        <div class="header">-->
+    <!--          <h3 *ngIf="ListStudent==null || ListStudent.length<=0">There is no center in database.</h3>-->
+    <!--          &lt;!&ndash;            <ul class="header-dropdown">&ndash;&gt;-->
+    <!--          &lt;!&ndash;              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"&ndash;&gt;-->
+    <!--          &lt;!&ndash;                                      role="button" aria-haspopup="true" aria-expanded="false"> <i&ndash;&gt;-->
+    <!--          &lt;!&ndash;                class="zmdi zmdi-more-vert"></i> </a>&ndash;&gt;-->
+    <!--          &lt;!&ndash;                <ul class="dropdown-menu pull-right">&ndash;&gt;-->
+    <!--          &lt;!&ndash;                  <li><a href="javascript:void(0);">Action</a></li>&ndash;&gt;-->
+    <!--          &lt;!&ndash;                  <li><a href="javascript:void(0);">Another action</a></li>&ndash;&gt;-->
+    <!--          &lt;!&ndash;                  <li><a href="javascript:void(0);">Something else here</a></li>&ndash;&gt;-->
+    <!--          &lt;!&ndash;                </ul>&ndash;&gt;-->
+    <!--          &lt;!&ndash;              </li>&ndash;&gt;-->
+    <!--          &lt;!&ndash;            </ul>&ndash;&gt;-->
+    <!--        </div>-->
+    <!--        <div *ngIf="ListStudent!=null && ListStudent.length>0" class="body table-responsive">-->
+    <!--          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">-->
+    <!--            <thead>-->
+    <!--            <tr>-->
+    <!--              <th scope="col">No</th>-->
+    <!--              <th scope="col">Full Name</th>-->
+    <!--              <th scope="col">Phone number</th>-->
+    <!--              <th scope="col">Email</th>-->
+    <!--              <th scope="col">Sex</th>-->
+    <!--            </tr>-->
+    <!--            </thead>-->
+    <!--            <tbody>-->
+    <!--            <tr *ngFor="let ttb of ListStudent; index as i">-->
+    <!--              <td>{{i + 1}}</td>-->
+    <!--              <td>{{ttb.Full_Name}}</td>-->
+    <!--              <td>{{ttb.PhoneNumber}}</td>-->
+    <!--              <td>{{ttb.Email}}</td>-->
+    <!--              <td>{{ttb.realSex}}</td>-->
+    <!--            </tr>-->
+    <!--            </tbody>-->
+    <!--          </table>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <!-- Tabs With Custom Animations -->
+    <!--    <div class="row clearfix">-->
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="card">
-        <div class="header">
-          <h3 *ngIf="ListStudent==null || ListStudent.length<=0">There is no center in database.</h3>
-          <!--            <ul class="header-dropdown">-->
-          <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
-          <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
-          <!--                class="zmdi zmdi-more-vert"></i> </a>-->
-          <!--                <ul class="dropdown-menu pull-right">-->
-          <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
-          <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
-          <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
-          <!--                </ul>-->
-          <!--              </li>-->
-          <!--            </ul>-->
-        </div>
-        <div *ngIf="ListStudent!=null && ListStudent.length>0" class="body table-responsive">
-          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-            <thead>
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Full Name</th>
-              <th scope="col">Phone number</th>
-              <th scope="col">Email</th>
-              <th scope="col">Sex</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let student of ListStudent; index as i">
-              <td>{{i + 1}}</td>
-              <td>{{student.Full_Name}}</td>
-              <td>{{student.PhoneNumber}}</td>
-              <td>{{student.Email}}</td>
-              <td>{{student.realSex}}</td>
-            </tr>
-            </tbody>
-          </table>
+<!--        <div class="header">-->
+<!--          <h2> TABS WITH CUSTOM ANIMATIONS-->
+<!--            <small>You can use different animation class. We used Animation.css which link is <a-->
+<!--              href="https://daneden.github.io/animate.css/" target="_blank">https://daneden.github.io/animate.css/</a>-->
+<!--            </small>-->
+<!--          </h2>-->
+<!--        </div>-->
+        <div class="body">
+          <div class="row clearfix">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <!-- Nav tabs -->
+              <div class="profile-sub-header">
+              </div>
+              <div class="box-list">
+                <ul class="nav nav-tabs text-center" role="tablist">
+                  <li class="nav-item"><a class="nav-link bold-all active" data-toggle="tab"
+                                          href="#tabInfo">INFORMATION</a>
+                  </li>
+                  <li class="nav-item"><a class="nav-link bold-all" data-toggle="tab" href="#tabStudent">LIST
+                    STUDENTS</a>
+                  </li>
+                  <li class="nav-item"><a class="nav-link bold-all" data-toggle="tab" href="#tabTimetable">LIST
+                    TIMETABLES</a>
+                  </li>
+                </ul>
+              </div>
+
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane animated fadeIn active" id="tabInfo">
+                  <div class="card">
+                    <div class="header">
+                      <h4>Detail information of class</h4>
+                    </div>
+                    <div class="body">
+                      <strong>Name: </strong>{{currentClass.ClassName}}<br/>
+                      <strong>Program: </strong>{{currentClass.ProgramName}}<br/>
+                      <strong>Course: </strong>{{currentClass.CourseName}}<br/>
+                      <strong>Number of student: </strong>{{currentClass.NumberOfStudent}}<br/>
+                      <strong>Subject ID: </strong>{{currentClass.SubjectId}}
+<!--                      <strong>Finished: </strong>-->
+<!--                      <p>{{currentClass.IsFinished}}</p>-->
+<!--                      <strong>Closed: </strong>-->
+<!--                      <p>{{currentClass.IsClosed}}</p>-->
+<!--                      <strong>Teachers: </strong>-->
+<!--                      <p>{{currentClass.Teachers}}</p>-->
+<!--                      <strong>Room ID: </strong>-->
+<!--                      <p>{{currentClass.RoomId}}</p>-->
+                    </div>
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tabStudent">
+                  <div class="card">
+                    <div class="header">
+                      <h3 *ngIf="ListStudent==null || ListStudent.length<=0">There is no center in database.</h3>
+                      <!--            <ul class="header-dropdown">-->
+                      <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
+                      <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
+                      <!--                class="zmdi zmdi-more-vert"></i> </a>-->
+                      <!--                <ul class="dropdown-menu pull-right">-->
+                      <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
+                      <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
+                      <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
+                      <!--                </ul>-->
+                      <!--              </li>-->
+                      <!--            </ul>-->
+                    </div>
+                    <div *ngIf="ListStudent!=null && ListStudent.length>0" class="body table-responsive">
+                      <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                        <tr>
+                          <th scope="col">No</th>
+                          <th scope="col">Full Name</th>
+                          <th scope="col">Phone number</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Sex</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let student of ListStudent; index as i">
+                          <td>{{i + 1}}</td>
+                          <td>{{student.Full_Name}}</td>
+                          <td>{{student.PhoneNumber}}</td>
+                          <td>{{student.Email}}</td>
+                          <td>{{student.realSex}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tabTimetable">
+                  <div class="card">
+                    <div class="header">
+                      <h3 *ngIf="listTimetable==null || listTimetable.length<=0">There is no timetable in database.</h3>
+                    </div>
+                    <div *ngIf="listTimetable!=null && listTimetable.length>0" class="body table-responsive">
+                      <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                        <tr>
+                          <th scope="col">Session</th>
+                          <th scope="col">Day</th>
+                          <th scope="col">Slot</th>
+                          <th scope="col">Teacher</th>
+                          <th scope="col">Room</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let ttb of listTimetable; index as i">
+                          <td>{{ttb.SessionNumber}}</td>
+                          <td>{{ttb.LearningDay.substring(0, 10)}}</td>
+                          <td>{{ttb.slot.From + '-' + ttb.slot.To}}</td>
+                          <td>{{(ttb.teacher == null || ttb.teacher.User == null) ? '' : ttb.teacher.User.Full_Name}}</td>
+                          <td>{{(ttb.Room == null) ? '' : ttb.Room.RoomNumber}}</td>
+                          <td>
+                            <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
+                                    (click)="openAttendanceForm(longContent, ttb)">Update
+                            </button>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- #END# Tabs With Custom Animations -->
+  <!--  </div>-->
   <app-loading-page *ngIf="isLoading"></app-loading-page>
 </section>
+
+
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Update session {{updatingTtb.SessionNumber}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="body">
+      <!--      <div class="col-lg-3 col-md-6 col-md-12">-->
+      <!--        <div class="form-group">-->
+      <!--          <label for="selectTeacher">Teacher <span class="error-msg">(*)</span>:</label>-->
+      <!--          <select class="form-control show-tick hoverSelect"-->
+      <!--                  (change)="changeTeacher($event.target.value)"-->
+      <!--                  id="selectTeacher"-->
+      <!--                  required>-->
+      <!--            <ng-container *ngIf="updatingTtb.teacher==null; then teacherIsNull ; else teacherNotNull"></ng-container>-->
+      <!--            <ng-template #teacherIsNull>-->
+      <!--              <option *ngFor="let teacherModel of listTeachers" [value]="teacherModel.Id">-->
+      <!--                {{teacherModel.User.Full_Name}}-->
+      <!--              </option>-->
+      <!--            </ng-template>-->
+      <!--            <ng-template #teacherNotNull>-->
+      <!--              <option *ngFor="let teacherModel of listTeachers" [value]="teacherModel.Id"-->
+      <!--                      [selected]="teacherModel.Id==updatingTtb.teacher.Id">-->
+      <!--                {{teacherModel.User.Full_Name}}-->
+      <!--              </option>-->
+      <!--            </ng-template>-->
+      <!--          </select>-->
+      <!--        </div>-->
+      <!--        <div class="error-msg" *ngIf="errorMsgSubject!=null && errorMsgSubject.length>1">-->
+      <!--          {{errorMsgSubject}}-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <form id="formAdd" class="row clearfix">
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="learingDay">Learning day:</label>
+            <div class="form-line">
+              <input type="date" [(ngModel)]="newLearningDay" class="form-control" placeholder="Learing day"
+                     id="learingDay" name="learingDay"
+                     required (change)="checkValidDate()" (focusout)="checkValidDate()">
+            </div>
+          </div>
+          <div class="error-msg" *ngIf="errorMsgDay!=null && errorMsgDay.length>1">
+            {{errorMsgDay}}
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="selectedSlot">Slot:</label>
+            <ng-select [items]="listSlot" bindLabel="displayText" bindValue="ID" placeholder="Select slot"
+                       [(ngModel)]="newSlotId" id="selectedSlot" name="selectedSlot"
+                       required (change)="checkValidSlot()" (focusout)="checkValidSlot()">
+            </ng-select>
+          </div>
+          <div class="error-msg" *ngIf="errorMsgSlot!=null && errorMsgSlot.length>1">
+            {{errorMsgSlot}}
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="selectedTeacher">Teacher:</label>
+            <ng-select [items]="listTeachers" bindLabel="User.Full_Name" bindValue="Id" placeholder="Select teacher"
+                       [(ngModel)]="newTeacherId" id="selectedTeacher" name="selectedTeacher"
+                       required (change)="checkValidTeacher()" (focusout)="checkValidTeacher()">
+            </ng-select>
+          </div>
+          <div class="error-msg" *ngIf="errorMsgTeacher!=null && errorMsgTeacher.length>1">
+            {{errorMsgTeacher}}
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="form-group">
+            <label for="selectedBuilding">Building:</label>
+            <!--            <ng-select [items]="listRoom" bindLabel="RoomNumber" bindValue="Id" placeholder="Select room"-->
+            <!--                       [(ngModel)]="newRoomId" id="selectedRoom" name="selectedRoom"-->
+            <!--                       required (change)="checkValidRoom()" (focusout)="checkValidRoom()">-->
+            <!--            </ng-select>-->
+            <ng-select [items]="listBuilding" bindLabel="Name" bindValue="Id" placeholder="Select Building"
+                       name="selectedBuilding" id="selectedBuilding"
+                       (change)="changBuilding()"
+                       (clear)="clearBuilding()" [(ngModel)]="selectedBuildingId">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="form-group">
+            <label for="selectedRoom">Room:</label>
+            <ng-select [items]="listRoom" bindLabel="RoomNumber" bindValue="Id" placeholder="Select room"
+                       [(ngModel)]="newRoomId" id="selectedRoom" name="selectedRoom"
+                       required (change)="checkValidRoom()" (focusout)="checkValidRoom()">
+            </ng-select>
+          </div>
+          <div class="error-msg" *ngIf="errorMsgRoom!=null && errorMsgRoom.length>1">
+            {{errorMsgRoom}}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="checkValidFields()" id="btnAdd" name="btnAdd">Save</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')" id="btnClose" name="btnClose">
+      Close
+    </button>
+  </div>
+</ng-template>

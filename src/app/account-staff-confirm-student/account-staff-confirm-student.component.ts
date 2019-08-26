@@ -129,8 +129,12 @@ export class AccountStaffConfirmStudentComponent implements OnInit, AfterViewIni
   }
 
   ReLoadForm() {
-    this.isLoading = true;
     this.selectedFormId = null;
+    this.clearCourse();
+  }
+
+  clearCourse() {
+    this.isLoading = true;
     if (this.selectedCourseId != null && this.selectedCourseId != undefined) {
       const param = new HttpParams()
         .set('courseId', this.selectedCourseId)

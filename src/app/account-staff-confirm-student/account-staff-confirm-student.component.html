@@ -13,7 +13,7 @@
           <div style="float: left;width: 48%;margin-left: 1%">
             <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course" name="listCourse"
                        (change)="ReLoadForm()"
-                       (clear)="ReLoadForm()" [(ngModel)]="selectedCourseId">
+                       (clear)="clearCourse()" [(ngModel)]="selectedCourseId">
             </ng-select>
           </div>
           <div style="float: left;width: 47%;margin-left: 1%">

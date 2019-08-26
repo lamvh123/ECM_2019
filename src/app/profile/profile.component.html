@@ -30,6 +30,7 @@
                               <div class="form-line" style="display: flex">
                                 <!--                                <span class="input-group-addon"> <i class="material-icons">person</i> </span>-->
                                 <input type="text" class="form-control text" [disabled]="!isEditing"
+                                       style="border: none"
                                        [(ngModel)]="user.name" placeholder="" id="fullName" name="fullName" required
                                        (change)="checkValidName()"
                                        (focusout)="checkValidName()">
@@ -45,6 +46,7 @@
                               <div class="form-line" style="display: flex">
                                 <!--                                <span class="input-group-addon"> <i class="material-icons">email</i> </span>-->
                                 <input type="text" class="form-control text" disabled [(ngModel)]="user.email"
+                                       style="border: none"
                                        placeholder="" id="email" name="email" required>
                               </div>
                             </div>
@@ -56,6 +58,7 @@
                               <div class="form-line" style="display: flex">
                                 <!--                                <span class="input-group-addon"> <i class="material-icons">phone</i> </span>-->
                                 <input type="text" class="form-control text" [disabled]="!isEditing"
+                                       style="border: none"
                                        [(ngModel)]="user.PhoneNumber"
                                        placeholder="" id="phoneNumber" name="phoneNumber" required
                                        (change)="checkValidPhone()"

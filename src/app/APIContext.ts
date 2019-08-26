@@ -143,6 +143,7 @@ export class APITraining {
   closeClass = 'api/TrainingDept/CloseClass';
   updateTimeTable = 'api/TrainingDept/UpdateTimeTable';
   getClassListByAdmissionForm = 'api/TrainingDept/GetClassListByAdmissionForm';
+  getTimeTableOfParticularClass = 'api/TrainingDept/GetTimeTableOfParticularClass';
 }
 
 export class APITeacher {

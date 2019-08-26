@@ -9,4 +9,5 @@ export class Teacher {
   Subjects: Subject[];
   User: UserModel;
   center: Center;
+  tempName: string;
 }

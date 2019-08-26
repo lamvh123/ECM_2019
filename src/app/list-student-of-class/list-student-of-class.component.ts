@@ -183,6 +183,7 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
     this.http.get<Teacher[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log('hic');
         this.listTeachers = res;
+        this.updateListTeacherDisplay(this.listTeachers);
         this.isLoading = false;
       },
       error => {
@@ -381,6 +382,12 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
   private updateListSlopDisplay(listSlot: Slot[]) {
     listSlot.forEach(function(item) {
       item.displayText = item.From + ' - ' + item.To;
+    });
+  }
+
+  private updateListTeacherDisplay(listTeacher: Teacher[]) {
+    listTeacher.forEach(function(item) {
+      item.tempName = item.User.Full_Name;
     });
   }
 }

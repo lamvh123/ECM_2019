@@ -252,7 +252,7 @@
         <div class="col-lg-12">
           <div class="form-group">
             <label for="selectedTeacher">Teacher:</label>
-            <ng-select [items]="listTeachers" bindLabel="User.Full_Name" bindValue="Id" placeholder="Select teacher"
+            <ng-select [items]="listTeachers" bindLabel="tempName" bindValue="Id" placeholder="Select teacher"
                        [(ngModel)]="newTeacherId" id="selectedTeacher" name="selectedTeacher"
                        required (change)="checkValidTeacher()" (focusout)="checkValidTeacher()">
             </ng-select>

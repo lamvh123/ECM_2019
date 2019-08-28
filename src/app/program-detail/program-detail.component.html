@@ -43,8 +43,7 @@
               <div class="form-group">
                 <label for="frmFileUpload">Program Image <span class="error-msg">(*)</span>:</label><br/>
                 <ngx-uploadcare-widget images-only="true" public-key="929f11755f971c537f17"
-                                       (on-upload-complete)="onUploadCompleted($event)"
-                                       (on-upload-complete)="checkValidImage()"
+                                       (on-upload-complete)="[onUploadCompleted($event),checkValidImage()]"
                                        (change)="checkValidImage()" required
                                        (focusout)="checkValidImage()"></ngx-uploadcare-widget>
                 <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">

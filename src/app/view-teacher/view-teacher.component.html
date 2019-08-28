@@ -33,17 +33,22 @@
               <div class="thumb-xl member-thumb">
               </div>
               <ng-container
-                *ngIf="teacherModel.User.Avartar==null || teacherModel.User.Avartar.length<1; then imgNull; else imgNotNull">
+                *ngIf="teacherModel.User.Avatar==null || teacherModel.User.Avatar.length<1; then imgNull; else imgNotNull">
               </ng-container>
               <ng-template #imgNotNull>
-                <img src="{{teacherModel.User.Avartar}}" class="img-thumbnail rounded-circle" alt="profile-image">
+                <img src="{{teacherModel.User.Avatar}}" class="img-thumbnail rounded-circle" alt="profile-image"
+                     style="width: 120px; height: 120px">
                 <!--                <img src="{{teacherModel.image}}" alt="" class="img-fluid"-->
                 <!--                     (click)="navigateToProgramDetail(program)"-->
                 <!--                     [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">-->
               </ng-template>
               <ng-template #imgNull>
-                <img src="../../assets/images/undefinedPerson.png" class="img-thumbnail rounded-circle"
-                     alt="profile-image">
+                <img *ngIf="!teacherModel.User.Sex" src="../../assets/images/femaleProfessor.png"
+                     class="img-thumbnail rounded-circle"
+                     alt="profile-image" style="width: 120px; height: 120px">
+                <img *ngIf="teacherModel.User.Sex" src="../../assets/images/maleProfessor.png"
+                     class="img-thumbnail rounded-circle"
+                     alt="profile-image" style="width: 120px; height: 120px">
                 <!--                <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"-->
                 <!--                     (click)="navigateToProgramDetail(program)"-->
                 <!--                     [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">-->

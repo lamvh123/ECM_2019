@@ -42,13 +42,11 @@
                 <ng-template #notYet>
                   <td><p class="col-blue-grey">Not yet</p></td>
                   <td>
-                    <button *ngIf="!isPending(ttb.LearningDay)" type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
-                            (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Take
+                    <button *ngIf="ttb.status==0" type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
+                            (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent, true)]">Take
                       Attendance
                     </button>
-                    <button *ngIf="isPending(ttb.LearningDay)" type="button" class="btn  btn-raised g-bg-cgreen waves-effect" disabled="disabled">Take
-                      Attendance
-                    </button>
+                    <span *ngIf="ttb.status==1">Incoming</span>
                   </td>
                 </ng-template>
                 <ng-template #didAttendance>
@@ -56,10 +54,18 @@
                     <!--                  <span style="color: #0f9d58"></span>-->
                   </td>
                   <td>
-                    <button type="button" class="btn  btn-raised bg-amber waves-effect"
-                            (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Update
+                    <button *ngIf="ttb.status==-1" type="button" class="btn  btn-raised g-bg-blue waves-effect"
+                            (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent, false)]">View
                       Attendance
                     </button>
+                    <button *ngIf="ttb.status==0" type="button" class="btn  btn-raised g-bg-blue waves-effect"
+                            (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent, true)]">Update
+                      Attendance
+                    </button>
+                    <!--                    <button type="button" class="btn  btn-raised bg-amber waves-effect"-->
+                    <!--                            (click)="[getAttendance(ttlIndex, ttb.Id+''),openAttendanceForm(longContent)]">Update-->
+                    <!--                      Attendance-->
+                    <!--                    </button>-->
                   </td>
                 </ng-template>
               </tr>
@@ -102,37 +108,57 @@
           <td>{{atd.StudentName}}</td>
           <ng-container *ngIf="atd.IsPresent; then isPresent; else isAbsent"></ng-container>
           <ng-template #isPresent>
-            <td>
-              <div class="radio bg-light-green" (click)="setradio(i, true)" style="text-align: center">
-                <input type="radio" name="{{'present'+atd.Id}}" value="true" checked>Present
+            <td (click)="setradio(i, true)" [ngClass]="isTaking?'area-can-click':'area-can-not-click'"
+                class="take-attendance-area">
+              <div class="radio bg-light-green" style="text-align: center">Present
               </div>
             </td>
-            <td>
-              <div class="radio" (click)="setradio(i, false)" style="text-align: center">
-                <input type="radio" name="{{'present'+atd.Id}}" value="false">Absent
+            <td (click)="setradio(i, false)" [ngClass]="isTaking?'area-can-click':'area-can-not-click'"
+                class="take-attendance-area">
+              <div class="radio" style="text-align: center">Absent
               </div>
             </td>
           </ng-template>
           <ng-template #isAbsent>
-            <td>
-              <div class="radio" (click)="setradio(i, true)" style="text-align: center">
-                <input type="radio" name="{{'present'+atd.Id}}" value="true">Present
+            <td (click)="setradio(i, true)" [ngClass]="isTaking?'area-can-click':'area-can-not-click'"
+                class="take-attendance-area">
+              <div class="radio" style="text-align: center">Present
               </div>
             </td>
-            <td>
-              <div class="radio bg-deep-orange" (click)="setradio(i, false)" style="text-align: center">
-                <input type="radio" name="{{'present'+atd.Id}}" value="false" checked>Absent
+            <td (click)="setradio(i, false)" [ngClass]="isTaking?'area-can-click':'area-can-not-click'"
+                class="take-attendance-area">
+              <div class="radio bg-deep-orange" style="text-align: center">Absent
               </div>
             </td>
           </ng-template>
-          <td>{{atd.Avatar}}</td>
+          <td>
+            <ng-container
+              *ngIf="atd.Avatar==null || atd.Avatar.length<1; then imgNull; else imgNotNull">
+            </ng-container>
+            <ng-template #imgNotNull>
+              <img src="{{atd.Avatar}}" class="img-thumbnail rounded-circle" alt="profile-image"
+                   style="width: 120px; height: 120px">
+              <!--                <img src="{{teacherModel.image}}" alt="" class="img-fluid"-->
+              <!--                     (click)="navigateToProgramDetail(program)"-->
+              <!--                     [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">-->
+            </ng-template>
+            <ng-template #imgNull>
+              <img src="../../assets/images/maleProfessor.png"
+                   class="img-thumbnail rounded-circle"
+                   alt="profile-image" style="width: 120px; height: 120px">
+              <!--              <img *ngIf="teacherModel.User.Sex" src="../../assets/images/maleProfessor.png"-->
+              <!--                   class="img-thumbnail rounded-circle"-->
+              <!--                   alt="profile-image" style="width: 120px; height: 120px">-->
+            </ng-template>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="[modal.close('Close click'),saveAttendance()]">Save</button>
+    <button *ngIf="isTaking" type="button" class="btn btn-light"
+            (click)="[modal.close('Close click'),saveAttendance()]">Save
+    </button>
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
   </div>
 </ng-template>

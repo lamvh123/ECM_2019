@@ -9,6 +9,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-take-attendance',
@@ -30,23 +31,25 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
   selectedTimeTable: Timetable;
   isLoading = true;
   todayStr: string;
+  isTaking: boolean;
 
-  constructor(private modalService: NgbModal, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private modalService: NgbModal, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   ngOnInit() {
-    this.currentClassId = this.route.snapshot.paramMap.get('cId');
-    const urlGetCenterId = this.apiContext.host + this.apiTeacher.getCenter;
-    this.http.get(urlGetCenterId).toPromise().then(data => {
-      this.centerId = data['Id'];
-      this.getTimeTable();
-    });
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
 
     this.todayStr = yyyy + '-' + mm + '-' + dd;
+    this.currentClassId = this.route.snapshot.paramMap.get('cId');
+    const urlGetCenterId = this.apiContext.host + this.apiTeacher.getCenter;
+    this.http.get(urlGetCenterId).toPromise().then(data => {
+      this.centerId = data['Id'];
+      this.getTimeTable();
+    });
+
   }
 
   ngAfterViewInit(): void {
@@ -64,11 +67,13 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
     this.http.get<Timetable[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.timetableList = res;
+        this.updateStatus(this.timetableList);
         this.isLoading = false;
       },
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
   }
 
@@ -90,15 +95,19 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
   }
 
   setradio(i: number, b: boolean) {
-    console.log(b);
-    this.attendanceList[i].IsPresent = b;
+    if (this.isTaking) {
+      console.log(b);
+      this.attendanceList[i].IsPresent = b;
+    }
   }
 
-  openAttendanceForm(longContent) {
+  openAttendanceForm(longContent, isTaking: boolean) {
+    this.isTaking = isTaking;
     console.log(this.modalService);
     this.modalService.open(longContent, {size: 'lg'});
   }
@@ -122,21 +131,38 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
         console.log(data);
         this.getTimeTable();
         this.isLoading = false;
+        this.toastr.success('Take attendance for session ' + this.selectedTimeTable.SessionNumber + ' successfully.', 'Success!');
       },
       error => {
         console.log(error);
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
 
   }
 
-  isPending(dateSession: string): boolean {
+  // isPending(dateSession: string): boolean {
+  //   const today = Date.parse(this.todayStr);
+  //   const sessionDay = Date.parse(dateSession.substring(0, 10));
+  //   console.log('today: ' + this.todayStr + ' - sess: ' + dateSession.substring(0, 10) + ' - ' + (today < sessionDay));
+  //   if (today < sessionDay) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+  private updateStatus(timetableList: Timetable[]) {
     const today = Date.parse(this.todayStr);
-    const sessionDay = Date.parse(dateSession.substring(0, 10));
-    console.log('today: ' + this.todayStr + ' - sess: ' + dateSession.substring(0, 10) + ' - ' + (today < sessionDay));
-    if (today < sessionDay) {
-      return false;
-    }
-    return true;
+    timetableList.forEach(function(item) {
+      const sessionDay = Date.parse(item.LearningDay.substring(0, 10));
+      // console.log('today: ' + this.todayStr + ' - sess: ' + item.LearningDay.substring(0, 10) + ' - ' + (today < sessionDay));
+      if (today < sessionDay) {
+        item.status = 1;
+      } else if (today > sessionDay) {
+        item.status = -1;
+      } else {
+        item.status = 0;
+      }
+    });
   }
 }

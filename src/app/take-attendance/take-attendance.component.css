@@ -44,6 +44,7 @@
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
 a:link {
   text-decoration: none;
 }
@@ -58,4 +59,17 @@ a:hover {
 
 a:active {
   text-decoration: underline;
+}
+
+.take-attendance-area:hover {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+}
+
+.take-attendance-area.area-can-click {
+  cursor: pointer;
+}
+
+.take-attendance-area.area-can-not-click {
+  cursor: not-allowed;
+  box-shadow: none;
 }

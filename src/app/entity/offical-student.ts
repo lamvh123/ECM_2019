@@ -1,3 +1,5 @@
+import { Class } from './class';
+
 export class OfficalStudent {
   StudentId: number;
   Full_Name: string;
@@ -5,4 +7,6 @@ export class OfficalStudent {
   Email: string;
   Sex: boolean;
   realSex: string;
+  Id : string;
+  Classes : Class[];
 }

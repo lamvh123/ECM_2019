@@ -32,6 +32,7 @@ export class UrlTraining {
   listStudentOfClass = '/Training-staff/ListStudentOfClass';
   addCourse = '/Training-staff/add-course';
   courseDetail = '/Training-staff/course-detail';
+  viewStudent = '/Training-staff/Student';
 }
 
 export class UrlTeacher {

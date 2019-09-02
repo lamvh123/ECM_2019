@@ -88,6 +88,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import { CenterViewStaffComponent } from './center-view-staff/center-view-staff.component';
 import { WeeklyReportComponent } from './weekly-report/weekly-report.component';
+import { TrainingStaffViewStudentComponent } from './training-staff-view-student/training-staff-view-student.component';
+import { TrainingStaffViewStudentDetailComponent } from './training-staff-view-student-detail/training-staff-view-student-detail.component';
 
 @NgModule({
   declarations: [
@@ -150,7 +152,9 @@ import { WeeklyReportComponent } from './weekly-report/weekly-report.component';
     ResetPasswordComponent,
     ForgotPasswordComponent,
     CenterViewStaffComponent,
-    WeeklyReportComponent
+    WeeklyReportComponent,
+    TrainingStaffViewStudentComponent,
+    TrainingStaffViewStudentDetailComponent
   ],
   imports: [
     BrowserModule,

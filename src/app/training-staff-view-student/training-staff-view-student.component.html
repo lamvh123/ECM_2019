@@ -1,0 +1,67 @@
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+
+  <div class="row clearfix animated fadeIn">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <input type="text" [(ngModel)]="searchname" class="form-control" placeholder="Student name" name="searchname"
+            id="searchname">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <input type="text" [(ngModel)]="searchEmail" class="form-control" placeholder="Student email"
+            name="searchEmail" id="searchEmail">
+        </div>
+      </div>
+    </div>
+    <button (click)="searchStudent()" class="col-lg-6 col-md-6 col-sm-6" type="submit" name="_submit" class="btn g-bg-blush2 searchBtn">
+      Search 
+    </button>
+
+  </div>
+  <div style="max-height: 500px;overflow: auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Full name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone number</th>
+        <th scope="col">Sex</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of ListStudent; index as i;">
+        <td>{{i+1}}</td>
+        <td>{{item.Full_Name}}</td>
+        <td>{{item.Email}}</td>
+        <td>{{item.PhoneNumber}}</td>
+        <td *ngIf="item.Sex">Male</td>  
+        <td *ngIf="!item.Sex">Female</td>
+        <td><a [routerLink]="['/Training-staff/detail',item.Id]">View timetable</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <div class="row">
+    <div style="padding-top: 22px" class="col-sm-2">Page size: </div>
+    <div class="col-sm-2">
+      <ng-select [items]="listpagesize" bindLabel="label" bindValue="val" [(ngModel)]="pageSize" id="pageSize"
+        name="pageSize" (change)="changePagesize()" [clearable]="false">
+      </ng-select>
+    </div>
+    <div class="col-sm-2"></div>
+    <div  style="padding-top: 22px" class="col-sm-2">Page: </div>
+    <div class="col-sm-2">
+      <ng-select [items]="listPage" bindLabel="label" bindValue="value" [(ngModel)]="currentPage" id="currentPage"
+        name="currentPage" (change)="changePage()" [clearable]="false">
+      </ng-select>
+    </div>
+  </div>
+</section>
+
+<div class="color-bg"></div>

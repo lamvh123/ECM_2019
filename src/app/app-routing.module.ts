@@ -64,6 +64,8 @@ import {ResetPasswordComponent} from './reset-password/reset-password.component'
 import {CenterViewStaffComponent} from './center-view-staff/center-view-staff.component';
 import {AddTeacherComponent} from './add-teacher/add-teacher.component';
 import { WeeklyReportComponent } from './weekly-report/weekly-report.component';
+import { TrainingStaffViewStudentComponent } from './training-staff-view-student/training-staff-view-student.component';
+import { TrainingStaffViewStudentDetailComponent } from './training-staff-view-student-detail/training-staff-view-student-detail.component';
 
 
 const routes: Routes = [
@@ -230,6 +232,14 @@ const routes: Routes = [
       {
         path: 'WeeklyReport',
         component : WeeklyReportComponent
+      },
+      {
+        path:'Student',
+        component : TrainingStaffViewStudentComponent
+      },
+      {
+        path: 'detail/:id',
+        component : TrainingStaffViewStudentDetailComponent
       }
       // {
       //   path: 'course-detail/:id',

@@ -336,6 +336,16 @@
           </ul>
         </li>
         <li
+          [ngClass]="{'active open': getCurrentUrl()==urlTraining.viewStudent}">
+          <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
+            class="class-hover">Student</span> </a>
+          <ul class="ml-menu">
+            <li [ngClass]="{'active': getCurrentUrl()==urlTraining.viewStudent}">
+              <a href="javascript:;" (click)="redirectToUrl(urlTraining.viewStudent)">
+                <span class="class-hover">All Student</span></a></li>
+          </ul>
+        </li>
+        <li
           [ngClass]="{'active open': getCurrentUrl()==urlTraining.viewProgram||getCurrentUrl()==urlTraining.addProgram}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
             class="class-hover">Programs</span> </a>

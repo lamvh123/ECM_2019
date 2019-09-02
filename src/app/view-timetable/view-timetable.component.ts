@@ -90,6 +90,29 @@ export class ViewTimetableComponent implements OnInit, AfterViewInit {
     this.http.get<TotalTimetable>(url, {params: param}).toPromise().then(data => {
         console.log(data);
         this.totalTimetable = data;
+        if (this.totalTimetable != null) {
+          if (this.totalTimetable.NextTimetable != null && this.totalTimetable.NextTimetable.LearningDay != null) {
+            const splitted = this.totalTimetable.NextTimetable.LearningDay.substring(0, 10).split('-', 3);
+            console.log(splitted);
+            this.totalTimetable.NextTimetable.displayDate = splitted[2] + '/' + splitted[1] + '/' + splitted[0];
+          }
+
+          if (this.totalTimetable.LearntTimetableList != null && this.totalTimetable.LearntTimetableList.length > 0) {
+            this.totalTimetable.LearntTimetableList.forEach(function(item) {
+              const splitted2 = item.LearningDay.substring(0, 10).split('-', 3);
+              console.log(splitted2);
+              item.displayDate = splitted2[2] + '/' + splitted2[1] + '/' + splitted2[0];
+            });
+          }
+
+          if (this.totalTimetable.PendingTimetableList != null && this.totalTimetable.PendingTimetableList.length > 0) {
+            this.totalTimetable.PendingTimetableList.forEach(function(item) {
+              const splitted3 = item.LearningDay.substring(0, 10).split('-', 3);
+              console.log(splitted3);
+              item.displayDate = splitted3[2] + '/' + splitted3[1] + '/' + splitted3[0];
+            });
+          }
+        }
         this.isLoading = false;
       },
       error => {

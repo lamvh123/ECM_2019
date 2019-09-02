@@ -67,6 +67,11 @@ export class TakeAttendanceComponent implements OnInit, AfterViewInit {
     this.http.get<Timetable[]>(configUrl, {params: body}).toPromise().then(res => {
         console.log(res);
         this.timetableList = res;
+        this.timetableList.forEach(function(item) {
+          const splitted = item.LearningDay.substring(0, 10).split('-', 3);
+          console.log(splitted);
+          item.displayDay = splitted[2] + '/' + splitted[1] + '/' + splitted[0];
+        });
         this.updateStatus(this.timetableList);
         this.isLoading = false;
       },

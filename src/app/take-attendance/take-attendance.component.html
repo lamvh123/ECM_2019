@@ -36,7 +36,7 @@
               <tbody *ngFor="let ttb of timetableList; index as ttlIndex">
               <tr>
                 <td>{{ttlIndex + 1}}</td>
-                <td>{{ttb.LearningDay.substring(0, 10)}}</td>
+                <td>{{ttb.displayDay}}</td>
                 <td>{{ttb.slot.From + ' - ' + ttb.slot.To}}</td>
                 <ng-container *ngIf="ttb.AttendBy==null; then notYet; else didAttendance"></ng-container>
                 <ng-template #notYet>
@@ -84,7 +84,7 @@
   <div class="modal-header">
     <h4 class="modal-title">Take Attendance<br/>
       {{selectedTimeTable.Class.Name}}<br/>
-      {{selectedTimeTable.LearningDay}}
+      {{selectedTimeTable.displayDay}}
     </h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>

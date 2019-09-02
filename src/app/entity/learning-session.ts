@@ -16,6 +16,7 @@ export class LearningSession {
   teacher: Teacher;
   IsOfficial: number;
   AttendanceState: number;
+  displayDate: string;
 }
 
 export class TotalTimetable {

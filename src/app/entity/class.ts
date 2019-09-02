@@ -18,4 +18,5 @@ export class Class {
   RoomId: number;
   IsFinished: boolean = false;
   IsClosed: boolean = false;
+  StartDate: string;
 }

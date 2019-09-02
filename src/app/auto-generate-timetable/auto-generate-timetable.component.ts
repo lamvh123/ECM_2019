@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpParams, HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Program} from '../program';
@@ -13,7 +13,7 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./auto-generate-timetable.component.css', '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class AutoGenerateTimetableComponent implements OnInit {
+export class AutoGenerateTimetableComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) {
   }
@@ -33,6 +33,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
   listPage;
   empty;
   msg = '';
+  isLoading = true;
 
   ngOnInit() {
     const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
@@ -40,6 +41,10 @@ export class AutoGenerateTimetableComponent implements OnInit {
       this.centerId = data['Id'];
       this.loadInitData();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.isLoading = false;
   }
 
   loadInitData() {
@@ -84,6 +89,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
   }
 
   loadClass() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.searchClass;
     const param = new HttpParams()
       .set('courseId', this.selectedCourseId == null ? '-1' : this.selectedCourseId + '')
@@ -96,10 +102,12 @@ export class AutoGenerateTimetableComponent implements OnInit {
         console.log(data);
         this.listClass = data;
         this.unselectAll();
+        this.isLoading = false;
       },
       error => {
         console.log(error);
         this.toastr.info('Something is not working right. Please try again soon.');
+        this.isLoading = false;
       });
     this.getTotalClassAndPagi();
   }
@@ -111,6 +119,7 @@ export class AutoGenerateTimetableComponent implements OnInit {
   }
 
   getTotalClassAndPagi() {
+    this.isLoading = true;
     const url = this.apiContext.host + this.apiTraining.searchClass;
     const param = new HttpParams()
       .set('programId', this.selectedProgramId == null ? '-1' : this.selectedProgramId + '')
@@ -122,10 +131,12 @@ export class AutoGenerateTimetableComponent implements OnInit {
         console.log(data);
         this.totalData = data.length;
         this.pagination(this.totalData);
+        this.isLoading = false;
       },
       error => {
         console.log(error);
         this.toastr.info('Something is not working right. Please try again soon.');
+        this.isLoading = false;
       });
   }
 
@@ -181,4 +192,27 @@ export class AutoGenerateTimetableComponent implements OnInit {
       });
   }
 
+  geneTimeTable(Id: number, ClassName: string) {
+    // const url = this.apiContext.host + this.apiTraining.generateClass;
+    // const param = new Array();
+    // param.push({AdmissionFormId: Id, CenterId: this.centerId});
+    // this.http.post(url, param).toPromise().then(data => {
+    //
+    // }
+    this.isLoading = true;
+    const param = new Array();
+    param.push({ClassId: Id, CenterId: this.centerId});
+    const url = this.apiContext.host + this.apiTraining.generateTimeTable;
+    this.http.post(url, param).toPromise().then(data => {
+        console.log(data);
+        this.toastr.success('Time table of class ' + ClassName + ' was generated successfully.', 'Success!');
+        this.isLoading = false;
+        this.loadClass();
+      },
+      error => {
+        console.log(error);
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+        this.isLoading = false;
+      });
+  }
 }

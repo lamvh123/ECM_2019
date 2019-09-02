@@ -137,6 +137,11 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
     this.http.get<Timetable[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listTimetable = data;
+        this.listTimetable.forEach(function(item) {
+          const splitted = item.LearningDay.substring(0, 10).split('-', 3);
+          console.log(splitted);
+          item.displayDay = splitted[2] + '/' + splitted[1] + '/' + splitted[0];
+        });
         this.isLoading = false;
       },
       error => {

@@ -1,99 +1,250 @@
-<div class="row">
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-    <ng-select [items]="listProgram" bindLabel="Name" bindValue="Id" placeholder="Select Program"
-               (change)="loadCourse()"
-               (clear)="reloadCourse()" [(ngModel)]="selectedProgramId">
-    </ng-select>
-  </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-    <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
-               [(ngModel)]="selectedCourseId">
-    </ng-select>
-  </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
+<!--<div class="row">-->
+<!--  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">-->
+<!--    <ng-select [items]="listProgram" bindLabel="Name" bindValue="Id" placeholder="Select Program"-->
+<!--               (change)="loadCourse()"-->
+<!--               (clear)="reloadCourse()" [(ngModel)]="selectedProgramId">-->
+<!--    </ng-select>-->
+<!--  </div>-->
+<!--  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">-->
+<!--    <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"-->
+<!--               [(ngModel)]="selectedCourseId">-->
+<!--    </ng-select>-->
+<!--  </div>-->
+<!--  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">-->
 
-  </div>
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-    <button type="submit" name="_submit" (click)="searchClass()" class="btn searchBtn">Search</button>
-  </div>
-</div>
-<div *ngIf="empty"></div>
-<div *ngIf="!empty" style="width: 100%">
-  <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
-    <table class="table studenttbl">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Class Name</th>
-        <th scope="col">Number of student</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let class of listClass;let index = index;">
-        <th scope="row" style="vertical-align: bottom">
-          <div class="checkbox">
-            <input type="checkbox" name="rememberme{{index}}" id="rememberme{{index}}" class="filled-in chk-col-pink"
-                   [(ngModel)]="class.selected"/>
-            <label for="rememberme{{index}}"></label>
-          </div>
-        </th>
-        <td>{{class.ClassName}}</td>
-        <td>{{class.NumberOfStudent}}</td>
-        <!-- <td [class.check-availble]="student.IsPayment"
-          [class.reject-availble]="!student.IsPayment">{{student.IsPayment}}</td>
-      <td>
-        <div class="row">
-          <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>
+<!--  </div>-->
+<!--  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">-->
+<!--    <button type="submit" name="_submit" (click)="searchClass()" class="btn searchBtn">Search</button>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div *ngIf="empty"></div>-->
+<!--<div *ngIf="!empty" style="width: 100%">-->
+<!--  <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">-->
+<!--    <table class="table studenttbl">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th scope="col">#</th>-->
+<!--        <th scope="col">Class Name</th>-->
+<!--        <th scope="col">Number of student</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr *ngFor="let class of listClass;let index = index;">-->
+<!--        <th scope="row" style="vertical-align: bottom">-->
+<!--          <div class="checkbox">-->
+<!--            <input type="checkbox" name="rememberme{{index}}" id="rememberme{{index}}" class="filled-in chk-col-pink"-->
+<!--                   [(ngModel)]="class.selected"/>-->
+<!--            <label for="rememberme{{index}}"></label>-->
+<!--          </div>-->
+<!--        </th>-->
+<!--        <td>{{class.ClassName}}</td>-->
+<!--        <td>{{class.NumberOfStudent}}</td>-->
+<!--        &lt;!&ndash; <td [class.check-availble]="student.IsPayment"-->
+<!--          [class.reject-availble]="!student.IsPayment">{{student.IsPayment}}</td>-->
+<!--      <td>-->
+<!--        <div class="row">-->
+<!--          <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>-->
 
-          <ng-template #canCheck>
-            <div class="col-lg-5 col-xl-5">
-              <button (click)="ConfirmFee(student,index)" class="confirm-btn">
-                <i class="fa fa-check check-availble" style="font-size:24px" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="col-lg-5 col-xl-5">
-              <button class="confirm-btn">
-                <i class="fa fa-times reject-unavailble" style="font-size:24px"></i>
-              </button>
-            </div>
-          </ng-template>
-          <ng-template #cannotCheck>
-            <div class="col-lg-5 col-xl-5">
-              <button class="confirm-btn">
-                <i class="fa fa-check check-unavailble" style="font-size:24px" aria-hidden="true"></i>
-              </button>
-            </div>
+<!--          <ng-template #canCheck>-->
+<!--            <div class="col-lg-5 col-xl-5">-->
+<!--              <button (click)="ConfirmFee(student,index)" class="confirm-btn">-->
+<!--                <i class="fa fa-check check-availble" style="font-size:24px" aria-hidden="true"></i>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--            <div class="col-lg-5 col-xl-5">-->
+<!--              <button class="confirm-btn">-->
+<!--                <i class="fa fa-times reject-unavailble" style="font-size:24px"></i>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </ng-template>-->
+<!--          <ng-template #cannotCheck>-->
+<!--            <div class="col-lg-5 col-xl-5">-->
+<!--              <button class="confirm-btn">-->
+<!--                <i class="fa fa-check check-unavailble" style="font-size:24px" aria-hidden="true"></i>-->
+<!--              </button>-->
+<!--            </div>-->
 
-            <div class="col-lg-5 col-xl-5">
-              <button (click)="RejectFee(student,index)" class="confirm-btn">
-                <i class="fa fa-times reject-availble" style="font-size:24px"></i>
-              </button>
-            </div>
-          </ng-template>
+<!--            <div class="col-lg-5 col-xl-5">-->
+<!--              <button (click)="RejectFee(student,index)" class="confirm-btn">-->
+<!--                <i class="fa fa-times reject-availble" style="font-size:24px"></i>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </ng-template>-->
+<!--        </div>-->
+<!--      </td> &ndash;&gt;-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--  <div class="row">-->
+<!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">-->
+<!--      <ng-select [items]="listPageSize" placeholder="Select page size" [(ngModel)]="pageSize"-->
+<!--                 (change)="changePageSize()" [clearable]="false">-->
+<!--      </ng-select>-->
+<!--    </div>-->
+<!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">-->
+<!--      <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}} items</p>-->
+<!--    </div>-->
+<!--    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">-->
+<!--      <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"-->
+<!--                 [(ngModel)]="currentPage" (change)="changePage()" [clearable]="false">-->
+<!--      </ng-select>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">-->
+<!--    <button type="submit" name="_submit" (click)="generateTimetable()" class="btn searchBtn">Generate Timetable</button>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card">
+        <div style="float: left;width: 48%;margin-left: 1%">
+<!--          <ng-select [items]="ListOfCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"-->
+<!--                     (clear)="clearCourseAndLoadForm()" [(ngModel)]="selectedCourseId">-->
+<!--          </ng-select>-->
+          <ng-select [items]="listProgram" bindLabel="Name" bindValue="Id" placeholder="Select Program"
+                                 (change)="loadCourse()"
+                                 (clear)="reloadCourse()" [(ngModel)]="selectedProgramId">
+        </ng-select>
         </div>
-      </td> -->
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="row">
-    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
-      <ng-select [items]="listPageSize" placeholder="Select page size" [(ngModel)]="pageSize"
-                 (change)="changePageSize()" [clearable]="false">
-      </ng-select>
-    </div>
-    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 42px;text-align: right">
-      <p>Showing {{pageSize * currentPage - pageSize + 1}} to {{pageSize * currentPage}} of {{totalData}} items</p>
-    </div>
-    <div class="input-field col s12 required col-lg-3 col-xl-3" style="padding-top: 10px">
-      <ng-select [items]="listPage" bindLabel="text" bindValue="value" placeholder="Select page"
-                 [(ngModel)]="currentPage" (change)="changePage()" [clearable]="false">
-      </ng-select>
+                  <div style="float: left;width: 47%;margin-left: 1%">
+        <!--            <ng-select [items]="ListOfForm" bindLabel="Name" bindValue="Id" [(ngModel)]="listSelectedFormId"-->
+        <!--                       placeholder="Select Form" multiple="true">-->
+        <!--            </ng-select>-->
+        <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
+                   [(ngModel)]="selectedCourseId">
+        </ng-select>
+                  </div>
+                  <br style="clear: left;"/>
+        <button style="float: right;margin-right: 1%" type="submit" name="_submit" (click)="searchClass()"
+                class="btn g-bg-blush2 searchBtn">
+          Search Class
+        </button>
+      </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="input-field col s12 required col-lg-4 col-xl-4" style="padding-top: 20px">
-    <button type="submit" name="_submit" (click)="generateTimetable()" class="btn searchBtn">Generate Timetable</button>
+
+  <div [ngStyle]="isLoading?{'display':'none'}:{}">
+    <div class="row clearfix all-program-content">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div *ngIf="empty" class="header">
+            <h3>There is no pending class in database.</h3>
+          </div>
+          <div *ngIf="!empty" class="body table-responsive">
+            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+              <thead>
+              <tr>
+
+                <!--                <th scope="col" style="vertical-align: bottom">-->
+
+                <!--                  <div class="btn-group" style="box-shadow: none">-->
+                <!--                    <input type="checkbox" name="selectAll" id="selectAll"-->
+                <!--                           class="filled-in chk-col-pink" [checked]="isSelectedAll"-->
+                <!--                           (change)="selectAllFun()"/>-->
+                <!--                    <label for="selectAll"></label>-->
+                <!--                    &lt;!&ndash;                    <button type="button" class="btn btn-primary">Split me</button>&ndash;&gt;-->
+                <!--                    <div [ngStyle]="isSelectedAll?{}:{'visibility': 'hidden'}" class="btn-group" ngbDropdown-->
+                <!--                         role="group"-->
+                <!--                         aria-label="Button group with nested dropdown">-->
+                <!--                      <span ngbDropdownToggle></span>-->
+                <!--                      <ul class="dropdown-menu" ngbDropdownMenu>-->
+                <!--                        <li ngbDropdownItem style="font-weight:normal" (click)="ConfirmMultiple()"><a-->
+                <!--                          href="javascript:;">Confirm selected</a></li>-->
+                <!--                        <li ngbDropdownItem style="font-weight:normal" (click)="RejectMultiple()"><a-->
+                <!--                          href="javascript:;">Reject selected</a></li>-->
+                <!--                      </ul>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+
+                <!--                </th>-->
+
+
+                <th scope="col" style="vertical-align: middle">Class Name </th>
+                <th scope="col" style="vertical-align: middle">Number of student</th>
+                <th scope="col" style="vertical-align: middle">Start Date</th>
+                <!--                <th scope="col" style="vertical-align: middle">Student's Phone</th>=-->
+<!--                <th scope="col" style="vertical-align: middle">Start date</th>-->
+                <th scope="col" style="vertical-align: middle">Action</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let classModel of listClass;let index = index;">
+                <!--                <td style="vertical-align: bottom;text-align: center">-->
+                <!--                  <div class="checkbox">-->
+                <!--                    <input type="checkbox" name="rememberme{{index}}" id="rememberme{{index}}"-->
+                <!--                           class="filled-in chk-col-pink" [checked]="student.selected"-->
+                <!--                           (change)="updateSelectAllStatus(student)"/>-->
+                <!--                    <label for="rememberme{{index}}"></label>-->
+                <!--                  </div>-->
+                <!--                </td>-->
+                <td>{{classModel.ClassName}}</td>
+                <td>{{classModel.NumberOfStudent}}</td>
+                <td style="text-align: center">{{classModel.StartDate}}</td>
+                <td style="text-align: center">
+                  <div class="row">
+                    <div class="button-demo">
+
+                      <button style="display: block;margin: auto;" type="button"
+                              class="btn  btn-raised bg-light-green waves-effect"
+                              (click)="geneTimeTable(classModel.ClassId, classModel.ClassName)">Generate Timetable
+                      </button>
+                      <!--                      <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>-->
+                    </div>
+                    <!--                    <ng-template #canCheck>-->
+                    <!--                      <button style="display: block;margin: auto;" type="button"-->
+                    <!--                              class="btn  btn-raised bg-light-green waves-effect"-->
+                    <!--                              (click)="ConfirmFee(student,index)">Confirm-->
+                    <!--                      </button>-->
+                    <!--                    </ng-template>-->
+                    <!--                    <ng-template #cannotCheck>-->
+                    <!--                      <button style="display: block;margin: auto;" type="button"-->
+                    <!--                              class="btn  btn-raised bg-amber waves-effect"-->
+                    <!--                              (click)="RejectFee(student,index)">Reject-->
+                    <!--                      </button>-->
+                    <!--                    </ng-template>-->
+                  </div>
+                </td>
+                <!--                <td style="text-align: center">-->
+                <!--                  <button type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float"-->
+                <!--                          (click)="openAttendanceForm(longContent, student)"><i-->
+                <!--                    style="color:#f44336" class="material-icons">delete_forever</i></button>-->
+                <!--                </td>-->
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!--          <div *ngIf="!empty" class="body">-->
+          <!--            <ul class="pagination justify-content-center">-->
+          <!--              <li class="page-item disabled" *ngIf="currentPage==1">-->
+          <!--                <a class="page-link" href="javascript:;">First</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item" *ngIf="currentPage!=1">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(1)">First</a>-->
+          <!--              </li>-->
+          <!--              <li *ngFor="let p of listPageDisplay" class="page-item" [class.active]="currentPage==p">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(p)">{{p}}</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item disabled" *ngIf="currentPage==listPage.length">-->
+          <!--                <a class="page-link" href="javascript:;">Last</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item" *ngIf="currentPage!=listPage.length">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(listPage.length)">Last</a>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+          <!--          </div>-->
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
+
+</section>

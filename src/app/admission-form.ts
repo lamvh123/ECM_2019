@@ -17,6 +17,7 @@ export class AdmissionForm {
   program: Program;
   GoogleFormLink: string;
   // $ref: string;
+  displayDate: string;
 
 
   constructor() {

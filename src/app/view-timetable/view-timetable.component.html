@@ -33,7 +33,7 @@
               <tr>
                 <td>{{totalTimetable.NextTimetable.SessionNumber}}</td>
                 <td>{{totalTimetable.NextTimetable.ClassName}}</td>
-                <td>{{totalTimetable.NextTimetable.LearningDay.substr(0, 10)}}</td>
+                <td>{{totalTimetable.NextTimetable.displayDate}}</td>
                 <td
                   *ngIf="totalTimetable.NextTimetable.Room!=null">{{totalTimetable.NextTimetable.Room.RoomNumber}}</td>
                 <td *ngIf="totalTimetable.NextTimetable.Room==null"></td>
@@ -68,7 +68,7 @@
               <tbody>
               <tr *ngFor="let item of totalTimetable.LearntTimetableList;let index = index;">
                 <td>{{item.SessionNumber}}</td>
-                <td>{{item.LearningDay.substr(0, 10)}}</td>
+                <td>{{item.displayDate}}</td>
                 <td>{{item.slot.Name + ' (' + item.slot.From + '-' + item.slot.To + ')'}}</td>
                 <td *ngIf="item.AttendanceState==-1" style="color: #FFC107">Pending</td>
                 <td *ngIf="item.AttendanceState==0" style="color: #f44336">Absent</td>
@@ -100,7 +100,7 @@
               <tbody>
               <tr *ngFor="let item of totalTimetable.PendingTimetableList;let index = index;">
                 <td>{{item.SessionNumber}}</td>
-                <td>{{item.LearningDay.substr(0, 10)}}</td>
+                <td>{{item.displayDate}}</td>
                 <td>{{item.slot.Name + ' (' + item.slot.From + '-' + item.slot.To + ')'}}</td>
                 <td *ngIf="item.AttendanceState==-1" style="color: #FFC107">Pending</td>
                 <td *ngIf="item.AttendanceState==0" style="color: #f44336">Absent</td>

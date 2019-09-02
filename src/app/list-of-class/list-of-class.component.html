@@ -156,6 +156,7 @@
                   <ng-container
                     *ngIf="class.Teachers==null || class.Teachers.length<=0; then teacherIsNull ; else teacherNotNull"></ng-container>
                   <ng-template #teacherIsNull>
+                    <option disabled selected value></option>
                     <option *ngFor="let teacherModel of class.TeacherList" [value]="teacherModel.Id">
                       {{teacherModel.User.Full_Name}}
                     </option>
@@ -176,6 +177,7 @@
                   <ng-container
                     *ngIf="class.RoomList!=null && class.RoomList.length>0; then roomNotNull; else roomIsNull"></ng-container>
                   <ng-template #roomIsNull>
+                    <option disabled selected value></option>
                     <option *ngFor="let roomModel of class.RoomList" [value]="roomModel.Id">
                       {{roomModel.RoomNumber}}
                     </option>

@@ -161,7 +161,7 @@
                         <tbody>
                         <tr *ngFor="let ttb of listTimetable; index as i">
                           <td>{{ttb.SessionNumber}}</td>
-                          <td>{{ttb.LearningDay.substring(0, 10)}}</td>
+                          <td>{{ttb.displayDay}}</td>
                           <td>{{ttb.slot.From + '-' + ttb.slot.To}}</td>
                           <td>{{(ttb.teacher == null || ttb.teacher.User == null) ? '' : ttb.teacher.User.Full_Name}}</td>
                           <td>{{(ttb.Room == null) ? '' : ttb.Room.RoomNumber}}</td>

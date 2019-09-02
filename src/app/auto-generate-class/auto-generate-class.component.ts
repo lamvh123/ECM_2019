@@ -16,6 +16,7 @@ import {Class} from '../entity/class';
     '../../assets/css/themes/all-themes.css']
 })
 export class AutoGenerateClassComponent implements OnInit, AfterViewInit {
+  private currentPage: number;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private toastr: ToastrService, private modalService: NgbModal) {
   }
@@ -68,10 +69,16 @@ export class AutoGenerateClassComponent implements OnInit, AfterViewInit {
 
   clearCourseAndLoadForm() {
     this.selectedCourseId = -1;
+  }
+
+
+  searchStudent() {
+    this.currentPage = 1;
     this.loadForm();
   }
 
   loadForm() {
+    this.empty = false;
     const param = new HttpParams()
       .set('courseId', this.selectedCourseId + '')
       .set('centerId', this.centerId + '')
@@ -84,6 +91,12 @@ export class AutoGenerateClassComponent implements OnInit, AfterViewInit {
         this.ListOfForm = data;
         if (this.ListOfForm.length == null || this.ListOfForm.length <= 0) {
           this.empty = true;
+        } else {
+          this.ListOfForm.forEach(function(item) {
+            const splitted = item.StartDate.substring(0, 10).split('-', 3);
+            console.log(splitted);
+            item.displayDate = splitted[2] + '/' + splitted[1] + '/' + splitted[0];
+          });
         }
         console.log(this.ListOfForm);
       },

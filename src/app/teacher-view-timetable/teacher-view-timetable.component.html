@@ -28,7 +28,7 @@
                 {{item.SessionNumber}}
               </th>
               <td>{{item.Class.Name}}</td>
-              <td>{{item.LearningDay.substr(0, 10)}}</td>
+              <td>{{item.displayDate}}</td>
               <td *ngIf="item.Room!=null">{{item.Room.RoomNumber}}</td>
               <td *ngIf="item.Room==null"></td>
               <td>{{item.slot.Name}}</td>

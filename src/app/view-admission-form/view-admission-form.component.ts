@@ -99,8 +99,10 @@ export class ViewAdmissionFormComponent implements OnInit, AfterViewInit {
   }
 
   dateToString(date: string) {
-    const splitDate = date.split('T');
-    return splitDate[0];
+    const splitted = date.substring(0, 10).split('-', 3);
+    console.log(splitted);
+    const displayDay = splitted[2] + '/' + splitted[1] + '/' + splitted[0];
+    return displayDay;
   }
 
   closeForm(form: AdmissionForm) {

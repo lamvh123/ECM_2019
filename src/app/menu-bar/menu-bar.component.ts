@@ -15,7 +15,10 @@ import {UrlTraining} from '../SiteUrlContext';
     '../../assets/css/themes/all-themes.css']
 })
 export class MenuBarComponent implements OnInit, AfterViewInit {
+  // static routerStatic: Router;
+
   constructor(private _router: Router, private route: ActivatedRoute) {
+    // MenuBarComponent.routerStatic = _router;
   }
 
   static currentUrl = '';
@@ -175,8 +178,27 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     //      $('.dtp-content').hide();
 
     // });
-
+    // this.triggerOpenNewTab('das', this.urlTraining.viewReport);
   }
+
+  // triggerOpenNewTab(elementId: string, url: string) {
+  //   document.getElementById(elementId).onclick = function(evnt) {
+  //     if (
+  //       evnt.ctrlKey ||
+  //       evnt.shiftKey ||
+  //       evnt.metaKey ||
+  //       (evnt.button && evnt.button == 1)
+  //     ) {
+  //       MenuBarComponent.currentUrl = url;
+  //       window.open(url, '_blank');
+  //       return;
+  //     }
+  //     evnt.preventDefault();
+  //     MenuBarComponent.currentUrl = url;
+  //     MenuBarComponent.routerStatic.navigateByUrl(url);
+  //     return false;
+  //   };
+  // }
 
   logout() {
     const r = confirm('Do you really want to logout?');
@@ -194,4 +216,9 @@ export class MenuBarComponent implements OnInit, AfterViewInit {
     MenuBarComponent.currentUrl = url;
     this._router.navigateByUrl(url);
   }
+
+  // openNewTab(url: string) {
+  //   MenuBarComponent.currentUrl = url;
+  //   window.open(url, '_blank');
+  // }
 }

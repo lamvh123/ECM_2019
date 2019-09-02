@@ -15,4 +15,5 @@ export class Student {
   realSex: string;
   selected: boolean = false;
   User: UserModel;
+  displayDate: string;
 }

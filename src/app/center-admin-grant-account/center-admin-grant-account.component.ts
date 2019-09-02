@@ -177,6 +177,9 @@ export class CenterAdminGrantAccountComponent implements OnInit, AfterViewInit {
               console.log(this.listStudent);
               this.UnselectAllItem();
               this.listStudent.forEach(item => {
+                const splitted = item.Dob.substring(0, 10).split('-', 3);
+                console.log(splitted);
+                item.displayDate = splitted[2] + '/' + splitted[1] + '/' + splitted[0];
                 if (item.Dob != null && item.Dob != undefined && item.Dob.length >= 10) {
                   item.Dob = item.Dob.substr(0, 10);
                 }

@@ -68,6 +68,12 @@ export class TeacherViewTimetableComponent implements OnInit, AfterViewInit {
     this.http.get<LearningSession[]>(url, {params: param}).toPromise().then(data => {
         console.log(data);
         this.listSession = data;
+
+        this.listSession.forEach(function(item) {
+          const splitted = item.LearningDay.substring(0, 10).split('-', 3);
+          console.log(splitted);
+          item.displayDate = splitted[2] + '/' + splitted[1] + '/' + splitted[0];
+        });
         console.log(this.listSession);
         this.isLoading = false;
       },

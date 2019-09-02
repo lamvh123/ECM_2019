@@ -16,4 +16,5 @@ export class Timetable {
   teacher: Teacher;
   AttendBy: Teacher;
   status: number;
+  displayDay: string;
 }

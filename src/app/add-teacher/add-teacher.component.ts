@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {APIContext, APITraining} from '../APIContext';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-add-teacher',
@@ -17,6 +19,7 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   fullName = '';
   teacherEmail = '';
@@ -24,8 +27,10 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
   selectedSubject: Subject[] = [];
   errorMsgName = '-';
   errorMsgMail = '-';
+  errorMsgPhone = '-';
   errorMsgSubject = '-';
   isLoading = true;
+  teacherPhone = '';
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
@@ -39,7 +44,18 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
 
@@ -80,11 +96,32 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
     if (this.teacherEmail != null) {
       this.teacherEmail = this.formatText(this.teacherEmail);
     }
+    const regex = /^[a-zA-Z][a-zA-Z0-9_\.]{5,32}@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/gm;
     if (this.teacherEmail == null || this.teacherEmail === '') {
       this.errorMsgMail = 'Email is required.';
       return false;
+    } else if (!regex.test(this.teacherEmail)) {
+      this.errorMsgMail = 'Invalid email format.';
+      return false;
     } else {
       this.errorMsgMail = '';
+      return true;
+    }
+  }
+
+  checkValidPhone() {
+    if (this.teacherPhone != null) {
+      this.teacherPhone = this.formatText(this.teacherPhone);
+    }
+    const regex = /(09|03)+([0-9]{8})\b/g;
+    if (this.teacherPhone == null || this.teacherPhone === '') {
+      this.errorMsgPhone = 'Phone is required.';
+      return false;
+    } else if (!regex.test(this.teacherPhone)) {
+      this.errorMsgPhone = 'Invalid phone number format.';
+      return false;
+    } else {
+      this.errorMsgPhone = '';
       return true;
     }
   }
@@ -103,10 +140,18 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
     this.checkValidName();
     this.checkValidEmail();
     this.checkValidSubject();
-    if (this.checkValidName() && this.checkValidEmail() && this.checkValidSubject()) {
+    this.checkValidPhone();
+    if (this.checkValidName() && this.checkValidEmail() && this.checkValidSubject() && this.checkValidPhone()) {
       this.addTeacher();
     } else {
       this.toastr.warning('Something is missing.', 'Alert!');
+    }
+  }
+
+  isInputNumber(evt) {
+    const c = String.fromCharCode(evt.which);
+    if (!(/[0-9]/.test(c))) {
+      evt.preventDefault();
     }
   }
 
@@ -115,7 +160,8 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
   }
 
   redirectToViewTeacher() {
-    this.router.navigateByUrl('/Training-staff/view-teacher');
+    MenuBarComponent.currentUrl = this.urlTraining.viewTeacher;
+    this.router.navigateByUrl(this.urlTraining.viewTeacher);
   }
 
   private addTeacher() {
@@ -124,6 +170,7 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
     let body = new HttpParams()
       .set('Email', this.teacherEmail)
       .set('FullName', this.fullName)
+      .set('PhoneNumber', this.teacherPhone)
       .set('CenterId', this.centerId + '');
     this.selectedSubject.forEach(item => {
       body = body.append('Subjects', item + '');

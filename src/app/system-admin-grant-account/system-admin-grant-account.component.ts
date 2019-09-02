@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, ParamMap} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {APIContext, APISystem} from '../APIContext';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-system-admin-grant-account',
@@ -11,7 +12,7 @@ import {APIContext, APISystem} from '../APIContext';
 })
 export class SystemAdminGrantAccountComponent implements OnInit, AfterViewInit {
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: ToastrService) {
   }
 
   centerId;
@@ -20,7 +21,6 @@ export class SystemAdminGrantAccountComponent implements OnInit, AfterViewInit {
   errorMsgAccount: string;
   apiContext = new APIContext();
   apiSystem = new APISystem();
-  msg;
   isLoading = true;
 
   ngOnInit() {
@@ -32,7 +32,18 @@ export class SystemAdminGrantAccountComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   checkValidFields() {
@@ -54,16 +65,20 @@ export class SystemAdminGrantAccountComponent implements OnInit, AfterViewInit {
 
   GrantAccount() {
     this.isLoading = true;
-    var url = this.apiContext.host + this.apiSystem.grantAccountForCenter;
-    var params = new HttpParams().set('CenterId', this.centerId).set('EmailCenter', this.Account);
+    const url = this.apiContext.host + this.apiSystem.grantAccountForCenter;
+    const params = new HttpParams().set('CenterId', this.centerId).set('EmailCenter', this.Account);
     this.http.post(url, params).toPromise().then(data => {
-        this.msg = 'success';
         this.isLoading = false;
+        this.toastr.success('Grant account for center ' + this.centerName + ' successfully.', 'Success!');
       },
       error => {
-        this.msg = 'error';
         this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
       });
+  }
+
+  redirectToViewCenter() {
+    this.router.navigateByUrl('/SystemAdmin/AllCenter');
   }
 
 }

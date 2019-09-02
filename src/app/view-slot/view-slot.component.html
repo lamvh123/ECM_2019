@@ -7,10 +7,10 @@
   <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="card">
-        <div class="header">
-          <h3 *ngIf="slotList==null || slotList.length<=0">There is no slot in database.</h3>
+        <div *ngIf="slotList==null || slotList.length<=0" class="header">
+          <h3>There is no slot in database.</h3>
         </div>
-        <div class="body table-responsive">
+        <div *ngIf="slotList!=null && slotList.length>0" class="body table-responsive">
           <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
             <thead>
             <tr>

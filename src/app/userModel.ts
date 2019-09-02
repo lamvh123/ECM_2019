@@ -1,9 +1,10 @@
 import {Subject} from './subject';
 
 export class UserModel {
-  Avartar: string;
+  Avatar: string;
   Email: string;
   Full_Name: string;
   Location: string;
   PhoneNumber: string;
+  Sex: boolean;
 }

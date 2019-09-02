@@ -10,6 +10,8 @@ import {Teacher} from '../teacher';
 import {forEach} from '@angular/router/src/utils/collection';
 import {Room} from '../room';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-list-of-class',
@@ -27,6 +29,7 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   listProgram: Program[];
   listCourse: Course[];
@@ -41,6 +44,11 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   listPage;
   empty;
   isLoading = true;
+
+  openClassList: Class[];
+  finishedClassList: Class[];
+  closedClassList: Class[];
+
 
   ngOnInit() {
     const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
@@ -124,11 +132,21 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   }
 
   unselectAll() {
+    this.openClassList = [];
+    this.finishedClassList = [];
+    this.closedClassList = [];
     this.listClass.forEach(item => {
       item.selected = false;
       console.log(item.SubjectId);
       this.getTeachersBySid(item);
       this.getRoomByCid(item);
+      if (!item.IsFinished) {
+        this.openClassList.push(item);
+      } else if (!item.IsClosed) {
+        this.finishedClassList.push(item);
+      } else {
+        this.closedClassList.push(item);
+      }
     });
   }
 
@@ -189,7 +207,8 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
   }
 
   navigateToListStudent(item: Class) {
-    this.router.navigateByUrl('/Training-staff/ListStudentOfClass/' + item.ClassId);
+    MenuBarComponent.currentUrl = this.urlTraining.listClass;
+    this.router.navigateByUrl(this.urlTraining.listStudentOfClass + '/' + item.ClassId);
   }
 
   resetProgram() {
@@ -268,6 +287,25 @@ export class ListOfClassComponent implements OnInit, AfterViewInit {
         console.log(data);
         this.isLoading = false;
         this.toastr.success('Assign new room for class ' + cName + ' successfully.', 'Success!');
+      },
+      error => {
+        console.log(error);
+        this.isLoading = false;
+        this.toastr.error('Something goes wrong. Please try again.', 'Oops!');
+      });
+  }
+
+  closeClass(currentClass: Class) {
+    this.isLoading = true;
+    const url = this.apiContext.host + this.apiTraining.closeClass;
+    const param = new HttpParams()
+      .set('ClassId', currentClass.ClassId + '')
+      .set('CenterId', this.centerId + '');
+    this.http.post(url, param).toPromise().then(data => {
+        console.log(data);
+        this.isLoading = false;
+        this.toastr.success('Class ' + currentClass.ClassName + ' was closed successfully.', 'Success!');
+        currentClass.IsClosed = true;
       },
       error => {
         console.log(error);

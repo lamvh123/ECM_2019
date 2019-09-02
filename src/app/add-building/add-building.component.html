@@ -24,46 +24,48 @@
           </ul>
         </div>
         <div class="body">
-          <div class="row clearfix">
-            <div class="col-sm-12">
-              <div class="form-group">
-                <label for="buildingName">Buidling name:</label>
-                <div class="form-line">
-                  <input type="text" class="form-control" placeholder="Building Name " [(ngModel)]="buildingName"
-                         id="buildingName" required
-                         (change)="checkValidName()"
-                         (focusout)="checkValidName()">
+          <form id="formAdd">
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="buildingName">Buidling Name <span class="error-msg">(*)</span>:</label>
+                  <div class="form-line">
+                    <input type="text" class="form-control" placeholder="Building Name " [(ngModel)]="buildingName"
+                           id="buildingName" required name="buildingName"
+                           (change)="checkValidName()"
+                           (focusout)="checkValidName()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
+                    {{errorMsgName}}
+                  </div>
                 </div>
-                <div class="error-msg" *ngIf="errorMsgName!=null && errorMsgName.length>1">
-                  {{errorMsgName}}
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="buildingAddress">Buidling Address <span class="error-msg">(*)</span>:</label>
+                  <div class="form-line">
+                    <input type="text" class="form-control" placeholder="Building Address" [(ngModel)]="buildingAddress"
+                           id="buildingAddress" required name="buildingAddress"
+                           (change)="checkValidAddress()"
+                           (focusout)="checkValidAddress()">
+                  </div>
+                  <div class="error-msg" *ngIf="errorMsgAddress!=null && errorMsgAddress.length>1">
+                    {{errorMsgAddress}}
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-12">
-              <div class="form-group">
-                <label for="buildingAddress">Buidling Address:</label>
-                <div class="form-line">
-                  <input type="text" class="form-control" placeholder="Building Address" [(ngModel)]="buildingAddress"
-                         id="buildingAddress" required
-                         (change)="checkValidAddress()"
-                         (focusout)="checkValidAddress()">
-                </div>
-                <div class="error-msg" *ngIf="errorMsgAddress!=null && errorMsgAddress.length>1">
-                  {{errorMsgAddress}}
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <button type="submit" (click)="checkValidFields()" class="btn btn-raised g-bg-blush2" id="btnAdd" name="btnAdd">Add Building
+                  </button>
+                  <button type="submit" (click)="redirectToViewBuilding()" class="btn btn-raised btn-default">Cancel
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row clearfix">
-            <div class="col-sm-12">
-              <div class="form-group">
-                <button type="submit" (click)="checkValidFields()" class="btn btn-raised g-bg-blush2">Add Building
-                </button>
-                <button type="submit" (click)="redirectToViewBuilding()" class="btn btn-raised btn-default">Cancel
-                </button>
-              </div>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

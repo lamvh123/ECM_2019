@@ -5,7 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/c
 import {APIAccounting, APIAdmission, APICenter, APIContext, APIStudent, APISystem, APITeacher, APITraining} from '../APIContext';
 import * as $ from 'jquery';
 import {ToastrService} from 'ngx-toastr';
-import {UrlNotLogin} from '../SiteUrlContext';
+import {UrlNotLogin, UrlTraining} from '../SiteUrlContext';
 
 declare var logInForm: any;
 
@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   apiCenter = new APICenter();
   apiStudent = new APIStudent();
   apiTeacher = new APITeacher();
+  urlTraining = new UrlTraining();
 
   loginMessage: string;
   loginUserData = {
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     $.getScript('../../assets/plugins/bootstrap-notify/bootstrap-notify.js');
     $.getScript('../../assets/js/pages/ui/notifications.js');
     $.getScript('../../assets/bundles/mainscripts.bundle.js');
+    this.triggerSignInForm('sign_in', 'signInBtn');
     this.isLoading = false;
   }
 
@@ -76,7 +78,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
     if (!!this._auth.trainingStaffLogedIn()) {
       console.log('2');
-      this._router.navigate(['/Training-staff/profile']);
+      this._router.navigateByUrl(this.urlTraining.profile);
     }
     if (!!this._auth.admissionStaffLogedIn()) {
       console.log('1');
@@ -95,6 +97,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/Teacher/profile']);
     }
 
+  }
+
+  triggerSignInForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   public loadScript(url: string) {
@@ -129,7 +141,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           distUrl = '/SystemAdmin/profile';
           configUrl += this.apiSystem.profile;
         } else if (this._auth.trainingStaffLogedIn()) {
-          distUrl = '/Training-staff/profile';
+          distUrl = this.urlTraining.profile;
           configUrl += this.apiTraining.getProfile;
         } else if (this._auth.admissionStaffLogedIn()) {
           distUrl = '/Admission-staff/profile';
@@ -228,6 +240,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   formatText(s: string) {
     return s.trim().replace(/\s\s+/g, ' ');
   }
+
   redirectToUrl(url: string) {
     this._router.navigateByUrl(url);
   }

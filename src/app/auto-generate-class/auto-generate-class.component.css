@@ -10,3 +10,131 @@
 .success-bg{
   background-color: rgb(176, 219, 125);
 }
+:host {
+  width: 100%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+
+studenttbl {
+  max-width: 100%;
+  overflow: auto
+}
+
+.confirm-btn {
+  background-color: transparent;
+  border: none;
+}
+
+.btn-close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}
+
+[type=checkbox].filled-in:not(:checked) + label:after {
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+  border: 2px solid #5a5a5a;
+  top: 0;
+  z-index: 0;
+}
+
+[type=checkbox].filled-in + label:after, [type=checkbox].filled-in + label:before {
+  content: '';
+  left: 0;
+  position: absolute;
+  transition: border .25s, background-color .25s, width .2s .1s, height .2s .1s, top .2s .1s, left .2s .1s;
+  z-index: 1;
+}
+
+[type=checkbox].filled-in:not(:checked) + label:before {
+  width: 0;
+  height: 0;
+  border: 3px solid transparent;
+  left: 6px;
+  top: 10px;
+  transform: rotateZ(37deg);
+  transform-origin: 100% 100%;
+}
+
+[type=checkbox].filled-in + label:after, [type=checkbox].filled-in + label:before {
+  content: '';
+  left: 0;
+  position: absolute;
+  transition: border .25s, background-color .25s, width .2s .1s, height .2s .1s, top .2s .1s, left .2s .1s;
+  z-index: 1;
+}
+
+[type=checkbox] + label:before, [type=checkbox]:not(.filled-in) + label:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  z-index: 0;
+  border: 2px solid #5a5a5a;
+  border-radius: 1px;
+  margin-top: 2px;
+  transition: .2s;
+}
+
+th, td {
+  white-space: nowrap;
+}
+
+.check-availble {
+  color: #8BC34A;
+}
+
+.reject-availble {
+  color: #FFC107;
+}
+
+.success-bg {
+  background-color: rgb(176, 219, 125);
+}
+
+td, th {
+  vertical-align: middle;
+}
+
+th{
+  text-align: center;
+}

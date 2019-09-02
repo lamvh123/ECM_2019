@@ -5,6 +5,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {APIContext, APITraining} from '../APIContext';
 import * as $ from 'jquery';
 import {ToastrService} from 'ngx-toastr';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
+import {UrlTraining} from '../SiteUrlContext';
 
 
 @Component({
@@ -24,6 +26,7 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   public Editor = ClassicEditor;
 
@@ -72,8 +75,18 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
     this.loadScript('../../assets/js/pages/ui/notifications.js');
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
     this.loadScript('../../assets/testJS.js');
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
 
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   addProgram() {
@@ -105,7 +118,8 @@ export class AddProgramComponent implements OnInit, AfterViewInit {
   }
 
   redirectToAllProgram() {
-    this.router.navigateByUrl('/Training-staff/view-program');
+    MenuBarComponent.currentUrl = this.urlTraining.viewProgram;
+    this.router.navigateByUrl(this.urlTraining.viewProgram);
     // this.showNoti('fBtn');
   }
 

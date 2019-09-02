@@ -1,32 +1,55 @@
-<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
-
-    <div *ngIf="empty"></div>
-    <div *ngIf="!empty" style="width: 100%">
-      <div style="overflow-x: auto;width: 100%;height: auto;max-height: 600px">
-        <table class="table studenttbl">
-          <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Center Name</th>
-            <th scope="col">Owner</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Address</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let center of listCenter;let index = index;">
-            <td>{{index}}</td>
-            <td><span style="cursor: pointer;color: #33DAFF"
-                      (click)="navigateToGrantAccount(center)">{{center.Name}}</span></td>
-            <td>{{center.ResponsiblePersonFullname}}</td>
-            <td>{{center.Email}}</td>
-            <td>{{center.PhoneNumber}}</td>
-            <td>{{center.Address}}</td>
-          </tr>
-          </tbody>
-        </table>
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+  <div class="block-header">
+    <h2>ALL CENTERS</h2>
+    <!--      <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>-->
+  </div>
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card">
+        <div class="header">
+          <h3 *ngIf="empty">There is no center in database.</h3>
+          <!--            <ul class="header-dropdown">-->
+          <!--              <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"-->
+          <!--                                      role="button" aria-haspopup="true" aria-expanded="false"> <i-->
+          <!--                class="zmdi zmdi-more-vert"></i> </a>-->
+          <!--                <ul class="dropdown-menu pull-right">-->
+          <!--                  <li><a href="javascript:void(0);">Action</a></li>-->
+          <!--                  <li><a href="javascript:void(0);">Another action</a></li>-->
+          <!--                  <li><a href="javascript:void(0);">Something else here</a></li>-->
+          <!--                </ul>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+        </div>
+        <div *ngIf="!empty" class="body table-responsive">
+          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+            <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Center Name</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Address</th>
+              <th scope="col">Grant account</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let center of listCenter; index as i">
+              <td>{{i + 1}}</td>
+              <td>{{center.Name}}</td>
+              <td>{{center.ResponsiblePersonFullname}}</td>
+              <td>{{center.Email}}</td>
+              <td>{{center.PhoneNumber}}</td>
+              <td>{{center.Address}}</td>
+              <td>
+                <button type="button" class="btn  btn-raised g-bg-blue waves-effect"
+                        (click)="navigateToGrantAccount(center)">Grant account
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

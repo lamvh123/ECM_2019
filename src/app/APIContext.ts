@@ -6,7 +6,8 @@ import {Slot} from './slot';
 
 export class APIContext {
   // host = 'https://educationcentermanagementapi-dev-as.azurewebsites.net/';
-  host = 'https://ecm-api.azurewebsites.net/';
+  // host = 'https://ecm-api.azurewebsites.net/';
+  host = 'https://ecm-api-fptuniversity.azurewebsites.net/';
   centerId = 1;
 
   // constructor() {
@@ -128,6 +129,7 @@ export class APITraining {
   generateTimeTable = 'api/TrainingDept/GenerateTimeTable';
   officialTimeTableOfClass = 'api/TrainingDept/OfficialTimeTableOfClass';
   getAllTimeTable = 'api/TrainingDept/GetAllTimeTable';
+  getTotalTeacher = 'api/TrainingDept/GetTotalTeacher';
 
   getStatisticByProgram = 'api/TrainingDept/statistic/GetStatisticByProgram';
   getNumberOfProgram = 'api/TrainingDept/statistic/GetNumberOfProgram';
@@ -136,6 +138,12 @@ export class APITraining {
 
   getTeacherBySubject = 'api/TrainingDept/GetTeacherBySubject';
   grantAccountForTeacher = 'api/TrainingDept/GrantAccountForTeacher';
+
+  getNotJoinClassStudentList = 'api/TrainingDept/GetNotJoinClassStudentList';
+  closeClass = 'api/TrainingDept/CloseClass';
+  updateTimeTable = 'api/TrainingDept/UpdateTimeTable';
+  getClassListByAdmissionForm = 'api/TrainingDept/GetClassListByAdmissionForm';
+  getTimeTableOfParticularClass = 'api/TrainingDept/GetTimeTableOfParticularClass';
 }
 
 export class APITeacher {
@@ -147,6 +155,7 @@ export class APITeacher {
   getTimeTableOfParticularClass = 'api/teacher/GetTimeTableOfParticularClass';
   getAttendanceStudentOfParticularClass = 'api/teacher/GetAttendanceStudentOfParticularClass';
   updateAttendanceStudentOfParticularClass = 'api/teacher/UpdateAttendanceStudentOfParticularClass';
+  getAllSubject = 'api/teacher/GetAllSubject';
 }
 
 export class APIRegistrationStudent {

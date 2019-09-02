@@ -47,7 +47,18 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   getInitData() {
@@ -106,6 +117,7 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
         console.log(data);
         this.isLoading = false;
         this.toastr.success('Staff ' + this.addingStaff.FullName + ' was added successfully.', 'Success!');
+        this.getInitData();
       },
       error => {
         console.log(error);
@@ -121,6 +133,9 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
   }
 
   openAddForm(addModal) {
+    this.errorMsgName = '-';
+    this.errorMsgEmail = '-';
+    this.errorMsgRole = '-';
     this.addingStaff = new Staff();
     this.addingStaff.RoleName = this.listRole[0].Name;
     console.log(this.modalService);
@@ -154,8 +169,12 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
     if (this.addingStaff.Email != null) {
       this.addingStaff.Email = this.formatText(this.addingStaff.Email);
     }
+    const regex = /^[a-zA-Z][a-zA-Z0-9_\.]{5,32}@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/gm;
     if (this.addingStaff.Email == null || this.addingStaff.Email === '') {
       this.errorMsgEmail = 'Email is required.';
+      return false;
+    } else if (!regex.test(this.addingStaff.Email)) {
+      this.errorMsgEmail = 'Invalid email format.';
       return false;
     } else {
       this.errorMsgEmail = '';
@@ -183,6 +202,13 @@ export class CenterViewStaffComponent implements OnInit, AfterViewInit {
       btnClose.click();
     } else {
       this.toastr.warning('Something is missing.', 'Alert!');
+    }
+  }
+
+  isInputNumber(evt) {
+    const c = String.fromCharCode(evt.which);
+    if (!(/[0-9]/.test(c))) {
+      evt.preventDefault();
     }
   }
 

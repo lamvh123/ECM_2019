@@ -5,6 +5,7 @@ import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
 
 @Component({
   selector: 'app-view-program',
@@ -24,6 +25,7 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   programs: Program[];
 
@@ -63,7 +65,18 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
     // this.loadScript('../../assets/bundles/vendorscripts.bundle.js');
     // this.loadScript('../../assets/bundles/morphingsearchscripts.bundle.js');
     // this.loadScript('../../assets/bundles/mainscripts.bundle.js');
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   public loadScript(url: string) {
@@ -97,11 +110,13 @@ export class ViewProgramComponent implements OnInit, AfterViewInit {
   }
 
   selectProgram(program) {
-    this.router.navigate(['/Training-staff/view-course', program.Id]);
+    MenuBarComponent.currentUrl = this.urlTraining.viewCourse;
+    this.router.navigateByUrl(this.urlTraining.viewCourse + '/' + program.Id);
   }
 
   navigateToProgramDetail(program) {
-    this.router.navigate(['/Training-staff/program-detail', program.Id]);
+    MenuBarComponent.currentUrl = this.urlTraining.viewProgram;
+    this.router.navigateByUrl(this.urlTraining.programDetail + '/' + program.Id);
   }
 
 }

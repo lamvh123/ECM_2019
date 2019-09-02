@@ -8,6 +8,8 @@ import {Slot} from '../slot';
 import {Center} from '../center';
 import {APIContext, APITraining} from '../APIContext';
 import {ToastrService} from 'ngx-toastr';
+import {UrlTraining} from '../SiteUrlContext';
+import {MenuBarComponent} from '../menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-add-slot',
@@ -26,6 +28,7 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
   apiContext = new APIContext();
   apiTraining = new APITraining();
   centerId: number;
+  urlTraining = new UrlTraining();
 
   constructor(private atp: AmazingTimePickerService, private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
   }
@@ -63,7 +66,18 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
     // this.loadScript('/assets/bundles/mainscripts.bundle.js');
     // this.loadScript('/assets/plugins/momentjs/moment.js');
     // this.loadScript('/assets/js/TrainingDept/addcourse.js');
+    this.triggerEnterForm('formAdd', 'btnAdd');
     this.isLoading = false;
+  }
+
+  triggerEnterForm(formId: string, btnId: string) {
+    const signInForm = document.getElementById(formId);
+    signInForm.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById(btnId).click();
+      }
+    });
   }
 
   addSlot() {
@@ -95,7 +109,8 @@ export class AddSlotComponent implements OnInit, AfterViewInit {
 
 
   redirectToAllSlot() {
-    this._router.navigateByUrl('/Training-staff/view-slot');
+    MenuBarComponent.currentUrl = this.urlTraining.viewSlot;
+    this._router.navigateByUrl(this.urlTraining.viewSlot);
   }
 
   checkValidName() {

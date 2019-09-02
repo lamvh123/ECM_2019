@@ -13,3 +13,215 @@
     <button type="submit" name="_submit" (click)="GenerateClass()" class="btn searchBtn">Generate Class</button>
   </div>
 </div>
+
+
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+  <!--  <div class="row clearfix">-->
+  <!--    <div class="col-lg-12 col-md-12 col-sm-12">-->
+  <!--      <div class="card">-->
+  <!--        <div style="float: left;width: 48%;margin-left: 1%">-->
+  <!--          <ng-select [items]="ListOfCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"-->
+  <!--                     (change)="loadForm()"-->
+  <!--                     (clear)="clearCourseAndLoadForm()" [(ngModel)]="selectedCourseId">-->
+  <!--          </ng-select>-->
+  <!--        </div>-->
+  <!--        <div style="float: left;width: 47%;margin-left: 1%">-->
+  <!--          <ng-select [items]="ListOfForm" bindLabel="Name" bindValue="Id" [(ngModel)]="listSelectedFormId"-->
+  <!--                     placeholder="Select Form" multiple="true">-->
+  <!--          </ng-select>-->
+  <!--        </div>-->
+  <!--        <br style="clear: left;"/>-->
+  <!--        <button style="float: right;margin-right: 1%" type="submit" name="_submit" (click)="searchStudent()"-->
+  <!--                class="btn g-bg-blush2 searchBtn">-->
+  <!--          Search Student-->
+  <!--        </button>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+  <div [ngStyle]="isLoading?{'display':'none'}:{}">
+    <div class="row clearfix all-program-content">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div *ngIf="empty" class="header">
+            <h3>There is no pending class in database.</h3>
+          </div>
+
+          <!--          <div *ngIf="!empty" class="body">-->
+          <!--            <ul class="pagination justify-content-center">-->
+          <!--              <li class="page-item disabled" *ngIf="currentPage==1">-->
+          <!--                <a class="page-link" href="javascript:;">First</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item" *ngIf="currentPage!=1">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(1)">First</a>-->
+          <!--              </li>-->
+          <!--              <li *ngFor="let p of listPageDisplay" class="page-item" [class.active]="currentPage==p">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(p)">{{p}}</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item disabled" *ngIf="currentPage==listPage.length">-->
+          <!--                <a class="page-link" href="javascript:;">Last</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item" *ngIf="currentPage!=listPage.length">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(listPage.length)">Last</a>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+          <!--          </div>-->
+
+          <div *ngIf="!empty" class="body table-responsive">
+            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+              <thead>
+              <tr>
+
+                <!--                <th scope="col" style="vertical-align: bottom">-->
+
+                <!--                  <div class="btn-group" style="box-shadow: none">-->
+                <!--                    <input type="checkbox" name="selectAll" id="selectAll"-->
+                <!--                           class="filled-in chk-col-pink" [checked]="isSelectedAll"-->
+                <!--                           (change)="selectAllFun()"/>-->
+                <!--                    <label for="selectAll"></label>-->
+                <!--                    &lt;!&ndash;                    <button type="button" class="btn btn-primary">Split me</button>&ndash;&gt;-->
+                <!--                    <div [ngStyle]="isSelectedAll?{}:{'visibility': 'hidden'}" class="btn-group" ngbDropdown-->
+                <!--                         role="group"-->
+                <!--                         aria-label="Button group with nested dropdown">-->
+                <!--                      <span ngbDropdownToggle></span>-->
+                <!--                      <ul class="dropdown-menu" ngbDropdownMenu>-->
+                <!--                        <li ngbDropdownItem style="font-weight:normal" (click)="ConfirmMultiple()"><a-->
+                <!--                          href="javascript:;">Confirm selected</a></li>-->
+                <!--                        <li ngbDropdownItem style="font-weight:normal" (click)="RejectMultiple()"><a-->
+                <!--                          href="javascript:;">Reject selected</a></li>-->
+                <!--                      </ul>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+
+                <!--                </th>-->
+
+
+                <th scope="col" style="vertical-align: middle">Form Name</th>
+                <th scope="col" style="vertical-align: middle">Course</th>
+                <th scope="col" style="vertical-align: middle">Program</th>
+                <!--                <th scope="col" style="vertical-align: middle">Student's Phone</th>=-->
+                <th scope="col" style="vertical-align: middle">Start date</th>
+                <th scope="col" style="vertical-align: middle">Action</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let formModel of ListOfForm;let index = index;">
+                <!--                <td style="vertical-align: bottom;text-align: center">-->
+                <!--                  <div class="checkbox">-->
+                <!--                    <input type="checkbox" name="rememberme{{index}}" id="rememberme{{index}}"-->
+                <!--                           class="filled-in chk-col-pink" [checked]="student.selected"-->
+                <!--                           (change)="updateSelectAllStatus(student)"/>-->
+                <!--                    <label for="rememberme{{index}}"></label>-->
+                <!--                  </div>-->
+                <!--                </td>-->
+                <td>{{formModel.Name}}</td>
+                <td>{{formModel.Course}}</td>
+                <td>{{formModel.program}}</td>
+                <td style="text-align: center">{{formModel.StartDate}}</td>
+                <!--                <td>{{formModel.Parent_Phone}}</td>-->
+                <!--                <td style="text-align: center" [class.check-availble]="student.IsPayment"-->
+                <!--                    [class.reject-availble]="!student.IsPayment">{{student.IsPayment ? 'Paid' : 'Not Yet'}}</td>-->
+                <td style="text-align: center">
+                  <div class="row">
+                    <div class="button-demo">
+
+                      <button style="display: block;margin: auto;" type="button"
+                              class="btn  btn-raised bg-light-green waves-effect"
+                              (click)="generateClass(formModel.Id, formModel.Name)">Generate Class
+                      </button>
+                      <!--                      <ng-container *ngIf="!student.IsPayment; then canCheck; else cannotCheck"></ng-container>-->
+                    </div>
+                    <!--                    <ng-template #canCheck>-->
+                    <!--                      <button style="display: block;margin: auto;" type="button"-->
+                    <!--                              class="btn  btn-raised bg-light-green waves-effect"-->
+                    <!--                              (click)="ConfirmFee(student,index)">Confirm-->
+                    <!--                      </button>-->
+                    <!--                    </ng-template>-->
+                    <!--                    <ng-template #cannotCheck>-->
+                    <!--                      <button style="display: block;margin: auto;" type="button"-->
+                    <!--                              class="btn  btn-raised bg-amber waves-effect"-->
+                    <!--                              (click)="RejectFee(student,index)">Reject-->
+                    <!--                      </button>-->
+                    <!--                    </ng-template>-->
+                  </div>
+                </td>
+                <!--                <td style="text-align: center">-->
+                <!--                  <button type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float"-->
+                <!--                          (click)="openAttendanceForm(longContent, student)"><i-->
+                <!--                    style="color:#f44336" class="material-icons">delete_forever</i></button>-->
+                <!--                </td>-->
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!--          <div *ngIf="!empty" class="body">-->
+          <!--            <ul class="pagination justify-content-center">-->
+          <!--              <li class="page-item disabled" *ngIf="currentPage==1">-->
+          <!--                <a class="page-link" href="javascript:;">First</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item" *ngIf="currentPage!=1">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(1)">First</a>-->
+          <!--              </li>-->
+          <!--              <li *ngFor="let p of listPageDisplay" class="page-item" [class.active]="currentPage==p">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(p)">{{p}}</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item disabled" *ngIf="currentPage==listPage.length">-->
+          <!--                <a class="page-link" href="javascript:;">Last</a>-->
+          <!--              </li>-->
+          <!--              <li class="page-item" *ngIf="currentPage!=listPage.length">-->
+          <!--                <a class="page-link" href="javascript:;" (click)="changePage(listPage.length)">Last</a>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+          <!--          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
+
+</section>
+
+
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Assign student to class</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table>
+      <thead>
+      </thead>
+      <tbody class="table">
+      <tr *ngFor="let studentModel of notJoinStudentList">
+        <td>{{studentModel.User.Full_Name}}</td>
+        <td>
+          <select class="form-control show-tick hoverSelect"
+                  (change)="addToClass($event.target.value, studentModel.Id+'', studentModel.Name)"
+                  id="selectTeacher"
+                  required>
+            <option *ngFor="let classModel of availableClassList" [value]="classModel.ClassId">
+              {{classModel.ClassName}}
+            </option>
+          </select>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <!--    <div class="body">-->
+    <!--      Do you really want to delete student <b>{{deletingStudent.Name}}</b>?-->
+    <!--    </div>-->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-raised btn-default waves-effect" (click)="modal.close('Close click')">Cancel
+    </button>
+    <!--    <button type="button" class="btn  btn-raised btn-danger waves-effect"-->
+    <!--            (click)="[modal.close('Close click'),deleteStudent(deletingStudent)]">-->
+    <!--      Yes, delete.-->
+    <!--    </button>-->
+  </div>
+</ng-template>
+<button style="display: none" (click)="openAttendanceForm(longContent)" id="btnModal">hic</button>

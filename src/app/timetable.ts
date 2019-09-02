@@ -15,4 +15,5 @@ export class Timetable {
   slot: Slot;
   teacher: Teacher;
   AttendBy: Teacher;
+  status: number;
 }

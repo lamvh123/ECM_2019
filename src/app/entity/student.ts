@@ -1,3 +1,5 @@
+import {UserModel} from '../userModel';
+
 export class Student {
   Dob: string;
   Email: string;
@@ -12,4 +14,5 @@ export class Student {
   Sex: boolean;
   realSex: string;
   selected: boolean = false;
+  User: UserModel;
 }

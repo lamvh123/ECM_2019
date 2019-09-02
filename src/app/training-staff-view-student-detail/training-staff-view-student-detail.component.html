@@ -17,7 +17,8 @@
           <tr *ngFor="let item of schedule; index as i;">
             <td>{{item.SessionNumber}}</td>
             <td>{{item.LearningDay.substring(0, 10)}}</td>
-            <td>{{item.RoomId}}</td>
+            <td *ngIf="item.RoomId!=-1">{{item.RoomId}}</td>
+            <td *ngIf="item.RoomId==-1"></td>
             <td>{{item.slot.From}}</td>
             <td>{{item.slot.To}}</td>
             <td *ngIf="item.AttendanceState == 0">Absent</td>

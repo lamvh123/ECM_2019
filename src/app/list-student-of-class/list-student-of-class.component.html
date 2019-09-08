@@ -49,13 +49,13 @@
     <!--    <div class="row clearfix">-->
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="card">
-<!--        <div class="header">-->
-<!--          <h2> TABS WITH CUSTOM ANIMATIONS-->
-<!--            <small>You can use different animation class. We used Animation.css which link is <a-->
-<!--              href="https://daneden.github.io/animate.css/" target="_blank">https://daneden.github.io/animate.css/</a>-->
-<!--            </small>-->
-<!--          </h2>-->
-<!--        </div>-->
+        <!--        <div class="header">-->
+        <!--          <h2> TABS WITH CUSTOM ANIMATIONS-->
+        <!--            <small>You can use different animation class. We used Animation.css which link is <a-->
+        <!--              href="https://daneden.github.io/animate.css/" target="_blank">https://daneden.github.io/animate.css/</a>-->
+        <!--            </small>-->
+        <!--          </h2>-->
+        <!--        </div>-->
         <div class="body">
           <div class="row clearfix">
             <div class="col-sm-12 col-md-12 col-lg-12">
@@ -89,15 +89,16 @@
                       <strong>Program: </strong>{{currentClass.ProgramName}}<br/>
                       <strong>Course: </strong>{{currentClass.CourseName}}<br/>
                       <strong>Number of student: </strong>{{currentClass.NumberOfStudent}}<br/>
-                      <strong>Subject ID: </strong>{{currentClass.SubjectId}}
-<!--                      <strong>Finished: </strong>-->
-<!--                      <p>{{currentClass.IsFinished}}</p>-->
-<!--                      <strong>Closed: </strong>-->
-<!--                      <p>{{currentClass.IsClosed}}</p>-->
-<!--                      <strong>Teachers: </strong>-->
-<!--                      <p>{{currentClass.Teachers}}</p>-->
-<!--                      <strong>Room ID: </strong>-->
-<!--                      <p>{{currentClass.RoomId}}</p>-->
+                      <strong>Slot: </strong>{{currentClass.From + '-' + currentClass.To}}
+                      <br/>
+                      <!--                      <strong>Finished: </strong>-->
+                      <!--                      <p>{{currentClass.IsFinished}}</p>-->
+                      <!--                      <strong>Closed: </strong>-->
+                      <!--                      <p>{{currentClass.IsClosed}}</p>-->
+                      <!--                      <strong>Teachers: </strong>-->
+                      <!--                      <p>{{currentClass.Teachers}}</p>-->
+                      <!--                      <strong>Room ID: </strong>-->
+                      <!--                      <p>{{currentClass.RoomId}}</p>-->
                     </div>
                   </div>
                 </div>
@@ -166,7 +167,8 @@
                           <td>{{(ttb.teacher == null || ttb.teacher.User == null) ? '' : ttb.teacher.User.Full_Name}}</td>
                           <td>{{(ttb.Room == null) ? '' : ttb.Room.RoomNumber}}</td>
                           <td>
-                            <button type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
+                            <span *ngIf="ttb.status==0">Expired</span>
+                            <button *ngIf="ttb.status==1" type="button" class="btn  btn-raised g-bg-cgreen waves-effect"
                                     (click)="openAttendanceForm(longContent, ttb)">Update
                             </button>
                           </td>

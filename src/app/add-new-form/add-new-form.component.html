@@ -41,7 +41,7 @@
                   <div class="form-group">
                     <label for="startdate">Start Date <span class="error-msg">(*)</span>:</label>
                     <div class="form-line">
-                      <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"
+                      <input type="date" [(ngModel)]="form.StartDate" class="form-control" placeholder="Start date"  min="{{todayStr}}"
                              id="startdate" name="startdate"
                              required (change)="checkValidDate()" (focusout)="checkValidDate()">
                     </div>

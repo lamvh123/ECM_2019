@@ -29,6 +29,7 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
   private errorMsgSlot = '-';
   private errorMsgDay = '-';
   private selectedBuildingId = -1;
+  private todayStr: string;
 
   constructor(private _router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService, private modalService: NgbModal, private datepipe: DatePipe) {
   }
@@ -53,6 +54,12 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
   newSlotId: number;
 
   ngOnInit() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+
+    this.todayStr = yyyy + '-' + mm + '-' + dd;
     this.ClassId = this.route.snapshot.paramMap.get('cId');
     const urlGetCenterId = this.apiContext.host + this.apiTraining.getCenter;
     this.http.get(urlGetCenterId).toPromise().then(data => {
@@ -142,6 +149,7 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
           console.log(splitted);
           item.displayDay = splitted[2] + '/' + splitted[1] + '/' + splitted[0];
         });
+        this.updateStatus(this.listTimetable);
         this.isLoading = false;
       },
       error => {
@@ -393,6 +401,19 @@ export class ListStudentOfClassComponent implements OnInit, AfterViewInit {
   private updateListTeacherDisplay(listTeacher: Teacher[]) {
     listTeacher.forEach(function(item) {
       item.tempName = item.User.Full_Name;
+    });
+  }
+
+  private updateStatus(listTimetable: Timetable[]) {
+    const today = Date.parse(this.todayStr);
+    listTimetable.forEach(function(item) {
+      const sessionDay = Date.parse(item.LearningDay.substring(0, 10));
+      // console.log('today: ' + this.todayStr + ' - sess: ' + item.LearningDay.substring(0, 10) + ' - ' + (today < sessionDay));
+      if (today > sessionDay) {
+        item.status = 0;
+      } else {
+        item.status = 1;
+      }
     });
   }
 }

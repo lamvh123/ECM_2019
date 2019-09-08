@@ -66,6 +66,7 @@ import {AddTeacherComponent} from './add-teacher/add-teacher.component';
 import { WeeklyReportComponent } from './weekly-report/weekly-report.component';
 import { TrainingStaffViewStudentComponent } from './training-staff-view-student/training-staff-view-student.component';
 import { TrainingStaffViewStudentDetailComponent } from './training-staff-view-student-detail/training-staff-view-student-detail.component';
+import {AccessDeniedComponent} from './access-denied/access-denied.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,7 @@ const routes: Routes = [
   {path: 'events', component: EventsComponent},
   {path: 'special', component: SpecialEventsComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'access-denied', component: AccessDeniedComponent},
   {path: 'logout', component: LogoutComponent},
   {
     path: 'forgot-password', children: [

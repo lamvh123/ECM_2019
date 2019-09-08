@@ -192,10 +192,10 @@
         <li class="header">MAIN NAVIGATION</li>
         <li [ngClass]="{'active open': currentUrl==urlTeacher.profile}">
           <a href="javascript:;" (click)="redirectToUrl(urlTeacher.profile)">
-          <i class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>
+            <i class="material-icons">account_circle</i><span class="class-hover">Profile</span></a></li>
         <li [ngClass]="{'active open': currentUrl==urlTeacher.viewTimetable}">
           <a href="javascript:;" (click)="redirectToUrl(urlTeacher.viewTimetable)">
-            <i class="zmdi zmdi-home"></i><span class="class-hover">View Timetable</span></a></li>
+            <i class="material-icons">subject</i><span class="class-hover">View Timetable</span></a></li>
         <li [ngClass]="{'active open': currentUrl.includes(urlTeacher.takeAttendance)}">
           <a href="javascript:void(0);" class="menu-toggle">
             <i class="zmdi zmdi-book"></i><span class="class-hover">Take Attendance</span> </a>
@@ -210,7 +210,7 @@
             <!--                  <span class="class-hover">Add Teacher</span></a></li>-->
           </ul>
         </li>
-        <li><a (click)="logout()"><i class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>
+        <li><a (click)="logout()"><i class="material-icons">exit_to_app</i><span class="class-hover">Logout</span></a></li>
 
       </ul>
     </div>

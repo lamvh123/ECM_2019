@@ -6,8 +6,29 @@
     <div class="row clearfix">
       <div class="col-lg-4 col-md-12 col-sm-12">
         <div class=" card">
-          <img src="{{user.Avatar}}" class="img-fluid" alt=""
-               style="border-radius: 50%; width: 350px; height: 350px; display: block;  margin-left: auto;  margin-right: auto;  margin-top: 15px;   margin-bottom:15px; alignment: center">
+
+          <ng-container
+            *ngIf="user.Avatar==null || user.Avatar.length<1; then imgNull; else imgNotNull">
+          </ng-container>
+          <ng-template #imgNotNull>
+            <img src="{{user.Avatar}}" class="img-fluid" alt=""
+                 style="border-radius: 50%; width: 350px; height: 350px; display: block;  margin-left: auto;  margin-right: auto;  margin-top: 15px;   margin-bottom:15px; alignment: center">
+            <!--                <img src="{{teacherModel.image}}" alt="" class="img-fluid"-->
+            <!--                     (click)="navigateToProgramDetail(program)"-->
+            <!--                     [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">-->
+          </ng-template>
+          <ng-template #imgNull>
+            <img *ngIf="!user.Sex" src="../../assets/images/femaleProfessor.png" class="img-fluid" alt=""
+                 style="border-radius: 50%; width: 350px; height: 350px; display: block;  margin-left: auto;  margin-right: auto;  margin-top: 15px;   margin-bottom:15px; alignment: center">
+            <img *ngIf="user.Sex" src="../../assets/images/maleProfessor.png" class="img-fluid" alt=""
+                 style="border-radius: 50%; width: 350px; height: 350px; display: block;  margin-left: auto;  margin-right: auto;  margin-top: 15px;   margin-bottom:15px; alignment: center">
+            <!--            <img *ngIf="!teacherModel.User.Sex" src="../../assets/images/femaleProfessor.png"-->
+            <!--                 class="img-thumbnail rounded-circle"-->
+            <!--                 alt="profile-image" style="width: 120px; height: 120px">-->
+            <!--            <img *ngIf="teacherModel.User.Sex" src="../../assets/images/maleProfessor.png"-->
+            <!--                 class="img-thumbnail rounded-circle"-->
+            <!--                 alt="profile-image" style="width: 120px; height: 120px">-->
+          </ng-template>
         </div>
         <ngx-uploadcare-widget *ngIf="isEditing" images-only="true" public-key="929f11755f971c537f17"
                                (on-upload-complete)="[onUploadCompleted($event),checkValidImage()]"

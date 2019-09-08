@@ -144,6 +144,9 @@ export class APITraining {
   updateTimeTable = 'api/TrainingDept/UpdateTimeTable';
   getClassListByAdmissionForm = 'api/TrainingDept/GetClassListByAdmissionForm';
   getTimeTableOfParticularClass = 'api/TrainingDept/GetTimeTableOfParticularClass';
+
+  searchStudent = 'api/TrainingDept/SearchStudent';
+  getTotalStudent = 'api/TrainingDept/GetTotalStudent';
 }
 
 export class APITeacher {

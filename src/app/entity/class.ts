@@ -19,4 +19,8 @@ export class Class {
   IsFinished: boolean = false;
   IsClosed: boolean = false;
   StartDate: string;
+  From: string;
+  To: string;
+  DaysPerWeek: number[];
+  listDays: string;
 }

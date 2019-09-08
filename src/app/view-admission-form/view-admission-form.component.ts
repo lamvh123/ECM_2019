@@ -24,9 +24,9 @@ export class ViewAdmissionFormComponent implements OnInit, AfterViewInit {
   courseId;
   isClosed = -1;
   listForm: AdmissionForm[];
-  isClose;
+  isClose = 'All';
   startDate;
-  boolArr: string[] = ['true', 'false'];
+  boolArr: string[] = ['All', 'Closed', 'Opening'];
   availbleCourses: Course[] = [];
   availbleSlots: Slot[] = [];
   isLoading = false;
@@ -68,15 +68,6 @@ export class ViewAdmissionFormComponent implements OnInit, AfterViewInit {
 
   getAdmissionForm() {
     this.isLoading = true;
-    if (this.isClose == null) {
-      this.isClosed = -1;
-    } else {
-      if (this.isClose == 'false') {
-        this.isClosed = 0;
-      } else if (this.isClose == 'true') {
-        this.isClosed = 1;
-      }
-    }
     const parameters = new HttpParams()
       .set('courseId', this.courseId == null ? '-1' : this.courseId + '')
       .set('centerId', this.centerId + '')
@@ -108,7 +99,7 @@ export class ViewAdmissionFormComponent implements OnInit, AfterViewInit {
   closeForm(form: AdmissionForm) {
     this.isLoading = true;
     const body = new HttpParams()
-      .set('CenterId', '1')
+      .set('CenterId', this.centerId + '')
       .set('AdmissionFormId', form.Id + '');
 
     const configUrl = this.apiContext.host + this.apiAdmission.closeAdmissionForm;
@@ -123,4 +114,22 @@ export class ViewAdmissionFormComponent implements OnInit, AfterViewInit {
       });
   }
 
+  updateCloseStatus() {
+    console.log('this.isClose');
+    console.log(this.isClose);
+    if (this.isClose == 'Opening') {
+      this.isClosed = 0;
+    } else if (this.isClose == 'Closed') {
+      this.isClosed = 1;
+    } else {
+      this.isClosed = -1;
+    }
+    console.log('this.isClosed');
+    console.log(this.isClosed);
+  }
+
+  clearCloseStatus() {
+    this.isClose = 'All';
+    this.updateCloseStatus();
+  }
 }

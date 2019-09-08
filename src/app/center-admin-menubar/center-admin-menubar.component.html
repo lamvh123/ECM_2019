@@ -191,22 +191,21 @@
         <li class="header">MAIN NAVIGATION</li>
         <li [ngClass]="{'active open': currentUrl==urlCenter.profile}">
           <a href="javascript:;" (click)="redirectToUrl(urlCenter.profile)">
-            <i class="zmdi zmdi-home"></i><span class="class-hover">Profile</span>
+            <i class="material-icons">account_circle</i><span class="class-hover">Profile</span>
           </a>
         </li>
         <li [ngClass]="{'active open': currentUrl==urlCenter.grantAccount}">
           <a href="javascript:;" (click)="redirectToUrl(urlCenter.grantAccount)">
-            <i class="zmdi zmdi-account-outline"></i><span class="class-hover">Student</span>
+            <i class="zmdi zmdi-accounts-outline"></i><span class="class-hover">Student</span>
           </a>
         </li>
         <li [ngClass]="{'active open': currentUrl==urlCenter.viewStaff}">
           <a href="javascript:;" (click)="redirectToUrl(urlCenter.viewStaff)">
-            <i class="zmdi zmdi-account-outline"></i><span class="class-hover">Staff</span>
+            <i class="material-icons">school</i><span class="class-hover">Staff</span>
           </a>
         </li>
 
-        <li><a (click)="logout()"><i
-          class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>
+        <li><a (click)="logout()"><i class="material-icons">exit_to_app</i><span class="class-hover">Logout</span></a></li>
         <!-- <li><a href="centres.html"><i class="zmdi zmdi-pin"></i><span>University Centres</span></a></li>
         <li><a href="reports.html"><i class="zmdi zmdi-file-text"></i><span>Reports</span></a></li>
         <li><a href="widgets.html"><i class="zmdi zmdi-delicious"></i><span>Widgets</span></a></li>

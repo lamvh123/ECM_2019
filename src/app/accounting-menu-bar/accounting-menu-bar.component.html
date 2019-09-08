@@ -174,11 +174,12 @@
         <ul>
           <!--          <li><a data-placement="bottom" title="Go to Inbox" href="mail-inbox.html"><i class="zmdi zmdi-email"></i></a>-->
           <!--          </li>-->
-          <li><a data-placement="bottom" title="Go to Profile" href="/Account-staff/profile"><i
+          <li><a data-placement="bottom" title="Go to Profile" href="javascript:;"
+                 (click)="redirectToUrl(urlAccounting.profile)"><i
             class="zmdi zmdi-account"></i></a>
           </li>
-          <li><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i
-            class="zmdi zmdi-settings"></i></a></li>
+<!--          <li><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i-->
+<!--            class="zmdi zmdi-settings"></i></a></li>-->
           <li><a data-placement="bottom" title="Full Screen" (click)="logout()"><i class="zmdi zmdi-sign-in"></i></a>
           </li>
         </ul>
@@ -191,13 +192,12 @@
         <li class="header">MAIN NAVIGATION</li>
         <li [ngClass]="{'active open': currentUrl==urlAccounting.profile}">
           <a href="javascript:;" (click)="redirectToUrl(urlAccounting.profile)">
-          <i class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>
+            <i class="material-icons">account_circle</i><span class="class-hover">Profile</span></a></li>
         <li [ngClass]="{'active open': currentUrl==urlAccounting.student}">
           <a href="javascript:;" (click)="redirectToUrl(urlAccounting.student)">
-          <i class="zmdi zmdi-account-outline"></i><span class="class-hover">Student</span> </a></li>
+            <i class="zmdi zmdi-accounts-outline"></i><span class="class-hover">Student</span> </a></li>
 
-        <li><a (click)="logout()"><i
-          class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>
+        <li><a (click)="logout()"><i class="material-icons">exit_to_app</i><span class="class-hover">Logout</span></a></li>
       </ul>
     </div>
     <!-- #Menu -->

@@ -192,7 +192,7 @@
         <li class="header">MAIN NAVIGATION</li>
         <li [ngClass]="{'active open': currentUrl==urlStudent.profile}">
           <a href="javascript:;" (click)="redirectToUrl(urlStudent.profile)">
-            <i class="zmdi zmdi-home"></i><span class="class-hover">Profile</span></a></li>
+            <i class="material-icons">account_circle</i><span class="class-hover">Profile</span></a></li>
         <li [ngClass]="{'active open': currentUrl.includes(urlStudent.viewTimetable)}">
           <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-book"></i><span
             class="class-hover">View TimeTable</span> </a>
@@ -208,7 +208,7 @@
           </ul>
         </li>
 
-        <li><a (click)="logout()"><i class="zmdi zmdi-power"></i><span class="class-hover">Logout</span></a></li>
+        <li><a (click)="logout()"><i class="material-icons">exit_to_app</i><span class="class-hover">Logout</span></a></li>
       </ul>
     </div>
     <!-- #Menu -->

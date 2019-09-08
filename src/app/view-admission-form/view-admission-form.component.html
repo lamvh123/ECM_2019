@@ -1,63 +1,153 @@
-<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">
-  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">
-    <div class="block-header">
-      <h2><font color="#78b83e"><b>All Forms</b></font></h2>
-    </div>
+<!--<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px'}">-->
+<!--  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="container-fluid">-->
+<!--    <div class="block-header">-->
+<!--      <h2><font color="#78b83e"><b>All Forms</b></font></h2>-->
+<!--    </div>-->
 
-    <div class="row">
-      <div class="input-field col s12 required col-lg-4 col-xl-3" style="padding-top: 10px">
-        <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
-                   [(ngModel)]="courseId">
-        </ng-select>
-      </div>
-      <div class="input-field col s12 required col-lg-4 col-xl-3" style="padding-top: 10px">
-        <ng-select [items]="boolArr" [(ngModel)]="isClose" placeholder="Select status">
-        </ng-select>
-      </div>
-      <div class="input-field col s12 required col-lg-2 col-xl-2" style="padding-top: 20px">
-        <button type="submit" name="_submit" (click)="getAdmissionForm()" class="btn searchBtn">Search</button>
-      </div>
-    </div>
-    <div class="row clearfix">
-      <div *ngFor="let form of listForm" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
-        <div class="thumbnail card" style="min-width: 20vh">
-          <ng-container
-            *ngIf="form.Course.Image!=null; then imgNotNull; else imgNull">
-          </ng-container>
-          <ng-template #imgNotNull>
-            <img src="{{form.Course.Image}}" alt="" class="img-fluid"
-                 (click)="navigateToAdmissionFormDetail(form)"
-                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
-          </ng-template>
-          <ng-template #imgNull>
-            <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"
-                 (click)="navigateToAdmissionFormDetail(form)"
-                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
-          </ng-template>
+<!--    <div class="row">-->
+<!--      <div class="input-field col s12 required col-lg-4 col-xl-3" style="padding-top: 10px">-->
+<!--        <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"-->
+<!--                   [(ngModel)]="courseId">-->
+<!--        </ng-select>-->
+<!--      </div>-->
+<!--      <div class="input-field col s12 required col-lg-4 col-xl-3" style="padding-top: 10px">-->
+<!--        <ng-select [items]="boolArr" [(ngModel)]="isClose" placeholder="Select status">-->
+<!--        </ng-select>-->
+<!--      </div>-->
+<!--      <div class="input-field col s12 required col-lg-2 col-xl-2" style="padding-top: 20px">-->
+<!--        <button type="submit" name="_submit" (click)="getAdmissionForm()" class="btn searchBtn">Search</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="row clearfix">-->
+<!--      <div *ngFor="let form of listForm" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">-->
+<!--        <div class="thumbnail card" style="min-width: 20vh">-->
+<!--          <ng-container-->
+<!--            *ngIf="form.Course.Image!=null; then imgNotNull; else imgNull">-->
+<!--          </ng-container>-->
+<!--          <ng-template #imgNotNull>-->
+<!--            <img src="{{form.Course.Image}}" alt="" class="img-fluid"-->
+<!--                 (click)="navigateToAdmissionFormDetail(form)"-->
+<!--                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">-->
+<!--          </ng-template>-->
+<!--          <ng-template #imgNull>-->
+<!--            <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"-->
+<!--                 (click)="navigateToAdmissionFormDetail(form)"-->
+<!--                 [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">-->
+<!--          </ng-template>-->
 
-          <div class="caption  body">
-            <h3>{{form.Name}}
-              <span *ngIf="form.IsClosed" class="closed-form">(Closed)</span>
-            </h3>
-            Course: <strong class="col-green">{{form.Course.Name}}</strong><br/>
-            Start date: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>
-            <!--              Day(s) in week: <strong class="col-green">{{form.}}</strong><br/>-->
-            Slot: <strong class="col-green">{{form.Slot.From}}-{{form.Slot.To}}</strong><br/>
-            <div class="btn-group-align">
-              <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"
-                      (click)="navigateToAdmissionFormDetail(form)">Detail</a></div>
-              <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"
-                      (click)="closeForm(form)" *ngIf="!form.IsClosed">Close</a>
-              </div>
+<!--          <div class="caption  body">-->
+<!--            <h3>{{form.Name}}-->
+<!--              <span *ngIf="form.IsClosed" class="closed-form">(Closed)</span>-->
+<!--            </h3>-->
+<!--            Course: <strong class="col-green">{{form.Course.Name}}</strong><br/>-->
+<!--            Start date: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>-->
+<!--            &lt;!&ndash;              Day(s) in week: <strong class="col-green">{{form.}}</strong><br/>&ndash;&gt;-->
+<!--            Slot: <strong class="col-green">{{form.Slot.From}}-{{form.Slot.To}}</strong><br/>-->
+<!--            <div class="btn-group-align">-->
+<!--              <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"-->
+<!--                      (click)="navigateToAdmissionFormDetail(form)">Detail</a></div>-->
+<!--              <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"-->
+<!--                      (click)="closeForm(form)" *ngIf="!form.IsClosed">Close</a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--  <app-loading-page *ngIf="isLoading"></app-loading-page>-->
+<!--</section>-->
+
+<!--<div class="color-bg"></div>-->
+
+
+<section class="content" [ngStyle]="{'margin': '15px 15px 15px 15px','padding': '15px 15px 15px 15px'}">
+  <div class="block-header">
+    <h2>All Forms</h2>
+    <!--      <small class="text-muted">Welcome to Swift application</small>-->
+  </div>
+  <div class="row clearfix search-area">
+    <div class="card" style="padding: 15px;">
+
+      <form id="formAdd">
+        <div class="row">
+          <div class="input-field col s12 required col-lg-4 col-xl-3" style="padding-top: 10px">
+            <ng-select [items]="listCourse" bindLabel="Name" bindValue="Id" placeholder="Select Course"
+                       name="listCourse" id="listCourse"
+                       [(ngModel)]="courseId">
+            </ng-select>
+          </div>
+          <div class="input-field col s12 required col-lg-4 col-xl-3" style="padding-top: 10px">
+            <ng-select [items]="boolArr" [(ngModel)]="isClose" (change)="updateCloseStatus()"
+                       (clear)="clearCloseStatus()" placeholder="Select status" name="boolArr" id="boolArr">
+            </ng-select>
+          </div>
+        </div>
+        <button type="button" class="btn  btn-raised g-bg-blush2 waves-effect" (click)="getAdmissionForm()" id="btnAdd"
+                name="btnAdd">Search Form
+        </button>
+      </form>
+      <!--      <button style="float: right" type="submit" name="_submit" class="btn searchBtn g-bg-blush2"-->
+      <!--              (click)="searchProgramByName()">Search-->
+      <!--      </button>-->
+    </div>
+  </div>
+  <!--    <div class="row">-->
+  <!--      <div class="input-field col s12 required" id="id_email_container">-->
+  <!--        <input placeholder="Search..." id="coursename" maxlength="254" [(ngModel)]="programName" name="coursename"-->
+  <!--               type="text">-->
+  <!--        <button type="submit" name="_submit" class="btn searchBtn" (click)="searchProgramByName()">Submit</button>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="row clearfix all-program-content">-->
+
+  <div [ngStyle]="isLoading?{'display':'none'}:{}" class="row clearfix">
+    <h3 *ngIf="listForm==null || listForm.length<=0">There is no form in database.</h3>
+    <div *ngFor="let form of listForm" class="col-sm-12 col-md-6 col-lg-4 col-xl-3 course-div">
+      <div class="thumbnail card" style="min-width: 20vh">
+        <ng-container
+          *ngIf="form.Course.Image!=null; then imgNotNull; else imgNull">
+        </ng-container>
+        <ng-template #imgNotNull>
+          <img src="{{form.Course.Image}}" alt="" class="img-fluid"
+               (click)="navigateToAdmissionFormDetail(form)"
+               [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+        </ng-template>
+        <ng-template #imgNull>
+          <img src="../../assets/images/bualiem.png" alt="" class="img-fluid"
+               (click)="navigateToAdmissionFormDetail(form)"
+               [ngStyle]="{'height':'250px', 'width':'100%', 'object-fit': 'cover'}">
+        </ng-template>
+
+        <div class="caption  body">
+          <h3>{{form.Name}}
+            <span *ngIf="form.IsClosed" class="closed-form">(Closed)</span>
+          </h3>
+          Course: <strong class="col-green">{{form.Course.Name}}</strong><br/>
+          Start date: <strong class="col-green">{{dateToString(form.StartDate)}}</strong><br/>
+          <!--              Day(s) in week: <strong class="col-green">{{form.}}</strong><br/>-->
+          Slot: <strong class="col-green">{{form.Slot.From}}-{{form.Slot.To}}</strong><br/>
+          <div class="btn-group-align">
+            <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"
+                    (click)="navigateToAdmissionFormDetail(form)">Detail</a></div>
+            <div><a class="btn  btn-raised btn-info waves-effect btn-fix-width" role="button" style="padding: 10px"
+                    (click)="closeForm(form)" *ngIf="!form.IsClosed">Close</a>
             </div>
           </div>
-
         </div>
+
       </div>
     </div>
 
+    <!--      <div class="col-sm-12 text-center">-->
+    <!--        <a href="#" class="btn btn-raised waves-effect g-bg-blush2" role="button">Load more</a>-->
+    <!--      </div>-->
   </div>
   <app-loading-page *ngIf="isLoading"></app-loading-page>
+
 </section>
 
 <div class="color-bg"></div>
+

@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 import {UrlSystem} from '../SiteUrlContext';
 
 @Component({
@@ -8,11 +8,13 @@ import {UrlSystem} from '../SiteUrlContext';
   styleUrls: ['./system-admin-menu-bar.component.css', '../../assets/css/main.css',
     '../../assets/css/themes/all-themes.css']
 })
-export class SystemAdminMenuBarComponent implements OnInit,AfterViewInit{
+export class SystemAdminMenuBarComponent implements OnInit, AfterViewInit {
 
   urlName;
   urlSystem = new UrlSystem();
   currentUrl = this._router.url;
+  userAvatar = '';
+  userName = '';
 
   constructor(private _router: Router, private route: ActivatedRoute) {
 
@@ -62,6 +64,8 @@ export class SystemAdminMenuBarComponent implements OnInit,AfterViewInit{
   }
 
   ngAfterViewInit() {
+    this.userAvatar = localStorage.getItem('userAvatar');
+    this.userName = localStorage.getItem('userName');
     this.loadScript('/assets/bundles/libscripts.bundle.js');
     this.loadScript('/assets/bundles/vendorscripts.bundle.js');
     this.loadScript('/assets/bundles/mainscripts.bundle.js');

@@ -45,6 +45,7 @@ export class AddNewFormComponent implements OnInit, AfterViewInit {
   errorMsgSlot = '-';
   @Output() messageEvent = new EventEmitter<string>();
   isLoading = true;
+  todayStr: string;
 
 
   constructor(private http: HttpClient, private router: Router, private datepipe: DatePipe, private route: ActivatedRoute) {
@@ -56,6 +57,12 @@ export class AddNewFormComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+
+    this.todayStr = yyyy + '-' + mm + '-' + dd;
     this.form = new AdmissionForm();
     const urlGetCenterId = this.apiContext.host + this.apiAdmission.getCenter;
     this.http.get(urlGetCenterId).toPromise().then(data => {

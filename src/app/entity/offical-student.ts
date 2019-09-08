@@ -9,4 +9,5 @@ export class OfficalStudent {
   realSex: string;
   Id : string;
   Classes : Class[];
+  Avatar: string;
 }
